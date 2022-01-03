@@ -1,0 +1,566 @@
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:cc="http://creativecommons.org/ns#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:svg="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     version='1.1'
+     baseProfile='full'
+     width='1494.000'
+     height='1633.000'>
+    <defs>
+        <style><![CDATA[
+            line
+            {
+              stroke: black;
+            }
+            line.separator
+            {
+              stroke:       black;
+              stroke-width: 1;
+            }
+            marker
+            {
+              fill: white;
+            }
+            path
+            {
+              fill:   white;
+              stroke: black;
+            }
+            path.implementation
+            {
+              fill:             none;
+              stroke-dasharray: 5,5;
+              stroke-width:     3;
+            }
+            path.inheritance
+            {
+              fill:         none;
+              stroke-width: 3;
+            }
+            rect
+            {
+              fill:         none;
+              stroke:       black;
+              stroke-width: 2;
+            }
+            rect.externalClass
+            {
+              fill:         #D0D0D0;
+              fill-opacity: 0.8;
+            }
+            rect.focusClass
+            {
+              fill:         #FFFFF9;
+              fill-opacity: 0.8;
+            }
+            rect.otherClass
+            {
+              fill:         #F0E68C;
+              fill-opacity: 0.8;
+            }
+            rect.template
+            {
+              fill:             #FFFFFF;
+              fill-opacity:     1.0;
+              stroke-dasharray: 3,3;
+            }
+            text
+            {
+              font-family: monospace;
+              font-size:   10px;
+              font-weight: bold;
+            }
+            text.abstract
+            {
+              font-style: italic;
+            }
+            text.final
+            {
+              text-decoration: underline;
+            }
+            text.static
+            {
+              font-weight: normal;
+            }
+            text.stereotype
+            {
+              font-size:   8px;
+              font-weight: normal;
+            }
+            ]]></style>
+        <marker id='inheritance'
+                viewBox='0,0,40,40'
+                markerUnits='strokeWidth'
+                refX='40'
+                refY='20'
+                markerWidth='6'
+                markerHeight='6'
+                orient='auto'>
+            <path d='M40,20 l-40,-20 v40 Z'
+                  fill='#ffffff'
+                  stroke='#000000'
+                  stroke-width='3'/>
+        </marker>
+        <marker id='implementation'
+                viewBox='0,0,40,40'
+                markerUnits='strokeWidth'
+                refX='40'
+                refY='20'
+                markerWidth='6'
+                markerHeight='6'
+                orient='auto'>
+            <path d='M40,20 l-40,-20 v40 Z'
+                  fill='#ffffff'
+                  stroke='#000000'
+                  stroke-width='3'/>
+        </marker>
+        <clipPath id='ID000001'>
+            <rect class='focusClass'
+                  height='117.000'
+                  width='1444.000'
+                  x='0.000'
+                  y='0.000'/>
+        </clipPath>
+        <symbol id='org.tquadrat.foundation.config.ap.impl.specialprops.TimeZoneProperty'>
+            <g>
+                <g class='focusClass'
+                   clip-path='url(#ID000001)'>
+                    <rect x='0.000'
+                          y='0.000'
+                          width='1444.000'
+                          height='117.000'
+                          class='focusClass'/>
+                    <line x1='0.000'
+                          y1='17.000'
+                          x2='1444.000'
+                          y2='17.000'
+                          class='separator'/>
+                    <text x='674.000'
+                          y='13.000'>TimeZoneProperty</text>
+                    <line x1='0.000'
+                          y1='34.000'
+                          x2='1444.000'
+                          y2='34.000'
+                          class='separator'/>
+                    <text x='5.000'
+                          y='30.000'/>
+                    <text x='5.000'
+                          y='47.000'>+ TimeZoneProperty()</text>
+                    <text x='5.000'
+                          y='58.000'
+                          class='static'>- composeConstructorFragment(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):org.tquadrat.foundation.javacomposer.CodeBlock</text>
+                    <text x='5.000'
+                          y='69.000'>+ getCLIValueHandlerClass():java.util.Optional&lt;org.tquadrat.foundation.javacomposer.TypeName&gt;</text>
+                    <text x='5.000'
+                          y='80.000'>+ getConstructorFragmentComposer():java.util.Optional&lt;java.util.function.BiFunction&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl,org.tquadrat.foundation.javacomposer.CodeBlock&gt;&gt;</text>
+                    <text x='5.000'
+                          y='91.000'>+ getPrefsAccessorClass():java.util.Optional&lt;org.tquadrat.foundation.javacomposer.TypeName&gt;</text>
+                    <text x='5.000'
+                          y='102.000'>+ getPropertyType():org.tquadrat.foundation.javacomposer.TypeName</text>
+                    <text x='5.000'
+                          y='113.000'>+ getStringConverterClass():java.util.Optional&lt;org.tquadrat.foundation.javacomposer.TypeName&gt;</text>
+                </g>
+            </g>
+        </symbol>
+        <clipPath id='ID000002'>
+            <rect class='otherClass'
+                  height='480.000'
+                  width='1444.000'
+                  x='0.000'
+                  y='0.000'/>
+        </clipPath>
+        <symbol id='org.tquadrat.foundation.config.ap.impl.specialprops.SpecialPropertySpecBase'>
+            <g>
+                <g clip-path='url(#ID000002)'>
+                    <rect x='0.000'
+                          y='0.000'
+                          width='1444.000'
+                          height='480.000'
+                          class='otherClass'/>
+                    <line x1='0.000'
+                          y1='28.000'
+                          x2='1444.000'
+                          y2='28.000'
+                          class='separator'/>
+                    <text x='707.600'
+                          y='13.000'
+                          class='stereotype'>&#xAB;Type&#xBB;</text>
+                    <text x='653.000'
+                          y='24.000'
+                          class='abstract'>SpecialPropertySpecBase</text>
+                    <line x1='0.000'
+                          y1='56.000'
+                          x2='1444.000'
+                          y2='56.000'
+                          class='separator'/>
+                    <text y='41.000'
+                          class='final'>- m_PropertyFlags:java.util.Set&lt;org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag&gt;</text>
+                    <text y='52.000'
+                          class='final'>- m_Type:org.tquadrat.foundation.config.SpecialPropertyType</text>
+                    <text x='5.000'
+                          y='69.000'># SpecialPropertySpecBase(type:org.tquadrat.foundation.config.SpecialPropertyType,flags:org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag&#x2026;)</text>
+                    <text x='5.000'
+                          y='80.000'>+ createAddMethod(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.MethodSpec&gt;</text>
+                    <text x='5.000'
+                          y='91.000'>+ createConstructorFragment(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.CodeBlock&gt;</text>
+                    <text x='5.000'
+                          y='102.000'>+ createField(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.FieldSpec&gt;</text>
+                    <text x='5.000'
+                          y='113.000'>+ createGetter(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.MethodSpec&gt;</text>
+                    <text x='5.000'
+                          y='124.000'>+ createSetter(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.MethodSpec&gt;</text>
+                    <text x='5.000'
+                          y='135.000'>+ getAddMethodArgumentName():java.lang.String</text>
+                    <text x='5.000'
+                          y='146.000'>+ getAddMethodComposer():java.util.Optional&lt;java.util.function.BiFunction&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl,org.tquadrat.foundation.javacomposer.MethodSpec&gt;&gt;</text>
+                    <text x='5.000'
+                          y='157.000'>+ getAddMethodName():java.util.Optional&lt;javax.lang.model.element.Name&gt;</text>
+                    <text x='5.000'
+                          y='168.000'>+ getAllFlags():java.util.EnumSet&lt;org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag&gt;</text>
+                    <text x='5.000'
+                          y='179.000'>+ getCLIArgumentIndex():java.util.OptionalInt</text>
+                    <text x='5.000'
+                          y='190.000'>+ getCLIFormat():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='201.000'>+ getCLIMetaVar():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='212.000'>+ getCLIOptionNames():java.util.Optional&lt;java.util.List&lt;java.lang.String&gt;&gt;</text>
+                    <text x='5.000'
+                          y='223.000'>+ getCLIUsage():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='234.000'>+ getCLIUsageKey():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='245.000'>+ getCollectionKind():org.tquadrat.foundation.config.ap.CollectionKind</text>
+                    <text x='5.000'
+                          y='256.000'>+ getConstructorFragmentComposer():java.util.Optional&lt;java.util.function.BiFunction&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl,org.tquadrat.foundation.javacomposer.CodeBlock&gt;&gt;</text>
+                    <text x='5.000'
+                          y='267.000'>+ getEnvironmentVariableName():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='278.000'>+ getFieldComposer():java.util.Optional&lt;java.util.function.BiFunction&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl,org.tquadrat.foundation.javacomposer.FieldSpec&gt;&gt;</text>
+                    <text x='5.000'
+                          y='289.000'>+ getGetterBuilder():java.util.Optional&lt;org.tquadrat.foundation.javacomposer.MethodSpec.Builder&gt;</text>
+                    <text x='5.000'
+                          y='300.000'>+ getGetterComposer():java.util.Optional&lt;java.util.function.BiFunction&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl,org.tquadrat.foundation.javacomposer.MethodSpec&gt;&gt;</text>
+                    <text x='5.000'
+                          y='311.000'>+ getGetterMethodName():java.util.Optional&lt;javax.lang.model.element.Name&gt;</text>
+                    <text x='5.000'
+                          y='322.000'>+ getGetterReturnType():org.tquadrat.foundation.javacomposer.TypeName</text>
+                    <text x='5.000'
+                          y='333.000'>+ getINIComment():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='344.000'>+ getINIGroup():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='355.000'>+ getINIKey():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='366.000'>+ getPrefsKey():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='377.000'>+ getPropertyName():java.lang.String</text>
+                    <text x='5.000'
+                          y='388.000'>+ getSetterArgumentName():java.lang.String</text>
+                    <text x='5.000'
+                          y='399.000'>+ getSetterBuilder():java.util.Optional&lt;org.tquadrat.foundation.javacomposer.MethodSpec.Builder&gt;</text>
+                    <text x='5.000'
+                          y='410.000'>+ getSetterComposer():java.util.Optional&lt;java.util.function.BiFunction&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl,org.tquadrat.foundation.javacomposer.MethodSpec&gt;&gt;</text>
+                    <text x='5.000'
+                          y='421.000'>+ getSetterMethodName():java.util.Optional&lt;javax.lang.model.element.Name&gt;</text>
+                    <text x='5.000'
+                          y='432.000'>+ getSpecialPropertyType():java.util.Optional&lt;org.tquadrat.foundation.config.SpecialPropertyType&gt;</text>
+                    <text x='5.000'
+                          y='443.000'>+ getSystemPrefsPath():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='454.000'>+ getSystemPropertyName():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='465.000'>+ hasFlag(flag:org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag):boolean</text>
+                    <text x='5.000'
+                          y='476.000'>+ merge():org.tquadrat.foundation.config.ap.PropertySpec</text>
+                </g>
+            </g>
+        </symbol>
+        <clipPath id='ID000003'>
+            <rect class='externalClass'
+                  height='172.000'
+                  width='244.000'
+                  x='0.000'
+                  y='0.000'/>
+        </clipPath>
+        <symbol id='java.lang.Object'>
+            <g>
+                <g clip-path='url(#ID000003)'>
+                    <rect x='0.000'
+                          y='0.000'
+                          width='244.000'
+                          height='172.000'
+                          class='externalClass'/>
+                    <line x1='0.000'
+                          y1='17.000'
+                          x2='244.000'
+                          y2='17.000'
+                          class='separator'/>
+                    <text x='104.000'
+                          y='13.000'>Object</text>
+                    <line x1='0.000'
+                          y1='34.000'
+                          x2='244.000'
+                          y2='34.000'
+                          class='separator'/>
+                    <text x='5.000'
+                          y='30.000'/>
+                    <text x='5.000'
+                          y='47.000'>+ Object()</text>
+                    <text x='5.000'
+                          y='58.000'>+ getClass():java.lang.Class&lt;?&gt;</text>
+                    <text x='5.000'
+                          y='69.000'>+ hashCode():int</text>
+                    <text x='5.000'
+                          y='80.000'>+ equals(arg0:java.lang.Object):boolean</text>
+                    <text x='5.000'
+                          y='91.000'># clone():java.lang.Object</text>
+                    <text x='5.000'
+                          y='102.000'>+ toString():java.lang.String</text>
+                    <text x='5.000'
+                          y='113.000'>+ notify():void</text>
+                    <text x='5.000'
+                          y='124.000'>+ notifyAll():void</text>
+                    <text x='5.000'
+                          y='135.000'>+ wait():void</text>
+                    <text x='5.000'
+                          y='146.000'>+ wait(arg0:long):void</text>
+                    <text x='5.000'
+                          y='157.000'>+ wait(arg0:long,arg1:int):void</text>
+                    <text x='5.000'
+                          y='168.000'># finalize():void</text>
+                </g>
+            </g>
+        </symbol>
+        <clipPath id='ID000004'>
+            <rect class='otherClass'
+                  height='117.000'
+                  width='1444.000'
+                  x='0.000'
+                  y='0.000'/>
+        </clipPath>
+        <symbol id='org.tquadrat.foundation.config.ap.impl.SpecialPropertySpec'>
+            <g>
+                <g clip-path='url(#ID000004)'>
+                    <rect x='0.000'
+                          y='0.000'
+                          width='1444.000'
+                          height='117.000'
+                          class='otherClass'/>
+                    <line x1='0.000'
+                          y1='28.000'
+                          x2='1444.000'
+                          y2='28.000'
+                          class='separator'/>
+                    <text x='695.600'
+                          y='13.000'
+                          class='stereotype'>&#xAB;Interface&#xBB;</text>
+                    <text x='665.000'
+                          y='24.000'
+                          class='abstract'>SpecialPropertySpec</text>
+                    <line x1='0.000'
+                          y1='45.000'
+                          x2='1444.000'
+                          y2='45.000'
+                          class='separator'/>
+                    <text x='5.000'
+                          y='41.000'/>
+                    <text x='5.000'
+                          y='58.000'
+                          class='abstract'>+ getAddMethodComposer():java.util.Optional&lt;java.util.function.BiFunction&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl,org.tquadrat.foundation.javacomposer.MethodSpec&gt;&gt;</text>
+                    <text x='5.000'
+                          y='69.000'
+                          class='abstract'>+ getAllFlags():java.util.EnumSet&lt;org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag&gt;</text>
+                    <text x='5.000'
+                          y='80.000'
+                          class='abstract'>+ getConstructorFragmentComposer():java.util.Optional&lt;java.util.function.BiFunction&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl,org.tquadrat.foundation.javacomposer.CodeBlock&gt;&gt;</text>
+                    <text x='5.000'
+                          y='91.000'
+                          class='abstract'>+ getFieldComposer():java.util.Optional&lt;java.util.function.BiFunction&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl,org.tquadrat.foundation.javacomposer.FieldSpec&gt;&gt;</text>
+                    <text x='5.000'
+                          y='102.000'
+                          class='abstract'>+ getGetterComposer():java.util.Optional&lt;java.util.function.BiFunction&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl,org.tquadrat.foundation.javacomposer.MethodSpec&gt;&gt;</text>
+                    <text x='5.000'
+                          y='113.000'
+                          class='abstract'>+ getSetterComposer():java.util.Optional&lt;java.util.function.BiFunction&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl,org.tquadrat.foundation.javacomposer.MethodSpec&gt;&gt;</text>
+                </g>
+            </g>
+        </symbol>
+        <clipPath id='ID000005'>
+            <rect class='otherClass'
+                  height='469.000'
+                  width='958.000'
+                  x='0.000'
+                  y='0.000'/>
+        </clipPath>
+        <symbol id='org.tquadrat.foundation.config.ap.PropertySpec'>
+            <g>
+                <g clip-path='url(#ID000005)'>
+                    <rect x='0.000'
+                          y='0.000'
+                          width='958.000'
+                          height='469.000'
+                          class='otherClass'/>
+                    <line x1='0.000'
+                          y1='28.000'
+                          x2='958.000'
+                          y2='28.000'
+                          class='separator'/>
+                    <text x='452.600'
+                          y='13.000'
+                          class='stereotype'>&#xAB;Interface&#xBB;</text>
+                    <text x='443.000'
+                          y='24.000'
+                          class='abstract'>PropertySpec</text>
+                    <line x1='0.000'
+                          y1='45.000'
+                          x2='958.000'
+                          y2='45.000'
+                          class='separator'/>
+                    <text x='5.000'
+                          y='41.000'/>
+                    <text x='5.000'
+                          y='58.000'
+                          class='abstract'>+ createAddMethod(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.MethodSpec&gt;</text>
+                    <text x='5.000'
+                          y='69.000'
+                          class='abstract'>+ createConstructorFragment(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.CodeBlock&gt;</text>
+                    <text x='5.000'
+                          y='80.000'
+                          class='abstract'>+ createField(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.FieldSpec&gt;</text>
+                    <text x='5.000'
+                          y='91.000'
+                          class='abstract'>+ createGetter(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.MethodSpec&gt;</text>
+                    <text x='5.000'
+                          y='102.000'
+                          class='abstract'>+ createSetter(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.MethodSpec&gt;</text>
+                    <text x='5.000'
+                          y='113.000'
+                          class='abstract'>+ getAddMethodArgumentName():java.lang.String</text>
+                    <text x='5.000'
+                          y='124.000'
+                          class='abstract'>+ getAddMethodName():java.util.Optional&lt;javax.lang.model.element.Name&gt;</text>
+                    <text x='5.000'
+                          y='135.000'
+                          class='abstract'>+ getCLIArgumentIndex():java.util.OptionalInt</text>
+                    <text x='5.000'
+                          y='146.000'
+                          class='abstract'>+ getCLIFormat():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='157.000'
+                          class='abstract'>+ getCLIMetaVar():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='168.000'
+                          class='abstract'>+ getCLIOptionNames():java.util.Optional&lt;java.util.List&lt;java.lang.String&gt;&gt;</text>
+                    <text x='5.000'
+                          y='179.000'
+                          class='abstract'>+ getCLIUsage():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='190.000'
+                          class='abstract'>+ getCLIUsageKey():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='201.000'
+                          class='abstract'>+ getCLIValueHandlerClass():java.util.Optional&lt;org.tquadrat.foundation.javacomposer.TypeName&gt;</text>
+                    <text x='5.000'
+                          y='212.000'
+                          class='abstract'>+ getCollectionKind():org.tquadrat.foundation.config.ap.CollectionKind</text>
+                    <text x='5.000'
+                          y='223.000'
+                          class='abstract'>+ getEnvironmentVariableName():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='234.000'>&#x2A22; getFieldName():java.lang.String</text>
+                    <text x='5.000'
+                          y='245.000'
+                          class='abstract'>+ getGetterBuilder():java.util.Optional&lt;org.tquadrat.foundation.javacomposer.MethodSpec.Builder&gt;</text>
+                    <text x='5.000'
+                          y='256.000'
+                          class='abstract'>+ getGetterMethodName():java.util.Optional&lt;javax.lang.model.element.Name&gt;</text>
+                    <text x='5.000'
+                          y='267.000'
+                          class='abstract'>+ getGetterReturnType():org.tquadrat.foundation.javacomposer.TypeName</text>
+                    <text x='5.000'
+                          y='278.000'
+                          class='abstract'>+ getINIComment():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='289.000'
+                          class='abstract'>+ getINIGroup():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='300.000'
+                          class='abstract'>+ getINIKey():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='311.000'
+                          class='abstract'>+ getPrefsAccessorClass():java.util.Optional&lt;org.tquadrat.foundation.javacomposer.TypeName&gt;</text>
+                    <text x='5.000'
+                          y='322.000'
+                          class='abstract'>+ getPrefsKey():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='333.000'
+                          class='abstract'>+ getPropertyName():java.lang.String</text>
+                    <text x='5.000'
+                          y='344.000'
+                          class='abstract'>+ getPropertyType():org.tquadrat.foundation.javacomposer.TypeName</text>
+                    <text x='5.000'
+                          y='355.000'
+                          class='abstract'>+ getSetterArgumentName():java.lang.String</text>
+                    <text x='5.000'
+                          y='366.000'
+                          class='abstract'>+ getSetterBuilder():java.util.Optional&lt;org.tquadrat.foundation.javacomposer.MethodSpec.Builder&gt;</text>
+                    <text x='5.000'
+                          y='377.000'
+                          class='abstract'>+ getSetterMethodName():java.util.Optional&lt;javax.lang.model.element.Name&gt;</text>
+                    <text x='5.000'
+                          y='388.000'
+                          class='abstract'>+ getSpecialPropertyType():java.util.Optional&lt;org.tquadrat.foundation.config.SpecialPropertyType&gt;</text>
+                    <text x='5.000'
+                          y='399.000'
+                          class='abstract'>+ getStringConverterClass():java.util.Optional&lt;org.tquadrat.foundation.javacomposer.TypeName&gt;</text>
+                    <text x='5.000'
+                          y='410.000'
+                          class='abstract'>+ getSystemPrefsPath():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='421.000'
+                          class='abstract'>+ getSystemPropertyName():java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text x='5.000'
+                          y='432.000'
+                          class='abstract'>+ hasFlag(flag:org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag):boolean</text>
+                    <text x='5.000'
+                          y='443.000'>&#x2A22; isCollection():boolean</text>
+                    <text x='5.000'
+                          y='454.000'>&#x2A22; isOnCLI():boolean</text>
+                    <text x='5.000'
+                          y='465.000'
+                          class='abstract'>+ merge():org.tquadrat.foundation.config.ap.PropertySpec</text>
+                </g>
+            </g>
+        </symbol>
+    </defs>
+    <path class='inheritance'
+          d='M747.000,1391.000 L747.000,1291.000'
+          marker-end='url(#inheritance)'/>
+    <path class='inheritance'
+          d='M722.000,811.000 c0.000,-599.000,-575.000,0.000,-575.000,-599.000 v-15'
+          marker-end='url(#inheritance)'/>
+    <path class='implementation'
+          d='M772.000,811.000 c0.000,-85.000,-25.000,0.000,-25.000,-85.000 v-15'
+          marker-end='url(#implementation)'/>
+    <path class='inheritance'
+          d='M747.000,594.000 c0.000,-85.000,51.000,0.000,51.000,-85.000 v-15'
+          marker-end='url(#inheritance)'/>
+    <use x='25.000'
+         y='25.000'
+         xlink:href='#java.lang.Object'/>
+    <use x='319.000'
+         y='25.000'
+         xlink:href='#org.tquadrat.foundation.config.ap.PropertySpec'/>
+    <use x='25.000'
+         y='594.000'
+         xlink:href='#org.tquadrat.foundation.config.ap.impl.SpecialPropertySpec'/>
+    <use x='25.000'
+         y='811.000'
+         xlink:href='#org.tquadrat.foundation.config.ap.impl.specialprops.SpecialPropertySpecBase'/>
+    <use x='25.000'
+         y='1391.000'
+         xlink:href='#org.tquadrat.foundation.config.ap.impl.specialprops.TimeZoneProperty'/>
+</svg>

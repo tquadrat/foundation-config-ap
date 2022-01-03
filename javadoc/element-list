@@ -1,0 +1,4 @@
+org.tquadrat.foundation.config.ap
+org.tquadrat.foundation.config.ap.impl
+org.tquadrat.foundation.config.ap.impl.codebuilders
+org.tquadrat.foundation.config.ap.impl.specialprops

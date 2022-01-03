@@ -1,0 +1,398 @@
+
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:cc="http://creativecommons.org/ns#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:svg="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     version='1.1'
+     baseProfile='full'
+     width='1386.000'
+     height='998.000'>
+    <defs>
+        <style><![CDATA[
+            line
+            {
+              stroke: black;
+            }
+            line.separator
+            {
+              stroke:       black;
+              stroke-width: 1;
+            }
+            marker
+            {
+              fill: white;
+            }
+            path
+            {
+              fill:   white;
+              stroke: black;
+            }
+            path.implementation
+            {
+              fill:             none;
+              stroke-dasharray: 5,5;
+              stroke-width:     3;
+            }
+            path.inheritance
+            {
+              fill:         none;
+              stroke-width: 3;
+            }
+            rect
+            {
+              fill:         none;
+              stroke:       black;
+              stroke-width: 2;
+            }
+            rect.externalClass
+            {
+              fill:         #D0D0D0;
+              fill-opacity: 0.8;
+            }
+            rect.focusClass
+            {
+              fill:         #FFFFF9;
+              fill-opacity: 0.8;
+            }
+            rect.otherClass
+            {
+              fill:         #F0E68C;
+              fill-opacity: 0.8;
+            }
+            rect.template
+            {
+              fill:             #FFFFFF;
+              fill-opacity:     1.0;
+              stroke-dasharray: 3,3;
+            }
+            text
+            {
+              font-family: monospace;
+              font-size:   10px;
+              font-weight: bold;
+            }
+            text.abstract
+            {
+              font-style: italic;
+            }
+            text.final
+            {
+              text-decoration: underline;
+            }
+            text.static
+            {
+              font-weight: normal;
+            }
+            text.stereotype
+            {
+              font-size:   8px;
+              font-weight: normal;
+            }
+            ]]></style>
+        <marker id='inheritance'
+                viewBox='0,0,40,40'
+                markerUnits='strokeWidth'
+                refX='40'
+                refY='20'
+                markerWidth='6'
+                markerHeight='6'
+                orient='auto'>
+            <path d='M40,20 l-40,-20 v40 Z'
+                  fill='#ffffff'
+                  stroke='#000000'
+                  stroke-width='3'/>
+        </marker>
+        <marker id='implementation'
+                viewBox='0,0,40,40'
+                markerUnits='strokeWidth'
+                refX='40'
+                refY='20'
+                markerWidth='6'
+                markerHeight='6'
+                orient='auto'>
+            <path d='M40,20 l-40,-20 v40 Z'
+                  fill='#ffffff'
+                  stroke='#000000'
+                  stroke-width='3'/>
+        </marker>
+        <clipPath id='ID000001'>
+            <rect class='focusClass'
+                  height='62.000'
+                  width='598.000'
+                  x='0.000'
+                  y='0.000'/>
+        </clipPath>
+        <symbol id='org.tquadrat.foundation.config.ap.impl.codebuilders.INIBeanBuilder'>
+            <g>
+                <g class='focusClass'
+                   clip-path='url(#ID000001)'>
+                    <rect x='0.000'
+                          y='0.000'
+                          width='598.000'
+                          height='62.000'
+                          class='focusClass'/>
+                    <line x1='0.000'
+                          y1='17.000'
+                          x2='598.000'
+                          y2='17.000'
+                          class='separator'/>
+                    <text x='257.000'
+                          y='13.000'>INIBeanBuilder</text>
+                    <line x1='0.000'
+                          y1='34.000'
+                          x2='598.000'
+                          y2='34.000'
+                          class='separator'/>
+                    <text x='5.000'
+                          y='30.000'/>
+                    <text x='5.000'
+                          y='47.000'>+ INIBeanBuilder(context:org.tquadrat.foundation.config.ap.impl.codebuilders.CodeGeneratorContext)</text>
+                    <text x='5.000'
+                          y='58.000'>+ build():void</text>
+                </g>
+            </g>
+        </symbol>
+        <clipPath id='ID000002'>
+            <rect class='otherClass'
+                  height='414.000'
+                  width='1336.000'
+                  x='0.000'
+                  y='0.000'/>
+        </clipPath>
+        <symbol id='org.tquadrat.foundation.config.ap.impl.codebuilders.CodeBuilderBase'>
+            <g>
+                <g clip-path='url(#ID000002)'>
+                    <rect x='0.000'
+                          y='0.000'
+                          width='1336.000'
+                          height='414.000'
+                          class='otherClass'/>
+                    <line x1='0.000'
+                          y1='28.000'
+                          x2='1336.000'
+                          y2='28.000'
+                          class='separator'/>
+                    <text x='653.600'
+                          y='13.000'
+                          class='stereotype'>&#xAB;Type&#xBB;</text>
+                    <text x='623.000'
+                          y='24.000'
+                          class='abstract'>CodeBuilderBase</text>
+                    <line x1='0.000'
+                          y1='133.000'
+                          x2='1336.000'
+                          y2='133.000'
+                          class='separator'/>
+                    <text y='41.000'
+                          class='final'>- m_ClassBuilder:org.tquadrat.foundation.javacomposer.TypeSpec.Builder</text>
+                    <text y='52.000'
+                          class='final'>- m_Composer:org.tquadrat.foundation.javacomposer.JavaComposer</text>
+                    <text y='63.000'
+                          class='final'>- m_Configuration:org.tquadrat.foundation.config.ap.CodeGenerationConfiguration</text>
+                    <text y='74.000'
+                          class='final'>- m_ConstructorCode:org.tquadrat.foundation.javacomposer.CodeBlock.Builder</text>
+                    <text y='85.000'
+                          class='final'>- m_Context:org.tquadrat.foundation.config.ap.impl.codebuilders.CodeGeneratorContext</text>
+                    <text y='96.000'
+                          class='final'>- m_IsSynchronized:boolean</text>
+                    <text y='107.000'
+                          class='static final'>- m_StandardFields:java.util.Map&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField,org.tquadrat.foundation.javacomposer.FieldSpec&gt;</text>
+                    <text y='118.000'
+                          class='static final'>- m_StandardMethods:java.util.Map&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardMethod,org.tquadrat.foundation.javacomposer.MethodSpec&gt;</text>
+                    <text y='129.000'
+                          class='static final'>- m_ConverterRegistry:org.tquadrat.foundation.util.LazyMap&lt;org.tquadrat.foundation.javacomposer.TypeName,org.tquadrat.foundation.javacomposer.TypeName&gt;</text>
+                    <text x='5.000'
+                          y='146.000'># CodeBuilderBase(context:org.tquadrat.foundation.config.ap.impl.codebuilders.CodeGeneratorContext)</text>
+                    <text x='5.000'
+                          y='157.000'># addConstructorArgument(argument:org.tquadrat.foundation.javacomposer.ParameterSpec):void</text>
+                    <text x='5.000'
+                          y='168.000'># addConstructorCode(code:org.tquadrat.foundation.javacomposer.CodeBlock):void</text>
+                    <text x='5.000'
+                          y='179.000'># addConstructorSuppressedWarning(warning:org.tquadrat.foundation.javacomposer.SuppressableWarnings):void</text>
+                    <text x='5.000'
+                          y='190.000'># addField(field:org.tquadrat.foundation.javacomposer.FieldSpec):void</text>
+                    <text x='5.000'
+                          y='201.000'># addField(reference:org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField,field:org.tquadrat.foundation.javacomposer.FieldSpec):void</text>
+                    <text x='5.000'
+                          y='212.000'># addMethod(method:org.tquadrat.foundation.javacomposer.MethodSpec):void</text>
+                    <text x='5.000'
+                          y='223.000'># addMethod(reference:org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardMethod,method:org.tquadrat.foundation.javacomposer.MethodSpec):void</text>
+                    <text x='5.000'
+                          y='234.000'
+                          class='abstract'>+ build():void</text>
+                    <text x='5.000'
+                          y='245.000'
+                          class='static'>+ composeAddMethod(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):org.tquadrat.foundation.javacomposer.MethodSpec</text>
+                    <text x='5.000'
+                          y='256.000'
+                          class='static'>+ composeConstructorFragment4Environment(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):org.tquadrat.foundation.javacomposer.CodeBlock</text>
+                    <text x='5.000'
+                          y='267.000'
+                          class='static'>+ composeConstructorFragment4SystemPreference(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):org.tquadrat.foundation.javacomposer.CodeBlock</text>
+                    <text x='5.000'
+                          y='278.000'
+                          class='static'>+ composeConstructorFragment4SystemProp(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):org.tquadrat.foundation.javacomposer.CodeBlock</text>
+                    <text x='5.000'
+                          y='289.000'
+                          class='static'>+ composeField(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):org.tquadrat.foundation.javacomposer.FieldSpec</text>
+                    <text x='5.000'
+                          y='300.000'
+                          class='static'>+ composeGetter(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):org.tquadrat.foundation.javacomposer.MethodSpec</text>
+                    <text x='5.000'
+                          y='311.000'
+                          class='static'>+ composeSetter(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):org.tquadrat.foundation.javacomposer.MethodSpec</text>
+                    <text x='5.000'
+                          y='322.000'
+                          class='static'># determineStringConverterInstantiation(stringConverterClass:org.tquadrat.foundation.javacomposer.TypeName):boolean</text>
+                    <text x='5.000'
+                          y='333.000'>+ getComposer():org.tquadrat.foundation.javacomposer.JavaComposer</text>
+                    <text x='5.000'
+                          y='344.000'>+ getConfiguration():org.tquadrat.foundation.config.ap.CodeGenerationConfiguration</text>
+                    <text x='5.000'
+                          y='355.000'>+ getField(reference:org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField):org.tquadrat.foundation.javacomposer.FieldSpec</text>
+                    <text x='5.000'
+                          y='366.000'>+ getMethod(reference:org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardMethod):org.tquadrat.foundation.javacomposer.MethodSpec</text>
+                    <text x='5.000'
+                          y='377.000'># getProperties():java.util.Iterator&lt;org.tquadrat.foundation.config.ap.PropertySpec&gt;</text>
+                    <text x='5.000'
+                          y='388.000'
+                          class='static'># getStringConverter(type:org.tquadrat.foundation.javacomposer.TypeName):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.TypeName&gt;</text>
+                    <text x='5.000'
+                          y='399.000'># isSynchronized():boolean</text>
+                    <text x='5.000'
+                          y='410.000'
+                          class='static'>- loadStringConverters():java.util.Map&lt;org.tquadrat.foundation.javacomposer.TypeName,org.tquadrat.foundation.javacomposer.TypeName&gt;</text>
+                </g>
+            </g>
+        </symbol>
+        <clipPath id='ID000003'>
+            <rect class='externalClass'
+                  height='172.000'
+                  width='244.000'
+                  x='0.000'
+                  y='0.000'/>
+        </clipPath>
+        <symbol id='java.lang.Object'>
+            <g>
+                <g clip-path='url(#ID000003)'>
+                    <rect x='0.000'
+                          y='0.000'
+                          width='244.000'
+                          height='172.000'
+                          class='externalClass'/>
+                    <line x1='0.000'
+                          y1='17.000'
+                          x2='244.000'
+                          y2='17.000'
+                          class='separator'/>
+                    <text x='104.000'
+                          y='13.000'>Object</text>
+                    <line x1='0.000'
+                          y1='34.000'
+                          x2='244.000'
+                          y2='34.000'
+                          class='separator'/>
+                    <text x='5.000'
+                          y='30.000'/>
+                    <text x='5.000'
+                          y='47.000'>+ Object()</text>
+                    <text x='5.000'
+                          y='58.000'>+ getClass():java.lang.Class&lt;?&gt;</text>
+                    <text x='5.000'
+                          y='69.000'>+ hashCode():int</text>
+                    <text x='5.000'
+                          y='80.000'>+ equals(arg0:java.lang.Object):boolean</text>
+                    <text x='5.000'
+                          y='91.000'># clone():java.lang.Object</text>
+                    <text x='5.000'
+                          y='102.000'>+ toString():java.lang.String</text>
+                    <text x='5.000'
+                          y='113.000'>+ notify():void</text>
+                    <text x='5.000'
+                          y='124.000'>+ notifyAll():void</text>
+                    <text x='5.000'
+                          y='135.000'>+ wait():void</text>
+                    <text x='5.000'
+                          y='146.000'>+ wait(arg0:long):void</text>
+                    <text x='5.000'
+                          y='157.000'>+ wait(arg0:long,arg1:int):void</text>
+                    <text x='5.000'
+                          y='168.000'># finalize():void</text>
+                </g>
+            </g>
+        </symbol>
+        <clipPath id='ID000004'>
+            <rect class='otherClass'
+                  height='106.000'
+                  width='826.000'
+                  x='0.000'
+                  y='0.000'/>
+        </clipPath>
+        <symbol id='org.tquadrat.foundation.config.ap.impl.CodeBuilder'>
+            <g>
+                <g clip-path='url(#ID000004)'>
+                    <rect x='0.000'
+                          y='0.000'
+                          width='826.000'
+                          height='106.000'
+                          class='otherClass'/>
+                    <line x1='0.000'
+                          y1='28.000'
+                          x2='826.000'
+                          y2='28.000'
+                          class='separator'/>
+                    <text x='386.600'
+                          y='13.000'
+                          class='stereotype'>&#xAB;Interface&#xBB;</text>
+                    <text x='380.000'
+                          y='24.000'
+                          class='abstract'>CodeBuilder</text>
+                    <line x1='0.000'
+                          y1='45.000'
+                          x2='826.000'
+                          y2='45.000'
+                          class='separator'/>
+                    <text x='5.000'
+                          y='41.000'/>
+                    <text x='5.000'
+                          y='58.000'
+                          class='abstract'>+ build():void</text>
+                    <text x='5.000'
+                          y='69.000'
+                          class='abstract'>+ getComposer():org.tquadrat.foundation.javacomposer.JavaComposer</text>
+                    <text x='5.000'
+                          y='80.000'
+                          class='abstract'>+ getConfiguration():org.tquadrat.foundation.config.ap.CodeGenerationConfiguration</text>
+                    <text x='5.000'
+                          y='91.000'
+                          class='abstract'>+ getField(reference:org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField):org.tquadrat.foundation.javacomposer.FieldSpec</text>
+                    <text x='5.000'
+                          y='102.000'
+                          class='abstract'>+ getMethod(reference:org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardMethod):org.tquadrat.foundation.javacomposer.MethodSpec</text>
+                </g>
+            </g>
+        </symbol>
+    </defs>
+    <path class='inheritance'
+          d='M693.000,811.000 L693.000,711.000'
+          marker-end='url(#inheritance)'/>
+    <path class='inheritance'
+          d='M668.000,297.000 c0.000,-85.000,-521.000,0.000,-521.000,-85.000 v-15'
+          marker-end='url(#inheritance)'/>
+    <path class='implementation'
+          d='M718.000,297.000 c0.000,-151.000,14.000,0.000,14.000,-151.000 v-15'
+          marker-end='url(#implementation)'/>
+    <use x='25.000'
+         y='25.000'
+         xlink:href='#java.lang.Object'/>
+    <use x='319.000'
+         y='25.000'
+         xlink:href='#org.tquadrat.foundation.config.ap.impl.CodeBuilder'/>
+    <use x='25.000'
+         y='297.000'
+         xlink:href='#org.tquadrat.foundation.config.ap.impl.codebuilders.CodeBuilderBase'/>
+    <use x='394.000'
+         y='811.000'
+         xlink:href='#org.tquadrat.foundation.config.ap.impl.codebuilders.INIBeanBuilder'/>
+</svg>
