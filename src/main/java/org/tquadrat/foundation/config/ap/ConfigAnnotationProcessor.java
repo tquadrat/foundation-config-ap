@@ -161,6 +161,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  The name for
      *  {@link org.tquadrat.foundation.config.ConfigBeanSpec#getResourceBundle()}: {@value}.
      */
+    @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
     public static final String METHODNAME_ConfigBeanSpec_GetResourceBundle = "getResourceBundle";
 
     /**
@@ -206,18 +207,21 @@ public class ConfigAnnotationProcessor extends APBase
      *  The message that indicates that a property was specified twice:
      *  {@value}.
      */
+    @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
     public static final String MSG_DuplicateProperty = "Duplicate property: %1$s";
 
     /**
      *  The message that indicates that an option name was used twice:
      *  {@value}.
      */
+    @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
     public static final String MSG_DuplicateOptionName = "Option name '%s' for property '%s' is already used";
 
     /**
      *  The message that indicates a missing default getter for the message
      *  prefix: {@value}.
      */
+    @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
     public static final String MSG_GetterMustBeDEFAULT = "The getter for the message prefix must be defined as default";
 
     /**
@@ -242,6 +246,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  The message that indicates that an invalid implementation for an
      *  interface was use: {@value}.
      */
+    @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
     public static final String MSG_IllegalImplementation = "Illegal implementation for '%1$s': %1$2";
 
     /**
@@ -255,6 +260,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  {@link INIValue#group()}
      *  was not properly populated: {@value}.
      */
+    @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
     public static final String MSG_INIGroupMissing = "The group for @INIValue on '%s' is missing";
 
     /**
@@ -262,6 +268,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  {@link INIValue#key()}
      *  was not properly populated: {@value}.
      */
+    @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
     public static final String MSG_INIKeyMissing = "The key for @INIValue on '%s' is missing";
 
     /**
@@ -280,12 +287,14 @@ public class ConfigAnnotationProcessor extends APBase
     /**
      *  The message that indicates that a CLI property is invalid: {@value}.
      */
+    @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
     public static final String MSG_InvalidCLIType = "Property '%s' is neither argument nor option";
 
     /**
      *  The message that indicates a missing environment variable name for a
      *  property: {@value}.
      */
+    @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
     public static final String MSG_MissingEnvironmentVar = "The name of the environment variable is missing for property '%1$s'";
 
     /**
@@ -299,13 +308,14 @@ public class ConfigAnnotationProcessor extends APBase
      *  {@link org.tquadrat.foundation.config.ConfigBeanSpec}:
      *  {@value}.
      */
+    @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
     public static final String MSG_MissingInterface = "The configuration bean specification '%1$s' does not extend '%2$s'";
 
     /**
      *  The message that indicates a missing definition for a property:
      *  {@value}.
      */
-    public static final String MSG_MissingPropertyDefinition = "There is neither a getter or a setter method for the property '%1$s', first introduced by the 'add' method '%2$s'";
+    public static final String MSG_MissingPropertyDefinition = "There is neither a getter nor a setter method for the property '%1$s', first introduced by the 'add' method '%2$s'";
 
     /**
      *  The message that indicates a missing
@@ -325,12 +335,14 @@ public class ConfigAnnotationProcessor extends APBase
      *  The message that indicates a missing system property name for a
      *  property: {@value}.
      */
+    @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
     public static final String MSG_MissingSystemProp = "The name of the system property is missing for property '%1$s'";
 
     /**
      *  The message that indicates a missing argument index for a CLI argument
      *  property: {@value}.
      */
+    @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
     public static final String MSG_NoArgumentIndex = "No argument index for property '%s'";
 
     /**
@@ -352,6 +364,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  The message that indicates a missing property name for a CLI option
      *  property: {@value}.
      */
+    @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
     public static final String MSG_NoOptionName = "No option name for property '%s'";
 
     /**
@@ -374,7 +387,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  The message that indicates invalid &quot;preferences&quot;
      *  configuration for a property: {@value}.
      */
-    public static final String MSG_PreferencesNotConfigured = "The preferences configuration for '%1$s' is invalid";
+    public static final String MSG_PreferencesNotConfigured = "The 'preferences' configuration for '%1$s' is invalid";
 
     /**
      *  The message that indicates that no {@code Preferences} key is given for
@@ -388,6 +401,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  {@link org.tquadrat.foundation.config.ConfigBeanSpec#getResourceBundle()}:
      *  {@value}.
      */
+    @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
     public static final String MSG_ResourceBundleWrongReturnType = "The return type of getResourceBundle() must be Optional(ResourceBundle)";
 
     /**
@@ -397,6 +411,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  @see    org.tquadrat.foundation.config.SessionBeanSpec#getSessionKey()
      *  @see    SpecialPropertyType#CONFIG_PROPERTY_SESSION
      */
+    @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
     public static final String MSG_SessionPropertyMissing = "Session property was not defined";
 
     /**
@@ -418,6 +433,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  {@link org.tquadrat.foundation.lang.StringConverter}
      *  is invalid for the property type.
      */
+    @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
     public static final String MSG_StringConverterNotCompatible = "StringConverter '%2$s' cannot handle '%1$s'";
 
     /**
@@ -765,7 +781,6 @@ public class ConfigAnnotationProcessor extends APBase
              * required that we already have a property specification for this
              * property.
              */
-            @SuppressWarnings( "CastToConcreteClass" )
             final var property = (PropertySpecImpl) configuration.getProperty( propertyName )
                 .orElseThrow( () -> new org.tquadrat.foundation.ap.CodeGenerationError( format( MSG_MissingPropertyDefinition, propertyName, addMethodName ) ) );
 

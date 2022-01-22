@@ -71,7 +71,7 @@ import org.tquadrat.foundation.util.stringconverter.EnumStringConverter;
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods", "OverlyCoupledClass"} )
+@SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods"} )
 @ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 946 2021-12-23 14:48:19Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class CodeGenerationConfiguration
@@ -109,7 +109,7 @@ public final class CodeGenerationConfiguration
      * {@link JavaComposer}
      * instance that is used for the code generation.
      */
-    @SuppressWarnings( "InstanceVariableOfConcreteClass" )
+    @SuppressWarnings( "UseOfConcreteClass" )
     private final JavaComposer m_Composer;
 
     /**
@@ -297,9 +297,9 @@ public final class CodeGenerationConfiguration
      *  @param  property    The property
      *  @throws CodeGenerationError There is a duplicate property.
      */
-    @SuppressWarnings( "InstanceofConcreteClass" )
     public final void addProperty( final PropertySpec property ) throws CodeGenerationError
     {
+        //noinspection UseOfConcreteClass
         if( requireNonNullArgument( property, "property" ) instanceof PropertySpecImpl propertyImpl )
         {
             final var propertyName = propertyImpl.getPropertyName();

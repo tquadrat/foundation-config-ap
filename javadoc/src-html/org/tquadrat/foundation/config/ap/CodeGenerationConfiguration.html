@@ -84,7 +84,7 @@
 <span class="source-line-no">071</span><span id="line-71"> *  @UMLGraph.link</span>
 <span class="source-line-no">072</span><span id="line-72"> *  @since 0.1.0</span>
 <span class="source-line-no">073</span><span id="line-73"> */</span>
-<span class="source-line-no">074</span><span id="line-74">@SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods", "OverlyCoupledClass"} )</span>
+<span class="source-line-no">074</span><span id="line-74">@SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods"} )</span>
 <span class="source-line-no">075</span><span id="line-75">@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 946 2021-12-23 14:48:19Z tquadrat $" )</span>
 <span class="source-line-no">076</span><span id="line-76">@API( status = MAINTAINED, since = "0.1.0" )</span>
 <span class="source-line-no">077</span><span id="line-77">public final class CodeGenerationConfiguration</span>
@@ -122,7 +122,7 @@
 <span class="source-line-no">109</span><span id="line-109">     * {@link JavaComposer}</span>
 <span class="source-line-no">110</span><span id="line-110">     * instance that is used for the code generation.</span>
 <span class="source-line-no">111</span><span id="line-111">     */</span>
-<span class="source-line-no">112</span><span id="line-112">    @SuppressWarnings( "InstanceVariableOfConcreteClass" )</span>
+<span class="source-line-no">112</span><span id="line-112">    @SuppressWarnings( "UseOfConcreteClass" )</span>
 <span class="source-line-no">113</span><span id="line-113">    private final JavaComposer m_Composer;</span>
 <span class="source-line-no">114</span><span id="line-114"></span>
 <span class="source-line-no">115</span><span id="line-115">    /**</span>
@@ -310,9 +310,9 @@
 <span class="source-line-no">297</span><span id="line-297">     *  @param  property    The property</span>
 <span class="source-line-no">298</span><span id="line-298">     *  @throws CodeGenerationError There is a duplicate property.</span>
 <span class="source-line-no">299</span><span id="line-299">     */</span>
-<span class="source-line-no">300</span><span id="line-300">    @SuppressWarnings( "InstanceofConcreteClass" )</span>
-<span class="source-line-no">301</span><span id="line-301">    public final void addProperty( final PropertySpec property ) throws CodeGenerationError</span>
-<span class="source-line-no">302</span><span id="line-302">    {</span>
+<span class="source-line-no">300</span><span id="line-300">    public final void addProperty( final PropertySpec property ) throws CodeGenerationError</span>
+<span class="source-line-no">301</span><span id="line-301">    {</span>
+<span class="source-line-no">302</span><span id="line-302">        //noinspection UseOfConcreteClass</span>
 <span class="source-line-no">303</span><span id="line-303">        if( requireNonNullArgument( property, "property" ) instanceof PropertySpecImpl propertyImpl )</span>
 <span class="source-line-no">304</span><span id="line-304">        {</span>
 <span class="source-line-no">305</span><span id="line-305">            final var propertyName = propertyImpl.getPropertyName();</span>
