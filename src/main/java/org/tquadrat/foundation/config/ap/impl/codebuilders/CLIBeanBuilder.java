@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2021 by Thomas Thrien.
+ *  Copyright © 2002-2022 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -76,12 +76,12 @@ import org.tquadrat.foundation.javacomposer.WildcardTypeName;
  *  {@link org.tquadrat.foundation.config.CLIBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CLIBeanBuilder.java 943 2021-12-21 01:34:32Z tquadrat $
+ *  @version $Id: CLIBeanBuilder.java 998 2022-01-26 15:50:18Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: CLIBeanBuilder.java 943 2021-12-21 01:34:32Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CLIBeanBuilder.java 998 2022-01-26 15:50:18Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class CLIBeanBuilder extends CodeBuilderBase
 {
@@ -323,22 +323,31 @@ public final class CLIBeanBuilder extends CodeBuilderBase
      */
     private final void createParseCommandLine( final FieldSpec registry, final FieldSpec errorMsgHolder )
     {
-
         final TypeName typeName = ArrayTypeName.of( String.class );
         final var arg = getComposer().parameterBuilder( typeName, "args", FINAL )
             .build();
-        final var method = getComposer().methodBuilder( "parseCommandLine" )
+        final var methodBuilder = getComposer().methodBuilder( "parseCommandLine" )
             .addModifiers( PUBLIC, FINAL )
             .addAnnotation( Override.class )
             .addParameter( arg )
             .returns( BOOLEAN )
             .addJavadoc( getComposer().createInheritDocComment() )
-            .addStatement( "var retValue = true" )
-            .beginControlFlow(
-               """
+            .addStatement( "var retValue = true" );
+        if( isSynchronized() )
+        {
+            methodBuilder.beginControlFlow(
+            """
                 try( final var ignored = $N.lock() )
-                """, getField( STD_FIELD_WriteLock ) )
-            .addStatement( "$T.parseCommandLine( $N, $N )", ConfigUtil.class, registry, arg )
+                """, getField( STD_FIELD_WriteLock ) );
+        }
+        else
+        {
+            methodBuilder.beginControlFlow(
+            """
+                try
+                """ );
+        }
+        methodBuilder.addStatement( "$T.parseCommandLine( $N, $N )", ConfigUtil.class, registry, arg )
             .addStatement( "$N = null", errorMsgHolder )
             .nextControlFlow(
                 """
@@ -350,6 +359,9 @@ public final class CLIBeanBuilder extends CodeBuilderBase
             .endControlFlow()
             .addCode( getComposer().createReturnStatement() )
             .build();
+
+        final var method =methodBuilder.build();
+
         addMethod( method );
     }   //  createParseCommandLine()
 

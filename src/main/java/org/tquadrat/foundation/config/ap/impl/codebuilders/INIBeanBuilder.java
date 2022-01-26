@@ -62,12 +62,12 @@ import org.tquadrat.foundation.util.stringconverter.PathStringConverter;
  *  {@link org.tquadrat.foundation.config.INIBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: INIBeanBuilder.java 947 2021-12-23 21:44:25Z tquadrat $
+ *  @version $Id: INIBeanBuilder.java 998 2022-01-26 15:50:18Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: INIBeanBuilder.java 947 2021-12-23 21:44:25Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: INIBeanBuilder.java 998 2022-01-26 15:50:18Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class INIBeanBuilder extends CodeBuilderBase
 {
@@ -258,11 +258,22 @@ public final class INIBeanBuilder extends CodeBuilderBase
         addMethod( method );
 
         //---* The builder for the code of the loadINIFile() method *----------
-        final var loadCodeBuilder = getComposer().codeBlockBuilder()
-            .beginControlFlow( """
+        final var loadCodeBuilder = getComposer().codeBlockBuilder();
+        if( isSynchronized() )
+        {
+            loadCodeBuilder.beginControlFlow(
+                """
                 try( final var ignore = $N.lock() )
-                """, getField( STD_FIELD_WriteLock ) )
-            .addStatement( "$N.refresh()", iniFile )
+                """, getField( STD_FIELD_WriteLock ) );
+        }
+        else
+        {
+            loadCodeBuilder.beginControlFlow(
+                """
+                try
+                """ );
+        }
+        loadCodeBuilder.addStatement( "$N.refresh()", iniFile )
             .add(
                 """
                 
@@ -273,17 +284,28 @@ public final class INIBeanBuilder extends CodeBuilderBase
             );
 
         //---* The builder for the code of the updateINIFile() method *--------
-        final var updateCodeBuilder = getComposer().codeBlockBuilder()
-            .beginControlFlow( """
+        final var updateCodeBuilder = getComposer().codeBlockBuilder();
+        if( isSynchronized() )
+        {
+            updateCodeBuilder.beginControlFlow(
+                """
                 try( final var ignore = $N.lock() )
-                """, getField( STD_FIELD_ReadLock ) )
-            .add(
+                """, getField( STD_FIELD_ReadLock ) );
+        }
+        else
+        {
+            updateCodeBuilder.beginControlFlow(
                 """
-                /*
-                 * Write the data.
-                 */
-                """
-            );
+                try
+                """ );
+        }
+        updateCodeBuilder.add(
+            """
+            /*
+             * Write the data.
+             */
+            """
+        );
 
         //---* Process the properties *----------------------------------------
         PropertiesLoop:

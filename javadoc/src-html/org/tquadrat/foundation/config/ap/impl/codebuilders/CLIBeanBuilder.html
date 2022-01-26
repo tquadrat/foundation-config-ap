@@ -13,7 +13,7 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">/*</span>
 <span class="source-line-no">002</span><span id="line-2"> * ============================================================================</span>
-<span class="source-line-no">003</span><span id="line-3"> *  Copyright © 2002-2021 by Thomas Thrien.</span>
+<span class="source-line-no">003</span><span id="line-3"> *  Copyright © 2002-2022 by Thomas Thrien.</span>
 <span class="source-line-no">004</span><span id="line-4"> *  All Rights Reserved.</span>
 <span class="source-line-no">005</span><span id="line-5"> * ============================================================================</span>
 <span class="source-line-no">006</span><span id="line-6"> *  Licensed to the public under the agreements of the GNU Lesser General Public</span>
@@ -89,12 +89,12 @@
 <span class="source-line-no">076</span><span id="line-76"> *  {@link org.tquadrat.foundation.config.CLIBeanSpec}.</span>
 <span class="source-line-no">077</span><span id="line-77"> *</span>
 <span class="source-line-no">078</span><span id="line-78"> *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org</span>
-<span class="source-line-no">079</span><span id="line-79"> *  @version $Id: CLIBeanBuilder.java 943 2021-12-21 01:34:32Z tquadrat $</span>
+<span class="source-line-no">079</span><span id="line-79"> *  @version $Id: CLIBeanBuilder.java 998 2022-01-26 15:50:18Z tquadrat $</span>
 <span class="source-line-no">080</span><span id="line-80"> *  @UMLGraph.link</span>
 <span class="source-line-no">081</span><span id="line-81"> *  @since 0.1.0</span>
 <span class="source-line-no">082</span><span id="line-82"> */</span>
 <span class="source-line-no">083</span><span id="line-83">@SuppressWarnings( "OverlyCoupledClass" )</span>
-<span class="source-line-no">084</span><span id="line-84">@ClassVersion( sourceVersion = "$Id: CLIBeanBuilder.java 943 2021-12-21 01:34:32Z tquadrat $" )</span>
+<span class="source-line-no">084</span><span id="line-84">@ClassVersion( sourceVersion = "$Id: CLIBeanBuilder.java 998 2022-01-26 15:50:18Z tquadrat $" )</span>
 <span class="source-line-no">085</span><span id="line-85">@API( status = MAINTAINED, since = "0.1.0" )</span>
 <span class="source-line-no">086</span><span id="line-86">public final class CLIBeanBuilder extends CodeBuilderBase</span>
 <span class="source-line-no">087</span><span id="line-87">{</span>
@@ -336,115 +336,127 @@
 <span class="source-line-no">323</span><span id="line-323">     */</span>
 <span class="source-line-no">324</span><span id="line-324">    private final void createParseCommandLine( final FieldSpec registry, final FieldSpec errorMsgHolder )</span>
 <span class="source-line-no">325</span><span id="line-325">    {</span>
-<span class="source-line-no">326</span><span id="line-326"></span>
-<span class="source-line-no">327</span><span id="line-327">        final TypeName typeName = ArrayTypeName.of( String.class );</span>
-<span class="source-line-no">328</span><span id="line-328">        final var arg = getComposer().parameterBuilder( typeName, "args", FINAL )</span>
-<span class="source-line-no">329</span><span id="line-329">            .build();</span>
-<span class="source-line-no">330</span><span id="line-330">        final var method = getComposer().methodBuilder( "parseCommandLine" )</span>
-<span class="source-line-no">331</span><span id="line-331">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">332</span><span id="line-332">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">333</span><span id="line-333">            .addParameter( arg )</span>
-<span class="source-line-no">334</span><span id="line-334">            .returns( BOOLEAN )</span>
-<span class="source-line-no">335</span><span id="line-335">            .addJavadoc( getComposer().createInheritDocComment() )</span>
-<span class="source-line-no">336</span><span id="line-336">            .addStatement( "var retValue = true" )</span>
-<span class="source-line-no">337</span><span id="line-337">            .beginControlFlow(</span>
-<span class="source-line-no">338</span><span id="line-338">               """</span>
-<span class="source-line-no">339</span><span id="line-339">                try( final var ignored = $N.lock() )</span>
-<span class="source-line-no">340</span><span id="line-340">                """, getField( STD_FIELD_WriteLock ) )</span>
-<span class="source-line-no">341</span><span id="line-341">            .addStatement( "$T.parseCommandLine( $N, $N )", ConfigUtil.class, registry, arg )</span>
-<span class="source-line-no">342</span><span id="line-342">            .addStatement( "$N = null", errorMsgHolder )</span>
-<span class="source-line-no">343</span><span id="line-343">            .nextControlFlow(</span>
-<span class="source-line-no">344</span><span id="line-344">                """</span>
-<span class="source-line-no">345</span><span id="line-345"></span>
-<span class="source-line-no">346</span><span id="line-346">                catch( final $T e )</span>
-<span class="source-line-no">347</span><span id="line-347">                """, CmdLineException.class )</span>
-<span class="source-line-no">348</span><span id="line-348">            .addStatement( "$N = e.getLocalizedMessage()", errorMsgHolder )</span>
-<span class="source-line-no">349</span><span id="line-349">            .addStatement( "retValue = false" )</span>
-<span class="source-line-no">350</span><span id="line-350">            .endControlFlow()</span>
-<span class="source-line-no">351</span><span id="line-351">            .addCode( getComposer().createReturnStatement() )</span>
-<span class="source-line-no">352</span><span id="line-352">            .build();</span>
-<span class="source-line-no">353</span><span id="line-353">        addMethod( method );</span>
-<span class="source-line-no">354</span><span id="line-354">    }   //  createParseCommandLine()</span>
-<span class="source-line-no">355</span><span id="line-355"></span>
-<span class="source-line-no">356</span><span id="line-356">    /**</span>
-<span class="source-line-no">357</span><span id="line-357">     *  Creates the implementation for the method</span>
-<span class="source-line-no">358</span><span id="line-358">     *  {@link org.tquadrat.foundation.config.CLIBeanSpec#printUsage(OutputStream, CharSequence)}.</span>
-<span class="source-line-no">359</span><span id="line-359">     *</span>
-<span class="source-line-no">360</span><span id="line-360">     *  @param  registry    The registry of the properties that are exposed for</span>
-<span class="source-line-no">361</span><span id="line-361">     *      the CLI.</span>
-<span class="source-line-no">362</span><span id="line-362">     */</span>
-<span class="source-line-no">363</span><span id="line-363">    private final void createPrintUsage( final FieldSpec registry )</span>
-<span class="source-line-no">364</span><span id="line-364">    {</span>
-<span class="source-line-no">365</span><span id="line-365">        final var arg0 = getComposer().parameterBuilder( OutputStream.class, "outputStream", FINAL )</span>
-<span class="source-line-no">366</span><span id="line-366">            .build();</span>
-<span class="source-line-no">367</span><span id="line-367">        final var arg1 = getComposer().parameterBuilder( CharSequence.class, "command", FINAL )</span>
-<span class="source-line-no">368</span><span id="line-368">            .build();</span>
-<span class="source-line-no">369</span><span id="line-369">        final var method = getComposer().methodBuilder( "printUsage" )</span>
-<span class="source-line-no">370</span><span id="line-370">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">371</span><span id="line-371">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">372</span><span id="line-372">            .addParameter( arg0 )</span>
-<span class="source-line-no">373</span><span id="line-373">            .addParameter( arg1 )</span>
-<span class="source-line-no">374</span><span id="line-374">            .returns( VOID )</span>
-<span class="source-line-no">375</span><span id="line-375">            .addException( IOException.class )</span>
-<span class="source-line-no">376</span><span id="line-376">            .addJavadoc( getComposer().createInheritDocComment() )</span>
-<span class="source-line-no">377</span><span id="line-377">            .addStatement( "$T.printUsage( $N, $N(), $N, $N )", ConfigUtil.class, arg0, getMethod( STD_METHOD_GetRessourceBundle ), arg1, registry )</span>
+<span class="source-line-no">326</span><span id="line-326">        final TypeName typeName = ArrayTypeName.of( String.class );</span>
+<span class="source-line-no">327</span><span id="line-327">        final var arg = getComposer().parameterBuilder( typeName, "args", FINAL )</span>
+<span class="source-line-no">328</span><span id="line-328">            .build();</span>
+<span class="source-line-no">329</span><span id="line-329">        final var methodBuilder = getComposer().methodBuilder( "parseCommandLine" )</span>
+<span class="source-line-no">330</span><span id="line-330">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">331</span><span id="line-331">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">332</span><span id="line-332">            .addParameter( arg )</span>
+<span class="source-line-no">333</span><span id="line-333">            .returns( BOOLEAN )</span>
+<span class="source-line-no">334</span><span id="line-334">            .addJavadoc( getComposer().createInheritDocComment() )</span>
+<span class="source-line-no">335</span><span id="line-335">            .addStatement( "var retValue = true" );</span>
+<span class="source-line-no">336</span><span id="line-336">        if( isSynchronized() )</span>
+<span class="source-line-no">337</span><span id="line-337">        {</span>
+<span class="source-line-no">338</span><span id="line-338">            methodBuilder.beginControlFlow(</span>
+<span class="source-line-no">339</span><span id="line-339">            """</span>
+<span class="source-line-no">340</span><span id="line-340">                try( final var ignored = $N.lock() )</span>
+<span class="source-line-no">341</span><span id="line-341">                """, getField( STD_FIELD_WriteLock ) );</span>
+<span class="source-line-no">342</span><span id="line-342">        }</span>
+<span class="source-line-no">343</span><span id="line-343">        else</span>
+<span class="source-line-no">344</span><span id="line-344">        {</span>
+<span class="source-line-no">345</span><span id="line-345">            methodBuilder.beginControlFlow(</span>
+<span class="source-line-no">346</span><span id="line-346">            """</span>
+<span class="source-line-no">347</span><span id="line-347">                try</span>
+<span class="source-line-no">348</span><span id="line-348">                """ );</span>
+<span class="source-line-no">349</span><span id="line-349">        }</span>
+<span class="source-line-no">350</span><span id="line-350">        methodBuilder.addStatement( "$T.parseCommandLine( $N, $N )", ConfigUtil.class, registry, arg )</span>
+<span class="source-line-no">351</span><span id="line-351">            .addStatement( "$N = null", errorMsgHolder )</span>
+<span class="source-line-no">352</span><span id="line-352">            .nextControlFlow(</span>
+<span class="source-line-no">353</span><span id="line-353">                """</span>
+<span class="source-line-no">354</span><span id="line-354"></span>
+<span class="source-line-no">355</span><span id="line-355">                catch( final $T e )</span>
+<span class="source-line-no">356</span><span id="line-356">                """, CmdLineException.class )</span>
+<span class="source-line-no">357</span><span id="line-357">            .addStatement( "$N = e.getLocalizedMessage()", errorMsgHolder )</span>
+<span class="source-line-no">358</span><span id="line-358">            .addStatement( "retValue = false" )</span>
+<span class="source-line-no">359</span><span id="line-359">            .endControlFlow()</span>
+<span class="source-line-no">360</span><span id="line-360">            .addCode( getComposer().createReturnStatement() )</span>
+<span class="source-line-no">361</span><span id="line-361">            .build();</span>
+<span class="source-line-no">362</span><span id="line-362"></span>
+<span class="source-line-no">363</span><span id="line-363">        final var method =methodBuilder.build();</span>
+<span class="source-line-no">364</span><span id="line-364"></span>
+<span class="source-line-no">365</span><span id="line-365">        addMethod( method );</span>
+<span class="source-line-no">366</span><span id="line-366">    }   //  createParseCommandLine()</span>
+<span class="source-line-no">367</span><span id="line-367"></span>
+<span class="source-line-no">368</span><span id="line-368">    /**</span>
+<span class="source-line-no">369</span><span id="line-369">     *  Creates the implementation for the method</span>
+<span class="source-line-no">370</span><span id="line-370">     *  {@link org.tquadrat.foundation.config.CLIBeanSpec#printUsage(OutputStream, CharSequence)}.</span>
+<span class="source-line-no">371</span><span id="line-371">     *</span>
+<span class="source-line-no">372</span><span id="line-372">     *  @param  registry    The registry of the properties that are exposed for</span>
+<span class="source-line-no">373</span><span id="line-373">     *      the CLI.</span>
+<span class="source-line-no">374</span><span id="line-374">     */</span>
+<span class="source-line-no">375</span><span id="line-375">    private final void createPrintUsage( final FieldSpec registry )</span>
+<span class="source-line-no">376</span><span id="line-376">    {</span>
+<span class="source-line-no">377</span><span id="line-377">        final var arg0 = getComposer().parameterBuilder( OutputStream.class, "outputStream", FINAL )</span>
 <span class="source-line-no">378</span><span id="line-378">            .build();</span>
-<span class="source-line-no">379</span><span id="line-379">        addMethod( method );</span>
-<span class="source-line-no">380</span><span id="line-380">    }   //  createPrintUsage()</span>
-<span class="source-line-no">381</span><span id="line-381"></span>
-<span class="source-line-no">382</span><span id="line-382">    /**</span>
-<span class="source-line-no">383</span><span id="line-383">     *  Creates the implementation for the method</span>
-<span class="source-line-no">384</span><span id="line-384">     *  {@link org.tquadrat.foundation.config.CLIBeanSpec#retrieveParseErrorMessage()}.</span>
-<span class="source-line-no">385</span><span id="line-385">     *</span>
-<span class="source-line-no">386</span><span id="line-386">     *  @param  errorMsgHolder  The field for the parse errors.</span>
-<span class="source-line-no">387</span><span id="line-387">     */</span>
-<span class="source-line-no">388</span><span id="line-388">    private final void createRetrieveParseErrorMessage( final FieldSpec errorMsgHolder )</span>
-<span class="source-line-no">389</span><span id="line-389">    {</span>
-<span class="source-line-no">390</span><span id="line-390">        final var typeName = ParameterizedTypeName.from( Optional.class, String.class );</span>
-<span class="source-line-no">391</span><span id="line-391">        final var method = getComposer().methodBuilder( "retrieveParseErrorMessage" )</span>
-<span class="source-line-no">392</span><span id="line-392">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">393</span><span id="line-393">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">394</span><span id="line-394">            .returns( typeName )</span>
-<span class="source-line-no">395</span><span id="line-395">            .addJavadoc( getComposer().createInheritDocComment() )</span>
-<span class="source-line-no">396</span><span id="line-396">            .addStatement( "return $T.ofNullable( $N )", Optional.class, errorMsgHolder )</span>
-<span class="source-line-no">397</span><span id="line-397">            .build();</span>
-<span class="source-line-no">398</span><span id="line-398">        addMethod( method );</span>
-<span class="source-line-no">399</span><span id="line-399">    }   //  createRetrieveParseErrorMessage()</span>
-<span class="source-line-no">400</span><span id="line-400"></span>
-<span class="source-line-no">401</span><span id="line-401">    /**</span>
-<span class="source-line-no">402</span><span id="line-402">     *  &lt;p&gt;{@summary Retrieves the class for the value handler for the given</span>
-<span class="source-line-no">403</span><span id="line-403">     *  property.} If returning</span>
-<span class="source-line-no">404</span><span id="line-404">     *  {@link Optional#empty()} empty},</span>
-<span class="source-line-no">405</span><span id="line-405">     *  an instance of</span>
-<span class="source-line-no">406</span><span id="line-406">     *  {@link SimpleCmdLineValueHandler}</span>
-<span class="source-line-no">407</span><span id="line-407">     *  must be used that will be instantiated with the</span>
-<span class="source-line-no">408</span><span id="line-408">     *  {@link org.tquadrat.foundation.lang.StringConverter}</span>
-<span class="source-line-no">409</span><span id="line-409">     *  retrieved by a call to</span>
-<span class="source-line-no">410</span><span id="line-410">     *  {@link PropertySpec#getStringConverterClass()}.&lt;/p&gt;</span>
-<span class="source-line-no">411</span><span id="line-411">     *</span>
-<span class="source-line-no">412</span><span id="line-412">     *  @param  property    The property.</span>
-<span class="source-line-no">413</span><span id="line-413">     *  @return An instance of</span>
-<span class="source-line-no">414</span><span id="line-414">     *      {@link Optional}</span>
-<span class="source-line-no">415</span><span id="line-415">     *      that holds the respective type name.</span>
-<span class="source-line-no">416</span><span id="line-416">     */</span>
-<span class="source-line-no">417</span><span id="line-417">    private final Optional&lt;TypeName&gt; retrieveValueHandlerClass( final PropertySpec property )</span>
-<span class="source-line-no">418</span><span id="line-418">    {</span>
-<span class="source-line-no">419</span><span id="line-419">        var retValue = property.getCLIValueHandlerClass();</span>
-<span class="source-line-no">420</span><span id="line-420">        if( retValue.isEmpty() )</span>
-<span class="source-line-no">421</span><span id="line-421">        {</span>
-<span class="source-line-no">422</span><span id="line-422">            final var c = m_HandlerClasses.get( property.getPropertyType().toString() );</span>
-<span class="source-line-no">423</span><span id="line-423">            if( nonNull( c ) ) retValue = Optional.of( TypeName.from( c ) );</span>
-<span class="source-line-no">424</span><span id="line-424">        }</span>
-<span class="source-line-no">425</span><span id="line-425"></span>
-<span class="source-line-no">426</span><span id="line-426">        //---* Done *----------------------------------------------------------</span>
-<span class="source-line-no">427</span><span id="line-427">        return retValue;</span>
-<span class="source-line-no">428</span><span id="line-428">    }   //  retrieveValueHandlerClass()</span>
-<span class="source-line-no">429</span><span id="line-429">}</span>
-<span class="source-line-no">430</span><span id="line-430">//  class CLIBeanBuilder</span>
-<span class="source-line-no">431</span><span id="line-431"></span>
-<span class="source-line-no">432</span><span id="line-432">/*</span>
-<span class="source-line-no">433</span><span id="line-433"> *  End of File</span>
-<span class="source-line-no">434</span><span id="line-434"> */</span>
+<span class="source-line-no">379</span><span id="line-379">        final var arg1 = getComposer().parameterBuilder( CharSequence.class, "command", FINAL )</span>
+<span class="source-line-no">380</span><span id="line-380">            .build();</span>
+<span class="source-line-no">381</span><span id="line-381">        final var method = getComposer().methodBuilder( "printUsage" )</span>
+<span class="source-line-no">382</span><span id="line-382">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">383</span><span id="line-383">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">384</span><span id="line-384">            .addParameter( arg0 )</span>
+<span class="source-line-no">385</span><span id="line-385">            .addParameter( arg1 )</span>
+<span class="source-line-no">386</span><span id="line-386">            .returns( VOID )</span>
+<span class="source-line-no">387</span><span id="line-387">            .addException( IOException.class )</span>
+<span class="source-line-no">388</span><span id="line-388">            .addJavadoc( getComposer().createInheritDocComment() )</span>
+<span class="source-line-no">389</span><span id="line-389">            .addStatement( "$T.printUsage( $N, $N(), $N, $N )", ConfigUtil.class, arg0, getMethod( STD_METHOD_GetRessourceBundle ), arg1, registry )</span>
+<span class="source-line-no">390</span><span id="line-390">            .build();</span>
+<span class="source-line-no">391</span><span id="line-391">        addMethod( method );</span>
+<span class="source-line-no">392</span><span id="line-392">    }   //  createPrintUsage()</span>
+<span class="source-line-no">393</span><span id="line-393"></span>
+<span class="source-line-no">394</span><span id="line-394">    /**</span>
+<span class="source-line-no">395</span><span id="line-395">     *  Creates the implementation for the method</span>
+<span class="source-line-no">396</span><span id="line-396">     *  {@link org.tquadrat.foundation.config.CLIBeanSpec#retrieveParseErrorMessage()}.</span>
+<span class="source-line-no">397</span><span id="line-397">     *</span>
+<span class="source-line-no">398</span><span id="line-398">     *  @param  errorMsgHolder  The field for the parse errors.</span>
+<span class="source-line-no">399</span><span id="line-399">     */</span>
+<span class="source-line-no">400</span><span id="line-400">    private final void createRetrieveParseErrorMessage( final FieldSpec errorMsgHolder )</span>
+<span class="source-line-no">401</span><span id="line-401">    {</span>
+<span class="source-line-no">402</span><span id="line-402">        final var typeName = ParameterizedTypeName.from( Optional.class, String.class );</span>
+<span class="source-line-no">403</span><span id="line-403">        final var method = getComposer().methodBuilder( "retrieveParseErrorMessage" )</span>
+<span class="source-line-no">404</span><span id="line-404">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">405</span><span id="line-405">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">406</span><span id="line-406">            .returns( typeName )</span>
+<span class="source-line-no">407</span><span id="line-407">            .addJavadoc( getComposer().createInheritDocComment() )</span>
+<span class="source-line-no">408</span><span id="line-408">            .addStatement( "return $T.ofNullable( $N )", Optional.class, errorMsgHolder )</span>
+<span class="source-line-no">409</span><span id="line-409">            .build();</span>
+<span class="source-line-no">410</span><span id="line-410">        addMethod( method );</span>
+<span class="source-line-no">411</span><span id="line-411">    }   //  createRetrieveParseErrorMessage()</span>
+<span class="source-line-no">412</span><span id="line-412"></span>
+<span class="source-line-no">413</span><span id="line-413">    /**</span>
+<span class="source-line-no">414</span><span id="line-414">     *  &lt;p&gt;{@summary Retrieves the class for the value handler for the given</span>
+<span class="source-line-no">415</span><span id="line-415">     *  property.} If returning</span>
+<span class="source-line-no">416</span><span id="line-416">     *  {@link Optional#empty()} empty},</span>
+<span class="source-line-no">417</span><span id="line-417">     *  an instance of</span>
+<span class="source-line-no">418</span><span id="line-418">     *  {@link SimpleCmdLineValueHandler}</span>
+<span class="source-line-no">419</span><span id="line-419">     *  must be used that will be instantiated with the</span>
+<span class="source-line-no">420</span><span id="line-420">     *  {@link org.tquadrat.foundation.lang.StringConverter}</span>
+<span class="source-line-no">421</span><span id="line-421">     *  retrieved by a call to</span>
+<span class="source-line-no">422</span><span id="line-422">     *  {@link PropertySpec#getStringConverterClass()}.&lt;/p&gt;</span>
+<span class="source-line-no">423</span><span id="line-423">     *</span>
+<span class="source-line-no">424</span><span id="line-424">     *  @param  property    The property.</span>
+<span class="source-line-no">425</span><span id="line-425">     *  @return An instance of</span>
+<span class="source-line-no">426</span><span id="line-426">     *      {@link Optional}</span>
+<span class="source-line-no">427</span><span id="line-427">     *      that holds the respective type name.</span>
+<span class="source-line-no">428</span><span id="line-428">     */</span>
+<span class="source-line-no">429</span><span id="line-429">    private final Optional&lt;TypeName&gt; retrieveValueHandlerClass( final PropertySpec property )</span>
+<span class="source-line-no">430</span><span id="line-430">    {</span>
+<span class="source-line-no">431</span><span id="line-431">        var retValue = property.getCLIValueHandlerClass();</span>
+<span class="source-line-no">432</span><span id="line-432">        if( retValue.isEmpty() )</span>
+<span class="source-line-no">433</span><span id="line-433">        {</span>
+<span class="source-line-no">434</span><span id="line-434">            final var c = m_HandlerClasses.get( property.getPropertyType().toString() );</span>
+<span class="source-line-no">435</span><span id="line-435">            if( nonNull( c ) ) retValue = Optional.of( TypeName.from( c ) );</span>
+<span class="source-line-no">436</span><span id="line-436">        }</span>
+<span class="source-line-no">437</span><span id="line-437"></span>
+<span class="source-line-no">438</span><span id="line-438">        //---* Done *----------------------------------------------------------</span>
+<span class="source-line-no">439</span><span id="line-439">        return retValue;</span>
+<span class="source-line-no">440</span><span id="line-440">    }   //  retrieveValueHandlerClass()</span>
+<span class="source-line-no">441</span><span id="line-441">}</span>
+<span class="source-line-no">442</span><span id="line-442">//  class CLIBeanBuilder</span>
+<span class="source-line-no">443</span><span id="line-443"></span>
+<span class="source-line-no">444</span><span id="line-444">/*</span>
+<span class="source-line-no">445</span><span id="line-445"> *  End of File</span>
+<span class="source-line-no">446</span><span id="line-446"> */</span>
 
 
 
