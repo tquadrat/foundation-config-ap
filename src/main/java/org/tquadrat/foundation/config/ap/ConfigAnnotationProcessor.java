@@ -46,6 +46,7 @@ import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER_IS_DEFAULT;
 import static org.tquadrat.foundation.config.internal.ClassRegistry.m_PrefsAccessorClasses;
 import static org.tquadrat.foundation.javacomposer.Layout.LAYOUT_FOUNDATION;
+import static org.tquadrat.foundation.lang.DebugOutput.ifDebug;
 import static org.tquadrat.foundation.lang.Objects.isNull;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
 import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
@@ -135,14 +136,14 @@ import org.tquadrat.foundation.util.stringconverter.PathStringConverter;
  *  The annotation processor for the {@code org.tquadrat.foundation.config}
  *  module.
  *
- *  @version $Id: ConfigAnnotationProcessor.java 946 2021-12-23 14:48:19Z tquadrat $
+ *  @version $Id: ConfigAnnotationProcessor.java 997 2022-01-26 14:55:05Z tquadrat $
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"OverlyCoupledClass", "OverlyComplexClass"} )
-@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 946 2021-12-23 14:48:19Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 997 2022-01-26 14:55:05Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @SupportedSourceVersion( SourceVersion.RELEASE_17 )
 @SupportedOptions( { APBase.ADD_DEBUG_OUTPUT, APBase.MAVEN_GOAL } )
@@ -244,7 +245,7 @@ public class ConfigAnnotationProcessor extends APBase
 
     /**
      *  The message that indicates that an invalid implementation for an
-     *  interface was use: {@value}.
+     *  interface was used: {@value}.
      */
     @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
     public static final String MSG_IllegalImplementation = "Illegal implementation for '%1$s': %1$2";
@@ -709,7 +710,8 @@ public class ConfigAnnotationProcessor extends APBase
     @Override
     protected final Collection<Class<? extends Annotation>> getSupportedAnnotationClasses()
     {
-        final Collection<Class<? extends Annotation>> retValue = List.of( ConfigurationBeanSpecification.class, MessagePrefix.class, BaseBundleName.class );
+        final Collection<Class<? extends Annotation>> retValue =
+            List.of( ConfigurationBeanSpecification.class );
 
         //---* Done *----------------------------------------------------------
         return retValue;
@@ -916,6 +918,13 @@ public class ConfigAnnotationProcessor extends APBase
         }
         var allowsPreferences = !isDefault;
 
+        //---* Determine the property type *-------------------------------
+        final var propertyType = determinePropertyType( getter );
+        checkAppropriate( propertyType );
+        property.setPropertyType( propertyType );
+        final var collectionKind = CollectionKind.determine( propertyType );
+        property.setCollectionKind( collectionKind );
+
         /*
          * Some properties are 'special', and that is reflected by the
          * annotation @SpecialProperty.
@@ -935,13 +944,6 @@ public class ConfigAnnotationProcessor extends APBase
             final var returnType = TypeName.from( getter.getReturnType() );
             checkAppropriate( returnType );
             property.setGetterReturnType( returnType );
-
-            //---* Determine the property type *-------------------------------
-            final var propertyType = determinePropertyType( getter );
-            checkAppropriate( propertyType );
-            property.setPropertyType( propertyType );
-            final var collectionKind = CollectionKind.determine( propertyType );
-            property.setCollectionKind( collectionKind );
 
             /*
              * Check whether the return type is Optional; only when the return
@@ -1030,8 +1032,8 @@ public class ConfigAnnotationProcessor extends APBase
                 }
 
                 /*
-                 * The property will be initialised from an environment
-                 * variable with the name given in the annotation.
+                 * The property will be initialised from a system preference
+                 * with the name given in the annotation.
                  */
                 property.setSystemPrefsPath( systemPrefsAnnotation.path() );
                 final var prefsKey = systemPrefsAnnotation.key();
@@ -1168,8 +1170,10 @@ public class ConfigAnnotationProcessor extends APBase
          */
         final PropertySpecImpl property;
         final TypeName propertyType;
+        ifDebug( "propertyName: %s"::formatted, propertyName );
         if( configuration.hasProperty( propertyName ) )
         {
+            ifDebug( "property '%s' exists already"::formatted, propertyName );
             try
             {
                 property = (PropertySpecImpl) configuration.getProperty( propertyName ).orElseThrow();
@@ -1178,9 +1182,14 @@ public class ConfigAnnotationProcessor extends APBase
             {
                 throw new UnexpectedExceptionError( e );
             }
-            propertyType = property.getPropertyType();
+            ifDebug( property.hasFlag( PROPERTY_IS_SPECIAL ), "property '%s' is special"::formatted, propertyName );
 
-            //---* The property type must match the setter argument type *-----
+            /*
+             *  The setter's argument type must match the property type, also
+             *  for special properties – even when this is checked elsewhere
+             *  again.
+             */
+            propertyType = property.getPropertyType();
             if( !propertyType.equals( TypeName.from( setter.getParameters().get( 0 ).asType() ) ) )
             {
                 throw new CodeGenerationError( format( MSG_TypeMismatch, TypeName.from( setter.getParameters().get( 0 ).asType() ).toString(), setterMethodName, propertyType.toString() ) );
@@ -1564,12 +1573,12 @@ public class ConfigAnnotationProcessor extends APBase
                  * Get the values for the i18n annotations and keep them.
                  */
                 //---* Get the message prefix *--------------------------------
-                m_MessagePrefix = retrieveAnnotatedField( annotations, roundEnvironment, MessagePrefix.class )
+                m_MessagePrefix = retrieveAnnotatedField( roundEnvironment, MessagePrefix.class )
                     .filter( variableElement -> variableElement.getModifiers().containsAll( Set.of( PUBLIC, STATIC ) ) )
                     .map( variableElement -> format( "%s.%s", variableElement.getEnclosingElement(), variableElement.getSimpleName() ) );
 
                 //---* Get the base bundle name *------------------------------
-                m_BaseBundleName = retrieveAnnotatedField( annotations, roundEnvironment, BaseBundleName.class )
+                m_BaseBundleName = retrieveAnnotatedField( roundEnvironment, BaseBundleName.class )
                     .filter( variableElement -> variableElement.getModifiers().containsAll( Set.of( PUBLIC, STATIC ) ) )
                     .map( variableElement -> format( "%s.%s", variableElement.getEnclosingElement(), variableElement.getSimpleName() ) );
 
@@ -1751,9 +1760,6 @@ public class ConfigAnnotationProcessor extends APBase
             configuration.setINIFileConfig( path, iniFileConfig.mustExist(), iniFileConfig.comment() );
             for( final var group : specification.getAnnotationsByType( INIGroup.class ) ) configuration.addINIGroup( group );
         }
-
-        //---* Retrieve the properties *---------------------------------------
-        retrieveProperties( configuration, interfaces );
 
         //---* Create the source code *----------------------------------------
         try

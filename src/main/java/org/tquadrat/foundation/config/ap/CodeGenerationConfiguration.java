@@ -17,23 +17,33 @@
 
 package org.tquadrat.foundation.config.ap;
 
+import static java.util.Collections.list;
+import static org.apiguardian.api.API.Status.INTERNAL;
 import static org.apiguardian.api.API.Status.MAINTAINED;
 import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_DuplicateProperty;
 import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_IllegalImplementation;
 import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_StringConverterNotCompatible;
+import static org.tquadrat.foundation.lang.DebugOutput.ifDebug;
 import static org.tquadrat.foundation.lang.Objects.isNull;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
 import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
 import static org.tquadrat.foundation.lang.Objects.requireNotEmptyArgument;
+import static org.tquadrat.foundation.lang.StringConverter.METHOD_NAME_GetSubjectClass;
 import static org.tquadrat.foundation.util.Comparators.caseInsensitiveComparator;
+import static org.tquadrat.foundation.util.JavaUtils.loadClass;
 import static org.tquadrat.foundation.util.StringUtils.format;
 import static org.tquadrat.foundation.util.StringUtils.isEmptyOrBlank;
 import static org.tquadrat.foundation.util.StringUtils.isNotEmptyOrBlank;
 
+import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Name;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.nio.file.Path;
 import java.time.Instant;
@@ -55,11 +65,14 @@ import org.tquadrat.foundation.ap.IllegalAnnotationError;
 import org.tquadrat.foundation.config.INIGroup;
 import org.tquadrat.foundation.config.StringConversion;
 import org.tquadrat.foundation.config.ap.impl.PropertySpecImpl;
+import org.tquadrat.foundation.exception.UnexpectedExceptionError;
 import org.tquadrat.foundation.javacomposer.ClassName;
 import org.tquadrat.foundation.javacomposer.JavaComposer;
 import org.tquadrat.foundation.javacomposer.MethodSpec;
 import org.tquadrat.foundation.javacomposer.TypeName;
 import org.tquadrat.foundation.lang.StringConverter;
+import org.tquadrat.foundation.util.JavaUtils;
+import org.tquadrat.foundation.util.LazyMap;
 import org.tquadrat.foundation.util.stringconverter.EnumStringConverter;
 
 /**
@@ -67,12 +80,12 @@ import org.tquadrat.foundation.util.stringconverter.EnumStringConverter;
  *  generation, and it collects the results from the different code generators.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CodeGenerationConfiguration.java 946 2021-12-23 14:48:19Z tquadrat $
+ *  @version $Id: CodeGenerationConfiguration.java 997 2022-01-26 14:55:05Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 946 2021-12-23 14:48:19Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 997 2022-01-26 14:55:05Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class CodeGenerationConfiguration
 {
@@ -198,7 +211,7 @@ public final class CodeGenerationConfiguration
      *  {@link TypeName}
      *  as keys.
      */
-    private final Map<TypeName,TypeName> m_StringConvertersForTypeNames;
+    private final LazyMap<TypeName,ClassName> m_StringConvertersForTypeNames;
 
     /**
      *  This flag indicates whether the access to the configuration bean
@@ -239,7 +252,7 @@ public final class CodeGenerationConfiguration
         m_BaseClass = baseClass;
         m_SynchronizeAccess = synchronizeAccess;
 
-        m_StringConvertersForTypeNames = initStringConvertersForTypeNames();
+        m_StringConvertersForTypeNames = LazyMap.use( true, this::initStringConvertersForTypeNames );
     }   //  CodeGenerationConfiguration()
 
         /*---------*\
@@ -299,7 +312,6 @@ public final class CodeGenerationConfiguration
      */
     public final void addProperty( final PropertySpec property ) throws CodeGenerationError
     {
-        //noinspection UseOfConcreteClass
         if( requireNonNullArgument( property, "property" ) instanceof PropertySpecImpl propertyImpl )
         {
             final var propertyName = propertyImpl.getPropertyName();
@@ -313,6 +325,116 @@ public final class CodeGenerationConfiguration
             throw new CodeGenerationError( format( MSG_IllegalImplementation, PropertySpec.class.getName(), property.getClass().getName() ) );
         }
     }   //  addProperty()
+
+    /**
+     *  <p>{@summary Creates a registry of the known
+     *  {@link StringConverter}
+     *  implementations.}</p>
+     *  <p>The
+     *  {@link TypeName}
+     *  of the subject class is the key for that map, the {@code TypeName} for
+     *  the {@code Class} implementing the {@code StringConverter} is the
+     *  value.</p>
+     *
+     *  @return An immutable map of
+     *      {@link StringConverter}
+     *      implementations.
+     *
+     *  @throws IOException Failed to read the resource files with the
+     *      {@code StringConverter} implementations.
+     */
+    @SuppressWarnings( "NestedTryStatement" )
+    @API( status = INTERNAL, since = "0.1.0" )
+    public static final Map<TypeName,ClassName> createStringConverterRegistry() throws IOException
+    {
+        final Map<TypeName,ClassName> buffer = new HashMap<>();
+
+        /*
+         * For some reason, the original code for this method does not work:
+         *
+         * for( final var c : StringConverter.list() )
+         * {
+         *    final var container = StringConverter.forClass( c );
+         *    if( container.isPresent() )
+         *    {
+         *       final var stringConverterClass = TypeName.from( container.get().getClass() );
+         *       final var key = TypeName.from( c );
+         *       buffer.put( key, stringConverterClass );
+         *       ifDebug( "StringConverters: %1$s => %2$s"::formatted, key, stringConverterClass );
+         *    }
+         * }
+         *
+         * This code relies on the code in the foundation-util module, so I
+         * assumed the problem there and move the code to here:
+         *
+         * final var moduleLayer = StringConverter.class.getModule().getLayer();
+         * final var converters = isNull( moduleLayer )
+         *   ? ServiceLoader.load( StringConverter.class )
+         *   : ServiceLoader.load( moduleLayer, StringConverter.class );
+         *
+         * for( final StringConverter<?> c : converters )
+         * {
+         *   StringConverter<?> converter;
+         *   try
+         *   {
+         *     final var providerMethod = c.getClass().getMethod( METHOD_NAME_Provider );
+         *     converter = (StringConverter<?>) providerMethod.invoke( null );
+         *   }
+         *   catch( final NoSuchMethodException | IllegalAccessException | InvocationTargetException e )
+         *   {
+         *     converter = c;
+         *   }
+         *
+         *   for( final var subjectClass : retrieveSubjectClasses( converter ) )
+         *   {
+         *     buffer.put( TypeName.from( subjectClass ), TypeName.from( converter.getClass() ) );
+         *   }
+         * }
+         *
+         * I raised a question on StackOverflow regarding this issue:
+         *   https://stackoverflow.com/questions/70861635/java-util-serviceloader-does-not-work-inside-of-an-annotationprocessor
+         */
+
+        final var classLoader = CodeGenerationConfiguration.class.getClassLoader();
+        final var resources = classLoader.getResources( format( "META-INF/services/%s", StringConverter.class.getName() ) );
+        for( final var file : list( resources ) )
+        {
+            try( final var reader = new BufferedReader( new InputStreamReader( file.openStream() ) ) )
+            {
+                final var converterClasses = reader.lines()
+                    .map( String::trim )
+                    .filter( l -> !l.startsWith( "#" ) )
+                    .map( l -> loadClass( classLoader, l, StringConverter.class ) )
+                    .filter( Optional::isPresent )
+                    .map( Optional::get )
+                    .toList();
+                CreateLoop: for( final var c : converterClasses )
+                {
+                    try
+                    {
+                        final var constructor = c.getConstructor();
+                        final var instance = constructor.newInstance();
+                        for( final var subjectClass : retrieveSubjectClasses( instance ) )
+                        {
+                            buffer.put( TypeName.from( subjectClass ), ClassName.from( c ) );
+                        }
+                    }
+                    catch( final InvocationTargetException | NoSuchMethodException |InstantiationException | IllegalAccessException e )
+                    {
+                        ifDebug( e );
+
+                        //---* Deliberately ignored! *-------------------------
+                        continue CreateLoop;
+                    }
+                }   //  CreateLoop:
+            }
+        }
+
+        final var retValue = Map.copyOf( buffer );
+
+        //---* Done *----------------------------------------------------------
+        return retValue;
+    }   //  createStringConverterRegistry()
 
     /**
      *  Determines the implementation of
@@ -330,13 +452,17 @@ public final class CodeGenerationConfiguration
      *  @throws IllegalAnnotationError  The String converter from the
      *      annotation cannot handle the target type.
      */
-    public final Optional<TypeName> determineStringConverterClass( final ExecutableElement method, final TypeName type ) throws IllegalAnnotationError
+    public final Optional<ClassName> determineStringConverterClass( final ExecutableElement method, final TypeName type ) throws IllegalAnnotationError
     {
         requireNonNullArgument( type, "type" );
+        requireNonNullArgument( method, "method" );
+        ifDebug( a -> "Method: %2$s%nType for StringConverter request: %1$s".formatted( a [0].toString(), ((Element) a[1]).getSimpleName() ), type, method );
 
         //---* Retrieve the StringConverter from the annotation *--------------
         final var retValue = extractStringConverterClass( method )
-            .or( () -> Optional.ofNullable( isEnumType( type ) ? TypeName.from( EnumStringConverter.class ) : m_StringConvertersForTypeNames.get( type ) ) );
+            .or( () -> Optional.ofNullable( isEnumType( type ) ? ClassName.from( EnumStringConverter.class ) : m_StringConvertersForTypeNames.get( type ) ) );
+        //noinspection unchecked
+        ifDebug( a -> ((Optional<TypeName>) a [0]).map( "Detected StringConverter: %1$s"::formatted ).orElse( "Could not find a StringConverter" ), retValue );
         retValue.ifPresent( stringConverter ->
         {
             if( !validateStringConverterClass( type, stringConverter ) ) throw new IllegalAnnotationError( format( MSG_StringConverterNotCompatible, type.toString(), stringConverter.toString() ) );
@@ -365,11 +491,16 @@ public final class CodeGenerationConfiguration
      *      holding the type name that represents the annotation value
      *      &quot;<i>stringConverter</i>&quot;.
      */
-    public final Optional<TypeName> extractStringConverterClass( final ExecutableElement method )
+    public final Optional<ClassName> extractStringConverterClass( final ExecutableElement method )
     {
         final var retValue = m_Environment.getAnnotationMirror( requireNonNullArgument( method, "method" ), StringConversion.class )
             .flatMap( m_Environment::getAnnotationValue )
-            .map( annotationValue -> TypeName.from( (TypeMirror) annotationValue.getValue() ) );
+            .map( annotationValue -> TypeName.from( (TypeMirror) annotationValue.getValue() ) )
+            .map( TypeName::toString )
+            .map( JavaUtils::loadClass )
+            .filter( Optional::isPresent )
+            .map( Optional::get )
+            .map( ClassName::from );
 
         //---* Done *----------------------------------------------------------
         return retValue;
@@ -629,22 +760,19 @@ public final class CodeGenerationConfiguration
      *      {@link StringConverter}
      *      implementations.
      */
-    private static final Map<TypeName,TypeName> initStringConvertersForTypeNames()
+    @API( status = INTERNAL, since = "0.1.0" )
+    private final Map<TypeName,ClassName> initStringConvertersForTypeNames()
     {
-        final Map<TypeName,TypeName> buffer = new HashMap<>();
-
-        for( final var c : StringConverter.list() )
+        final Map<TypeName,ClassName> retValue;
+        try
         {
-            final var container = StringConverter.forClass( c );
-            if( container.isPresent() )
-            {
-                final var stringConverterClass = TypeName.from( container.get().getClass() );
-                final var key = TypeName.from( c );
-                buffer.put( key, stringConverterClass );
-            }
+            retValue = createStringConverterRegistry();
         }
-
-        final var retValue = Map.copyOf( buffer );
+        catch( final IOException e )
+        {
+            throw new ExceptionInInitializerError( e );
+        }
+        ifDebug( retValue.isEmpty(), $ -> "No StringConverters??" );
 
         //---* Done *----------------------------------------------------------
         return retValue;
@@ -707,6 +835,44 @@ public final class CodeGenerationConfiguration
         //---* Done *----------------------------------------------------------
         return retValue;
     }   //  propertyIterator()
+
+    /**
+     *  <p>{@summary Determines the key class for the given instance of
+     *  {@link StringConverter}.}</p>
+     *
+     *  @note   This method was copied from
+     *      {@code org.tquadrat.foundation.base/org.tquadrat.foundation.lang.internal.StringConverterService}.
+     *
+     *  @param  converter   The converter instance.
+     *  @return The subject class.
+     */
+    @SuppressWarnings( {"NestedTryStatement", "unchecked"} )
+    public static final Collection<Class<?>> retrieveSubjectClasses( final StringConverter<?> converter )
+    {
+        final var converterClass = requireNonNullArgument( converter, "converter" ).getClass();
+        Collection<Class<?>> retValue;
+        try
+        {
+            try
+            {
+                final var getSubjectClassMethod = converterClass.getMethod( METHOD_NAME_GetSubjectClass );
+                //noinspection unchecked
+                retValue = (Collection<Class<?>>) getSubjectClassMethod.invoke( converter );
+            }
+            catch( @SuppressWarnings( "unused" ) final NoSuchMethodException e )
+            {
+                final var fromStringMethod = converterClass.getMethod( "fromString", CharSequence.class );
+                retValue = List.of( fromStringMethod.getReturnType() );
+            }
+        }
+        catch( final NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException e )
+        {
+            throw new UnexpectedExceptionError( e );
+        }
+
+        //---* Done *----------------------------------------------------------
+        return retValue;
+    }   //  retrieveSubjectClass()
 
     /**
      *  Sets the i18n parameters.
@@ -788,38 +954,40 @@ public final class CodeGenerationConfiguration
      *  @return {@code true} if the string converter works for the target type,
      *      {@code false} otherwise.
      */
-    @SuppressWarnings( "NestedTryStatement" )
-    public final boolean validateStringConverterClass( final TypeName targetType, final TypeName stringConverterClass )
+    public static final boolean validateStringConverterClass( final TypeName targetType, final ClassName stringConverterClass )
     {
-        requireNonNullArgument( targetType, "targetType" );
+        /*
+         * There are no specialised StringConverter implementations for the
+         * primitives, we make use of auto-boxing/-unboxing instead and provide
+         * implementations only for the box types.
+         */
+        final var effectiveTargetType = requireNonNullArgument( targetType, "targetType" ).box();
 
         var retValue = false;
-        if( stringConverterClass instanceof ClassName className )
+        try
         {
-            try
+            final var candidateClass = Class.forName( stringConverterClass.canonicalName(), false, CodeGenerationConfiguration.class.getClassLoader() );
+            if( StringConverter.class.isAssignableFrom( candidateClass ) )
             {
-                final var candidateClass = Class.forName( className.canonicalName(), false, getClass().getClassLoader() );
-                if( candidateClass.isInstance( StringConverter.class ) )
-                {
-                    /*
-                     * We need the fromString() method from the converter; more
-                     * precisely, we need the type of the return value for that
-                     * method. We do not regard a potentially existing method
-                     * getSubjectClass() on the StringConverter class.
-                     */
-                    try
-                    {
-                        final var fromStringMethod = candidateClass.getMethod( "fromString", CharSequence.class );
-                        final var returnType = TypeName.from( fromStringMethod.getReturnType() );
-                        retValue = returnType.equals( targetType );
-                    }
-                    catch( final NoSuchMethodException | SecurityException e )
-                    {
-                        throw new CodeGenerationError( format( MSG_IllegalImplementation, StringConverter.class.getName(), className.canonicalName() ), e );
-                    }
-                }
+                /*
+                 * We need the fromString() method from the converter; more
+                 * precisely, we need the type of the return value for that
+                 * method. We do not regard a potentially existing method
+                 * getSubjectClass() on the StringConverter class.
+                 */
+                final var fromStringMethod = candidateClass.getMethod( "fromString", CharSequence.class );
+                final var returnType = TypeName.from( fromStringMethod.getReturnType() );
+                retValue = returnType.equals( effectiveTargetType );
             }
-            catch( @SuppressWarnings( "unused" ) final ClassNotFoundException e ) { /* Deliberately ignored */ }
+        }
+        catch( final NoSuchMethodException | SecurityException e )
+        {
+            throw new CodeGenerationError( format( MSG_IllegalImplementation, StringConverter.class.getName(), stringConverterClass.canonicalName() ), e );
+        }
+        catch( final ClassNotFoundException e )
+        {
+            //---* Deliberately ignored! *---------------------------------
+            ifDebug( e );
         }
 
         //---* Done *----------------------------------------------------------
