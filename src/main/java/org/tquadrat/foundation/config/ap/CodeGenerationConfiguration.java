@@ -18,6 +18,7 @@
 package org.tquadrat.foundation.config.ap;
 
 import static java.util.Collections.list;
+import static java.util.Collections.unmodifiableMap;
 import static org.apiguardian.api.API.Status.INTERNAL;
 import static org.apiguardian.api.API.Status.MAINTAINED;
 import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_DuplicateProperty;
@@ -80,12 +81,12 @@ import org.tquadrat.foundation.util.stringconverter.EnumStringConverter;
  *  generation, and it collects the results from the different code generators.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CodeGenerationConfiguration.java 997 2022-01-26 14:55:05Z tquadrat $
+ *  @version $Id: CodeGenerationConfiguration.java 999 2022-01-27 23:23:26Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 997 2022-01-26 14:55:05Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 999 2022-01-27 23:23:26Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class CodeGenerationConfiguration
 {
@@ -596,15 +597,29 @@ public final class CodeGenerationConfiguration
      *
      *  @return The group names and the related comments.
      */
-    public final Map<String,String> getINIGroups() { return Map.copyOf( m_INIGroups ); }
+    public final Map<String,String> getINIGroups() { return unmodifiableMap( m_INIGroups ); }
 
     /**
-     *  Returns the method that is provided as a source for the initialisation
-     *  of the properties of the configuration bean.
+     *  <p>{@summary Returns the method that is provided as a source for the
+     *  initialisation of the properties of the configuration bean.}</p>
+     *  <p>It it is {@code default} or {@code static}, the implementation of
+     *  the method has to be part of the configuration bean specification
+     *  interface itself, otherwise it has to be implemented in base class.</p>
+     *  <p>It is an error if there is an {@code initData()} method that is
+     *  neither {@code default} nor {@code static}, and no base class is
+     *  defined with the
+     *  {@link org.tquadrat.foundation.config.ConfigurationBeanSpecification &#64;ConfigurationBeanSpecificatgion}
+     *  annotation.</p>
+     *  <p>The signature for the method has to be</p>
+     *  <pre><code>public Map&lt;String,Object&gt; initData() throws Exception</code></pre>
+     *  <p>and the return value is a map with the initialisation values, where
+     *  the property names are the keys.</p>
      *
      *  @return An instance of
      *      {@link Optional}
      *      that holds the method.
+     *
+     *  @see org.tquadrat.foundation.config.ConfigurationBeanSpecification#baseClass()
      */
     public final Optional<MethodSpec> getInitDataMethod() { return Optional.ofNullable( m_InitDataMethod ); }
 

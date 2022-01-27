@@ -76,12 +76,12 @@ import org.tquadrat.foundation.javacomposer.WildcardTypeName;
  *  {@link org.tquadrat.foundation.config.CLIBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CLIBeanBuilder.java 998 2022-01-26 15:50:18Z tquadrat $
+ *  @version $Id: CLIBeanBuilder.java 999 2022-01-27 23:23:26Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: CLIBeanBuilder.java 998 2022-01-26 15:50:18Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CLIBeanBuilder.java 999 2022-01-27 23:23:26Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class CLIBeanBuilder extends CodeBuilderBase
 {
@@ -103,132 +103,26 @@ public final class CLIBeanBuilder extends CodeBuilderBase
         \*---------*/
     /**
      *  {@inheritDoc}
+     *  <p>This method checks whether there are any properties that are either
+     *  options or arguments, and does the build only when there is at least
+     *  one.</p>
+     *  <p>Not building CLI stuff will let crash the compilation of the
+     *  generated code, but this is intended: either the annotation for the
+     *  CLI properties is missing, or the interface
+     *  {@link org.tquadrat.foundation.config.CLIBeanSpec}
+     *  was added to the configuration bean specification in error.</p>
      */
     @Override
     public final void build()
     {
-        //---* Create the registry for the CLI definitions *-------------------
-        final var registryType = ParameterizedTypeName.from( ClassName.from( List.class ), TypeName.from( CLIDefinition.class ) );
-        final var registry = getComposer().fieldBuilder( registryType, STD_FIELD_CLIDefinitions.toString(), PRIVATE, FINAL )
-            .addJavadoc(
-                """
-                The registry for the CLI definitions
-                """ )
-            .initializer( "new $T<>()", ArrayList.class )
-            .build();
-        addField( STD_FIELD_CLIDefinitions, registry );
-
-        //---* Create the field for the CLI parsing errors *-------------------
-        final var errorMsgHolder = getComposer().fieldBuilder( String.class, STD_FIELD_CLIError.toString(), PRIVATE )
-            .addJavadoc(
-                """
-                The last error message from a call to
-                {@link #parseCommandLine(String[])}.
-
-                @see #retrieveParseErrorMessage()
-                """ )
-            .initializer( "null" )
-            .build();
-        addField( STD_FIELD_CLIError, errorMsgHolder );
-
-        //---* Add the methods from CLIBeanSpec *------------------------------
-        createDumpParamFileTemplate();
-        createParseCommandLine( registry, errorMsgHolder );
-        createPrintUsage( registry );
-        createRetrieveParseErrorMessage( errorMsgHolder );
-
-        /*
-         * The names of previously encountered options, collected to avoid
-         * collisions.
-         */
-        final Collection<String> alreadyUsedOptions = new HashSet<>();
-
-        //---* Add the code to the constructor *-------------------------------
-        final var objectType = WildcardTypeName.subtypeOf( Object.class );
-        final var handlerName = "valueHandler";
-        final var handlerType = ParameterizedTypeName.from( ClassName.from( CmdLineValueHandler.class ), objectType );
-
-        final var definitionName = "cliDefinition";
-
-        final var builder = getComposer().codeBlockBuilder().add(
-            """
-
-            /*
-             * Initialise the CLI definitions.
-             */
-            """ )
-            .addStatement( "$T $L", handlerType, handlerName )
-            .addStatement( "$T $L", CLIDefinition.class, definitionName );
-
-        CLIPropertiesLoop:
+        var doBuild = false;
         //noinspection ForLoopWithMissingComponent
-        for( final var i = getProperties(); i.hasNext(); )
+        for( final var i = getProperties(); i.hasNext() && !doBuild; )
         {
             final var property = i.next();
-            if( !property.isOnCLI() ) continue CLIPropertiesLoop;
-
-            //---* Create the value handler *----------------------------------
-            builder.add(
-                """
-                
-                /*
-                 * CLI definition for Property &quot;$L&quot;.
-                 */
-                """, property.getPropertyName()
-            )
-                .addStatement( "$L = $L()", handlerName, composeValueHandlerCreation( property ) );
-
-            //---* Create the CLI definition *---------------------------------
-            final var usage = property.getCLIUsage().orElse( null );
-            final var usageKey = property.getCLIUsageKey().orElse( null );
-            final var metaVar = property.getCLIMetaVar().orElse( null );
-            final var required = Boolean.valueOf( property.hasFlag( PROPERTY_CLI_MANDATORY ) );
-            final var multiValued = Boolean.valueOf( property.hasFlag( PROPERTY_CLI_MULTIVALUED ) );
-            final var format = property.getCLIFormat().orElse( null );
-            if( property.hasFlag( PROPERTY_IS_ARGUMENT ) )
-            {
-                builder.addStatement( "$L = new $T( $S, $L, $S, $S, $S, $L, $L, $L, $S )", definitionName, CLIArgumentDefinition.class,
-                    property.getPropertyName(),
-                    Integer.valueOf( property.getCLIArgumentIndex().orElseThrow( () -> new IllegalAnnotationError( format( MSG_NoArgumentIndex, property.getPropertyName() ) ) ) ),
-                    usage,
-                    usageKey,
-                    metaVar,
-                    required,
-                    handlerName,
-                    multiValued,
-                    format );
-            }
-            else if( property.hasFlag( PROPERTY_IS_OPTION ) )
-            {
-                final var optionNames = property.getCLIOptionNames().orElseThrow( () -> new IllegalAnnotationError( format( MSG_NoOptionName, property.getPropertyName() ) ) );
-                for( final var optionName : optionNames )
-                {
-                    if( !alreadyUsedOptions.add( optionName ) )
-                    {
-                        throw new IllegalAnnotationError( format( MSG_DuplicateOptionName, optionName, property.getPropertyName() ) );
-                    }
-                }
-                final var names = optionNames.stream()
-                    .map( n -> format( "\"%s\"", n ) )
-                    .collect( joining( ", ", "List.of( ", " )" ) );
-                builder.addStatement( "$L = new $T( $S, $L, $S, $S, $S, $L, $L, $L, $S )", definitionName, CLIOptionDefinition.class,
-                    property.getPropertyName(),
-                    names,
-                    usage,
-                    usageKey,
-                    metaVar,
-                    required,
-                    handlerName,
-                    multiValued,
-                    format );
-            }
-            else
-            {
-                throw new IllegalAnnotationError( format( MSG_InvalidCLIType, property.getPropertyName() ) );
-            }
-            builder.addStatement( "$N.add( $L )", registry, definitionName );
+            doBuild = property.hasFlag( PROPERTY_IS_OPTION ) || property.hasFlag( PROPERTY_IS_ARGUMENT );
         }
-        addConstructorCode( builder.build() );
+        if( doBuild ) doBuild();
     }   //  build()
 
     /**
@@ -409,6 +303,137 @@ public final class CLIBeanBuilder extends CodeBuilderBase
             .build();
         addMethod( method );
     }   //  createRetrieveParseErrorMessage()
+
+    /**
+     *  Is called by
+     *  {@link #build()}
+     *  to do the work – only if there is work to do …
+     */
+    private final void doBuild()
+    {
+        //---* Create the registry for the CLI definitions *-------------------
+        final var registryType = ParameterizedTypeName.from( ClassName.from( List.class ), TypeName.from( CLIDefinition.class ) );
+        final var registry = getComposer().fieldBuilder( registryType, STD_FIELD_CLIDefinitions.toString(), PRIVATE, FINAL )
+            .addJavadoc(
+                """
+                The registry for the CLI definitions
+                """ )
+            .initializer( "new $T<>()", ArrayList.class )
+            .build();
+        addField( STD_FIELD_CLIDefinitions, registry );
+
+        //---* Create the field for the CLI parsing errors *-------------------
+        final var errorMsgHolder = getComposer().fieldBuilder( String.class, STD_FIELD_CLIError.toString(), PRIVATE )
+            .addJavadoc(
+                """
+                The last error message from a call to
+                {@link #parseCommandLine(String[])}.
+
+                @see #retrieveParseErrorMessage()
+                """ )
+            .initializer( "null" )
+            .build();
+        addField( STD_FIELD_CLIError, errorMsgHolder );
+
+        //---* Add the methods from CLIBeanSpec *------------------------------
+        createDumpParamFileTemplate();
+        createParseCommandLine( registry, errorMsgHolder );
+        createPrintUsage( registry );
+        createRetrieveParseErrorMessage( errorMsgHolder );
+
+        /*
+         * The names of previously encountered options, collected to avoid
+         * collisions.
+         */
+        final Collection<String> alreadyUsedOptions = new HashSet<>();
+
+        //---* Add the code to the constructor *-------------------------------
+        final var objectType = WildcardTypeName.subtypeOf( Object.class );
+        final var handlerName = "valueHandler";
+        final var handlerType = ParameterizedTypeName.from( ClassName.from( CmdLineValueHandler.class ), objectType );
+
+        final var definitionName = "cliDefinition";
+
+        final var builder = getComposer().codeBlockBuilder().add(
+                """
+    
+                /*
+                 * Initialise the CLI definitions.
+                 */
+                """ )
+            .addStatement( "$T $L", handlerType, handlerName )
+            .addStatement( "$T $L", CLIDefinition.class, definitionName );
+
+        CLIPropertiesLoop:
+        //noinspection ForLoopWithMissingComponent
+        for( final var i = getProperties(); i.hasNext(); )
+        {
+            final var property = i.next();
+            if( !property.isOnCLI() ) continue CLIPropertiesLoop;
+
+            //---* Create the value handler *----------------------------------
+            builder.add(
+                    """
+                    
+                    /*
+                     * CLI definition for Property &quot;$L&quot;.
+                     */
+                    """, property.getPropertyName()
+                )
+                .addStatement( "$L = $L()", handlerName, composeValueHandlerCreation( property ) );
+
+            //---* Create the CLI definition *---------------------------------
+            final var usage = property.getCLIUsage().orElse( null );
+            final var usageKey = property.getCLIUsageKey().orElse( null );
+            final var metaVar = property.getCLIMetaVar().orElse( null );
+            final var required = Boolean.valueOf( property.hasFlag( PROPERTY_CLI_MANDATORY ) );
+            final var multiValued = Boolean.valueOf( property.hasFlag( PROPERTY_CLI_MULTIVALUED ) );
+            final var format = property.getCLIFormat().orElse( null );
+            if( property.hasFlag( PROPERTY_IS_ARGUMENT ) )
+            {
+                builder.addStatement( "$L = new $T( $S, $L, $S, $S, $S, $L, $L, $L, $S )", definitionName, CLIArgumentDefinition.class,
+                    property.getPropertyName(),
+                    Integer.valueOf( property.getCLIArgumentIndex().orElseThrow( () -> new IllegalAnnotationError( format( MSG_NoArgumentIndex, property.getPropertyName() ) ) ) ),
+                    usage,
+                    usageKey,
+                    metaVar,
+                    required,
+                    handlerName,
+                    multiValued,
+                    format );
+            }
+            else if( property.hasFlag( PROPERTY_IS_OPTION ) )
+            {
+                final var optionNames = property.getCLIOptionNames().orElseThrow( () -> new IllegalAnnotationError( format( MSG_NoOptionName, property.getPropertyName() ) ) );
+                for( final var optionName : optionNames )
+                {
+                    if( !alreadyUsedOptions.add( optionName ) )
+                    {
+                        throw new IllegalAnnotationError( format( MSG_DuplicateOptionName, optionName, property.getPropertyName() ) );
+                    }
+                }
+                final var names = optionNames.stream()
+                    .map( n -> format( "\"%s\"", n ) )
+                    .collect( joining( ", ", "List.of( ", " )" ) );
+                builder.addStatement( "$L = new $T( $S, $L, $S, $S, $S, $L, $L, $L, $S )", definitionName, CLIOptionDefinition.class,
+                    property.getPropertyName(),
+                    names,
+                    usage,
+                    usageKey,
+                    metaVar,
+                    required,
+                    handlerName,
+                    multiValued,
+                    format );
+            }
+            else
+            {
+                throw new IllegalAnnotationError( format( MSG_InvalidCLIType, property.getPropertyName() ) );
+            }
+            builder.addStatement( "$N.add( $L )", registry, definitionName );
+        }
+        addConstructorCode( builder.build() );
+    }   //  doBuild()
 
     /**
      *  <p>{@summary Retrieves the class for the value handler for the given

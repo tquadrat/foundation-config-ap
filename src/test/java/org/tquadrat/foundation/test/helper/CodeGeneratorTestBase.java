@@ -44,6 +44,8 @@ import static org.tquadrat.foundation.javacomposer.Primitives.BOOLEAN;
 import static org.tquadrat.foundation.lang.CommonConstants.PROPERTY_IS_DEBUG;
 import static org.tquadrat.foundation.lang.CommonConstants.PROPERTY_IS_TEST;
 import static org.tquadrat.foundation.lang.Objects.requireNotEmptyArgument;
+import static org.tquadrat.foundation.util.JavaUtils.composeGetterName;
+import static org.tquadrat.foundation.util.JavaUtils.composeSetterName;
 import static org.tquadrat.foundation.util.StringUtils.capitalize;
 import static org.tquadrat.foundation.util.StringUtils.format;
 
@@ -57,6 +59,7 @@ import org.apiguardian.api.API;
 import org.tquadrat.foundation.annotation.ClassVersion;
 import org.tquadrat.foundation.ap.APHelper;
 import org.tquadrat.foundation.config.ConfigBeanSpec;
+import org.tquadrat.foundation.config.I18nSupport;
 import org.tquadrat.foundation.config.SessionBeanSpec;
 import org.tquadrat.foundation.config.ap.CodeGenerationConfiguration;
 import org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor;
@@ -80,11 +83,11 @@ import org.tquadrat.foundation.util.stringconverter.StringStringConverter;
 /**
  *  The base class for the code generation tests.
  *
- *  @version $Id: CodeGeneratorTestBase.java 947 2021-12-23 21:44:25Z tquadrat $
+ *  @version $Id: CodeGeneratorTestBase.java 999 2022-01-27 23:23:26Z tquadrat $
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  */
-@SuppressWarnings( {"AbstractClassWithoutAbstractMethods", "OverlyCoupledClass"} )
-@ClassVersion( sourceVersion = "$Id: CodeGeneratorTestBase.java 947 2021-12-23 21:44:25Z tquadrat $" )
+@SuppressWarnings( {"AbstractClassWithoutAbstractMethods", "OverlyCoupledClass", "ClassWithTooManyMethods"} )
+@ClassVersion( sourceVersion = "$Id: CodeGeneratorTestBase.java 999 2022-01-27 23:23:26Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public abstract class CodeGeneratorTestBase extends TestBaseClass
 {
@@ -384,64 +387,12 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
     @SuppressWarnings( "UseOfConcreteClass" )
     protected final void createPropertiesForConfigBeanSpec( final CodeGenerationConfiguration configuration )
     {
-        PropertySpecImpl property;
-
-        property = new PropertySpecImpl( CONFIG_PROPERTY_CHARSET.getPropertyName() );
-        configuration.addProperty( property );
-        property.setFlag( PROPERTY_IS_SPECIAL );
-        property.setSpecialPropertyType( CONFIG_PROPERTY_CHARSET );
-        property.setGetterMethodName( new NameImpl( "getCharset" ) );
-        property.setSetterMethodName( new NameImpl( "setCharset" ) );
-        property.setSetterArgumentName( "charset" );
-        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
-
-        property = new PropertySpecImpl( CONFIG_PROPERTY_LOCALE.getPropertyName() );
-        configuration.addProperty( property );
-        property.setFlag( PROPERTY_IS_SPECIAL );
-        property.setSpecialPropertyType( CONFIG_PROPERTY_LOCALE );
-        property.setGetterMethodName( new NameImpl( "getLocale" ) );
-        property.setSetterMethodName( new NameImpl( "setLocale" ) );
-        property.setSetterArgumentName( "locale" );
-        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
-
-        property = new PropertySpecImpl( CONFIG_PROPERTY_RESOURCEBUNDLE.getPropertyName() );
-        configuration.addProperty( property );
-        property.setFlag( PROPERTY_IS_SPECIAL );
-        property.setSpecialPropertyType( CONFIG_PROPERTY_RESOURCEBUNDLE );
-        property.setGetterMethodName( new NameImpl( "getResourceBundle" ) );
-        property.setSetterArgumentName( "resourceBundle" );
-        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
-
-        property = new PropertySpecImpl( CONFIG_PROPERTY_TIMEZONE.getPropertyName() );
-        configuration.addProperty( property );
-        property.setFlag( PROPERTY_IS_SPECIAL );
-        property.setSpecialPropertyType( CONFIG_PROPERTY_TIMEZONE );
-        property.setGetterMethodName( new NameImpl( "getTimezone" ) );
-        property.setSetterMethodName( new NameImpl( "setTimezone" ) );
-        property.setSetterArgumentName( "timezone" );
-        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
-
-        property = new PropertySpecImpl( "isDebug" );
-        configuration.addProperty( property );
-        property.setFlag( SYSTEM_PROPERTY );
-        property.setGetterMethodName( new NameImpl( "isDebug" ) );
-        property.setPropertyType( BOOLEAN );
-        property.setFieldName( "m_IsDebug" );
-        property.setGetterReturnType( BOOLEAN );
-        property.setSystemPropertyName( PROPERTY_IS_DEBUG );
-        property.setStringConverterClass( ClassName.from( BooleanStringConverter.class ) );
-        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
-
-        property = new PropertySpecImpl( "isTest" );
-        configuration.addProperty( property );
-        property.setFlag( SYSTEM_PROPERTY );
-        property.setGetterMethodName( new NameImpl( "isTest" ) );
-        property.setPropertyType( BOOLEAN );
-        property.setFieldName( "m_IsTest" );
-        property.setGetterReturnType( BOOLEAN );
-        property.setSystemPropertyName( PROPERTY_IS_TEST );
-        property.setStringConverterClass( ClassName.from( BooleanStringConverter.class ) );
-        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
+        createProperty_charset( configuration );
+        createProperty_isDebug( configuration );
+        createProperty_isTest( configuration );
+        createProperty_locale( configuration );
+        createProperty_resourceBundle( configuration, false );
+        createProperty_timezone( configuration );
     }   //  createPropertiesForConfigBeanSpec()
 
     /**
@@ -454,14 +405,8 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
     @SuppressWarnings( "UseOfConcreteClass" )
     protected final void createPropertiesForI18NSupport( final CodeGenerationConfiguration configuration )
     {
-        final PropertySpecImpl property;
-
         //---* The method that returns the message prefix *--------------------
-        property = new PropertySpecImpl( "messagePrefix" );
-        configuration.addProperty( property );
-        property.setFlag( GETTER_IS_DEFAULT );
-        property.setGetterMethodName( new NameImpl( "getMessagePrefix" ) );
-        property.setGetterReturnType( ClassName.from( String.class ) );
+        createProperty_messagePrefix( configuration );
 
         /*
          * Additional settings.
@@ -488,7 +433,7 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
         property.setFlag( PROPERTY_IS_OPTION, PROPERTY_CLI_MANDATORY, ALLOWS_INIFILE );
         property.setPropertyType( TypeName.from( int.class ) );
         property.setFieldName( makeFieldName( name ) );
-        property.setGetterMethodName( new NameImpl( makeGetterName( name ) ) );
+        property.setGetterMethodName( new NameImpl( composeGetterName( name ) ) );
         property.setGetterReturnType( TypeName.from( int.class ) );
         property.setStringConverterClass( ClassName.from( IntegerStringConverter.class ) );
         if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
@@ -500,7 +445,7 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
         property.setFlag( PROPERTY_IS_OPTION, PROPERTY_CLI_MANDATORY, ALLOWS_INIFILE );
         property.setPropertyType( ClassName.from( Integer.class ) );
         property.setFieldName( makeFieldName( name ) );
-        property.setGetterMethodName( new NameImpl( makeGetterName( name ) ) );
+        property.setGetterMethodName( new NameImpl( composeGetterName( name ) ) );
         property.setGetterReturnType( ClassName.from( Integer.class ) );
         property.setStringConverterClass( ClassName.from( IntegerStringConverter.class ) );
         if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
@@ -512,7 +457,7 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
         property.setFlag( PROPERTY_IS_OPTION, PROPERTY_CLI_MANDATORY, GETTER_RETURNS_OPTIONAL, ALLOWS_INIFILE );
         property.setPropertyType( ClassName.from( Instant.class ) );
         property.setFieldName( makeFieldName( name ) );
-        property.setGetterMethodName( new NameImpl( makeGetterName( name ) ) );
+        property.setGetterMethodName( new NameImpl( composeGetterName( name ) ) );
         property.setGetterReturnType( ParameterizedTypeName.from( Optional.class, Instant.class ) );
         property.setStringConverterClass( ClassName.from( InstantStringConverter.class ) );
         if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
@@ -524,7 +469,7 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
         property.setFlag( PROPERTY_IS_OPTION, PROPERTY_CLI_MANDATORY, ALLOWS_INIFILE );
         property.setPropertyType( ClassName.from( String.class ) );
         property.setFieldName( makeFieldName( name ) );
-        property.setGetterMethodName( new NameImpl( makeGetterName( name ) ) );
+        property.setGetterMethodName( new NameImpl( composeGetterName( name ) ) );
         property.setGetterReturnType( ClassName.from( String.class ) );
         property.setStringConverterClass( ClassName.from( StringStringConverter.class ) );
         if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
@@ -563,6 +508,213 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
          * Additional settings.
          */
     }   //  createPropertiesForSystemPrefsInit()
+
+    /**
+     *  Creates the property 'charset', and adds it to the configuration.
+     *
+     *  @param  configuration   The configuration that takes the created
+     *      property.
+     */
+    @SuppressWarnings( "UseOfConcreteClass" )
+    public static final void createProperty_charset( final CodeGenerationConfiguration configuration )
+    {
+        final var propertyName = CONFIG_PROPERTY_CHARSET.getPropertyName();
+        final var property = new PropertySpecImpl( propertyName );
+        configuration.addProperty( property );
+        property.setFlag( PROPERTY_IS_SPECIAL, PROPERTY_IS_MUTABLE );
+        property.setSpecialPropertyType( CONFIG_PROPERTY_CHARSET );
+        property.setGetterMethodName( new NameImpl( composeGetterName( propertyName ) ) );
+        property.setSetterMethodName( new NameImpl( composeSetterName( propertyName ) ) );
+        property.setSetterArgumentName( propertyName );
+        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
+    }   //  createProperty_charset()
+
+    /**
+     *  Creates the property 'clock', and adds it to the configuration.
+     *
+     *  @param  configuration   The configuration that takes the created
+     *      property.
+     */
+    @SuppressWarnings( "UseOfConcreteClass" )
+    public static final void createProperty_clock( final CodeGenerationConfiguration configuration )
+    {
+        final var propertyName = CONFIG_PROPERTY_CLOCK.getPropertyName();
+        final var property = new PropertySpecImpl( propertyName );
+        configuration.addProperty( property );
+        property.setFlag( PROPERTY_IS_SPECIAL, PROPERTY_IS_MUTABLE );
+        property.setSpecialPropertyType( CONFIG_PROPERTY_CLOCK );
+        property.setGetterMethodName( new NameImpl( composeGetterName( propertyName ) ) );
+        property.setSetterMethodName( new NameImpl( composeSetterName( propertyName ) ) );
+        property.setSetterArgumentName( propertyName );
+        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
+    }   //  createProperty_clock()
+
+    /**
+     *  Creates the property 'isDebug', and adds it to the configuration.
+     *
+     *  @param  configuration   The configuration that takes the created
+     *      property.
+     */
+    @SuppressWarnings( "UseOfConcreteClass" )
+    public static final void createProperty_isDebug( final CodeGenerationConfiguration configuration )
+    {
+        final var propertyName = "isDebug";
+        final var property = new PropertySpecImpl( propertyName );
+        configuration.addProperty( property );
+        property.setFlag( SYSTEM_PROPERTY );
+        property.setGetterMethodName( new NameImpl( "isDebug" ) );
+        property.setPropertyType( BOOLEAN );
+        property.setFieldName( makeFieldName( propertyName ) );
+        property.setGetterReturnType( BOOLEAN );
+        property.setSystemPropertyName( PROPERTY_IS_DEBUG );
+        property.setStringConverterClass( ClassName.from( BooleanStringConverter.class ) );
+        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
+    }   //  createProperty_isDebug()
+
+    /**
+     *  Creates the property 'isTest', and adds it to the configuration.
+     *
+     *  @param  configuration   The configuration that takes the created
+     *      property.
+     */
+    @SuppressWarnings( "UseOfConcreteClass" )
+    public static final void createProperty_isTest( final CodeGenerationConfiguration configuration )
+    {
+        final var propertyName = "isTest";
+        final var property = new PropertySpecImpl( propertyName );
+        configuration.addProperty( property );
+        property.setFlag( SYSTEM_PROPERTY );
+        property.setGetterMethodName( new NameImpl( "isTest" ) );
+        property.setPropertyType( BOOLEAN );
+        property.setFieldName( makeFieldName( propertyName ) );
+        property.setGetterReturnType( BOOLEAN );
+        property.setSystemPropertyName( PROPERTY_IS_TEST );
+        property.setStringConverterClass( ClassName.from( BooleanStringConverter.class ) );
+        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
+    }   //  createProperty_isDebug()
+
+    /**
+     *  Creates the property 'locale', and adds it to the configuration.
+     *
+     *  @param  configuration   The configuration that takes the created
+     *      property.
+     */
+    @SuppressWarnings( "UseOfConcreteClass" )
+    public static final void createProperty_locale( final CodeGenerationConfiguration configuration )
+    {
+        final var propertyName = CONFIG_PROPERTY_LOCALE.getPropertyName();
+        final var property = new PropertySpecImpl( propertyName );
+        configuration.addProperty( property );
+        property.setFlag( PROPERTY_IS_SPECIAL, PROPERTY_IS_MUTABLE );
+        property.setSpecialPropertyType( CONFIG_PROPERTY_LOCALE );
+        property.setGetterMethodName( new NameImpl( composeGetterName( propertyName ) ) );
+        property.setSetterMethodName( new NameImpl( composeSetterName( propertyName ) ) );
+        property.setSetterArgumentName( propertyName );
+        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
+    }   //  createProperty_locale()
+
+    /**
+     *  Creates the property 'messagePrefix', and adds it to the
+     *  configuration.
+     *
+     *  @param  configuration   The configuration that takes the created
+     *      property.
+     */
+    @SuppressWarnings( "UseOfConcreteClass" )
+    public static final void createProperty_messagePrefix( final CodeGenerationConfiguration configuration )
+    {
+        final var propertyName = "messagePrefix";
+        final var property = new PropertySpecImpl( propertyName );
+        configuration.addProperty( property );
+        property.setFlag( GETTER_IS_DEFAULT );
+        property.setGetterMethodName( new NameImpl( composeGetterName( propertyName ) ) );
+        property.setGetterReturnType( ClassName.from( String.class ) );
+    }   //  createProperty_messagePrefix()
+
+    /**
+     *  Creates the property 'processId', and adds it to the
+     *  configuration.
+     *
+     *  @param  configuration   The configuration that takes the created
+     *      property.
+     */
+    @SuppressWarnings( "UseOfConcreteClass" )
+    public static final void createProperty_processId( final CodeGenerationConfiguration configuration )
+    {
+        final var propertyName = CONFIG_PROPERTY_PID.getPropertyName();
+        final var property = new PropertySpecImpl( propertyName );
+        configuration.addProperty( property );
+        property.setFlag( PROPERTY_IS_SPECIAL );
+        property.setSpecialPropertyType( CONFIG_PROPERTY_PID );
+        property.setGetterMethodName( new NameImpl( composeGetterName( propertyName ) ) );
+        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
+    }   //  createProperty_processId()
+
+    /**
+     *  Creates the property 'random', and adds it to the
+     *  configuration.
+     *
+     *  @param  configuration   The configuration that takes the created
+     *      property.
+     */
+    @SuppressWarnings( "UseOfConcreteClass" )
+    public static final void createProperty_random( final CodeGenerationConfiguration configuration )
+    {
+        final var propertyName = CONFIG_PROPERTY_RANDOM.getPropertyName();
+        final var property = new PropertySpecImpl( propertyName );
+        configuration.addProperty( property );
+        property.setFlag( PROPERTY_IS_SPECIAL );
+        property.setSpecialPropertyType( CONFIG_PROPERTY_RANDOM );
+        property.setGetterMethodName( new NameImpl( composeGetterName( propertyName ) ) );
+        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
+    }   //  createProperty_random()
+
+    /**
+     *  Creates the property 'resourceBundle', and adds it to the
+     *  configuration.
+     *
+     *  @param  configuration   The configuration that takes the created
+     *      property.
+     *  @param  isMutable   {@code true} if the property should be mutable,
+     *      {@code false}  otherwise.
+     */
+    @SuppressWarnings( "UseOfConcreteClass" )
+    public static final void createProperty_resourceBundle( final CodeGenerationConfiguration configuration, final boolean isMutable )
+    {
+        final var propertyName = CONFIG_PROPERTY_RESOURCEBUNDLE.getPropertyName();
+        final var property = new PropertySpecImpl( propertyName );
+        configuration.addProperty( property );
+        property.setFlag( PROPERTY_IS_SPECIAL );
+        property.setSpecialPropertyType( CONFIG_PROPERTY_RESOURCEBUNDLE );
+        property.setGetterMethodName( new NameImpl( composeGetterName( propertyName ) ) );
+        if( !configuration.implementInterface( I18nSupport.class ) && isMutable )
+        {
+            property.setFlag( PROPERTY_IS_MUTABLE );
+            property.setSetterMethodName( new NameImpl( composeSetterName( propertyName ) ) );
+            property.setSetterArgumentName( propertyName );
+        }
+        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
+    }   //  createProperty_resourceBundle()
+
+    /**
+     *  Creates the property 'timezone', and adds it to the configuration.
+     *
+     *  @param  configuration   The configuration that takes the created
+     *      property.
+     */
+    @SuppressWarnings( "UseOfConcreteClass" )
+    public static final void createProperty_timezone( final CodeGenerationConfiguration configuration )
+    {
+        final var propertyName = CONFIG_PROPERTY_TIMEZONE.getPropertyName();
+        final var property = new PropertySpecImpl( CONFIG_PROPERTY_TIMEZONE.getPropertyName() );
+        configuration.addProperty( property );
+        property.setFlag( PROPERTY_IS_SPECIAL );
+        property.setSpecialPropertyType( CONFIG_PROPERTY_TIMEZONE );
+        property.setGetterMethodName( new NameImpl( composeGetterName( propertyName ) ) );
+        property.setSetterMethodName( new NameImpl( composeSetterName( propertyName ) ) );
+        property.setSetterArgumentName( propertyName );
+        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
+    }   //  createProperty_timezone()
 
     /**
      *  Creates a code generation configuration for the generation of a session
@@ -612,22 +764,6 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
      *  @return The field name.
      */
     protected static final String makeFieldName( final String name ) { return format( "m_%s", capitalize( name ) ); }
-
-    /**
-     *  Composes a getter name from the property name.
-     *
-     *  @param  name    The property name.
-     *  @return The getter name.
-     */
-    protected static final String makeGetterName( final String name ) { return format( "get%s", capitalize( name ) ); }
-
-    /**
-     *  Composes a setter name from the property name.
-     *
-     *  @param  name    The property name.
-     *  @return The setter name.
-     */
-    protected static final String makeSetterName( final String name ) { return format( "set%s", capitalize( name ) ); }
 }
 //  class CodeGeneratorTestBase
 

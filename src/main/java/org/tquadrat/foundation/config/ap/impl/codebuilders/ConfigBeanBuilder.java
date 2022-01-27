@@ -76,12 +76,12 @@ import org.tquadrat.foundation.util.StringUtils;
  *  {@link org.tquadrat.foundation.config.ConfigBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: ConfigBeanBuilder.java 942 2021-12-20 02:04:04Z tquadrat $
+ *  @version $Id: ConfigBeanBuilder.java 1000 2022-01-27 23:24:48Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: ConfigBeanBuilder.java 942 2021-12-20 02:04:04Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ConfigBeanBuilder.java 1000 2022-01-27 23:24:48Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class ConfigBeanBuilder extends CodeBuilderBase
 {
@@ -161,38 +161,35 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
      */
     private final void addLockSupport()
     {
-        if( isSynchronized() )
-        {
-            //---* Add the locks *---------------------------------------------
-            var field = getComposer().fieldBuilder( AutoLock.class, STD_FIELD_ReadLock.toString(), PRIVATE, FINAL )
-                .addJavadoc(
-                    """
-                    The &quot;read&quot; lock.
-                    """ )
-                .build();
-            addField( STD_FIELD_ReadLock, field );
+        //---* Add the locks *-------------------------------------------------
+        var field = getComposer().fieldBuilder( AutoLock.class, STD_FIELD_ReadLock.toString(), PRIVATE, FINAL )
+            .addJavadoc(
+                """
+                The &quot;read&quot; lock.
+                """ )
+            .build();
+        addField( STD_FIELD_ReadLock, field );
 
-            field = getComposer().fieldBuilder( AutoLock.class, STD_FIELD_WriteLock.toString(), PRIVATE, FINAL )
-                .addJavadoc(
-                    """
-                    The &quot;write&quot; lock.
-                    """ )
-                .build();
-            addField( STD_FIELD_WriteLock, field );
+        field = getComposer().fieldBuilder( AutoLock.class, STD_FIELD_WriteLock.toString(), PRIVATE, FINAL )
+            .addJavadoc(
+                """
+                The &quot;write&quot; lock.
+                """ )
+            .build();
+        addField( STD_FIELD_WriteLock, field );
 
-            //---* Initialise the locks *--------------------------------------
-            final var code = getComposer().codeBlockBuilder()
-                .add(
-                    """
-                    
-                    //---* Create the locks and initialise them *--------------------------
-                    """ )
-                .addStatement( "final var lock = new $T()", ReentrantReadWriteLock.class )
-                .addStatement( "$N = $T.of( lock.readLock() )", getField( STD_FIELD_ReadLock ), AutoLock.class )
-                .addStatement( "$N = $T.of( lock.writeLock() )", getField( STD_FIELD_WriteLock ), AutoLock.class )
-                .build();
-            addConstructorCode( code );
-        }
+        //---* Initialise the locks *------------------------------------------
+        final var code = getComposer().codeBlockBuilder()
+            .add(
+                """
+                
+                //---* Create the locks and initialise them *--------------------------
+                """ )
+            .addStatement( "final var lock = new $T()", ReentrantReadWriteLock.class )
+            .addStatement( "$N = $T.of( lock.readLock() )", getField( STD_FIELD_ReadLock ), AutoLock.class )
+            .addStatement( "$N = $T.of( lock.writeLock() )", getField( STD_FIELD_WriteLock ), AutoLock.class )
+            .build();
+        addConstructorCode( code );
     }   //  addLockSupport()
 
     /**
@@ -234,7 +231,7 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
     {
         //---* Generate the default stuff *------------------------------------
         addListenerSupport();
-        addLockSupport();
+        if( isSynchronized() ) addLockSupport();
 
         //---* Generate the properties *---------------------------------------
         //noinspection ForLoopWithMissingComponent

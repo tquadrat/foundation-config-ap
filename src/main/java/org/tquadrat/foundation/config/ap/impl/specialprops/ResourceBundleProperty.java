@@ -62,12 +62,12 @@ import org.tquadrat.foundation.lang.Objects;
  *  for
  *  {@link SpecialPropertyType#CONFIG_PROPERTY_RESOURCEBUNDLE}.
  *
- *  @version $Id: ResourceBundleProperty.java 943 2021-12-21 01:34:32Z tquadrat $
+ *  @version $Id: ResourceBundleProperty.java 999 2022-01-27 23:23:26Z tquadrat $
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@ClassVersion( sourceVersion = "$Id: ResourceBundleProperty.java 943 2021-12-21 01:34:32Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ResourceBundleProperty.java 999 2022-01-27 23:23:26Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public final class ResourceBundleProperty extends SpecialPropertySpecBase
 {
@@ -118,8 +118,8 @@ public final class ResourceBundleProperty extends SpecialPropertySpecBase
     }   //  composeField()
 
     /**
-     *  <p>{@summary The implementation of the method that composes a getter for the given
-     *  property.}</p>
+     *  <p>{@summary The implementation of the method that composes a getter
+     *  for the given property.}</p>
      *  <p>The implementation details depend from the usage: with
      *  {@link I18nSupport},
      *  it is a bit more complex.</p>
@@ -152,7 +152,7 @@ public final class ResourceBundleProperty extends SpecialPropertySpecBase
 
             /*
              * I18nSupport does not allow a setter for the resource bundle, so
-             * we do not need the locking for tha access to the resource
+             * we do not need the locking for the access to the resource
              * bundle. But it may be necessary for the update.
              */
             final var lock = property.hasFlag( PROPERTY_REQUIRES_SYNCHRONIZATION )
@@ -180,7 +180,7 @@ public final class ResourceBundleProperty extends SpecialPropertySpecBase
             }
             else
             {
-                builder.addStatement(
+                builder.beginControlFlow(
                     """
                     try
                     """ );

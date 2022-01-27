@@ -340,7 +340,7 @@
         </symbol>
         <clipPath id='ID000005'>
             <rect class='otherClass'
-                  height='128.000'
+                  height='139.000'
                   width='910.000'
                   x='0.000'
                   y='0.000'/>
@@ -351,7 +351,7 @@
                     <rect x='0.000'
                           y='0.000'
                           width='910.000'
-                          height='128.000'
+                          height='139.000'
                           class='otherClass'/>
                     <line x1='0.000'
                           y1='17.000'
@@ -382,7 +382,9 @@
                     <text x='5.000'
                           y='113.000'>- createRetrieveParseErrorMessage(errorMsgHolder:org.tquadrat.foundation.javacomposer.FieldSpec):void</text>
                     <text x='5.000'
-                          y='124.000'>- retrieveValueHandlerClass(property:org.tquadrat.foundation.config.ap.PropertySpec):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.TypeName&gt;</text>
+                          y='124.000'>- doBuild():void</text>
+                    <text x='5.000'
+                          y='135.000'>- retrieveValueHandlerClass(property:org.tquadrat.foundation.config.ap.PropertySpec):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.TypeName&gt;</text>
                 </g>
             </g>
         </symbol>
