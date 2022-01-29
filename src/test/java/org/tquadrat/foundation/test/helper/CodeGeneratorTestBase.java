@@ -23,6 +23,7 @@ import static org.apiguardian.api.API.Status.STABLE;
 import static org.tquadrat.foundation.config.SpecialPropertyType.CONFIG_PROPERTY_CHARSET;
 import static org.tquadrat.foundation.config.SpecialPropertyType.CONFIG_PROPERTY_CLOCK;
 import static org.tquadrat.foundation.config.SpecialPropertyType.CONFIG_PROPERTY_LOCALE;
+import static org.tquadrat.foundation.config.SpecialPropertyType.CONFIG_PROPERTY_MESSAGEPREFIX;
 import static org.tquadrat.foundation.config.SpecialPropertyType.CONFIG_PROPERTY_PID;
 import static org.tquadrat.foundation.config.SpecialPropertyType.CONFIG_PROPERTY_RANDOM;
 import static org.tquadrat.foundation.config.SpecialPropertyType.CONFIG_PROPERTY_RESOURCEBUNDLE;
@@ -31,6 +32,7 @@ import static org.tquadrat.foundation.config.SpecialPropertyType.CONFIG_PROPERTY
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ALLOWS_INIFILE;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ALLOWS_PREFERENCES;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.GETTER_IS_DEFAULT;
+import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.GETTER_ON_MAP;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.GETTER_RETURNS_OPTIONAL;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_CLI_MANDATORY;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_MUTABLE;
@@ -260,11 +262,7 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
         property.setPrefsAccessorClass( ClassName.from( StringAccessor.class ) );
         property.setINIConfiguration( "group", "string1", "Property string1" );
 
-        property = new PropertySpecImpl( "object1" );
-        configuration.addProperty( property );
-        property.setFlag( GETTER_IS_DEFAULT );
-        property.setGetterMethodName( new NameImpl( "getObject1" ) );
-        property.setGetterReturnType( ClassName.from( Object.class ) );
+        createProperty_object1( configuration );
 
         /*
          * Those special properties that are optional.
@@ -411,7 +409,7 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
         /*
          * Additional settings.
          */
-        configuration.setI18NParameters( "BaseClass.MESSAGE_PREFIX", "BaseClass.BASE_BUNDLE_NAME" );
+        configuration.setI18NParameters( "MSG", format( "%s.TextsAndMessages", getClass().getPackageName() ) );
     }   //  createPropertiesForI18NSupport()
 
     /**
@@ -623,13 +621,32 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
     @SuppressWarnings( "UseOfConcreteClass" )
     public static final void createProperty_messagePrefix( final CodeGenerationConfiguration configuration )
     {
-        final var propertyName = "messagePrefix";
+        final var propertyName = CONFIG_PROPERTY_MESSAGEPREFIX.getPropertyName();
         final var property = new PropertySpecImpl( propertyName );
         configuration.addProperty( property );
-        property.setFlag( GETTER_IS_DEFAULT );
+        property.setFlag( PROPERTY_IS_SPECIAL );
+        property.setSpecialPropertyType( CONFIG_PROPERTY_MESSAGEPREFIX );
         property.setGetterMethodName( new NameImpl( composeGetterName( propertyName ) ) );
-        property.setGetterReturnType( ClassName.from( String.class ) );
+        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
     }   //  createProperty_messagePrefix()
+
+    /**
+     *  Creates the property 'object1', and adds it to the
+     *  configuration.
+     *
+     *  @param  configuration   The configuration that takes the created
+     *      property.
+     */
+    @SuppressWarnings( "UseOfConcreteClass" )
+    public static final void createProperty_object1( final CodeGenerationConfiguration configuration )
+    {
+        final var propertyName = "object1";
+        final var property = new PropertySpecImpl( propertyName );
+        configuration.addProperty( property );
+        property.setFlag( GETTER_IS_DEFAULT, GETTER_ON_MAP );
+        property.setGetterMethodName( new NameImpl( composeGetterName( propertyName ) ) );
+        property.setGetterReturnType( ClassName.from( Object.class ) );
+    }   //  createProperty_object1()
 
     /**
      *  Creates the property 'processId', and adds it to the

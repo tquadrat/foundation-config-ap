@@ -17,24 +17,14 @@
 
 package org.tquadrat.foundation.config.ap.impl.codebuilders;
 
-import static javax.lang.model.element.Modifier.FINAL;
 import static javax.lang.model.element.Modifier.PRIVATE;
-import static javax.lang.model.element.Modifier.PUBLIC;
 import static org.apiguardian.api.API.Status.STABLE;
-import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_GetterMustBeDEFAULT;
-import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_MissingGetter;
-import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_NoMessagePrefix;
 import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_ResourceLocale;
-import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardMethod.STD_METHOD_GetMessagePrefix;
-import static org.tquadrat.foundation.util.StringUtils.decapitalize;
-import static org.tquadrat.foundation.util.StringUtils.format;
 
 import java.util.Locale;
 
 import org.apiguardian.api.API;
 import org.tquadrat.foundation.annotation.ClassVersion;
-import org.tquadrat.foundation.ap.CodeGenerationError;
-import org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag;
 
 /**
  *  <p>{@summary The
@@ -52,22 +42,6 @@ import org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag;
 @API( status = STABLE, since = "0.1.0" )
 public final class I18nSupportBuilder extends CodeBuilderBase
 {
-        /*---------------*\
-    ====** Inner Classes **====================================================
-        \*---------------*/
-
-        /*-----------*\
-    ====** Constants **========================================================
-        \*-----------*/
-
-        /*------------*\
-    ====** Attributes **=======================================================
-        \*------------*/
-
-        /*------------------------*\
-    ====** Static Initialisations **===========================================
-        \*------------------------*/
-
         /*--------------*\
     ====** Constructors **=====================================================
         \*--------------*/
@@ -90,9 +64,6 @@ public final class I18nSupportBuilder extends CodeBuilderBase
     @Override
     public final void build()
     {
-        final var configuration = getConfiguration();
-        final var messagePrefix = configuration.getMessagePrefix().orElseThrow( () -> new CodeGenerationError( MSG_NoMessagePrefix ) );
-
         /*
          * Create the field that tracks the locale for the current resource
          * bundle.
@@ -109,24 +80,6 @@ public final class I18nSupportBuilder extends CodeBuilderBase
             .initializer( "$1L", "null" )
             .build();
         addField( STD_FIELD_ResourceLocale, resourceBundleLocaleField );
-
-        //---* Overwrite getMessagePrefix() *----------------------------------
-        final var propertyName = decapitalize( STD_METHOD_GetMessagePrefix.toString().substring( 3 ) );
-        final var propertySpec = configuration.getProperty( propertyName )
-            .orElseThrow( () -> new CodeGenerationError( format( MSG_MissingGetter, propertyName ) ) );
-        if( !propertySpec.hasFlag( PropertyFlag.GETTER_IS_DEFAULT ) )
-        {
-            throw new CodeGenerationError( MSG_GetterMustBeDEFAULT );
-        }
-
-        final var method = getComposer().methodBuilder( STD_METHOD_GetMessagePrefix.toString() )
-            .addModifiers( PUBLIC, FINAL )
-            .addAnnotation( Override.class )
-            .addJavadoc( getComposer().createInheritDocComment() )
-            .returns( String.class )
-            .addStatement( "return $1N", messagePrefix )
-            .build();
-        addMethod( STD_METHOD_GetMessagePrefix, method );
     }   //  build()
 }
 //  class I18nSupportBuilder

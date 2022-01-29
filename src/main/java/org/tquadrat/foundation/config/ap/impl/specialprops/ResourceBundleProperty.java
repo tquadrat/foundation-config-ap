@@ -147,6 +147,11 @@ public final class ResourceBundleProperty extends SpecialPropertySpecBase
         if( codeBuilder.getConfiguration().implementInterface( I18nSupport.class ) )
         {
             if( !property.hasFlag( GETTER_RETURNS_OPTIONAL ) ) throw new CodeGenerationError( MSG_ResourceBundleWrongReturnType );
+
+            /*
+             * This the value for the base bundle name, not the name of the
+             * field where the value is stored!
+             */
             final var baseBundleName = codeBuilder.getConfiguration().getBaseBundleName()
                 .orElseThrow( () -> new CodeGenerationError( MSG_NoBaseBundleName ) );
 
@@ -185,7 +190,20 @@ public final class ResourceBundleProperty extends SpecialPropertySpecBase
                     try
                     """ );
             }
-            builder.addStatement( "bundle = $1T.getBundle( $2L, currentLocale )", ResourceBundle.class, baseBundleName )
+
+            builder.addStatement( "var module = getClass().getModule()" )
+                .beginControlFlow(
+                    """
+                    if( module.isNamed() )
+                    """ )
+                .addStatement( "bundle = $1T.getBundle( $2S, currentLocale, module )", ResourceBundle.class, baseBundleName )
+                .nextControlFlow(
+                    """
+                    
+                    else
+                    """  )
+                .addStatement( "bundle = $1T.getBundle( $2S, currentLocale )", ResourceBundle.class, baseBundleName )
+                .endControlFlow()
                 .addStatement( "$1N = bundle", property.getFieldName() )
                 .addStatement( "$1N = currentLocale", STD_FIELD_ResourceLocale.toString() )
                 .nextControlFlow(
@@ -203,6 +221,9 @@ public final class ResourceBundleProperty extends SpecialPropertySpecBase
         }
         else
         {
+            /*
+             * Same, but without I18nSupport …
+             */
             //---* Add the locking *-------------------------------------------
             final var lock = property.hasFlag( PROPERTY_REQUIRES_SYNCHRONIZATION ) && property.hasFlag( PROPERTY_IS_MUTABLE )
                  ? codeBuilder.getField( STD_FIELD_ReadLock )
@@ -243,17 +264,17 @@ public final class ResourceBundleProperty extends SpecialPropertySpecBase
      * {@inheritDoc}
      */
     @Override
-    @MountPoint
-    public Optional<BiFunction<CodeBuilder,PropertySpecImpl,MethodSpec>> getGetterComposer() { return Optional.of( ResourceBundleProperty::composeGetter ); }
+    public final Optional<BiFunction<CodeBuilder,PropertySpecImpl, FieldSpec>> getFieldComposer()
+    {
+        return Optional.of( ResourceBundleProperty::composeField );
+    }   //  getFieldComposer()
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public final Optional<BiFunction<CodeBuilder,PropertySpecImpl, FieldSpec>> getFieldComposer()
-    {
-        return Optional.of( ResourceBundleProperty::composeField );
-    }   //  getFieldComposer()
+    @MountPoint
+    public Optional<BiFunction<CodeBuilder,PropertySpecImpl,MethodSpec>> getGetterComposer() { return Optional.of( ResourceBundleProperty::composeGetter ); }
 
     /**
      *  {@inheritDoc}

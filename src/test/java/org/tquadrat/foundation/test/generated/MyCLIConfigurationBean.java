@@ -675,6 +675,15 @@ public final class MyCLIConfigurationBean extends BaseClass implements MyCLIBean
      * {@inheritDoc}
      */
     @Override
+    public final String getMessagePrefix()
+    {
+        return "MSG";
+    }  //  getMessagePrefix()
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public final long getProcessId()
     {
         return m_ProcessId;

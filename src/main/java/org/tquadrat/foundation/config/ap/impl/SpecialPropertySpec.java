@@ -42,10 +42,6 @@ import org.tquadrat.foundation.javacomposer.MethodSpec;
 @API( status = STABLE, since = "0.1.0" )
 public interface SpecialPropertySpec extends PropertySpec
 {
-        /*-----------*\
-    ====** Constants **========================================================
-        \*-----------*/
-
         /*---------*\
     ====** Methods **==========================================================
         \*---------*/

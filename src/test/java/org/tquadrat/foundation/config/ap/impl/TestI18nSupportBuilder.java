@@ -699,7 +699,7 @@ public class TestI18nSupportBuilder extends CodeGeneratorTestBase
                     @Override
                     public final String getMessagePrefix()
                     {
-                        return BaseClass.MESSAGE_PREFIX;
+                        return "MSG";
                     }  //  getMessagePrefix()
 
                     /**
@@ -736,7 +736,15 @@ public class TestI18nSupportBuilder extends CodeGeneratorTestBase
                         {
                             try( final var ignored = m_WriteLock.lock() )
                             {
-                                bundle = ResourceBundle.getBundle( BaseClass.BASE_BUNDLE_NAME, currentLocale );
+                                var module = getClass().getModule();
+                                if( module.isNamed() )
+                                {
+                                    bundle = ResourceBundle.getBundle( "org.tquadrat.foundation.config.ap.impl.TextsAndMessages", currentLocale, module );
+                                }
+                                else
+                                {
+                                    bundle = ResourceBundle.getBundle( "org.tquadrat.foundation.config.ap.impl.TextsAndMessages", currentLocale );
+                                }
                                 m_ResourceBundle = bundle;
                                 m_CurrentResourceBundleLocale = currentLocale;
                             }
@@ -1122,11 +1130,6 @@ public class TestI18nSupportBuilder extends CodeGeneratorTestBase
                                 {
                                     joiner.add( format( "locale = \\"%1S\\"", NULL_STRING ) );
                                 }
-                            }
-
-                            // Property "messagePrefix"
-                            {
-                                joiner.add( format( "messagePrefix = \\"%1S\\"", Objects.toString( getMessagePrefix() ) ) );
                             }
 
                             // Property "object1"

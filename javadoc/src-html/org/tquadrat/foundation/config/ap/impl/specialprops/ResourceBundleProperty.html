@@ -160,150 +160,171 @@
 <span class="source-line-no">147</span><span id="line-147">        if( codeBuilder.getConfiguration().implementInterface( I18nSupport.class ) )</span>
 <span class="source-line-no">148</span><span id="line-148">        {</span>
 <span class="source-line-no">149</span><span id="line-149">            if( !property.hasFlag( GETTER_RETURNS_OPTIONAL ) ) throw new CodeGenerationError( MSG_ResourceBundleWrongReturnType );</span>
-<span class="source-line-no">150</span><span id="line-150">            final var baseBundleName = codeBuilder.getConfiguration().getBaseBundleName()</span>
-<span class="source-line-no">151</span><span id="line-151">                .orElseThrow( () -&gt; new CodeGenerationError( MSG_NoBaseBundleName ) );</span>
-<span class="source-line-no">152</span><span id="line-152"></span>
-<span class="source-line-no">153</span><span id="line-153">            /*</span>
-<span class="source-line-no">154</span><span id="line-154">             * I18nSupport does not allow a setter for the resource bundle, so</span>
-<span class="source-line-no">155</span><span id="line-155">             * we do not need the locking for the access to the resource</span>
-<span class="source-line-no">156</span><span id="line-156">             * bundle. But it may be necessary for the update.</span>
-<span class="source-line-no">157</span><span id="line-157">             */</span>
-<span class="source-line-no">158</span><span id="line-158">            final var lock = property.hasFlag( PROPERTY_REQUIRES_SYNCHRONIZATION )</span>
-<span class="source-line-no">159</span><span id="line-159">                 ? codeBuilder.getField( STD_FIELD_WriteLock )</span>
-<span class="source-line-no">160</span><span id="line-160">                 : null;</span>
-<span class="source-line-no">161</span><span id="line-161">            builder.addStatement( "$1T bundle = null", ResourceBundle.class )</span>
-<span class="source-line-no">162</span><span id="line-162">                .addStatement( "final var currentLocale = getLocale()" )</span>
-<span class="source-line-no">163</span><span id="line-163">                .beginControlFlow(</span>
-<span class="source-line-no">164</span><span id="line-164">                    """</span>
-<span class="source-line-no">165</span><span id="line-165">                    if( currentLocale.equals( $1N ) )</span>
-<span class="source-line-no">166</span><span id="line-166">                    """, STD_FIELD_ResourceLocale.toString() )</span>
-<span class="source-line-no">167</span><span id="line-167">                .addStatement( "bundle = $1N", property.getFieldName() )</span>
-<span class="source-line-no">168</span><span id="line-168">                .endControlFlow()</span>
-<span class="source-line-no">169</span><span id="line-169">                .beginControlFlow(</span>
-<span class="source-line-no">170</span><span id="line-170">                    """</span>
-<span class="source-line-no">171</span><span id="line-171">                    if( isNull( bundle ) )</span>
-<span class="source-line-no">172</span><span id="line-172">                    """ )</span>
-<span class="source-line-no">173</span><span id="line-173">                .addStaticImport( Objects.class, "isNull" );</span>
-<span class="source-line-no">174</span><span id="line-174">            if( nonNull( lock) )</span>
-<span class="source-line-no">175</span><span id="line-175">            {</span>
-<span class="source-line-no">176</span><span id="line-176">                builder.beginControlFlow(</span>
-<span class="source-line-no">177</span><span id="line-177">                """</span>
-<span class="source-line-no">178</span><span id="line-178">                    try( final var ignored = $N.lock() )</span>
-<span class="source-line-no">179</span><span id="line-179">                    """, lock );</span>
-<span class="source-line-no">180</span><span id="line-180">            }</span>
-<span class="source-line-no">181</span><span id="line-181">            else</span>
-<span class="source-line-no">182</span><span id="line-182">            {</span>
-<span class="source-line-no">183</span><span id="line-183">                builder.beginControlFlow(</span>
-<span class="source-line-no">184</span><span id="line-184">                    """</span>
-<span class="source-line-no">185</span><span id="line-185">                    try</span>
-<span class="source-line-no">186</span><span id="line-186">                    """ );</span>
-<span class="source-line-no">187</span><span id="line-187">            }</span>
-<span class="source-line-no">188</span><span id="line-188">            builder.addStatement( "bundle = $1T.getBundle( $2L, currentLocale )", ResourceBundle.class, baseBundleName )</span>
-<span class="source-line-no">189</span><span id="line-189">                .addStatement( "$1N = bundle", property.getFieldName() )</span>
-<span class="source-line-no">190</span><span id="line-190">                .addStatement( "$1N = currentLocale", STD_FIELD_ResourceLocale.toString() )</span>
-<span class="source-line-no">191</span><span id="line-191">                .nextControlFlow(</span>
-<span class="source-line-no">192</span><span id="line-192">                    """</span>
+<span class="source-line-no">150</span><span id="line-150"></span>
+<span class="source-line-no">151</span><span id="line-151">            /*</span>
+<span class="source-line-no">152</span><span id="line-152">             * This the value for the base bundle name, not the name of the</span>
+<span class="source-line-no">153</span><span id="line-153">             * field where the value is stored!</span>
+<span class="source-line-no">154</span><span id="line-154">             */</span>
+<span class="source-line-no">155</span><span id="line-155">            final var baseBundleName = codeBuilder.getConfiguration().getBaseBundleName()</span>
+<span class="source-line-no">156</span><span id="line-156">                .orElseThrow( () -&gt; new CodeGenerationError( MSG_NoBaseBundleName ) );</span>
+<span class="source-line-no">157</span><span id="line-157"></span>
+<span class="source-line-no">158</span><span id="line-158">            /*</span>
+<span class="source-line-no">159</span><span id="line-159">             * I18nSupport does not allow a setter for the resource bundle, so</span>
+<span class="source-line-no">160</span><span id="line-160">             * we do not need the locking for the access to the resource</span>
+<span class="source-line-no">161</span><span id="line-161">             * bundle. But it may be necessary for the update.</span>
+<span class="source-line-no">162</span><span id="line-162">             */</span>
+<span class="source-line-no">163</span><span id="line-163">            final var lock = property.hasFlag( PROPERTY_REQUIRES_SYNCHRONIZATION )</span>
+<span class="source-line-no">164</span><span id="line-164">                 ? codeBuilder.getField( STD_FIELD_WriteLock )</span>
+<span class="source-line-no">165</span><span id="line-165">                 : null;</span>
+<span class="source-line-no">166</span><span id="line-166">            builder.addStatement( "$1T bundle = null", ResourceBundle.class )</span>
+<span class="source-line-no">167</span><span id="line-167">                .addStatement( "final var currentLocale = getLocale()" )</span>
+<span class="source-line-no">168</span><span id="line-168">                .beginControlFlow(</span>
+<span class="source-line-no">169</span><span id="line-169">                    """</span>
+<span class="source-line-no">170</span><span id="line-170">                    if( currentLocale.equals( $1N ) )</span>
+<span class="source-line-no">171</span><span id="line-171">                    """, STD_FIELD_ResourceLocale.toString() )</span>
+<span class="source-line-no">172</span><span id="line-172">                .addStatement( "bundle = $1N", property.getFieldName() )</span>
+<span class="source-line-no">173</span><span id="line-173">                .endControlFlow()</span>
+<span class="source-line-no">174</span><span id="line-174">                .beginControlFlow(</span>
+<span class="source-line-no">175</span><span id="line-175">                    """</span>
+<span class="source-line-no">176</span><span id="line-176">                    if( isNull( bundle ) )</span>
+<span class="source-line-no">177</span><span id="line-177">                    """ )</span>
+<span class="source-line-no">178</span><span id="line-178">                .addStaticImport( Objects.class, "isNull" );</span>
+<span class="source-line-no">179</span><span id="line-179">            if( nonNull( lock) )</span>
+<span class="source-line-no">180</span><span id="line-180">            {</span>
+<span class="source-line-no">181</span><span id="line-181">                builder.beginControlFlow(</span>
+<span class="source-line-no">182</span><span id="line-182">                """</span>
+<span class="source-line-no">183</span><span id="line-183">                    try( final var ignored = $N.lock() )</span>
+<span class="source-line-no">184</span><span id="line-184">                    """, lock );</span>
+<span class="source-line-no">185</span><span id="line-185">            }</span>
+<span class="source-line-no">186</span><span id="line-186">            else</span>
+<span class="source-line-no">187</span><span id="line-187">            {</span>
+<span class="source-line-no">188</span><span id="line-188">                builder.beginControlFlow(</span>
+<span class="source-line-no">189</span><span id="line-189">                    """</span>
+<span class="source-line-no">190</span><span id="line-190">                    try</span>
+<span class="source-line-no">191</span><span id="line-191">                    """ );</span>
+<span class="source-line-no">192</span><span id="line-192">            }</span>
 <span class="source-line-no">193</span><span id="line-193"></span>
-<span class="source-line-no">194</span><span id="line-194">                    catch( @$1T( "unused" ) final $2T e )</span>
-<span class="source-line-no">195</span><span id="line-195">                    """, SuppressWarnings.class, MissingResourceException.class )</span>
-<span class="source-line-no">196</span><span id="line-196">                .addCode( """</span>
-<span class="source-line-no">197</span><span id="line-197">                    /* Deliberately ignored */</span>
+<span class="source-line-no">194</span><span id="line-194">            builder.addStatement( "var module = getClass().getModule()" )</span>
+<span class="source-line-no">195</span><span id="line-195">                .beginControlFlow(</span>
+<span class="source-line-no">196</span><span id="line-196">                    """</span>
+<span class="source-line-no">197</span><span id="line-197">                    if( module.isNamed() )</span>
 <span class="source-line-no">198</span><span id="line-198">                    """ )</span>
-<span class="source-line-no">199</span><span id="line-199">                .endControlFlow()</span>
-<span class="source-line-no">200</span><span id="line-200">                .endControlFlow()</span>
-<span class="source-line-no">201</span><span id="line-201">                .addStatement( "final var retValue = $T.ofNullable( bundle )", Optional.class )</span>
-<span class="source-line-no">202</span><span id="line-202">                .addCode( codeBuilder.getComposer().createReturnStatement() );</span>
-<span class="source-line-no">203</span><span id="line-203">        }</span>
-<span class="source-line-no">204</span><span id="line-204">        else</span>
-<span class="source-line-no">205</span><span id="line-205">        {</span>
-<span class="source-line-no">206</span><span id="line-206">            //---* Add the locking *-------------------------------------------</span>
-<span class="source-line-no">207</span><span id="line-207">            final var lock = property.hasFlag( PROPERTY_REQUIRES_SYNCHRONIZATION ) &amp;&amp; property.hasFlag( PROPERTY_IS_MUTABLE )</span>
-<span class="source-line-no">208</span><span id="line-208">                 ? codeBuilder.getField( STD_FIELD_ReadLock )</span>
-<span class="source-line-no">209</span><span id="line-209">                 : null;</span>
-<span class="source-line-no">210</span><span id="line-210">            if( nonNull( lock) ) builder.beginControlFlow(</span>
-<span class="source-line-no">211</span><span id="line-211">                """</span>
-<span class="source-line-no">212</span><span id="line-212">                try( final var ignored = $N.lock() )</span>
-<span class="source-line-no">213</span><span id="line-213">                """, lock );</span>
-<span class="source-line-no">214</span><span id="line-214"></span>
-<span class="source-line-no">215</span><span id="line-215">            //---* Return the value *------------------------------------------</span>
-<span class="source-line-no">216</span><span id="line-216">            if( property.hasFlag( GETTER_RETURNS_OPTIONAL ) )</span>
-<span class="source-line-no">217</span><span id="line-217">            {</span>
-<span class="source-line-no">218</span><span id="line-218">                builder.addStatement( "return $1T.ofNullable( $2N )", Optional.class, property.getFieldName() );</span>
-<span class="source-line-no">219</span><span id="line-219">            }</span>
-<span class="source-line-no">220</span><span id="line-220">            else</span>
-<span class="source-line-no">221</span><span id="line-221">            {</span>
-<span class="source-line-no">222</span><span id="line-222">                builder.addStatement( "return $1N", property.getFieldName() );</span>
-<span class="source-line-no">223</span><span id="line-223">            }</span>
-<span class="source-line-no">224</span><span id="line-224"></span>
-<span class="source-line-no">225</span><span id="line-225">            //---* Cleanup *---------------------------------------------------</span>
-<span class="source-line-no">226</span><span id="line-226">            if( nonNull( lock) ) builder.endControlFlow();</span>
-<span class="source-line-no">227</span><span id="line-227">        }</span>
-<span class="source-line-no">228</span><span id="line-228"></span>
-<span class="source-line-no">229</span><span id="line-229">        //---* Create the return value *---------------------------------------</span>
-<span class="source-line-no">230</span><span id="line-230">        final var retValue = builder.build();</span>
-<span class="source-line-no">231</span><span id="line-231"></span>
-<span class="source-line-no">232</span><span id="line-232">        //---* Done *----------------------------------------------------------</span>
-<span class="source-line-no">233</span><span id="line-233">        return retValue;</span>
-<span class="source-line-no">234</span><span id="line-234">    }   //  composeGetter()</span>
+<span class="source-line-no">199</span><span id="line-199">                .addStatement( "bundle = $1T.getBundle( $2S, currentLocale, module )", ResourceBundle.class, baseBundleName )</span>
+<span class="source-line-no">200</span><span id="line-200">                .nextControlFlow(</span>
+<span class="source-line-no">201</span><span id="line-201">                    """</span>
+<span class="source-line-no">202</span><span id="line-202">                    </span>
+<span class="source-line-no">203</span><span id="line-203">                    else</span>
+<span class="source-line-no">204</span><span id="line-204">                    """  )</span>
+<span class="source-line-no">205</span><span id="line-205">                .addStatement( "bundle = $1T.getBundle( $2S, currentLocale )", ResourceBundle.class, baseBundleName )</span>
+<span class="source-line-no">206</span><span id="line-206">                .endControlFlow()</span>
+<span class="source-line-no">207</span><span id="line-207">                .addStatement( "$1N = bundle", property.getFieldName() )</span>
+<span class="source-line-no">208</span><span id="line-208">                .addStatement( "$1N = currentLocale", STD_FIELD_ResourceLocale.toString() )</span>
+<span class="source-line-no">209</span><span id="line-209">                .nextControlFlow(</span>
+<span class="source-line-no">210</span><span id="line-210">                    """</span>
+<span class="source-line-no">211</span><span id="line-211"></span>
+<span class="source-line-no">212</span><span id="line-212">                    catch( @$1T( "unused" ) final $2T e )</span>
+<span class="source-line-no">213</span><span id="line-213">                    """, SuppressWarnings.class, MissingResourceException.class )</span>
+<span class="source-line-no">214</span><span id="line-214">                .addCode( """</span>
+<span class="source-line-no">215</span><span id="line-215">                    /* Deliberately ignored */</span>
+<span class="source-line-no">216</span><span id="line-216">                    """ )</span>
+<span class="source-line-no">217</span><span id="line-217">                .endControlFlow()</span>
+<span class="source-line-no">218</span><span id="line-218">                .endControlFlow()</span>
+<span class="source-line-no">219</span><span id="line-219">                .addStatement( "final var retValue = $T.ofNullable( bundle )", Optional.class )</span>
+<span class="source-line-no">220</span><span id="line-220">                .addCode( codeBuilder.getComposer().createReturnStatement() );</span>
+<span class="source-line-no">221</span><span id="line-221">        }</span>
+<span class="source-line-no">222</span><span id="line-222">        else</span>
+<span class="source-line-no">223</span><span id="line-223">        {</span>
+<span class="source-line-no">224</span><span id="line-224">            /*</span>
+<span class="source-line-no">225</span><span id="line-225">             * Same, but without I18nSupport …</span>
+<span class="source-line-no">226</span><span id="line-226">             */</span>
+<span class="source-line-no">227</span><span id="line-227">            //---* Add the locking *-------------------------------------------</span>
+<span class="source-line-no">228</span><span id="line-228">            final var lock = property.hasFlag( PROPERTY_REQUIRES_SYNCHRONIZATION ) &amp;&amp; property.hasFlag( PROPERTY_IS_MUTABLE )</span>
+<span class="source-line-no">229</span><span id="line-229">                 ? codeBuilder.getField( STD_FIELD_ReadLock )</span>
+<span class="source-line-no">230</span><span id="line-230">                 : null;</span>
+<span class="source-line-no">231</span><span id="line-231">            if( nonNull( lock) ) builder.beginControlFlow(</span>
+<span class="source-line-no">232</span><span id="line-232">                """</span>
+<span class="source-line-no">233</span><span id="line-233">                try( final var ignored = $N.lock() )</span>
+<span class="source-line-no">234</span><span id="line-234">                """, lock );</span>
 <span class="source-line-no">235</span><span id="line-235"></span>
-<span class="source-line-no">236</span><span id="line-236">    /**</span>
-<span class="source-line-no">237</span><span id="line-237">     *  {@inheritDoc}</span>
-<span class="source-line-no">238</span><span id="line-238">     */</span>
-<span class="source-line-no">239</span><span id="line-239">    @Override</span>
-<span class="source-line-no">240</span><span id="line-240">    public final Optional&lt;TypeName&gt; getCLIValueHandlerClass() { return Optional.empty(); }</span>
-<span class="source-line-no">241</span><span id="line-241"></span>
-<span class="source-line-no">242</span><span id="line-242">    /**</span>
-<span class="source-line-no">243</span><span id="line-243">     * {@inheritDoc}</span>
-<span class="source-line-no">244</span><span id="line-244">     */</span>
-<span class="source-line-no">245</span><span id="line-245">    @Override</span>
-<span class="source-line-no">246</span><span id="line-246">    @MountPoint</span>
-<span class="source-line-no">247</span><span id="line-247">    public Optional&lt;BiFunction&lt;CodeBuilder,PropertySpecImpl,MethodSpec&gt;&gt; getGetterComposer() { return Optional.of( ResourceBundleProperty::composeGetter ); }</span>
-<span class="source-line-no">248</span><span id="line-248"></span>
-<span class="source-line-no">249</span><span id="line-249">    /**</span>
-<span class="source-line-no">250</span><span id="line-250">     * {@inheritDoc}</span>
-<span class="source-line-no">251</span><span id="line-251">     */</span>
-<span class="source-line-no">252</span><span id="line-252">    @Override</span>
-<span class="source-line-no">253</span><span id="line-253">    public final Optional&lt;BiFunction&lt;CodeBuilder,PropertySpecImpl, FieldSpec&gt;&gt; getFieldComposer()</span>
-<span class="source-line-no">254</span><span id="line-254">    {</span>
-<span class="source-line-no">255</span><span id="line-255">        return Optional.of( ResourceBundleProperty::composeField );</span>
-<span class="source-line-no">256</span><span id="line-256">    }   //  getFieldComposer()</span>
-<span class="source-line-no">257</span><span id="line-257"></span>
-<span class="source-line-no">258</span><span id="line-258">    /**</span>
-<span class="source-line-no">259</span><span id="line-259">     *  {@inheritDoc}</span>
-<span class="source-line-no">260</span><span id="line-260">     */</span>
-<span class="source-line-no">261</span><span id="line-261">    @Override</span>
-<span class="source-line-no">262</span><span id="line-262">    public final TypeName getGetterReturnType()</span>
-<span class="source-line-no">263</span><span id="line-263">    {</span>
-<span class="source-line-no">264</span><span id="line-264">        final var rawType = ClassName.from( Optional.class );</span>
-<span class="source-line-no">265</span><span id="line-265">        final var retValue = ParameterizedTypeName.from( rawType, getPropertyType() );</span>
-<span class="source-line-no">266</span><span id="line-266"></span>
-<span class="source-line-no">267</span><span id="line-267">        //---* Done *----------------------------------------------------------</span>
-<span class="source-line-no">268</span><span id="line-268">        return retValue;</span>
-<span class="source-line-no">269</span><span id="line-269">    }   //  getGetterReturnType()</span>
-<span class="source-line-no">270</span><span id="line-270"></span>
-<span class="source-line-no">271</span><span id="line-271">    /**</span>
-<span class="source-line-no">272</span><span id="line-272">     *  {@inheritDoc}</span>
-<span class="source-line-no">273</span><span id="line-273">     */</span>
-<span class="source-line-no">274</span><span id="line-274">    @Override</span>
-<span class="source-line-no">275</span><span id="line-275">    public final Optional&lt;TypeName&gt; getPrefsAccessorClass() { return Optional.empty(); }</span>
-<span class="source-line-no">276</span><span id="line-276"></span>
-<span class="source-line-no">277</span><span id="line-277">    /**</span>
-<span class="source-line-no">278</span><span id="line-278">     *  {@inheritDoc}</span>
-<span class="source-line-no">279</span><span id="line-279">     */</span>
-<span class="source-line-no">280</span><span id="line-280">    @Override</span>
-<span class="source-line-no">281</span><span id="line-281">    public final TypeName getPropertyType() { return ClassName.from( ResourceBundle.class ); }</span>
-<span class="source-line-no">282</span><span id="line-282"></span>
-<span class="source-line-no">283</span><span id="line-283">    /**</span>
-<span class="source-line-no">284</span><span id="line-284">     *  {@inheritDoc}</span>
-<span class="source-line-no">285</span><span id="line-285">     */</span>
-<span class="source-line-no">286</span><span id="line-286">    @Override</span>
-<span class="source-line-no">287</span><span id="line-287">    public final Optional&lt;TypeName&gt; getStringConverterClass() { return Optional.empty(); }</span>
-<span class="source-line-no">288</span><span id="line-288">}</span>
-<span class="source-line-no">289</span><span id="line-289">//  class ResourceBundleProperty</span>
-<span class="source-line-no">290</span><span id="line-290"></span>
-<span class="source-line-no">291</span><span id="line-291">/*</span>
-<span class="source-line-no">292</span><span id="line-292"> *  End of File</span>
-<span class="source-line-no">293</span><span id="line-293"> */</span>
+<span class="source-line-no">236</span><span id="line-236">            //---* Return the value *------------------------------------------</span>
+<span class="source-line-no">237</span><span id="line-237">            if( property.hasFlag( GETTER_RETURNS_OPTIONAL ) )</span>
+<span class="source-line-no">238</span><span id="line-238">            {</span>
+<span class="source-line-no">239</span><span id="line-239">                builder.addStatement( "return $1T.ofNullable( $2N )", Optional.class, property.getFieldName() );</span>
+<span class="source-line-no">240</span><span id="line-240">            }</span>
+<span class="source-line-no">241</span><span id="line-241">            else</span>
+<span class="source-line-no">242</span><span id="line-242">            {</span>
+<span class="source-line-no">243</span><span id="line-243">                builder.addStatement( "return $1N", property.getFieldName() );</span>
+<span class="source-line-no">244</span><span id="line-244">            }</span>
+<span class="source-line-no">245</span><span id="line-245"></span>
+<span class="source-line-no">246</span><span id="line-246">            //---* Cleanup *---------------------------------------------------</span>
+<span class="source-line-no">247</span><span id="line-247">            if( nonNull( lock) ) builder.endControlFlow();</span>
+<span class="source-line-no">248</span><span id="line-248">        }</span>
+<span class="source-line-no">249</span><span id="line-249"></span>
+<span class="source-line-no">250</span><span id="line-250">        //---* Create the return value *---------------------------------------</span>
+<span class="source-line-no">251</span><span id="line-251">        final var retValue = builder.build();</span>
+<span class="source-line-no">252</span><span id="line-252"></span>
+<span class="source-line-no">253</span><span id="line-253">        //---* Done *----------------------------------------------------------</span>
+<span class="source-line-no">254</span><span id="line-254">        return retValue;</span>
+<span class="source-line-no">255</span><span id="line-255">    }   //  composeGetter()</span>
+<span class="source-line-no">256</span><span id="line-256"></span>
+<span class="source-line-no">257</span><span id="line-257">    /**</span>
+<span class="source-line-no">258</span><span id="line-258">     *  {@inheritDoc}</span>
+<span class="source-line-no">259</span><span id="line-259">     */</span>
+<span class="source-line-no">260</span><span id="line-260">    @Override</span>
+<span class="source-line-no">261</span><span id="line-261">    public final Optional&lt;TypeName&gt; getCLIValueHandlerClass() { return Optional.empty(); }</span>
+<span class="source-line-no">262</span><span id="line-262"></span>
+<span class="source-line-no">263</span><span id="line-263">    /**</span>
+<span class="source-line-no">264</span><span id="line-264">     * {@inheritDoc}</span>
+<span class="source-line-no">265</span><span id="line-265">     */</span>
+<span class="source-line-no">266</span><span id="line-266">    @Override</span>
+<span class="source-line-no">267</span><span id="line-267">    public final Optional&lt;BiFunction&lt;CodeBuilder,PropertySpecImpl, FieldSpec&gt;&gt; getFieldComposer()</span>
+<span class="source-line-no">268</span><span id="line-268">    {</span>
+<span class="source-line-no">269</span><span id="line-269">        return Optional.of( ResourceBundleProperty::composeField );</span>
+<span class="source-line-no">270</span><span id="line-270">    }   //  getFieldComposer()</span>
+<span class="source-line-no">271</span><span id="line-271"></span>
+<span class="source-line-no">272</span><span id="line-272">    /**</span>
+<span class="source-line-no">273</span><span id="line-273">     * {@inheritDoc}</span>
+<span class="source-line-no">274</span><span id="line-274">     */</span>
+<span class="source-line-no">275</span><span id="line-275">    @Override</span>
+<span class="source-line-no">276</span><span id="line-276">    @MountPoint</span>
+<span class="source-line-no">277</span><span id="line-277">    public Optional&lt;BiFunction&lt;CodeBuilder,PropertySpecImpl,MethodSpec&gt;&gt; getGetterComposer() { return Optional.of( ResourceBundleProperty::composeGetter ); }</span>
+<span class="source-line-no">278</span><span id="line-278"></span>
+<span class="source-line-no">279</span><span id="line-279">    /**</span>
+<span class="source-line-no">280</span><span id="line-280">     *  {@inheritDoc}</span>
+<span class="source-line-no">281</span><span id="line-281">     */</span>
+<span class="source-line-no">282</span><span id="line-282">    @Override</span>
+<span class="source-line-no">283</span><span id="line-283">    public final TypeName getGetterReturnType()</span>
+<span class="source-line-no">284</span><span id="line-284">    {</span>
+<span class="source-line-no">285</span><span id="line-285">        final var rawType = ClassName.from( Optional.class );</span>
+<span class="source-line-no">286</span><span id="line-286">        final var retValue = ParameterizedTypeName.from( rawType, getPropertyType() );</span>
+<span class="source-line-no">287</span><span id="line-287"></span>
+<span class="source-line-no">288</span><span id="line-288">        //---* Done *----------------------------------------------------------</span>
+<span class="source-line-no">289</span><span id="line-289">        return retValue;</span>
+<span class="source-line-no">290</span><span id="line-290">    }   //  getGetterReturnType()</span>
+<span class="source-line-no">291</span><span id="line-291"></span>
+<span class="source-line-no">292</span><span id="line-292">    /**</span>
+<span class="source-line-no">293</span><span id="line-293">     *  {@inheritDoc}</span>
+<span class="source-line-no">294</span><span id="line-294">     */</span>
+<span class="source-line-no">295</span><span id="line-295">    @Override</span>
+<span class="source-line-no">296</span><span id="line-296">    public final Optional&lt;TypeName&gt; getPrefsAccessorClass() { return Optional.empty(); }</span>
+<span class="source-line-no">297</span><span id="line-297"></span>
+<span class="source-line-no">298</span><span id="line-298">    /**</span>
+<span class="source-line-no">299</span><span id="line-299">     *  {@inheritDoc}</span>
+<span class="source-line-no">300</span><span id="line-300">     */</span>
+<span class="source-line-no">301</span><span id="line-301">    @Override</span>
+<span class="source-line-no">302</span><span id="line-302">    public final TypeName getPropertyType() { return ClassName.from( ResourceBundle.class ); }</span>
+<span class="source-line-no">303</span><span id="line-303"></span>
+<span class="source-line-no">304</span><span id="line-304">    /**</span>
+<span class="source-line-no">305</span><span id="line-305">     *  {@inheritDoc}</span>
+<span class="source-line-no">306</span><span id="line-306">     */</span>
+<span class="source-line-no">307</span><span id="line-307">    @Override</span>
+<span class="source-line-no">308</span><span id="line-308">    public final Optional&lt;TypeName&gt; getStringConverterClass() { return Optional.empty(); }</span>
+<span class="source-line-no">309</span><span id="line-309">}</span>
+<span class="source-line-no">310</span><span id="line-310">//  class ResourceBundleProperty</span>
+<span class="source-line-no">311</span><span id="line-311"></span>
+<span class="source-line-no">312</span><span id="line-312">/*</span>
+<span class="source-line-no">313</span><span id="line-313"> *  End of File</span>
+<span class="source-line-no">314</span><span id="line-314"> */</span>
 
 
 

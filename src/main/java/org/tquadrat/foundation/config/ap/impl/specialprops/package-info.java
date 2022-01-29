@@ -16,8 +16,12 @@
  */
 
 /**
- *  The implementations for
- *  {@link org.tquadrat.foundation.config.ap.impl.SpecialPropertySpec}.
+ *  <p>{@summary The implementations for
+ *  {@link org.tquadrat.foundation.config.ap.impl.SpecialPropertySpec}.}</p>
+ *  <p>If a new special property will be added, it has to be added to the
+ *  registry {@code CodeGenerator.m_SpecialProperties}.</p>
+ *
+ *  @see org.tquadrat.foundation.config.ap.impl.CodeGenerator
  */
 
 package org.tquadrat.foundation.config.ap.impl.specialprops;

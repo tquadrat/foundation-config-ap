@@ -102,7 +102,7 @@ public class BugHunt_20220126_002 extends TestBaseClass
         /*
          * Additional settings.
          */
-        retValue.setI18NParameters( "BaseClass.MESSAGE_PREFIX", "BaseClass.BASE_BUNDLE_NAME" );
+        retValue.setI18NParameters( "MSG", format( "%s.TextsAndMessages", getClass().getPackageName() ) );
 
         retValue.setPreferencesRoot( format( "%s.%s", packageName, className).replace( '.', '/' ) );
         retValue.setPreferenceChangeListenerClass( ClassName.from( PreferenceChangeListenerImpl.class ) );
@@ -134,6 +134,7 @@ public class BugHunt_20220126_002 extends TestBaseClass
      *  @param  configuration   The configuration that takes the created
      *      properties.
      */
+    @SuppressWarnings( "UseOfConcreteClass" )
     private void createProperties( final CodeGenerationConfiguration configuration )
     {
         createProperty_charset( configuration );
@@ -203,6 +204,7 @@ public class BugHunt_20220126_002 extends TestBaseClass
              * bean specification; that should give us the methods and
              * attributes for the CLI handling.
              */
+            @SuppressWarnings( "GrazieInspection" )
             final var expected =
                 """
                     /*
@@ -499,9 +501,9 @@ public class BugHunt_20220126_002 extends TestBaseClass
                         @Override
                         public final String getMessagePrefix()
                         {
-                            return BaseClass.MESSAGE_PREFIX;
+                            return "MSG";
                         }  //  getMessagePrefix()
-                                    
+
                         /**
                          * {@inheritDoc}
                          */
@@ -536,7 +538,15 @@ public class BugHunt_20220126_002 extends TestBaseClass
                             {
                                 try
                                 {
-                                    bundle = ResourceBundle.getBundle( BaseClass.BASE_BUNDLE_NAME, currentLocale );
+                                    var module = getClass().getModule();
+                                    if( module.isNamed() )
+                                    {
+                                        bundle = ResourceBundle.getBundle( "org.tquadrat.foundation.config.ap.impl.TextsAndMessages", currentLocale, module );
+                                    }
+                                    else
+                                    {
+                                        bundle = ResourceBundle.getBundle( "org.tquadrat.foundation.config.ap.impl.TextsAndMessages", currentLocale );
+                                    }
                                     m_ResourceBundle = bundle;
                                     m_CurrentResourceBundleLocale = currentLocale;
                                 }
@@ -722,11 +732,6 @@ public class BugHunt_20220126_002 extends TestBaseClass
                                 {
                                     joiner.add( format( "locale = \\"%1S\\"", NULL_STRING ) );
                                 }
-                            }
-                                    
-                            // Property "messagePrefix"
-                            {
-                                joiner.add( format( "messagePrefix = \\"%1S\\"", Objects.toString( getMessagePrefix() ) ) );
                             }
                                     
                             // Property "processId"

@@ -56,11 +56,10 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@SuppressWarnings( "ClassWithTooManyMethods" )
 @ClassVersion( sourceVersion = "$Id: SpecialPropertySpecBase.java 947 2021-12-23 21:44:25Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 abstract sealed class SpecialPropertySpecBase implements SpecialPropertySpec
-    permits CharsetProperty, ClockProperty, LocaleProperty, ProcessIdProperty, RandomProperty, ResourceBundleProperty, SessionKeyProperty, TimeZoneProperty
+    permits CharsetProperty, ClockProperty, LocaleProperty, MessagePrefixProperty, ProcessIdProperty, RandomProperty, ResourceBundleProperty, SessionKeyProperty, TimeZoneProperty
 {
         /*------------*\
     ====** Attributes **=======================================================
@@ -74,10 +73,6 @@ abstract sealed class SpecialPropertySpecBase implements SpecialPropertySpec
      *  The type of the special property.
      */
     private final SpecialPropertyType m_Type;
-
-        /*------------------------*\
-    ====** Static Initialisations **===========================================
-        \*------------------------*/
 
         /*--------------*\
     ====** Constructors **=====================================================

@@ -118,7 +118,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="impl/specialprops/CharsetProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">CharsetProperty</a></code>, <code><a href="impl/specialprops/ClockProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">ClockProperty</a></code>, <code><a href="impl/specialprops/LocaleProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">LocaleProperty</a></code>, <code><a href="impl/specialprops/ProcessIdProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">ProcessIdProperty</a></code>, <code><a href="impl/PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a></code>, <code><a href="impl/specialprops/RandomProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">RandomProperty</a></code>, <code><a href="impl/specialprops/ResourceBundleProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">ResourceBundleProperty</a></code>, <code><a href="impl/specialprops/SessionKeyProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">SessionKeyProperty</a></code>, <code><a href="impl/specialprops/SpecialPropertySpecBase.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">SpecialPropertySpecBase</a></code>, <code><a href="impl/specialprops/TimeZoneProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">TimeZoneProperty</a></code></dd>
+<dd><code><a href="impl/specialprops/CharsetProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">CharsetProperty</a></code>, <code><a href="impl/specialprops/ClockProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">ClockProperty</a></code>, <code><a href="impl/specialprops/LocaleProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">LocaleProperty</a></code>, <code><a href="impl/specialprops/MessagePrefixProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">MessagePrefixProperty</a></code>, <code><a href="impl/specialprops/ProcessIdProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">ProcessIdProperty</a></code>, <code><a href="impl/PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a></code>, <code><a href="impl/specialprops/RandomProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">RandomProperty</a></code>, <code><a href="impl/specialprops/ResourceBundleProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">ResourceBundleProperty</a></code>, <code><a href="impl/specialprops/SessionKeyProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">SessionKeyProperty</a></code>, <code><a href="impl/specialprops/SpecialPropertySpecBase.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">SpecialPropertySpecBase</a></code>, <code><a href="impl/specialprops/TimeZoneProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">TimeZoneProperty</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="annotations"><a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">@ClassVersion</a>(<a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html#sourceVersion()" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">sourceVersion</a>="$Id: PropertySpec.java 946 2021-12-23 14:48:19Z tquadrat $")
@@ -400,7 +400,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="createAddMethod(org.tquadrat.foundation.config.ap.impl.CodeBuilder)">
 <h3>createAddMethod</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-243">createAddMethod</a></span><wbr><span class="parameters">(<a href="impl/CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-265">createAddMethod</a></span><wbr><span class="parameters">(<a href="impl/CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
 <div class="block">Creates the specification of the 'add' method for this property.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -415,7 +415,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="createConstructorFragment(org.tquadrat.foundation.config.ap.impl.CodeBuilder)">
 <h3>createConstructorFragment</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/CodeBlock.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">CodeBlock</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-254">createConstructorFragment</a></span><wbr><span class="parameters">(<a href="impl/CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/CodeBlock.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">CodeBlock</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-276">createConstructorFragment</a></span><wbr><span class="parameters">(<a href="impl/CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
 <div class="block">Creates a code block that is a fragment for the constructor of the new
   configuration bean and that initialises this property.</div>
 <dl class="notes">
@@ -431,7 +431,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="createField(org.tquadrat.foundation.config.ap.impl.CodeBuilder)">
 <h3>createField</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/FieldSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">FieldSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-264">createField</a></span><wbr><span class="parameters">(<a href="impl/CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/FieldSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">FieldSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-286">createField</a></span><wbr><span class="parameters">(<a href="impl/CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
 <div class="block">Creates the field specification for this property.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -446,7 +446,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="createGetter(org.tquadrat.foundation.config.ap.impl.CodeBuilder)">
 <h3>createGetter</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-274">createGetter</a></span><wbr><span class="parameters">(<a href="impl/CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-296">createGetter</a></span><wbr><span class="parameters">(<a href="impl/CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
 <div class="block">Creates the specification of the getter for this property.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -461,7 +461,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="createSetter(org.tquadrat.foundation.config.ap.impl.CodeBuilder)">
 <h3>createSetter</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-284">createSetter</a></span><wbr><span class="parameters">(<a href="impl/CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-306">createSetter</a></span><wbr><span class="parameters">(<a href="impl/CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
 <div class="block">Creates the specification of the setter for this property.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -476,7 +476,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getAddMethodArgumentName()">
 <h3>getAddMethodArgumentName</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-291">getAddMethodArgumentName</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-313">getAddMethodArgumentName</a></span>()</div>
 <div class="block">Returns the name of the 'add' method's argument.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -487,7 +487,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getAddMethodName()">
 <h3>getAddMethodName</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-300">getAddMethodName</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-322">getAddMethodName</a></span>()</div>
 <div class="block">Returns the name of the 'add' method for this property.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -500,7 +500,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCLIArgumentIndex()">
 <h3>getCLIArgumentIndex</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/OptionalInt.html" title="class or interface in java.util" class="external-link">OptionalInt</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-315">getCLIArgumentIndex</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/OptionalInt.html" title="class or interface in java.util" class="external-link">OptionalInt</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-337">getCLIArgumentIndex</a></span>()</div>
 <div class="block"><p>Returns the index for an argument on the command
   line.</p>
   <p>The return value will be
@@ -523,7 +523,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCLIFormat()">
 <h3>getCLIFormat</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-327">getCLIFormat</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-349">getCLIFormat</a></span>()</div>
 <div class="block">Returns the special CLI format.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -543,7 +543,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCLIMetaVar()">
 <h3>getCLIMetaVar</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-339">getCLIMetaVar</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-361">getCLIMetaVar</a></span>()</div>
 <div class="block">Returns the name of the CLI meta variable for this property.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -563,7 +563,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCLIOptionNames()">
 <h3>getCLIOptionNames</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-355">getCLIOptionNames</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-377">getCLIOptionNames</a></span>()</div>
 <div class="block"><p>Returns the CLI option names. The mandatory first name in
   the list is the primary name, the optional others are the aliases.</p>
   <p>The return value will be
@@ -587,7 +587,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCLIUsage()">
 <h3>getCLIUsage</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-369">getCLIUsage</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-391">getCLIUsage</a></span>()</div>
 <div class="block">Returns the CLI usage text for this property. This text will not be
   localised.</div>
 <dl class="notes">
@@ -608,7 +608,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCLIUsageKey()">
 <h3>getCLIUsageKey</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-382">getCLIUsageKey</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-404">getCLIUsageKey</a></span>()</div>
 <div class="block">Returns the CLI usage key for this property. This key is used to
   retrieve a localised usage text.</div>
 <dl class="notes">
@@ -629,7 +629,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCLIValueHandlerClass()">
 <h3>getCLIValueHandlerClass</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-396">getCLIValueHandlerClass</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-418">getCLIValueHandlerClass</a></span>()</div>
 <div class="block">Returns the CLI value handler class for this property.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -651,7 +651,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCollectionKind()">
 <h3>getCollectionKind</h3>
-<div class="member-signature"><span class="return-type"><a href="CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-403">getCollectionKind</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-425">getCollectionKind</a></span>()</div>
 <div class="block">Returns the kind of collection for this property.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -662,7 +662,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getEnvironmentVariableName()">
 <h3>getEnvironmentVariableName</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-415">getEnvironmentVariableName</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-437">getEnvironmentVariableName</a></span>()</div>
 <div class="block">Returns the name of the environment variable that is used to initialise
   this property.</div>
 <dl class="notes">
@@ -682,7 +682,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getFieldName()">
 <h3>getFieldName</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-422">getFieldName</a></span>()</div>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-444">getFieldName</a></span>()</div>
 <div class="block">Returns the name of the field for the property.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -693,7 +693,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getGetterBuilder()">
 <h3>getGetterBuilder</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-431">getGetterBuilder</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-453">getGetterBuilder</a></span>()</div>
 <div class="block">Returns a builder for the getter for this property.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -706,7 +706,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getGetterMethodName()">
 <h3>getGetterMethodName</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-441">getGetterMethodName</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-463">getGetterMethodName</a></span>()</div>
 <div class="block">Returns the name of the getter method name. If there is no name for the
   method, it will not be generated.</div>
 <dl class="notes">
@@ -720,7 +720,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getGetterReturnType()">
 <h3>getGetterReturnType</h3>
-<div class="member-signature"><span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-450">getGetterReturnType</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-472">getGetterReturnType</a></span>()</div>
 <div class="block">Returns the return type of the getter. This is not necessarily the same
   as the
   <a href="#getPropertyType()">property type</a>.</div>
@@ -733,7 +733,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getINIComment()">
 <h3>getINIComment</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-459">getINIComment</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-481">getINIComment</a></span>()</div>
 <div class="block">Returns the comment for this property in the <code>INI</code> file.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -746,7 +746,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getINIGroup()">
 <h3>getINIGroup</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-468">getINIGroup</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-490">getINIGroup</a></span>()</div>
 <div class="block">Returns the group for this property in the <code>INI</code> file.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -759,7 +759,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getINIKey()">
 <h3>getINIKey</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-477">getINIKey</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-499">getINIKey</a></span>()</div>
 <div class="block">Returns the key for this property in the <code>INI</code> file.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -772,7 +772,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getPrefsAccessorClass()">
 <h3>getPrefsAccessorClass</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-494">getPrefsAccessorClass</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-516">getPrefsAccessorClass</a></span>()</div>
 <div class="block"><p>Returns the <code>Preferences</code> accessor class.</p>
   <p>This is used when this property is linked to a preference, but also
   to initialise it from a SYSTEM preference.</p></div>
@@ -797,7 +797,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getPrefsKey()">
 <h3>getPrefsKey</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-511">getPrefsKey</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-533">getPrefsKey</a></span>()</div>
 <div class="block"><p>Returns the <code>Preferences</code> key for this
   property.</p>
   <p>This is used when this property is linked to a preference, but also
@@ -822,7 +822,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getPropertyName()">
 <h3>getPropertyName</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-518">getPropertyName</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-540">getPropertyName</a></span>()</div>
 <div class="block">Returns the name of the configuration property.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -833,7 +833,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getPropertyType()">
 <h3>getPropertyType</h3>
-<div class="member-signature"><span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-525">getPropertyType</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-547">getPropertyType</a></span>()</div>
 <div class="block">Returns the property type.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -844,7 +844,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSetterArgumentName()">
 <h3>getSetterArgumentName</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-532">getSetterArgumentName</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-554">getSetterArgumentName</a></span>()</div>
 <div class="block">Returns the name of the setter's argument.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -855,7 +855,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSetterBuilder()">
 <h3>getSetterBuilder</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-541">getSetterBuilder</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-563">getSetterBuilder</a></span>()</div>
 <div class="block">Returns a builder for the setter for this property.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -868,7 +868,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSetterMethodName()">
 <h3>getSetterMethodName</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-551">getSetterMethodName</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-573">getSetterMethodName</a></span>()</div>
 <div class="block">Returns the name of the setter method name. If there is no name for the
   method, it will not be generated.</div>
 <dl class="notes">
@@ -882,7 +882,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSpecialPropertyType()">
 <h3>getSpecialPropertyType</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/SpecialPropertyType.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">SpecialPropertyType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-560">getSpecialPropertyType</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/SpecialPropertyType.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">SpecialPropertyType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-582">getSpecialPropertyType</a></span>()</div>
 <div class="block">Return the 'speciality' type for this property.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -895,7 +895,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getStringConverterClass()">
 <h3>getStringConverterClass</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-571">getStringConverterClass</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-593">getStringConverterClass</a></span>()</div>
 <div class="block">Returns the class that implements the String converter for the type of
   this property.</div>
 <dl class="notes">
@@ -910,7 +910,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSystemPrefsPath()">
 <h3>getSystemPrefsPath</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-583">getSystemPrefsPath</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-605">getSystemPrefsPath</a></span>()</div>
 <div class="block">Returns the path to the SYSTEM <code>Preferences</code> node that holds the
   data for the initialisation of this property.</div>
 <dl class="notes">
@@ -930,7 +930,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSystemPropertyName()">
 <h3>getSystemPropertyName</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-595">getSystemPropertyName</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-617">getSystemPropertyName</a></span>()</div>
 <div class="block">Returns the name of the system property that is used to initialise this
   property.</div>
 <dl class="notes">
@@ -950,7 +950,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="hasFlag(org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag)">
 <h3>hasFlag</h3>
-<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-603">hasFlag</a></span><wbr><span class="parameters">(<a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a>&nbsp;flag)</span></div>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-625">hasFlag</a></span><wbr><span class="parameters">(<a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a>&nbsp;flag)</span></div>
 <div class="block">Checks whether the given flag is set for this property.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -963,7 +963,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isCollection()">
 <h3>isCollection</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-611">isCollection</a></span>()</div>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-633">isCollection</a></span>()</div>
 <div class="block">Checks whether this property is a collection of some kind.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -975,7 +975,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isOnCLI()">
 <h3>isOnCLI</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-624">isOnCLI</a></span>()</div>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-646">isOnCLI</a></span>()</div>
 <div class="block">Checks whether this property is exposed to the CLI. This
   means that it has either the flag
   <a href="PropertySpec.PropertyFlag.html#PROPERTY_IS_ARGUMENT"><code>PropertySpec.PropertyFlag.PROPERTY_IS_ARGUMENT</code></a>
@@ -992,7 +992,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="merge()">
 <h3>merge</h3>
-<div class="member-signature"><span class="return-type"><a href="PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-638">merge</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-660">merge</a></span>()</div>
 <div class="block"><p>'Merges' the attributes from a
   <a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/SpecialPropertyType.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">special property</a>
   with the attributes retrieved from the configuration bean

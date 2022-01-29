@@ -33,6 +33,7 @@ import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ALLOWS
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ALLOWS_PREFERENCES;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.EXEMPT_FROM_TOSTRING;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.GETTER_IS_DEFAULT;
+import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.GETTER_ON_MAP;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.GETTER_RETURNS_OPTIONAL;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_CLI_MANDATORY;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_CLI_MULTIVALUED;
@@ -447,19 +448,19 @@ public class ConfigAnnotationProcessor extends APBase
     ====** Attributes **=======================================================
         \*------------*/
     /**
-     *  The base bundle name. Will be set in
+     *  <p>{@summary The base bundle name.} The value will be set in
      *  {@link #process(Set, RoundEnvironment)}
-     *  from the annotation
-     *  {@link BaseBundleName &#64;BaseBundleName}.
+     *  from a String constant that is annotated with the annotation
+     *  {@link BaseBundleName &#64;BaseBundleName}.</p>
      */
     @SuppressWarnings( "OptionalUsedAsFieldOrParameterType" )
     private Optional<String> m_BaseBundleName;
 
     /**
-     *  The message prefix. Will be set in
+     *  <p>{@summary The message prefix.} The value will be set in
      *  {@link #process(Set, RoundEnvironment)}
-     *  from the annotation
-     *  {@link MessagePrefix &#64;MessagePrefix}.
+     *  from a String constant that is annotated with the annotation
+     *  {@link MessagePrefix &#64;MessagePrefix}.</p>
      */
     @SuppressWarnings( "OptionalUsedAsFieldOrParameterType" )
     private Optional<String> m_MessagePrefix;
@@ -914,7 +915,7 @@ public class ConfigAnnotationProcessor extends APBase
                     throw new IllegalAnnotationError( format( MSG_IllegalAnnotationOnGetter, annotationClass.getName(), getter.getSimpleName() ) );
                 }
             }
-            property.setFlag( GETTER_IS_DEFAULT );
+            property.setFlag( GETTER_IS_DEFAULT, GETTER_ON_MAP );
         }
         var allowsPreferences = !isDefault;
 

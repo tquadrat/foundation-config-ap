@@ -105,18 +105,40 @@ public interface PropertySpec
         ENVIRONMENT_VARIABLE,
 
         /**
+         *  <p>{@summary Indicates that this property will not be part of the
+         *  map, in case the configuration bean implements
+         *  {@link java.util.Map}.}</p>
+         *  <p>There is no related annotation for this flag, it is used mainly
+         *  for
+         *  {@linkplain org.tquadrat.foundation.config.SpecialProperty special properties}.</p>
+         */
+        EXEMPT_FROM_MAP,
+
+        /**
          *  Indicates that this property will not appear in the return value of
          *  {@link #toString()}.
          */
-        @SuppressWarnings( "SpellCheckingInspection" )
         EXEMPT_FROM_TOSTRING,
 
         /**
-         * Indicates that the getter method for this property is default; this
-         * means that the method will not be implemented, and that there is no
-         * field for the property.
+         *  <p>{@summary Indicates that the getter method for this property is
+         *  default.} This means that the method will not be implemented, and
+         *  that there is no field for the property.</p>
+         *  <p>This flag implies
+         *  {@link #EXEMPT_FROM_MAP}.</p>
          */
         GETTER_IS_DEFAULT,
+
+        /**
+         *  <p>{@summary Indicates that the implementation of
+         *  {@link java.util.Map}
+         *  will refer to the getter for this property, instead of the
+         *  field.}</p>
+         *  <p>There is no related annotation for this flag, it is used mainly
+         *  for
+         *  {@linkplain org.tquadrat.foundation.config.SpecialProperty special properties}.</p>
+         */
+        GETTER_ON_MAP,
 
         /**
          * Indicates that the getter method returns an instance of

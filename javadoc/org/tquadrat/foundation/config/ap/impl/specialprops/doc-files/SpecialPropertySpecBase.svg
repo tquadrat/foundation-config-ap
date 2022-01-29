@@ -6,7 +6,7 @@
      xmlns:xlink="http://www.w3.org/1999/xlink"
      version='1.1'
      baseProfile='full'
-     width='11004.000'
+     width='12426.000'
      height='1666.000'>
     <defs>
         <style><![CDATA[
@@ -318,9 +318,9 @@
                     <text x='5.000'
                           y='80.000'>+ getCLIValueHandlerClass():java.util.Optional&lt;org.tquadrat.foundation.javacomposer.TypeName&gt;</text>
                     <text x='5.000'
-                          y='91.000'>+ getGetterComposer():java.util.Optional&lt;java.util.function.BiFunction&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl,org.tquadrat.foundation.javacomposer.MethodSpec&gt;&gt;</text>
+                          y='91.000'>+ getFieldComposer():java.util.Optional&lt;java.util.function.BiFunction&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl,org.tquadrat.foundation.javacomposer.FieldSpec&gt;&gt;</text>
                     <text x='5.000'
-                          y='102.000'>+ getFieldComposer():java.util.Optional&lt;java.util.function.BiFunction&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl,org.tquadrat.foundation.javacomposer.FieldSpec&gt;&gt;</text>
+                          y='102.000'>+ getGetterComposer():java.util.Optional&lt;java.util.function.BiFunction&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl,org.tquadrat.foundation.javacomposer.MethodSpec&gt;&gt;</text>
                     <text x='5.000'
                           y='113.000'>+ getGetterReturnType():org.tquadrat.foundation.javacomposer.TypeName</text>
                     <text x='5.000'
@@ -625,6 +625,57 @@
             </g>
         </symbol>
         <clipPath id='ID000010'>
+            <rect class='otherClass'
+                  height='139.000'
+                  width='1372.000'
+                  x='0.000'
+                  y='0.000'/>
+        </clipPath>
+        <symbol id='org.tquadrat.foundation.config.ap.impl.specialprops.MessagePrefixProperty'>
+            <g>
+                <g clip-path='url(#ID000010)'>
+                    <rect x='0.000'
+                          y='0.000'
+                          width='1372.000'
+                          height='139.000'
+                          class='otherClass'/>
+                    <line x1='0.000'
+                          y1='17.000'
+                          x2='1372.000'
+                          y2='17.000'
+                          class='separator'/>
+                    <text x='623.000'
+                          y='13.000'>MessagePrefixProperty</text>
+                    <line x1='0.000'
+                          y1='34.000'
+                          x2='1372.000'
+                          y2='34.000'
+                          class='separator'/>
+                    <text x='5.000'
+                          y='30.000'/>
+                    <text x='5.000'
+                          y='47.000'>+ MessagePrefixProperty()</text>
+                    <text x='5.000'
+                          y='58.000'
+                          class='static'>- composeGetter(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):org.tquadrat.foundation.javacomposer.MethodSpec</text>
+                    <text x='5.000'
+                          y='69.000'>+ getCLIValueHandlerClass():java.util.Optional&lt;org.tquadrat.foundation.javacomposer.TypeName&gt;</text>
+                    <text x='5.000'
+                          y='80.000'>+ getFieldComposer():java.util.Optional&lt;java.util.function.BiFunction&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl,org.tquadrat.foundation.javacomposer.FieldSpec&gt;&gt;</text>
+                    <text x='5.000'
+                          y='91.000'>+ getGetterComposer():java.util.Optional&lt;java.util.function.BiFunction&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl,org.tquadrat.foundation.javacomposer.MethodSpec&gt;&gt;</text>
+                    <text x='5.000'
+                          y='102.000'>+ getGetterReturnType():org.tquadrat.foundation.javacomposer.TypeName</text>
+                    <text x='5.000'
+                          y='113.000'>+ getPrefsAccessorClass():java.util.Optional&lt;org.tquadrat.foundation.javacomposer.TypeName&gt;</text>
+                    <text x='5.000'
+                          y='124.000'>+ getPropertyType():org.tquadrat.foundation.javacomposer.TypeName</text>
+                    <text x='5.000'
+                          y='135.000'>+ getStringConverterClass():java.util.Optional&lt;org.tquadrat.foundation.javacomposer.TypeName&gt;</text>
+                </g>
+            </g>
+        </symbol>
+        <clipPath id='ID000011'>
             <rect class='externalClass'
                   height='172.000'
                   width='244.000'
@@ -633,7 +684,7 @@
         </clipPath>
         <symbol id='java.lang.Object'>
             <g>
-                <g clip-path='url(#ID000010)'>
+                <g clip-path='url(#ID000011)'>
                     <rect x='0.000'
                           y='0.000'
                           width='244.000'
@@ -680,7 +731,7 @@
                 </g>
             </g>
         </symbol>
-        <clipPath id='ID000011'>
+        <clipPath id='ID000012'>
             <rect class='otherClass'
                   height='117.000'
                   width='1444.000'
@@ -689,7 +740,7 @@
         </clipPath>
         <symbol id='org.tquadrat.foundation.config.ap.impl.SpecialPropertySpec'>
             <g>
-                <g clip-path='url(#ID000011)'>
+                <g clip-path='url(#ID000012)'>
                     <rect x='0.000'
                           y='0.000'
                           width='1444.000'
@@ -734,7 +785,7 @@
                 </g>
             </g>
         </symbol>
-        <clipPath id='ID000012'>
+        <clipPath id='ID000013'>
             <rect class='otherClass'
                   height='469.000'
                   width='958.000'
@@ -743,7 +794,7 @@
         </clipPath>
         <symbol id='org.tquadrat.foundation.config.ap.PropertySpec'>
             <g>
-                <g clip-path='url(#ID000012)'>
+                <g clip-path='url(#ID000013)'>
                     <rect x='0.000'
                           y='0.000'
                           width='958.000'
@@ -883,48 +934,51 @@
         </symbol>
     </defs>
     <path class='inheritance'
-          d='M747.000,1391.000 c0.000,-85.000,4650.000,0.000,4650.000,-85.000 v-15'
+          d='M747.000,1391.000 c0.000,-85.000,5346.000,0.000,5346.000,-85.000 v-15'
           marker-end='url(#inheritance)'/>
     <path class='inheritance'
-          d='M2205.000,1391.000 c0.000,-85.000,3222.000,0.000,3222.000,-85.000 v-15'
+          d='M2205.000,1391.000 c0.000,-85.000,3918.000,0.000,3918.000,-85.000 v-15'
           marker-end='url(#inheritance)'/>
     <path class='inheritance'
-          d='M3663.000,1391.000 c0.000,-85.000,1794.000,0.000,1794.000,-85.000 v-15'
+          d='M3663.000,1391.000 c0.000,-85.000,2490.000,0.000,2490.000,-85.000 v-15'
           marker-end='url(#inheritance)'/>
     <path class='inheritance'
-          d='M4719.000,1391.000 c0.000,-85.000,768.000,0.000,768.000,-85.000 v-15'
+          d='M4719.000,1391.000 c0.000,-85.000,1464.000,0.000,1464.000,-85.000 v-15'
           marker-end='url(#inheritance)'/>
     <path class='inheritance'
-          d='M5775.000,1391.000 c0.000,-85.000,-258.000,0.000,-258.000,-85.000 v-15'
+          d='M5775.000,1391.000 c0.000,-85.000,438.000,0.000,438.000,-85.000 v-15'
           marker-end='url(#inheritance)'/>
     <path class='inheritance'
-          d='M7269.000,1391.000 c0.000,-85.000,-1722.000,0.000,-1722.000,-85.000 v-15'
+          d='M7269.000,1391.000 c0.000,-85.000,-1026.000,0.000,-1026.000,-85.000 v-15'
           marker-end='url(#inheritance)'/>
     <path class='inheritance'
-          d='M8763.000,1391.000 c0.000,-85.000,-3186.000,0.000,-3186.000,-85.000 v-15'
+          d='M8763.000,1391.000 c0.000,-85.000,-2490.000,0.000,-2490.000,-85.000 v-15'
           marker-end='url(#inheritance)'/>
     <path class='inheritance'
-          d='M10257.000,1391.000 c0.000,-85.000,-4650.000,0.000,-4650.000,-85.000 v-15'
+          d='M10257.000,1391.000 c0.000,-85.000,-3954.000,0.000,-3954.000,-85.000 v-15'
           marker-end='url(#inheritance)'/>
     <path class='inheritance'
-          d='M5477.000,811.000 c0.000,-599.000,-2726.000,0.000,-2726.000,-599.000 v-15'
+          d='M11715.000,1391.000 c0.000,-85.000,-5382.000,0.000,-5382.000,-85.000 v-15'
+          marker-end='url(#inheritance)'/>
+    <path class='inheritance'
+          d='M6188.000,811.000 c0.000,-599.000,-3081.500,0.000,-3081.500,-599.000 v-15'
           marker-end='url(#inheritance)'/>
     <path class='implementation'
-          d='M5527.000,811.000 c0.000,-85.000,-25.000,0.000,-25.000,-85.000 v-15'
+          d='M6238.000,811.000 c0.000,-85.000,-25.000,0.000,-25.000,-85.000 v-15'
           marker-end='url(#implementation)'/>
     <path class='inheritance'
-          d='M5502.000,594.000 c0.000,-85.000,2751.000,0.000,2751.000,-85.000 v-15'
+          d='M6213.000,594.000 c0.000,-85.000,3106.500,0.000,3106.500,-85.000 v-15'
           marker-end='url(#inheritance)'/>
-    <use x='2629.000'
+    <use x='2984.500'
          y='25.000'
          xlink:href='#java.lang.Object'/>
-    <use x='7774.000'
+    <use x='8840.500'
          y='25.000'
          xlink:href='#org.tquadrat.foundation.config.ap.PropertySpec'/>
-    <use x='4780.000'
+    <use x='5491.000'
          y='594.000'
          xlink:href='#org.tquadrat.foundation.config.ap.impl.SpecialPropertySpec'/>
-    <use x='4780.000'
+    <use x='5491.000'
          y='811.000'
          xlink:href='#org.tquadrat.foundation.config.ap.impl.specialprops.SpecialPropertySpecBase'/>
     <use x='25.000'
@@ -951,4 +1005,7 @@
     <use x='9535.000'
          y='1391.000'
          xlink:href='#org.tquadrat.foundation.config.ap.impl.specialprops.ClockProperty'/>
+    <use x='11029.000'
+         y='1391.000'
+         xlink:href='#org.tquadrat.foundation.config.ap.impl.specialprops.MessagePrefixProperty'/>
 </svg>

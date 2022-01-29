@@ -892,7 +892,7 @@ public final class CodeGenerationConfiguration
     /**
      *  Sets the i18n parameters.
      *
-     *  @param  messagePrefix   The message prefix.
+     *  @param  messagePrefix   The value for the message prefix.
      *  @param  baseBundleName  The name of the base bundle.
      */
     public final void setI18NParameters( final String messagePrefix, final String baseBundleName )

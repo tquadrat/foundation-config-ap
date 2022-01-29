@@ -21,6 +21,8 @@ import static javax.lang.model.element.Modifier.FINAL;
 import static javax.lang.model.element.Modifier.PRIVATE;
 import static javax.lang.model.element.Modifier.PUBLIC;
 import static org.apiguardian.api.API.Status.STABLE;
+import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.EXEMPT_FROM_MAP;
+import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.GETTER_ON_MAP;
 import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_ReadLock;
 import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_Registry;
 import static org.tquadrat.foundation.javacomposer.Primitives.BOOLEAN;
@@ -41,7 +43,6 @@ import java.util.stream.Collectors;
 
 import org.apiguardian.api.API;
 import org.tquadrat.foundation.annotation.ClassVersion;
-import org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag;
 import org.tquadrat.foundation.config.ap.impl.CodeBuilder;
 import org.tquadrat.foundation.javacomposer.ClassName;
 import org.tquadrat.foundation.javacomposer.ParameterizedTypeName;
@@ -119,9 +120,10 @@ public final class MapImplementor extends CodeBuilderBase
         {
             final var propertySpec = i.next().merge();
 
+            if( propertySpec.hasFlag( EXEMPT_FROM_MAP ) ) continue PropertyLoop;
 
             //---* Create the supplier and add it to the registry *------------
-            if( !propertySpec.hasFlag( PropertyFlag.GETTER_IS_DEFAULT ) )
+            if( !propertySpec.hasFlag( GETTER_ON_MAP ) )
             {
                 final var field = propertySpec.getFieldName();
                 final var supplier = getComposer().lambdaBuilder()
@@ -134,7 +136,7 @@ public final class MapImplementor extends CodeBuilderBase
                 propertySpec.getGetterMethodName()
                     .ifPresent( method -> builder.addStatement( "$1N.put( $2S, this::$3L )", registry, propertySpec.getPropertyName(), method  ) );
             }
-        }
+        }   //  PropertyLoop:
         addConstructorCode( builder.build() );
 
         //---* Add the methods from Map *--------------------------------------

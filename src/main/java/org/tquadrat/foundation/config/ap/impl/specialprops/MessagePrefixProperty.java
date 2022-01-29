@@ -18,9 +18,12 @@
 package org.tquadrat.foundation.config.ap.impl.specialprops;
 
 import static javax.lang.model.element.Modifier.FINAL;
-import static javax.lang.model.element.Modifier.PRIVATE;
+import static javax.lang.model.element.Modifier.PUBLIC;
 import static org.apiguardian.api.API.Status.STABLE;
-import static org.tquadrat.foundation.config.SpecialPropertyType.CONFIG_PROPERTY_PID;
+import static org.tquadrat.foundation.config.SpecialPropertyType.CONFIG_PROPERTY_MESSAGEPREFIX;
+import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_NoMessagePrefix;
+import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.EXEMPT_FROM_TOSTRING;
+import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.GETTER_ON_MAP;
 import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
 
 import java.util.Optional;
@@ -28,19 +31,20 @@ import java.util.function.BiFunction;
 
 import org.apiguardian.api.API;
 import org.tquadrat.foundation.annotation.ClassVersion;
+import org.tquadrat.foundation.annotation.MountPoint;
+import org.tquadrat.foundation.ap.CodeGenerationError;
 import org.tquadrat.foundation.config.SpecialPropertyType;
 import org.tquadrat.foundation.config.ap.impl.CodeBuilder;
 import org.tquadrat.foundation.config.ap.impl.PropertySpecImpl;
-import org.tquadrat.foundation.javacomposer.CodeBlock;
 import org.tquadrat.foundation.javacomposer.FieldSpec;
+import org.tquadrat.foundation.javacomposer.MethodSpec;
 import org.tquadrat.foundation.javacomposer.TypeName;
-import org.tquadrat.foundation.util.SystemUtils;
 
 /**
  *  The implementation of
  *  {@link SpecialPropertySpecBase}
  *  for
- *  {@link SpecialPropertyType#CONFIG_PROPERTY_PID}.
+ *  {@link SpecialPropertyType#CONFIG_PROPERTY_MESSAGEPREFIX}.
  *
  *  @version $Id: ProcessIdProperty.java 943 2021-12-21 01:34:32Z tquadrat $
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
@@ -49,7 +53,7 @@ import org.tquadrat.foundation.util.SystemUtils;
  */
 @ClassVersion( sourceVersion = "$Id: ProcessIdProperty.java 943 2021-12-21 01:34:32Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
-public final class ProcessIdProperty extends SpecialPropertySpecBase
+public final class MessagePrefixProperty extends SpecialPropertySpecBase
 {
         /*--------------*\
     ====** Constructors **=====================================================
@@ -57,70 +61,53 @@ public final class ProcessIdProperty extends SpecialPropertySpecBase
     /**
      *  Creates a new instance of {@code ProcessIdProperty}.
      */
-    public ProcessIdProperty()
+    public MessagePrefixProperty()
     {
-        super( CONFIG_PROPERTY_PID );
+        super( CONFIG_PROPERTY_MESSAGEPREFIX, EXEMPT_FROM_TOSTRING, GETTER_ON_MAP );
     }   //  ProcessIdProperty()
 
         /*---------*\
     ====** Methods **==========================================================
         \*---------*/
     /**
-     *  Composes the constructor fragment for the initialisation of this
-     *  property.
+     *  <p>{@summary The implementation of the method that composes a getter
+     *  for the given property.}</p>
      *
      *  @param  codeBuilder The factory for the code generation.
      *  @param  property    The property.
-     *  @return The field specification.
+     *  @return The method specification.
      */
-    @SuppressWarnings( {"TypeMayBeWeakened", "UseOfConcreteClass"} )
-    private static final CodeBlock composeConstructorFragment( final CodeBuilder codeBuilder, final PropertySpecImpl property )
+    @SuppressWarnings( {"OptionalGetWithoutIsPresent", "TypeMayBeWeakened", "UseOfConcreteClass"} )
+    private static final MethodSpec composeGetter( final CodeBuilder codeBuilder, final PropertySpecImpl property )
     {
-        final var builder = requireNonNullArgument( codeBuilder, "codeBuilder" ).getComposer()
-            .codeBlockBuilder()
-            .add(
-                """
-                
-                /*
-                 * Initialise the property '$N'.
-                 */
-                """, property.getPropertyName()
-            )
-            .addStatement( "$1N = getPID()", property.getFieldName() )
-            .addStaticImport( SystemUtils.class, "getPID" );
+        final var composer = requireNonNullArgument( codeBuilder, "codeBuilder" ).getComposer();
+
+        /*
+         * This is the value from the String constant holding the message
+         * prefix, not the name of that field!
+         */
+        final var messagePrefix = codeBuilder.getConfiguration().getMessagePrefix()
+            .orElseThrow( () -> new CodeGenerationError( MSG_NoMessagePrefix ) );
+
+        //---* Obtain the builder *--------------------------------------------
+        final var builder = property.getGetterBuilder()
+            .orElseGet( () -> composer.methodBuilder( property.getGetterMethodName().get() )
+                .addAnnotation( Override.class )
+                .addModifiers( PUBLIC )
+                .returns( property.getGetterReturnType() )
+            );
+        builder.addModifiers( FINAL )
+            .addJavadoc( composer.createInheritDocComment() );
+
+        //---* Create the body *-----------------------------------------------
+        builder.addStatement( "return $1S", messagePrefix );
 
         //---* Create the return value *---------------------------------------
         final var retValue = builder.build();
 
         //---* Done *----------------------------------------------------------
         return retValue;
-    }   //  composeConstructorFragment()
-
-    /**
-     *  The method that composes a field for the 'processId' property.
-     *
-     *  @param  codeBuilder The factory for the code generation.
-     *  @param  property    The property.
-     *  @return The field specification.
-     */
-    @SuppressWarnings( {"TypeMayBeWeakened", "UseOfConcreteClass"} )
-    private static FieldSpec composeField( final CodeBuilder codeBuilder, final PropertySpecImpl property )
-    {
-        final var composer = requireNonNullArgument( codeBuilder, "codeBuilder" ).getComposer();
-
-        final var builder = composer.fieldBuilder( property.getPropertyType(), property.getFieldName(), PRIVATE )
-            .addJavadoc(
-                """
-                Special Property: &quot;$L&quot;.
-                """, property.getPropertyName() )
-            .addModifiers( FINAL );
-
-        //---* Create the return value *--------------------------------------
-        final var retValue = builder.build();
-
-        //---* Done *----------------------------------------------------------
-        return retValue;
-    }   //  composeField()
+    }   //  composeGetter()
 
     /**
      *  {@inheritDoc}
@@ -129,16 +116,23 @@ public final class ProcessIdProperty extends SpecialPropertySpecBase
     public final Optional<TypeName> getCLIValueHandlerClass() { return Optional.empty(); }
 
     /**
-     *  {@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
-    public final Optional<BiFunction<CodeBuilder, PropertySpecImpl, CodeBlock>> getConstructorFragmentComposer() { return Optional.of( ProcessIdProperty::composeConstructorFragment );}
+    public final Optional<BiFunction<CodeBuilder,PropertySpecImpl, FieldSpec>> getFieldComposer() { return Optional.empty(); }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public final Optional<BiFunction<CodeBuilder,PropertySpecImpl, FieldSpec>> getFieldComposer() { return Optional.of( ProcessIdProperty::composeField ); }
+    @MountPoint
+    public Optional<BiFunction<CodeBuilder,PropertySpecImpl,MethodSpec>> getGetterComposer() { return Optional.of( MessagePrefixProperty::composeGetter ); }
+
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
+    public final TypeName getGetterReturnType() { return getPropertyType(); }
 
     /**
      *  {@inheritDoc}
@@ -150,7 +144,7 @@ public final class ProcessIdProperty extends SpecialPropertySpecBase
      *  {@inheritDoc}
      */
     @Override
-    public final TypeName getPropertyType() { return TypeName.from( long.class ); }
+    public final TypeName getPropertyType() { return TypeName.from( String.class ); }
 
     /**
      *  {@inheritDoc}
@@ -158,7 +152,7 @@ public final class ProcessIdProperty extends SpecialPropertySpecBase
     @Override
     public final Optional<TypeName> getStringConverterClass() { return Optional.empty(); }
 }
-//  class ProcessIdProperty
+//  class MessagePrefixProperty
 
 /*
  *  End of File

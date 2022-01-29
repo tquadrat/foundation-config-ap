@@ -158,16 +158,28 @@ loadScripts(document, 'script');</script>
 <div class="block">Indicates that this property is initialised from the value of an
  environment variable.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="#EXEMPT_FROM_TOSTRING" class="member-name-link">EXEMPT_FROM_TOSTRING</a></code></div>
+<div class="col-first odd-row-color"><code><a href="#EXEMPT_FROM_MAP" class="member-name-link">EXEMPT_FROM_MAP</a></code></div>
 <div class="col-last odd-row-color">
+<div class="block">Indicates that this property will not be part of the
+  map, in case the configuration bean implements
+  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link"><code>Map</code></a>.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="#EXEMPT_FROM_TOSTRING" class="member-name-link">EXEMPT_FROM_TOSTRING</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Indicates that this property will not appear in the return value of
   <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html#toString()" title="class or interface in java.lang" class="external-link"><code>Enum.toString()</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="#GETTER_IS_DEFAULT" class="member-name-link">GETTER_IS_DEFAULT</a></code></div>
+<div class="col-first odd-row-color"><code><a href="#GETTER_IS_DEFAULT" class="member-name-link">GETTER_IS_DEFAULT</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Indicates that the getter method for this property is
+  default.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="#GETTER_ON_MAP" class="member-name-link">GETTER_ON_MAP</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Indicates that the getter method for this property is default; this
- means that the method will not be implemented, and that there is no
- field for the property.</div>
+<div class="block">Indicates that the implementation of
+  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link"><code>Map</code></a>
+  will refer to the getter for this property, instead of the
+  field.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="#GETTER_RETURNS_OPTIONAL" class="member-name-link">GETTER_RETURNS_OPTIONAL</a></code></div>
 <div class="col-last odd-row-color">
@@ -341,9 +353,21 @@ the order they are declared.</div>
 </section>
 </li>
 <li>
+<section class="detail" id="EXEMPT_FROM_MAP">
+<h3>EXEMPT_FROM_MAP</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-115">EXEMPT_FROM_MAP</a></span></div>
+<div class="block"><p>Indicates that this property will not be part of the
+  map, in case the configuration bean implements
+  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link"><code>Map</code></a>.</p>
+  <p>There is no related annotation for this flag, it is used mainly
+  for
+  <a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/SpecialProperty.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">special properties</a>.</p></div>
+</section>
+</li>
+<li>
 <section class="detail" id="EXEMPT_FROM_TOSTRING">
 <h3>EXEMPT_FROM_TOSTRING</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-111">EXEMPT_FROM_TOSTRING</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-121">EXEMPT_FROM_TOSTRING</a></span></div>
 <div class="block">Indicates that this property will not appear in the return value of
   <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html#toString()" title="class or interface in java.lang" class="external-link"><code>Enum.toString()</code></a>.</div>
 </section>
@@ -351,16 +375,31 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="GETTER_IS_DEFAULT">
 <h3>GETTER_IS_DEFAULT</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-119">GETTER_IS_DEFAULT</a></span></div>
-<div class="block">Indicates that the getter method for this property is default; this
- means that the method will not be implemented, and that there is no
- field for the property.</div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-130">GETTER_IS_DEFAULT</a></span></div>
+<div class="block"><p>Indicates that the getter method for this property is
+  default. This means that the method will not be implemented, and
+  that there is no field for the property.</p>
+  <p>This flag implies
+  <a href="#EXEMPT_FROM_MAP"><code>EXEMPT_FROM_MAP</code></a>.</p></div>
+</section>
+</li>
+<li>
+<section class="detail" id="GETTER_ON_MAP">
+<h3>GETTER_ON_MAP</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-141">GETTER_ON_MAP</a></span></div>
+<div class="block"><p>Indicates that the implementation of
+  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link"><code>Map</code></a>
+  will refer to the getter for this property, instead of the
+  field.</p>
+  <p>There is no related annotation for this flag, it is used mainly
+  for
+  <a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/SpecialProperty.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">special properties</a>.</p></div>
 </section>
 </li>
 <li>
 <section class="detail" id="GETTER_RETURNS_OPTIONAL">
 <h3>GETTER_RETURNS_OPTIONAL</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-126">GETTER_RETURNS_OPTIONAL</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-148">GETTER_RETURNS_OPTIONAL</a></span></div>
 <div class="block">Indicates that the getter method returns an instance of
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link"><code>Optional</code></a>
  holding the configuration value.</div>
@@ -369,7 +408,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="PROPERTY_CLI_MANDATORY">
 <h3>PROPERTY_CLI_MANDATORY</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-132">PROPERTY_CLI_MANDATORY</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-154">PROPERTY_CLI_MANDATORY</a></span></div>
 <div class="block">Indicates that a value for this property is required on the
   command line.</div>
 </section>
@@ -377,7 +416,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="PROPERTY_CLI_MULTIVALUED">
 <h3>PROPERTY_CLI_MULTIVALUED</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-138">PROPERTY_CLI_MULTIVALUED</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-160">PROPERTY_CLI_MULTIVALUED</a></span></div>
 <div class="block">Indicates that it is possible to provide multiple values for this
   property on the command line.</div>
 </section>
@@ -385,7 +424,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="PROPERTY_IS_ARGUMENT">
 <h3>PROPERTY_IS_ARGUMENT</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-149">PROPERTY_IS_ARGUMENT</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-171">PROPERTY_IS_ARGUMENT</a></span></div>
 <div class="block">Indicates that the property can be initialised with a command line
   argument.</div>
 <dl class="notes">
@@ -404,7 +443,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="PROPERTY_IS_MUTABLE">
 <h3>PROPERTY_IS_MUTABLE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-156">PROPERTY_IS_MUTABLE</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-178">PROPERTY_IS_MUTABLE</a></span></div>
 <div class="block">Indicates that the property value can be modified. Basically, it
   means that there is a setter and/or an 'add' method for that
   property.</div>
@@ -413,7 +452,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="PROPERTY_IS_OPTION">
 <h3>PROPERTY_IS_OPTION</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-167">PROPERTY_IS_OPTION</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-189">PROPERTY_IS_OPTION</a></span></div>
 <div class="block">Indicates that the property can be initialised with a command line
   option.</div>
 <dl class="notes">
@@ -432,7 +471,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="PROPERTY_IS_SPECIAL">
 <h3>PROPERTY_IS_SPECIAL</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-177">PROPERTY_IS_SPECIAL</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-199">PROPERTY_IS_SPECIAL</a></span></div>
 <div class="block">Indicates that the property is a 'special' property. This also
  means that
  <a href="PropertySpec.html#getSpecialPropertyType()"><code>PropertySpec.getSpecialPropertyType()</code></a>
@@ -444,14 +483,14 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="PROPERTY_REQUIRES_SYNCHRONIZATION">
 <h3>PROPERTY_REQUIRES_SYNCHRONIZATION</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-182">PROPERTY_REQUIRES_SYNCHRONIZATION</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-204">PROPERTY_REQUIRES_SYNCHRONIZATION</a></span></div>
 <div class="block">Indicates that the access to the property requires synchronisation.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="SETTER_CHECK_EMPTY">
 <h3>SETTER_CHECK_EMPTY</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-188">SETTER_CHECK_EMPTY</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-210">SETTER_CHECK_EMPTY</a></span></div>
 <div class="block">Indicates that the setter method for this property should check for
  an empty argument.</div>
 </section>
@@ -459,7 +498,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="SETTER_CHECK_NULL">
 <h3>SETTER_CHECK_NULL</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-194">SETTER_CHECK_NULL</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-216">SETTER_CHECK_NULL</a></span></div>
 <div class="block">Indicates that the setter method for this property should check for
  a null argument.</div>
 </section>
@@ -467,7 +506,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="SETTER_IS_DEFAULT">
 <h3>SETTER_IS_DEFAULT</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-201">SETTER_IS_DEFAULT</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-223">SETTER_IS_DEFAULT</a></span></div>
 <div class="block">Indicates that the setter method for this property is default; this
  means that the method will not be implemented, and that there is no
  field for the property.</div>
@@ -476,7 +515,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="SYSTEM_PREFERENCE">
 <h3>SYSTEM_PREFERENCE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-213">SYSTEM_PREFERENCE</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-235">SYSTEM_PREFERENCE</a></span></div>
 <div class="block">Indicates that this property is initialised from the value of a
  system preference. The methods
  <a href="PropertySpec.html#getSystemPrefsPath()"><code>PropertySpec.getSystemPrefsPath()</code></a>,
@@ -490,7 +529,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="SYSTEM_PROPERTY">
 <h3>SYSTEM_PROPERTY</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-224">SYSTEM_PROPERTY</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.PropertyFlag.html#line-246">SYSTEM_PROPERTY</a></span></div>
 <div class="block">Indicates that this property is initialised from the value of a
  system property. The method
  <a href="PropertySpec.html#getSystemPropertyName()"><code>PropertySpec.getSystemPropertyName()</code></a>
