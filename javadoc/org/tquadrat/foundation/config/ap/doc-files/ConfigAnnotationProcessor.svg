@@ -7,7 +7,7 @@
      version='1.1'
      baseProfile='full'
      width='3570.000'
-     height='2018.000'>
+     height='2095.000'>
     <defs>
         <style><![CDATA[
             line
@@ -118,8 +118,8 @@
         </marker>
         <clipPath id='ID000001'>
             <rect class='focusClass'
-                  height='821.000'
-                  width='1192.000'
+                  height='832.000'
+                  width='1444.000'
                   x='0.000'
                   y='0.000'/>
         </clipPath>
@@ -129,20 +129,20 @@
                    clip-path='url(#ID000001)'>
                     <rect x='0.000'
                           y='0.000'
-                          width='1192.000'
-                          height='821.000'
+                          width='1444.000'
+                          height='832.000'
                           class='focusClass'/>
                     <line x1='0.000'
                           y1='17.000'
-                          x2='1192.000'
+                          x2='1444.000'
                           y2='17.000'
                           class='separator'/>
-                    <text x='521.000'
+                    <text x='647.000'
                           y='13.000'>ConfigAnnotationProcessor</text>
                     <line x1='0.000'
-                          y1='606.000'
-                          x2='1192.000'
-                          y2='606.000'
+                          y1='617.000'
+                          x2='1444.000'
+                          y2='617.000'
                           class='separator'/>
                     <text y='30.000'
                           class='static final'>+ METHODNAME_ConfigBeanSpec_AddListener:java.lang.String</text>
@@ -213,67 +213,64 @@
                     <text y='393.000'
                           class='static final'>+ MSG_NoOptionName:java.lang.String</text>
                     <text y='404.000'
-                          class='static final'>+ MSG_NoType:java.lang.String</text>
+                          class='static final'>+ MSG_NoSetter:java.lang.String</text>
                     <text y='415.000'
-                          class='static final'>+ MSG_NoValueForMirror:java.lang.String</text>
+                          class='static final'>+ MSG_NoType:java.lang.String</text>
                     <text y='426.000'
-                          class='static final'>+ MSG_PreferenceAnnotationClash:java.lang.String</text>
+                          class='static final'>+ MSG_NoValueForMirror:java.lang.String</text>
                     <text y='437.000'
-                          class='static final'>+ MSG_PreferencesNotConfigured:java.lang.String</text>
+                          class='static final'>+ MSG_PreferenceAnnotationClash:java.lang.String</text>
                     <text y='448.000'
-                          class='static final'>+ MSG_PrefsKeyMissing:java.lang.String</text>
+                          class='static final'>+ MSG_PreferencesNotConfigured:java.lang.String</text>
                     <text y='459.000'
-                          class='static final'>+ MSG_ResourceBundleWrongReturnType:java.lang.String</text>
+                          class='static final'>+ MSG_PrefsKeyMissing:java.lang.String</text>
                     <text y='470.000'
-                          class='static final'>+ MSG_SessionPropertyMissing:java.lang.String</text>
+                          class='static final'>+ MSG_ResourceBundleWrongReturnType:java.lang.String</text>
                     <text y='481.000'
-                          class='static final'>+ MSG_SpecialPropertyMismatch:java.lang.String</text>
+                          class='static final'>+ MSG_SessionPropertyMissing:java.lang.String</text>
                     <text y='492.000'
-                          class='static final'>+ MSG_StringConverterMismatch:java.lang.String</text>
+                          class='static final'>+ MSG_SpecialPropertyMismatch:java.lang.String</text>
                     <text y='503.000'
-                          class='static final'>+ MSG_StringConverterNotCompatible:java.lang.String</text>
+                          class='static final'>+ MSG_StringConverterMismatch:java.lang.String</text>
                     <text y='514.000'
+                          class='static final'>+ MSG_StringConverterNotCompatible:java.lang.String</text>
+                    <text y='525.000'
                           class='static final'>+ MSG_TypeMismatch:java.lang.String</text>
-                    <text y='525.000'>- m_BaseBundleName:java.util.Optional&lt;java.lang.String&gt;</text>
-                    <text y='536.000'>- m_MessagePrefix:java.util.Optional&lt;java.lang.String&gt;</text>
-                    <text y='547.000'
-                          class='static final'>+ DEFAULT_ACCESSOR_TYPE:org.tquadrat.foundation.javacomposer.TypeName</text>
+                    <text y='536.000'>- m_BaseBundleName:java.util.Optional&lt;java.lang.String&gt;</text>
+                    <text y='547.000'>- m_MessagePrefix:java.util.Optional&lt;java.lang.String&gt;</text>
                     <text y='558.000'
-                          class='static final'>+ ENUM_ACCESSOR_TYPE:org.tquadrat.foundation.javacomposer.TypeName</text>
+                          class='static final'>+ DEFAULT_ACCESSOR_TYPE:org.tquadrat.foundation.javacomposer.TypeName</text>
                     <text y='569.000'
-                          class='static final'>+ LIST_ACCESSOR_TYPE:org.tquadrat.foundation.javacomposer.TypeName</text>
+                          class='static final'>+ ENUM_ACCESSOR_TYPE:org.tquadrat.foundation.javacomposer.TypeName</text>
                     <text y='580.000'
-                          class='static final'>+ MAP_ACCESSOR_TYPE:org.tquadrat.foundation.javacomposer.TypeName</text>
+                          class='static final'>+ LIST_ACCESSOR_TYPE:org.tquadrat.foundation.javacomposer.TypeName</text>
                     <text y='591.000'
-                          class='static final'>+ PREFS_ACCESSOR_TYPE:org.tquadrat.foundation.javacomposer.TypeName</text>
+                          class='static final'>+ MAP_ACCESSOR_TYPE:org.tquadrat.foundation.javacomposer.TypeName</text>
                     <text y='602.000'
+                          class='static final'>+ PREFS_ACCESSOR_TYPE:org.tquadrat.foundation.javacomposer.TypeName</text>
+                    <text y='613.000'
                           class='static final'>+ SET_ACCESSOR_TYPE:org.tquadrat.foundation.javacomposer.TypeName</text>
                     <text x='5.000'
-                          y='619.000'>+ ConfigAnnotationProcessor()</text>
+                          y='630.000'>+ ConfigAnnotationProcessor()</text>
                     <text x='5.000'
-                          y='630.000'
-                          class='static'>- checkAppropriate(typeName:org.tquadrat.foundation.javacomposer.TypeName):void</text>
-                    <text x='5.000'
-                          y='641.000'
-                          class='static'>- composeArgumentName(parameter:javax.lang.model.element.VariableElement):java.lang.String</text>
+                          y='641.000'>- checkAppropriate(typeName:javax.lang.model.type.TypeMirror):void</text>
                     <text x='5.000'
                           y='652.000'
-                          class='static'>- composeArgumentName(parameter:java.lang.CharSequence):java.lang.String</text>
+                          class='static'>- composeFieldName(propertyName:java.lang.String):java.lang.String</text>
                     <text x='5.000'
-                          y='663.000'>- determinePropertyNameFromMethod(method:javax.lang.model.element.ExecutableElement):java.lang.String</text>
+                          y='663.000'>- determineCollectionKind(type:javax.lang.model.type.TypeMirror):org.tquadrat.foundation.config.ap.CollectionKind</text>
                     <text x='5.000'
-                          y='674.000'
-                          class='static'>- determinePropertyType(getter:javax.lang.model.element.ExecutableElement):org.tquadrat.foundation.javacomposer.TypeName</text>
+                          y='674.000'>- determinePropertyNameFromMethod(method:javax.lang.model.element.ExecutableElement):java.lang.String</text>
                     <text x='5.000'
-                          y='685.000'># getSupportedAnnotationClasses():java.util.Collection&lt;java.lang.Class&lt;? extends java.lang.annotation.Annotation&gt;&gt;</text>
+                          y='685.000'>- determinePropertyType(type:javax.lang.model.type.TypeMirror):javax.lang.model.type.TypeMirror</text>
                     <text x='5.000'
-                          y='696.000'>- handleAddMethod(configuration:org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,addMethod:javax.lang.model.element.ExecutableElement):void</text>
+                          y='696.000'># getSupportedAnnotationClasses():java.util.Collection&lt;java.lang.Class&lt;? extends java.lang.annotation.Annotation&gt;&gt;</text>
                     <text x='5.000'
-                          y='707.000'>- handleGetter(configuration:org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,getter:javax.lang.model.element.ExecutableElement):void</text>
+                          y='707.000'>- handleAddMethod(configuration:org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,addMethod:javax.lang.model.element.ExecutableElement):void</text>
                     <text x='5.000'
-                          y='718.000'>- handleSetter(configuration:org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,setter:javax.lang.model.element.ExecutableElement):void</text>
+                          y='718.000'>- handleGetter(configuration:org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,getter:javax.lang.model.element.ExecutableElement):void</text>
                     <text x='5.000'
-                          y='729.000'>- isEnumType(typeName:org.tquadrat.foundation.javacomposer.TypeName):boolean</text>
+                          y='729.000'>- handleSetter(configuration:org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,setter:javax.lang.model.element.ExecutableElement):void</text>
                     <text x='5.000'
                           y='740.000'>- parseCLIAnnotation(annotation:java.lang.annotation.Annotation,method:javax.lang.model.element.ExecutableElement,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):void</text>
                     <text x='5.000'
@@ -285,17 +282,19 @@
                     <text x='5.000'
                           y='784.000'>- processConfigurationBeanSpecification(specification:javax.lang.model.element.TypeElement):void</text>
                     <text x='5.000'
-                          y='795.000'>- retrieveAccessorClass(accessorType:org.tquadrat.foundation.javacomposer.TypeName,propertyType:org.tquadrat.foundation.javacomposer.TypeName):org.tquadrat.foundation.javacomposer.TypeName</text>
+                          y='795.000'>- retrieveAccessorClass(accessorType:org.tquadrat.foundation.javacomposer.TypeName,propertyType:javax.lang.model.type.TypeMirror,collectionKind:org.tquadrat.foundation.config.ap.CollectionKind):org.tquadrat.foundation.javacomposer.TypeName</text>
                     <text x='5.000'
                           y='806.000'>- retrieveInitDataMethod(configuration:org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,specification:javax.lang.model.element.TypeElement):void</text>
                     <text x='5.000'
                           y='817.000'>- retrieveProperties(configuration:org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,interfaces:java.util.Collection&lt;? extends javax.lang.model.element.TypeElement&gt;):void</text>
+                    <text x='5.000'
+                          y='828.000'>- retrieveSetterArgumentName(setter:javax.lang.model.element.ExecutableElement):javax.lang.model.element.Name</text>
                 </g>
             </g>
         </symbol>
         <clipPath id='ID000002'>
             <rect class='externalClass'
-                  height='392.000'
+                  height='425.000'
                   width='1456.000'
                   x='0.000'
                   y='0.000'/>
@@ -306,7 +305,7 @@
                     <rect x='0.000'
                           y='0.000'
                           width='1456.000'
-                          height='392.000'
+                          height='425.000'
                           class='externalClass'/>
                     <line x1='0.000'
                           y1='28.000'
@@ -374,22 +373,28 @@
                     <text x='5.000'
                           y='300.000'>+ getTypeUtils():javax.lang.model.util.Types</text>
                     <text x='5.000'
-                          y='311.000'>+ init(arg0:javax.annotation.processing.ProcessingEnvironment):void</text>
+                          y='311.000'>+ isEnumType(arg0:javax.lang.model.type.TypeMirror):boolean</text>
                     <text x='5.000'
-                          y='322.000'>+ printMessage(arg0:javax.tools.Diagnostic.Kind,arg1:java.lang.CharSequence):void</text>
+                          y='322.000'>+ init(arg0:javax.annotation.processing.ProcessingEnvironment):void</text>
                     <text x='5.000'
-                          y='333.000'>+ printMessage(arg0:javax.tools.Diagnostic.Kind,arg1:java.lang.CharSequence,arg2:javax.lang.model.element.Element):void</text>
+                          y='333.000'>+ printMessage(arg0:javax.tools.Diagnostic.Kind,arg1:java.lang.CharSequence):void</text>
                     <text x='5.000'
-                          y='344.000'>+ printMessage(arg0:javax.tools.Diagnostic.Kind,arg1:java.lang.CharSequence,arg2:javax.lang.model.element.Element,arg3:javax.lang.model.element.AnnotationMirror):void</text>
+                          y='344.000'>+ printMessage(arg0:javax.tools.Diagnostic.Kind,arg1:java.lang.CharSequence,arg2:javax.lang.model.element.Element):void</text>
                     <text x='5.000'
-                          y='355.000'>+ printMessage(arg0:javax.tools.Diagnostic.Kind,arg1:java.lang.CharSequence,arg2:javax.lang.model.element.Element,arg3:javax.lang.model.element.AnnotationMirror,arg4:javax.lang.model.element.AnnotationValue):void</text>
+                          y='355.000'>+ printMessage(arg0:javax.tools.Diagnostic.Kind,arg1:java.lang.CharSequence,arg2:javax.lang.model.element.Element,arg3:javax.lang.model.element.AnnotationMirror):void</text>
                     <text x='5.000'
-                          y='366.000'
+                          y='366.000'>+ printMessage(arg0:javax.tools.Diagnostic.Kind,arg1:java.lang.CharSequence,arg2:javax.lang.model.element.Element,arg3:javax.lang.model.element.AnnotationMirror,arg4:javax.lang.model.element.AnnotationValue):void</text>
+                    <text x='5.000'
+                          y='377.000'
                           class='abstract'>+ process(arg0:java.util.Set&lt;? extends javax.lang.model.element.TypeElement&gt;,arg1:javax.annotation.processing.RoundEnvironment):boolean</text>
                     <text x='5.000'
-                          y='377.000'># retrieveAnnotatedField(arg0:javax.annotation.processing.RoundEnvironment,arg1:java.lang.Class&lt;? extends java.lang.annotation.Annotation&gt;):java.util.Optional&lt;javax.lang.model.element.VariableElement&gt;</text>
+                          y='388.000'># retrieveAnnotatedField(arg0:javax.annotation.processing.RoundEnvironment,arg1:java.lang.Class&lt;? extends java.lang.annotation.Annotation&gt;):java.util.Optional&lt;javax.lang.model.element.VariableElement&gt;</text>
                     <text x='5.000'
-                          y='388.000'>+ retrieveInterfaces(arg0:javax.lang.model.element.TypeElement,arg1:java.util.Set&lt;? super javax.lang.model.element.TypeElement&gt;):void</text>
+                          y='399.000'>+ retrieveArgumentNames(arg0:javax.lang.model.element.ExecutableElement):java.util.List&lt;javax.lang.model.element.Name&gt;</text>
+                    <text x='5.000'
+                          y='410.000'>+ retrieveGenericTypes(arg0:javax.lang.model.type.TypeMirror):java.util.List&lt;javax.lang.model.type.TypeMirror&gt;</text>
+                    <text x='5.000'
+                          y='421.000'>+ retrieveInterfaces(arg0:javax.lang.model.element.TypeElement,arg1:java.util.Set&lt;? super javax.lang.model.element.TypeElement&gt;):void</text>
                 </g>
             </g>
         </symbol>
@@ -505,7 +510,7 @@
         </symbol>
         <clipPath id='ID000005'>
             <rect class='externalClass'
-                  height='183.000'
+                  height='216.000'
                   width='1282.000'
                   x='0.000'
                   y='0.000'/>
@@ -516,7 +521,7 @@
                     <rect x='0.000'
                           y='0.000'
                           width='1282.000'
-                          height='183.000'
+                          height='216.000'
                           class='externalClass'/>
                     <line x1='0.000'
                           y1='28.000'
@@ -552,15 +557,24 @@
                     <text x='5.000'
                           y='124.000'>&#x2A22; hasAnnotation(arg0:javax.lang.model.element.Element,arg1:java.lang.Class&lt;A&gt;):boolean</text>
                     <text x='5.000'
-                          y='135.000'>&#x2A22; printMessage(arg0:javax.tools.Diagnostic.Kind,arg1:java.lang.CharSequence):void</text>
+                          y='135.000'
+                          class='abstract'>+ isEnumType(arg0:javax.lang.model.type.TypeMirror):boolean</text>
                     <text x='5.000'
-                          y='146.000'>&#x2A22; printMessage(arg0:javax.tools.Diagnostic.Kind,arg1:java.lang.CharSequence,arg2:javax.lang.model.element.Element):void</text>
+                          y='146.000'>&#x2A22; printMessage(arg0:javax.tools.Diagnostic.Kind,arg1:java.lang.CharSequence):void</text>
                     <text x='5.000'
-                          y='157.000'>&#x2A22; printMessage(arg0:javax.tools.Diagnostic.Kind,arg1:java.lang.CharSequence,arg2:javax.lang.model.element.Element,arg3:javax.lang.model.element.AnnotationMirror):void</text>
+                          y='157.000'>&#x2A22; printMessage(arg0:javax.tools.Diagnostic.Kind,arg1:java.lang.CharSequence,arg2:javax.lang.model.element.Element):void</text>
                     <text x='5.000'
-                          y='168.000'>&#x2A22; printMessage(arg0:javax.tools.Diagnostic.Kind,arg1:java.lang.CharSequence,arg2:javax.lang.model.element.Element,arg3:javax.lang.model.element.AnnotationMirror,arg4:javax.lang.model.element.AnnotationValue):void</text>
+                          y='168.000'>&#x2A22; printMessage(arg0:javax.tools.Diagnostic.Kind,arg1:java.lang.CharSequence,arg2:javax.lang.model.element.Element,arg3:javax.lang.model.element.AnnotationMirror):void</text>
                     <text x='5.000'
-                          y='179.000'>&#x2A22; retrieveInterfaces(arg0:javax.lang.model.element.TypeElement,arg1:java.util.Set&lt;? super javax.lang.model.element.TypeElement&gt;):void</text>
+                          y='179.000'>&#x2A22; printMessage(arg0:javax.tools.Diagnostic.Kind,arg1:java.lang.CharSequence,arg2:javax.lang.model.element.Element,arg3:javax.lang.model.element.AnnotationMirror,arg4:javax.lang.model.element.AnnotationValue):void</text>
+                    <text x='5.000'
+                          y='190.000'
+                          class='abstract'>+ retrieveArgumentNames(arg0:javax.lang.model.element.ExecutableElement):java.util.List&lt;javax.lang.model.element.Name&gt;</text>
+                    <text x='5.000'
+                          y='201.000'
+                          class='abstract'>+ retrieveGenericTypes(arg0:javax.lang.model.type.TypeMirror):java.util.List&lt;? extends javax.lang.model.type.TypeMirror&gt;</text>
+                    <text x='5.000'
+                          y='212.000'>&#x2A22; retrieveInterfaces(arg0:javax.lang.model.element.TypeElement,arg1:java.util.Set&lt;? super javax.lang.model.element.TypeElement&gt;):void</text>
                 </g>
             </g>
         </symbol>
@@ -673,16 +687,16 @@
         </symbol>
     </defs>
     <path class='inheritance'
-          d='M1785.000,1072.000 L1785.000,972.000'
+          d='M1785.000,1138.000 L1785.000,1038.000'
           marker-end='url(#inheritance)'/>
     <path class='inheritance'
-          d='M1735.000,580.000 c0.000,-368.000,-1588.000,0.000,-1588.000,-368.000 v-15'
+          d='M1735.000,613.000 c0.000,-401.000,-1588.000,0.000,-1588.000,-401.000 v-15'
           marker-end='url(#inheritance)'/>
     <path class='implementation'
-          d='M1785.000,580.000 c0.000,-423.000,-738.000,0.000,-738.000,-423.000 v-15'
+          d='M1785.000,613.000 c0.000,-456.000,-738.000,0.000,-738.000,-456.000 v-15'
           marker-end='url(#implementation)'/>
     <path class='implementation'
-          d='M1835.000,580.000 c0.000,-85.000,-50.000,0.000,-50.000,-85.000 v-15'
+          d='M1835.000,613.000 c0.000,-85.000,-50.000,0.000,-50.000,-85.000 v-15'
           marker-end='url(#implementation)'/>
     <path class='inheritance'
           d='M1760.000,297.000 c0.000,-162.000,706.000,0.000,706.000,-162.000 v-15'
@@ -706,9 +720,9 @@
          y='297.000'
          xlink:href='#org.tquadrat.foundation.ap.APHelper'/>
     <use x='1057.000'
-         y='580.000'
+         y='613.000'
          xlink:href='#org.tquadrat.foundation.ap.APBase'/>
-    <use x='1189.000'
-         y='1072.000'
+    <use x='1063.000'
+         y='1138.000'
          xlink:href='#org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor'/>
 </svg>

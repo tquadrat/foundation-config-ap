@@ -165,7 +165,7 @@
                     <text x='5.000'
                           y='124.000'>+ createSetter(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.MethodSpec&gt;</text>
                     <text x='5.000'
-                          y='135.000'>+ getAddMethodArgumentName():java.lang.String</text>
+                          y='135.000'>+ getAddMethodArgumentName():javax.lang.model.element.Name</text>
                     <text x='5.000'
                           y='146.000'>+ getAddMethodComposer():java.util.Optional&lt;java.util.function.BiFunction&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl,org.tquadrat.foundation.javacomposer.MethodSpec&gt;&gt;</text>
                     <text x='5.000'
@@ -211,7 +211,7 @@
                     <text x='5.000'
                           y='377.000'>+ getPropertyName():java.lang.String</text>
                     <text x='5.000'
-                          y='388.000'>+ getSetterArgumentName():java.lang.String</text>
+                          y='388.000'>+ getSetterArgumentName():javax.lang.model.element.Name</text>
                     <text x='5.000'
                           y='399.000'>+ getSetterBuilder():java.util.Optional&lt;org.tquadrat.foundation.javacomposer.MethodSpec.Builder&gt;</text>
                     <text x='5.000'
@@ -835,7 +835,7 @@
                           class='abstract'>+ createSetter(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.MethodSpec&gt;</text>
                     <text x='5.000'
                           y='113.000'
-                          class='abstract'>+ getAddMethodArgumentName():java.lang.String</text>
+                          class='abstract'>+ getAddMethodArgumentName():javax.lang.model.element.Name</text>
                     <text x='5.000'
                           y='124.000'
                           class='abstract'>+ getAddMethodName():java.util.Optional&lt;javax.lang.model.element.Name&gt;</text>
@@ -900,7 +900,7 @@
                           class='abstract'>+ getPropertyType():org.tquadrat.foundation.javacomposer.TypeName</text>
                     <text x='5.000'
                           y='355.000'
-                          class='abstract'>+ getSetterArgumentName():java.lang.String</text>
+                          class='abstract'>+ getSetterArgumentName():javax.lang.model.element.Name</text>
                     <text x='5.000'
                           y='366.000'
                           class='abstract'>+ getSetterBuilder():java.util.Optional&lt;org.tquadrat.foundation.javacomposer.MethodSpec.Builder&gt;</text>

@@ -21,18 +21,9 @@ import static org.apiguardian.api.API.Status.INTERNAL;
 import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.LIST_ACCESSOR_TYPE;
 import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MAP_ACCESSOR_TYPE;
 import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.SET_ACCESSOR_TYPE;
-import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
-import static org.tquadrat.foundation.util.JavaUtils.loadClass;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.apiguardian.api.API;
 import org.tquadrat.foundation.annotation.ClassVersion;
-import org.tquadrat.foundation.javacomposer.ArrayTypeName;
-import org.tquadrat.foundation.javacomposer.ClassName;
-import org.tquadrat.foundation.javacomposer.ParameterizedTypeName;
 import org.tquadrat.foundation.javacomposer.TypeName;
 
 /**
@@ -95,128 +86,11 @@ public enum CollectionKind
     ====** Methods **==========================================================
         \*---------*/
     /**
-     * Determines the type of collection for the given type.
-     *
-     * @param type The type.
-     * @return The collection kind.
-     */
-    public static final CollectionKind determine( final TypeName type )
-    {
-        final var retValue =
-            isList( requireNonNullArgument( type, "type" ) ) ? LIST
-            : isMap( type ) ? MAP
-            : isSet( type ) ? SET
-            : NO_COLLECTION;
-
-        //---* Done *----------------------------------------------------------
-        return retValue;
-    }   //  determine()
-
-    /**
      * Returns the accessor type for the collection kind.
      *
      * @return The accessor type.
      */
     public final TypeName getAccessorType() { return m_AccessorType; }
-
-    /**
-     *  Determines whether the given instance of
-     *  {@link TypeName}
-     *  is for an implementation of
-     *  {@link List}.
-     *
-     *  @param  typeName    The type name to check.
-     *  @return {@code true} if the type name is for a {@code List}
-     *      implementation, {@code false} otherwise.
-     */
-    public static final boolean isList( final TypeName typeName )
-    {
-        var retValue = !(requireNonNullArgument( typeName, "typeName" ).isPrimitive() || typeName.isBoxedPrimitive() || (typeName instanceof ArrayTypeName));
-        if( retValue )
-        {
-            final ClassName className;
-            if( typeName instanceof ParameterizedTypeName )
-            {
-                className = ((ParameterizedTypeName) typeName).rawType();
-            }
-            else
-            {
-                className = (ClassName) typeName;
-            }
-            retValue = loadClass( className.canonicalName() )
-                .filter( List.class::isAssignableFrom )
-                .isPresent();
-        }
-
-        //---* Done *----------------------------------------------------------
-        return retValue;
-    }   //  isList()
-
-    /**
-     *  Determines whether the given instance of
-     *  {@link TypeName}
-     *  is for an implementation of
-     *  {@link Map}.
-     *
-     *  @param  typeName    The type name to check.
-     *  @return {@code true} if the type name is for a {@code Map}
-     *      implementation, {@code false} otherwise.
-     */
-    public static final boolean isMap( final TypeName typeName )
-    {
-        var retValue = !(requireNonNullArgument( typeName, "typeName" ).isPrimitive() || typeName.isBoxedPrimitive() || (typeName instanceof ArrayTypeName));
-        if( retValue )
-        {
-            final ClassName className;
-            if( typeName instanceof ParameterizedTypeName )
-            {
-                className = ((ParameterizedTypeName) typeName).rawType();
-            }
-            else
-            {
-                className = (ClassName) typeName;
-            }
-            retValue = loadClass( className.canonicalName() )
-                .filter( Map.class::isAssignableFrom )
-                .isPresent();
-        }
-
-        //---* Done *----------------------------------------------------------
-        return retValue;
-    }   //  isMap()
-
-    /**
-     *  Determines whether the given instance of
-     *  {@link TypeName}
-     *  is for an implementation of
-     *  {@link Set}.
-     *
-     *  @param  typeName    The type name to check.
-     *  @return {@code true} if the type name is for a {@code Set}
-     *      implementation, {@code false} otherwise.
-     */
-    public static final boolean isSet( final TypeName typeName )
-    {
-        var retValue = !(requireNonNullArgument( typeName, "typeName" ).isPrimitive() || typeName.isBoxedPrimitive() || (typeName instanceof ArrayTypeName));
-        if( retValue )
-        {
-            final ClassName className;
-            if( typeName instanceof ParameterizedTypeName )
-            {
-                className = ((ParameterizedTypeName) typeName).rawType();
-            }
-            else
-            {
-                className = (ClassName) typeName;
-            }
-            retValue = loadClass( className.canonicalName() )
-                .filter( Set.class::isAssignableFrom )
-                .isPresent();
-        }
-
-        //---* Done *----------------------------------------------------------
-        return retValue;
-    }   //  isSet()
 }
 //  enum CollectionKind
 

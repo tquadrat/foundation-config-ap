@@ -59,9 +59,11 @@ loadScripts(document, 'script');</script>
 <div class="block">The type name for the class
   <a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/spi/prefs/SimplePreferenceAccessor.html" title="class or interface in org.tquadrat.foundation.config.spi.prefs" class="external-link"><code>SimplePreferenceAccessor</code></a>.</div>
 </dd>
-<dt><a href="../org/tquadrat/foundation/config/ap/CollectionKind.html#determine(org.tquadrat.foundation.javacomposer.TypeName)" class="member-name-link">determine(TypeName)</a> - Static method in enum class org.tquadrat.foundation.config.ap.<a href="../org/tquadrat/foundation/config/ap/CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></dt>
+<dt><a href="../org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#determineCollectionKind(javax.lang.model.type.TypeMirror)" class="member-name-link">determineCollectionKind(TypeMirror)</a> - Method in class org.tquadrat.foundation.config.ap.<a href="../org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html" title="class in org.tquadrat.foundation.config.ap">ConfigAnnotationProcessor</a></dt>
 <dd>
-<div class="block">Determines the type of collection for the given type.</div>
+<div class="block">Determines whether the given
+  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html" title="class or interface in javax.lang.model.type" class="external-link"><code>type</code></a>
+  is a collection of some type and returns the respective kind.</div>
 </dd>
 <dt><a href="../org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#determinePropertyNameFromMethod(javax.lang.model.element.ExecutableElement)" class="member-name-link">determinePropertyNameFromMethod(ExecutableElement)</a> - Method in class org.tquadrat.foundation.config.ap.<a href="../org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html" title="class in org.tquadrat.foundation.config.ap">ConfigAnnotationProcessor</a></dt>
 <dd>
@@ -69,10 +71,10 @@ loadScripts(document, 'script');</script>
   given executable element for a method that is either a getter, a setter
   or an 'add' method.</div>
 </dd>
-<dt><a href="../org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#determinePropertyType(javax.lang.model.element.ExecutableElement)" class="member-name-link">determinePropertyType(ExecutableElement)</a> - Static method in class org.tquadrat.foundation.config.ap.<a href="../org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html" title="class in org.tquadrat.foundation.config.ap">ConfigAnnotationProcessor</a></dt>
+<dt><a href="../org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#determinePropertyType(javax.lang.model.type.TypeMirror)" class="member-name-link">determinePropertyType(TypeMirror)</a> - Method in class org.tquadrat.foundation.config.ap.<a href="../org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html" title="class in org.tquadrat.foundation.config.ap">ConfigAnnotationProcessor</a></dt>
 <dd>
-<div class="block">Determines the property type from the return type of the
-  given getter.</div>
+<div class="block">Determines the property type from the given
+  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html" title="class or interface in javax.lang.model.type" class="external-link"><code>TypeMirror</code></a> instance.</div>
 </dd>
 <dt><a href="../org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#determineStringConverterClass(javax.lang.model.element.ExecutableElement,org.tquadrat.foundation.javacomposer.TypeName)" class="member-name-link">determineStringConverterClass(ExecutableElement, TypeName)</a> - Method in class org.tquadrat.foundation.config.ap.<a href="../org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html" title="class in org.tquadrat.foundation.config.ap">CodeGenerationConfiguration</a></dt>
 <dd>

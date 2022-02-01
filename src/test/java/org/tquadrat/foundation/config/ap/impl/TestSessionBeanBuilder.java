@@ -45,7 +45,6 @@ import org.tquadrat.foundation.test.helper.CodeGeneratorTestBase;
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @version $Id: TestSessionBeanBuilder.java 949 2021-12-28 11:09:25Z tquadrat $
  */
-@SuppressWarnings( "OverlyCoupledClass" )
 @ClassVersion( sourceVersion = "$Id: TestSessionBeanBuilder.java 949 2021-12-28 11:09:25Z tquadrat $" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.TestConfigBeanBuilder" )
 public class TestSessionBeanBuilder extends CodeGeneratorTestBase
@@ -866,11 +865,11 @@ public class TestSessionBeanBuilder extends CodeGeneratorTestBase
                      * {@inheritDoc}
                      */
                     @Override
-                    public final void setDate2( final Instant value )
+                    public final void setDate2( final Instant date2 )
                     {
                         try( final var ignored = m_WriteLock.lock() )
                         {
-                            final var newValue = value;
+                            final var newValue = date2;
                             m_ListenerSupport.fireEvent( "date2", m_Date2, newValue );
                             m_Date2 = newValue;
                         }
@@ -880,11 +879,11 @@ public class TestSessionBeanBuilder extends CodeGeneratorTestBase
                      * {@inheritDoc}
                      */
                     @Override
-                    public final void setInt3( final int value )
+                    public final void setInt3( final int int3 )
                     {
                         try( final var ignored = m_WriteLock.lock() )
                         {
-                            final var newValue = value;
+                            final var newValue = int3;
                             m_ListenerSupport.fireEvent( "int3", m_Int3, newValue );
                             m_Int3 = newValue;
                         }
@@ -894,11 +893,11 @@ public class TestSessionBeanBuilder extends CodeGeneratorTestBase
                      * {@inheritDoc}
                      */
                     @Override
-                    public final void setInt4( final Integer value )
+                    public final void setInt4( final Integer int4 )
                     {
                         try( final var ignored = m_WriteLock.lock() )
                         {
-                            final var newValue = value;
+                            final var newValue = int4;
                             m_ListenerSupport.fireEvent( "int4", m_Int4, newValue );
                             m_Int4 = newValue;
                         }
@@ -922,11 +921,11 @@ public class TestSessionBeanBuilder extends CodeGeneratorTestBase
                      * {@inheritDoc}
                      */
                     @Override
-                    public final void setString2( final String value )
+                    public final void setString2( final String string2 )
                     {
                         try( final var ignored = m_WriteLock.lock() )
                         {
-                            final var newValue = value;
+                            final var newValue = string2;
                             m_ListenerSupport.fireEvent( "string2", m_String2, newValue );
                             m_String2 = newValue;
                         }

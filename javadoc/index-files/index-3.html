@@ -65,10 +65,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates a new instance of <code>CharsetProperty</code>.</div>
 </dd>
-<dt><a href="../org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#checkAppropriate(org.tquadrat.foundation.javacomposer.TypeName)" class="member-name-link">checkAppropriate(TypeName)</a> - Static method in class org.tquadrat.foundation.config.ap.<a href="../org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html" title="class in org.tquadrat.foundation.config.ap">ConfigAnnotationProcessor</a></dt>
+<dt><a href="../org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#checkAppropriate(javax.lang.model.type.TypeMirror)" class="member-name-link">checkAppropriate(TypeMirror)</a> - Method in class org.tquadrat.foundation.config.ap.<a href="../org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html" title="class in org.tquadrat.foundation.config.ap">ConfigAnnotationProcessor</a></dt>
 <dd>
-<div class="block">Checks whether the given type name is inappropriate for a configuration
-  bean property and deserves that an
+<div class="block">Checks whether the given type is inappropriate for a configuration bean
+  property and therefore deserves that an
   <a href="../org/tquadrat/foundation/config/ap/InappropriateTypeError.html" title="class in org.tquadrat.foundation.config.ap"><code>InappropriateTypeError</code></a>
   is thrown.</div>
 </dd>
@@ -149,16 +149,6 @@ loadScripts(document, 'script');</script>
 <div class="block">The default implementation of the method that composes an 'add' method
   for the given property.</div>
 </dd>
-<dt><a href="../org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#composeArgumentName(java.lang.CharSequence)" class="member-name-link">composeArgumentName(CharSequence)</a> - Static method in class org.tquadrat.foundation.config.ap.<a href="../org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html" title="class in org.tquadrat.foundation.config.ap">ConfigAnnotationProcessor</a></dt>
-<dd>
-<div class="block">Composes an argument name from the given formal
-  parameter.</div>
-</dd>
-<dt><a href="../org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#composeArgumentName(javax.lang.model.element.VariableElement)" class="member-name-link">composeArgumentName(VariableElement)</a> - Static method in class org.tquadrat.foundation.config.ap.<a href="../org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html" title="class in org.tquadrat.foundation.config.ap">ConfigAnnotationProcessor</a></dt>
-<dd>
-<div class="block">Composes an argument name from the given formal
-  parameter.</div>
-</dd>
 <dt><a href="../org/tquadrat/foundation/config/ap/impl/specialprops/CharsetProperty.html#composeConstructorFragment(org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl)" class="member-name-link">composeConstructorFragment(CodeBuilder, PropertySpecImpl)</a> - Static method in class org.tquadrat.foundation.config.ap.impl.specialprops.<a href="../org/tquadrat/foundation/config/ap/impl/specialprops/CharsetProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">CharsetProperty</a></dt>
 <dd>
 <div class="block">Composes the constructor fragment for the initialisation of this
@@ -231,6 +221,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">The implementation of the method that composes a field for the
   given property.</div>
+</dd>
+<dt><a href="../org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#composeFieldName(java.lang.String)" class="member-name-link">composeFieldName(String)</a> - Static method in class org.tquadrat.foundation.config.ap.<a href="../org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html" title="class in org.tquadrat.foundation.config.ap">ConfigAnnotationProcessor</a></dt>
+<dd>
+<div class="block">Composes the name of the field from the given property name.</div>
 </dd>
 <dt><a href="../org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#composeGetter(org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl)" class="member-name-link">composeGetter(CodeBuilder, PropertySpecImpl)</a> - Static method in class org.tquadrat.foundation.config.ap.impl.codebuilders.<a href="../org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">CodeBuilderBase</a></dt>
 <dd>

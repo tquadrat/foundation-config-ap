@@ -11,11 +11,7 @@
 <meta name="keywords" content="m_AccessorType">
 <meta name="keywords" content="values()">
 <meta name="keywords" content="valueOf()">
-<meta name="keywords" content="determine()">
 <meta name="keywords" content="getAccessorType()">
-<meta name="keywords" content="isList()">
-<meta name="keywords" content="isMap()">
-<meta name="keywords" content="isSet()">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../jquery-ui.overrides.css" title="Style">
@@ -95,7 +91,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="annotations"><a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">@ClassVersion</a>(<a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html#sourceVersion()" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">sourceVersion</a>="$Id: CollectionKind.java 919 2021-05-22 19:40:36Z tquadrat $")
 <a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html" title="class or interface in org.apiguardian.api" class="external-link">@API</a>(<a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html#status()" title="class or interface in org.apiguardian.api" class="external-link">status</a>=<a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.Status.html#INTERNAL" title="class or interface in org.apiguardian.api" class="external-link">INTERNAL</a>,
      <a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html#since()" title="class or interface in org.apiguardian.api" class="external-link">since</a>="0.1.0")
-</span><span class="modifiers">public enum </span><span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-46">CollectionKind</a></span>
+</span><span class="modifiers">public enum </span><span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-37">CollectionKind</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;<a href="CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a>&gt;</span></div>
 <div class="block">The kind of collection for a property type that is a collection.</div>
 <dl class="notes">
@@ -208,39 +204,10 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static final <a href="CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#determine(org.tquadrat.foundation.javacomposer.TypeName)" class="member-name-link">determine</a><wbr>(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;type)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Determines the type of collection for the given type.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAccessorType()" class="member-name-link">getAccessorType</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAccessorType()" class="member-name-link">getAccessorType</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the accessor type for the collection kind.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static final boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isList(org.tquadrat.foundation.javacomposer.TypeName)" class="member-name-link">isList</a><wbr>(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;typeName)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Determines whether the given instance of
-  <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link"><code>TypeName</code></a>
-  is for an implementation of
-  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a>.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static final boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isMap(org.tquadrat.foundation.javacomposer.TypeName)" class="member-name-link">isMap</a><wbr>(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;typeName)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Determines whether the given instance of
-  <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link"><code>TypeName</code></a>
-  is for an implementation of
-  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link"><code>Map</code></a>.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static final boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isSet(org.tquadrat.foundation.javacomposer.TypeName)" class="member-name-link">isSet</a><wbr>(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;typeName)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Determines whether the given instance of
-  <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link"><code>TypeName</code></a>
-  is for an implementation of
-  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link"><code>Set</code></a>.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
@@ -276,28 +243,28 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="LIST">
 <h3>LIST</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-56">LIST</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-47">LIST</a></span></div>
 <div class="block">The type is a List.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="MAP">
 <h3>MAP</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-61">MAP</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-52">MAP</a></span></div>
 <div class="block">The type is a Map.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="SET">
 <h3>SET</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-66">SET</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-57">SET</a></span></div>
 <div class="block">The type is a Set.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="NO_COLLECTION">
 <h3>NO_COLLECTION</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-71">NO_COLLECTION</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-62">NO_COLLECTION</a></span></div>
 <div class="block">The type is not a collection at all.</div>
 </section>
 </li>
@@ -312,7 +279,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="m_AccessorType">
 <h3>m_AccessorType</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-79">m_AccessorType</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-70">m_AccessorType</a></span></div>
 <div class="block">The type name for the accessor.</div>
 </section>
 </li>
@@ -327,7 +294,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="&lt;init&gt;(org.tquadrat.foundation.javacomposer.TypeName)">
 <h3>CollectionKind</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-89">CollectionKind</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;accessor)</span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-80">CollectionKind</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;accessor)</span></div>
 <div class="block">Creates a new <code>CollectionKind</code> instance.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -346,7 +313,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="values()">
 <h3>values</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a>[]</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-46">values</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a>[]</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-37">values</a></span>()</div>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
 <dl class="notes">
@@ -358,7 +325,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="valueOf(java.lang.String)">
 <h3>valueOf</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-46">valueOf</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-37">valueOf</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
 <div class="block">Returns the enum constant of this class with the specified name.
 The string must match <i>exactly</i> an identifier used to declare an
 enum constant in this class.  (Extraneous whitespace characters are 
@@ -375,77 +342,13 @@ not permitted.)</div>
 </section>
 </li>
 <li>
-<section class="detail" id="determine(org.tquadrat.foundation.javacomposer.TypeName)">
-<h3>determine</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-103">determine</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;type)</span></div>
-<div class="block">Determines the type of collection for the given type.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>type</code> - The type.</dd>
-<dt>Returns:</dt>
-<dd>The collection kind.</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="getAccessorType()">
 <h3>getAccessorType</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-120">getAccessorType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-93">getAccessorType</a></span>()</div>
 <div class="block">Returns the accessor type for the collection kind.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>The accessor type.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="isList(org.tquadrat.foundation.javacomposer.TypeName)">
-<h3>isList</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-132">isList</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;typeName)</span></div>
-<div class="block">Determines whether the given instance of
-  <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link"><code>TypeName</code></a>
-  is for an implementation of
-  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a>.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>typeName</code> - The type name to check.</dd>
-<dt>Returns:</dt>
-<dd><code>true</code> if the type name is for a <code>List</code>
-      implementation, <code>false</code> otherwise.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="isMap(org.tquadrat.foundation.javacomposer.TypeName)">
-<h3>isMap</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-165">isMap</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;typeName)</span></div>
-<div class="block">Determines whether the given instance of
-  <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link"><code>TypeName</code></a>
-  is for an implementation of
-  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link"><code>Map</code></a>.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>typeName</code> - The type name to check.</dd>
-<dt>Returns:</dt>
-<dd><code>true</code> if the type name is for a <code>Map</code>
-      implementation, <code>false</code> otherwise.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="isSet(org.tquadrat.foundation.javacomposer.TypeName)">
-<h3>isSet</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CollectionKind.html#line-198">isSet</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;typeName)</span></div>
-<div class="block">Determines whether the given instance of
-  <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link"><code>TypeName</code></a>
-  is for an implementation of
-  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link"><code>Set</code></a>.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>typeName</code> - The type name to check.</dd>
-<dt>Returns:</dt>
-<dd><code>true</code> if the type name is for a <code>Set</code>
-      implementation, <code>false</code> otherwise.</dd>
 </dl>
 </section>
 </li>

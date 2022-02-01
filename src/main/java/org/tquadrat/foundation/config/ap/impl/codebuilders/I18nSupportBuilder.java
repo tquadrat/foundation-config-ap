@@ -33,12 +33,12 @@ import org.tquadrat.foundation.annotation.ClassVersion;
  *  implement the interface
  *  {@link org.tquadrat.foundation.config.I18nSupport}.}</p>
  *
- *  @version $Id: I18nSupportBuilder.java 933 2021-07-03 13:32:17Z tquadrat $
+ *  @version $Id: I18nSupportBuilder.java 1001 2022-01-29 16:42:15Z tquadrat $
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@ClassVersion( sourceVersion = "$Id: I18nSupportBuilder.java 933 2021-07-03 13:32:17Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: I18nSupportBuilder.java 1001 2022-01-29 16:42:15Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public final class I18nSupportBuilder extends CodeBuilderBase
 {

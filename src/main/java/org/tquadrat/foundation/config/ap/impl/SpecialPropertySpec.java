@@ -33,12 +33,12 @@ import org.tquadrat.foundation.javacomposer.MethodSpec;
 /**
  *  The specification for special properties.
  *
- *  @version $Id: SpecialPropertySpec.java 927 2021-06-08 20:57:27Z tquadrat $
+ *  @version $Id: SpecialPropertySpec.java 1001 2022-01-29 16:42:15Z tquadrat $
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@ClassVersion( sourceVersion = "$Id: SpecialPropertySpec.java 927 2021-06-08 20:57:27Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: SpecialPropertySpec.java 1001 2022-01-29 16:42:15Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public interface SpecialPropertySpec extends PropertySpec
 {

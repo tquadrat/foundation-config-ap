@@ -42,12 +42,12 @@ import org.tquadrat.foundation.util.SystemUtils;
  *  for
  *  {@link SpecialPropertyType#CONFIG_PROPERTY_PID}.
  *
- *  @version $Id: ProcessIdProperty.java 943 2021-12-21 01:34:32Z tquadrat $
+ *  @version $Id: ProcessIdProperty.java 1001 2022-01-29 16:42:15Z tquadrat $
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@ClassVersion( sourceVersion = "$Id: ProcessIdProperty.java 943 2021-12-21 01:34:32Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ProcessIdProperty.java 1001 2022-01-29 16:42:15Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public final class ProcessIdProperty extends SpecialPropertySpecBase
 {

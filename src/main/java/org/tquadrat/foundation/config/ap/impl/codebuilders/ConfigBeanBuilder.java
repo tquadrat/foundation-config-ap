@@ -17,16 +17,12 @@
 
 package org.tquadrat.foundation.config.ap.impl.codebuilders;
 
-import static javax.lang.model.element.Modifier.DEFAULT;
 import static javax.lang.model.element.Modifier.FINAL;
 import static javax.lang.model.element.Modifier.PRIVATE;
 import static javax.lang.model.element.Modifier.PUBLIC;
 import static javax.lang.model.element.Modifier.STATIC;
 import static org.apiguardian.api.API.Status.MAINTAINED;
 import static org.tquadrat.foundation.config.SpecialPropertyType.CONFIG_PROPERTY_RESOURCEBUNDLE;
-import static org.tquadrat.foundation.config.ap.CollectionKind.isList;
-import static org.tquadrat.foundation.config.ap.CollectionKind.isMap;
-import static org.tquadrat.foundation.config.ap.CollectionKind.isSet;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ENVIRONMENT_VARIABLE;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.EXEMPT_FROM_TOSTRING;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.GETTER_IS_DEFAULT;
@@ -47,7 +43,6 @@ import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.UNCHECKE
 import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.createSuppressWarningsAnnotation;
 import static org.tquadrat.foundation.lang.CommonConstants.EMPTY_STRING;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
-import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -203,24 +198,11 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
      *
      *  @param  typeName    The type to check.
      *
-     *  @see org.tquadrat.foundation.config.ap.CollectionKind#isList(TypeName)
-     *  @see org.tquadrat.foundation.config.ap.CollectionKind#isMap(TypeName)
-     *  @see org.tquadrat.foundation.config.ap.CollectionKind#isSet(TypeName)
      *  @see ParameterizedTypeName
      */
-    @SuppressWarnings( "OverlyComplexBooleanExpression" )
     private final void addUnchecked( final TypeName typeName )
     {
-        if
-        (
-            isList( requireNonNullArgument( typeName, "typeName" ) )
-                || isMap( typeName )
-                || isSet( typeName )
-                || (typeName instanceof ParameterizedTypeName)
-        )
-        {
-            addConstructorSuppressedWarning( UNCHECKED );
-        }
+        if( typeName instanceof ParameterizedTypeName ) addConstructorSuppressedWarning( UNCHECKED );
     }   //  addUnchecked()
 
     /**
@@ -273,14 +255,13 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
                 """
             );
 
-        if( method.hasModifier( DEFAULT ) )
+        if( method.hasModifier( STATIC ) )
         {
-            builder.addStatement( "final var initData = initData()" );
+            builder.addStatement( "final var initData = $1T.initData()", getConfiguration().getSpecification() );
         }
         else
         {
-            assert method.hasModifier( STATIC ) : "initData() is neither DEFAULT nor STATIC";
-            builder.addStatement( "final var initData = $1T.initData()", getConfiguration().getSpecification() );
+            builder.addStatement( "final var initData = initData()" );
         }
 
         builder.beginControlFlow(

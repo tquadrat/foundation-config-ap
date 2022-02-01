@@ -62,12 +62,12 @@ import org.tquadrat.foundation.lang.Objects;
  *  for
  *  {@link SpecialPropertyType#CONFIG_PROPERTY_RESOURCEBUNDLE}.
  *
- *  @version $Id: ResourceBundleProperty.java 999 2022-01-27 23:23:26Z tquadrat $
+ *  @version $Id: ResourceBundleProperty.java 1001 2022-01-29 16:42:15Z tquadrat $
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@ClassVersion( sourceVersion = "$Id: ResourceBundleProperty.java 999 2022-01-27 23:23:26Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ResourceBundleProperty.java 1001 2022-01-29 16:42:15Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public final class ResourceBundleProperty extends SpecialPropertySpecBase
 {

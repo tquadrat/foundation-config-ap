@@ -45,12 +45,14 @@ import static org.tquadrat.foundation.javacomposer.Layout.LAYOUT_FOUNDATION;
 import static org.tquadrat.foundation.javacomposer.Primitives.BOOLEAN;
 import static org.tquadrat.foundation.lang.CommonConstants.PROPERTY_IS_DEBUG;
 import static org.tquadrat.foundation.lang.CommonConstants.PROPERTY_IS_TEST;
+import static org.tquadrat.foundation.lang.Objects.isNull;
 import static org.tquadrat.foundation.lang.Objects.requireNotEmptyArgument;
 import static org.tquadrat.foundation.util.JavaUtils.composeGetterName;
 import static org.tquadrat.foundation.util.JavaUtils.composeSetterName;
-import static org.tquadrat.foundation.util.StringUtils.capitalize;
 import static org.tquadrat.foundation.util.StringUtils.format;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.List;
@@ -85,14 +87,23 @@ import org.tquadrat.foundation.util.stringconverter.StringStringConverter;
 /**
  *  The base class for the code generation tests.
  *
- *  @version $Id: CodeGeneratorTestBase.java 999 2022-01-27 23:23:26Z tquadrat $
+ *  @version $Id: CodeGeneratorTestBase.java 1001 2022-01-29 16:42:15Z tquadrat $
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  */
 @SuppressWarnings( {"AbstractClassWithoutAbstractMethods", "OverlyCoupledClass", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: CodeGeneratorTestBase.java 999 2022-01-27 23:23:26Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeGeneratorTestBase.java 1001 2022-01-29 16:42:15Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public abstract class CodeGeneratorTestBase extends TestBaseClass
 {
+        /*------------*\
+    ====** Attributes **=======================================================
+        \*------------*/
+    /**
+     *  The method reference for
+     *  {@code ConfigAnnotationProcessor.composeFieldName(String)}.
+     */
+    private static Method m_ComposeFieldNameMethod = null;
+
         /*---------*\
     ====** Methods **==========================================================
         \*---------*/
@@ -267,15 +278,7 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
         /*
          * Those special properties that are optional.
          */
-        //---* The clock property *--------------------------------------------
-        property = new PropertySpecImpl( CONFIG_PROPERTY_CLOCK.getPropertyName() );
-        configuration.addProperty( property );
-        property.setFlag( PROPERTY_IS_SPECIAL, PROPERTY_IS_MUTABLE );
-        property.setSpecialPropertyType( CONFIG_PROPERTY_CLOCK );
-        property.setGetterMethodName( new NameImpl( "getClock" ) );
-        property.setSetterMethodName( new NameImpl( "setClock" ) );
-        property.setSetterArgumentName( "clock" );
-        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
+        createProperty_clock( configuration );
 
         //---* The process id property *---------------------------------------
         property = new PropertySpecImpl( CONFIG_PROPERTY_PID.getPropertyName() );
@@ -315,64 +318,19 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
      *  and adds them to the configuration.
      *
      *  @param  configuration   The configuration.
+     *  @throws Exception   Something went unexpectedly wrong.
      */
     @SuppressWarnings( "UseOfConcreteClass" )
-    protected final void createCustomProperties2( final CodeGenerationConfiguration configuration )
+    protected final void createCustomProperties2( final CodeGenerationConfiguration configuration ) throws Exception
     {
         PropertySpecImpl property;
 
         //---* Create the custom properties *----------------------------------
-        property = new PropertySpecImpl( "int3" );
-        configuration.addProperty( property );
-        property.setFlag( PROPERTY_IS_OPTION, PROPERTY_CLI_MANDATORY, ALLOWS_PREFERENCES );
-        property.setPropertyType( TypeName.from( int.class ) );
-        property.setFieldName( "m_Int3" );
-        property.setSetterMethodName( new NameImpl( "setInt3" ) );
-        property.setSetterArgumentName( "value" );
-        property.setStringConverterClass( ClassName.from( IntegerStringConverter.class ) );
-        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
-        property.setCLIOptionNames( List.of( "--int3") );
-        property.setPrefsKey( "int3" );
-        property.setPrefsAccessorClass( ClassName.from( PrimitiveIntAccessor.class ) );
+        createProperty_int3( configuration );
+        createProperty_int4( configuration );
 
-        property = new PropertySpecImpl( "int4" );
-        configuration.addProperty( property );
-        property.setFlag( PROPERTY_IS_OPTION, PROPERTY_CLI_MANDATORY, ALLOWS_PREFERENCES );
-        property.setPropertyType( ClassName.from( Integer.class ) );
-        property.setFieldName( "m_Int4" );
-        property.setSetterMethodName( new NameImpl( "setInt4" ) );
-        property.setSetterArgumentName( "value" );
-        property.setStringConverterClass( ClassName.from( IntegerStringConverter.class ) );
-        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
-        property.setCLIOptionNames( List.of( "--int4") );
-        property.setPrefsKey( "int4" );
-        property.setPrefsAccessorClass( ClassName.from( IntegerAccessor.class ) );
-
-        property = new PropertySpecImpl( "date2" );
-        configuration.addProperty( property );
-        property.setFlag( PROPERTY_IS_OPTION, PROPERTY_CLI_MANDATORY, GETTER_RETURNS_OPTIONAL, ALLOWS_PREFERENCES );
-        property.setPropertyType( ClassName.from( Instant.class ) );
-        property.setFieldName( "m_Date2" );
-        property.setSetterMethodName( new NameImpl( "setDate2" ) );
-        property.setSetterArgumentName( "value" );
-        property.setStringConverterClass( ClassName.from( InstantStringConverter.class ) );
-        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
-        property.setCLIOptionNames( List.of( "--date2") );
-        property.setPrefsKey( "date2" );
-        property.setPrefsAccessorClass( ClassName.from( SimplePreferenceAccessor.class ) );
-
-        property = new PropertySpecImpl( "string2" );
-        configuration.addProperty( property );
-        property.setFlag( PROPERTY_IS_OPTION, PROPERTY_CLI_MANDATORY, ALLOWS_PREFERENCES );
-        property.setPropertyType( ClassName.from( String.class ) );
-        property.setFieldName( "m_String2" );
-        property.setSetterMethodName( new NameImpl( "setString2" ) );
-        property.setSetterArgumentName( "value" );
-        property.setStringConverterClass( ClassName.from( StringStringConverter.class ) );
-        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
-        property.setCLIOptionNames( List.of( "--string2") );
-        property.setPrefsKey( "string2" );
-        property.setPrefsAccessorClass( ClassName.from( StringAccessor.class ) );
+        createProperty_date2( configuration );
+        createProperty_string2( configuration );
     }   //  createCustomProperties2()
 
     /**
@@ -381,9 +339,10 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
      *  and adds them to the configuration.
      *
      *  @param  configuration   The configuration.
+     *  @throws Exception   Something went unexpectedly wrong.
      */
     @SuppressWarnings( "UseOfConcreteClass" )
-    protected final void createPropertiesForConfigBeanSpec( final CodeGenerationConfiguration configuration )
+    protected final void createPropertiesForConfigBeanSpec( final CodeGenerationConfiguration configuration ) throws Exception
     {
         createProperty_charset( configuration );
         createProperty_isDebug( configuration );
@@ -417,9 +376,10 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
      *  configuration.
      *
      *  @param  configuration   The configuration.
+     *  @throws Exception   Something went unexpectedly wrong.
      */
     @SuppressWarnings( "UseOfConcreteClass" )
-    protected final void createPropertiesForINIBeanSpec( final CodeGenerationConfiguration configuration )
+    protected final void createPropertiesForINIBeanSpec( final CodeGenerationConfiguration configuration ) throws Exception
     {
         PropertySpecImpl property;
         String name;
@@ -523,7 +483,7 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
         property.setSpecialPropertyType( CONFIG_PROPERTY_CHARSET );
         property.setGetterMethodName( new NameImpl( composeGetterName( propertyName ) ) );
         property.setSetterMethodName( new NameImpl( composeSetterName( propertyName ) ) );
-        property.setSetterArgumentName( propertyName );
+        property.setSetterArgumentName( new NameImpl( propertyName ) );
         if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
     }   //  createProperty_charset()
 
@@ -543,18 +503,94 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
         property.setSpecialPropertyType( CONFIG_PROPERTY_CLOCK );
         property.setGetterMethodName( new NameImpl( composeGetterName( propertyName ) ) );
         property.setSetterMethodName( new NameImpl( composeSetterName( propertyName ) ) );
-        property.setSetterArgumentName( propertyName );
+        property.setSetterArgumentName( new NameImpl( propertyName ) );
         if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
     }   //  createProperty_clock()
+
+    /**
+     *  Creates the property 'date2', and adds it to the configuration.
+     *
+     *  @param  configuration   The configuration that takes the created
+     *      property.
+     *  @throws Exception   Something went unexpectedly wrong.
+     */
+    @SuppressWarnings( "UseOfConcreteClass" )
+    public static final void createProperty_date2( final CodeGenerationConfiguration configuration ) throws Exception
+    {
+        final var propertyName = "date2";
+        final var property = new PropertySpecImpl( propertyName );
+        configuration.addProperty( property );
+        property.setFlag( PROPERTY_IS_OPTION, PROPERTY_CLI_MANDATORY, GETTER_RETURNS_OPTIONAL, ALLOWS_PREFERENCES );
+        property.setPropertyType( ClassName.from( Instant.class ) );
+        property.setFieldName( makeFieldName( propertyName ) );
+        property.setSetterMethodName( new NameImpl( composeSetterName( propertyName ) ) );
+        property.setSetterArgumentName( new NameImpl( propertyName ) );
+        property.setStringConverterClass( ClassName.from( InstantStringConverter.class ) );
+        property.setCLIOptionNames( List.of( format( "--%s", propertyName ) ) );
+        property.setPrefsKey( propertyName );
+        property.setPrefsAccessorClass( ClassName.from( PrimitiveIntAccessor.class ) );
+        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
+    }   //  createProperty_date2()
+
+    /**
+     *  Creates the property 'int3', and adds it to the configuration.
+     *
+     *  @param  configuration   The configuration that takes the created
+     *      property.
+     *  @throws Exception   Something went unexpectedly wrong.
+     */
+    @SuppressWarnings( "UseOfConcreteClass" )
+    public static final void createProperty_int3( final CodeGenerationConfiguration configuration ) throws Exception
+    {
+        final var propertyName = "int3";
+        final var property = new PropertySpecImpl( propertyName );
+        configuration.addProperty( property );
+        property.setFlag( PROPERTY_IS_OPTION, PROPERTY_CLI_MANDATORY, ALLOWS_PREFERENCES );
+        property.setPropertyType( TypeName.from( int.class ) );
+        property.setFieldName( makeFieldName( propertyName ) );
+        property.setSetterMethodName( new NameImpl( composeSetterName( propertyName ) ) );
+        property.setSetterArgumentName( new NameImpl( propertyName ) );
+        property.setStringConverterClass( ClassName.from( IntegerStringConverter.class ) );
+        property.setCLIOptionNames( List.of( format( "--%s", propertyName ) ) );
+        property.setPrefsKey( propertyName );
+        property.setPrefsAccessorClass( ClassName.from( PrimitiveIntAccessor.class ) );
+        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
+    }   //  createProperty_int3()
+
+    /**
+     *  Creates the property 'int4', and adds it to the configuration.
+     *
+     *  @param  configuration   The configuration that takes the created
+     *      property.
+     *  @throws Exception   Something went unexpectedly wrong.
+     */
+    @SuppressWarnings( "UseOfConcreteClass" )
+    public static final void createProperty_int4( final CodeGenerationConfiguration configuration ) throws Exception
+    {
+        final var propertyName = "int4";
+        final var property = new PropertySpecImpl( propertyName );
+        configuration.addProperty( property );
+        property.setFlag( PROPERTY_IS_OPTION, PROPERTY_CLI_MANDATORY, ALLOWS_PREFERENCES );
+        property.setPropertyType( ClassName.from( Integer.class ) );
+        property.setFieldName( makeFieldName( propertyName ) );
+        property.setSetterMethodName( new NameImpl( composeSetterName( propertyName ) ) );
+        property.setSetterArgumentName( new NameImpl( propertyName ) );
+        property.setStringConverterClass( ClassName.from( IntegerStringConverter.class ) );
+        property.setCLIOptionNames( List.of( format( "--%s", propertyName ) ) );
+        property.setPrefsKey( propertyName );
+        property.setPrefsAccessorClass( ClassName.from( IntegerAccessor.class ) );
+        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
+    }   //  createProperty_int4()
 
     /**
      *  Creates the property 'isDebug', and adds it to the configuration.
      *
      *  @param  configuration   The configuration that takes the created
      *      property.
+     *  @throws Exception   Something went unexpectedly wrong.
      */
     @SuppressWarnings( "UseOfConcreteClass" )
-    public static final void createProperty_isDebug( final CodeGenerationConfiguration configuration )
+    public static final void createProperty_isDebug( final CodeGenerationConfiguration configuration ) throws Exception
     {
         final var propertyName = "isDebug";
         final var property = new PropertySpecImpl( propertyName );
@@ -574,9 +610,10 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
      *
      *  @param  configuration   The configuration that takes the created
      *      property.
+     *  @throws Exception   Something went unexpectedly wrong.
      */
     @SuppressWarnings( "UseOfConcreteClass" )
-    public static final void createProperty_isTest( final CodeGenerationConfiguration configuration )
+    public static final void createProperty_isTest( final CodeGenerationConfiguration configuration ) throws Exception
     {
         final var propertyName = "isTest";
         final var property = new PropertySpecImpl( propertyName );
@@ -607,7 +644,7 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
         property.setSpecialPropertyType( CONFIG_PROPERTY_LOCALE );
         property.setGetterMethodName( new NameImpl( composeGetterName( propertyName ) ) );
         property.setSetterMethodName( new NameImpl( composeSetterName( propertyName ) ) );
-        property.setSetterArgumentName( propertyName );
+        property.setSetterArgumentName( new NameImpl( propertyName ) );
         if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
     }   //  createProperty_locale()
 
@@ -708,7 +745,7 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
         {
             property.setFlag( PROPERTY_IS_MUTABLE );
             property.setSetterMethodName( new NameImpl( composeSetterName( propertyName ) ) );
-            property.setSetterArgumentName( propertyName );
+            property.setSetterArgumentName( new NameImpl( propertyName ) );
         }
         if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
     }   //  createProperty_resourceBundle()
@@ -729,9 +766,34 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
         property.setSpecialPropertyType( CONFIG_PROPERTY_TIMEZONE );
         property.setGetterMethodName( new NameImpl( composeGetterName( propertyName ) ) );
         property.setSetterMethodName( new NameImpl( composeSetterName( propertyName ) ) );
-        property.setSetterArgumentName( propertyName );
+        property.setSetterArgumentName( new NameImpl( propertyName ) );
         if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
     }   //  createProperty_timezone()
+
+    /**
+     *  Creates the property 'string2', and adds it to the configuration.
+     *
+     *  @param  configuration   The configuration that takes the created
+     *      property.
+     *  @throws Exception   Something went unexpectedly wrong.
+     */
+    @SuppressWarnings( "UseOfConcreteClass" )
+    public static final void createProperty_string2( final CodeGenerationConfiguration configuration ) throws Exception
+    {
+        final var propertyName = "string2";
+        final var property = new PropertySpecImpl( propertyName );
+        configuration.addProperty( property );
+        property.setFlag( PROPERTY_IS_OPTION, PROPERTY_CLI_MANDATORY, ALLOWS_PREFERENCES );
+        property.setPropertyType( ClassName.from( String.class ) );
+        property.setFieldName( makeFieldName( propertyName ) );
+        property.setSetterMethodName( new NameImpl( composeSetterName( propertyName ) ) );
+        property.setSetterArgumentName( new NameImpl( propertyName ) );
+        property.setStringConverterClass( ClassName.from( StringStringConverter.class ) );
+        property.setCLIOptionNames( List.of( format( "--%s", propertyName ) ) );
+        property.setPrefsKey( propertyName );
+        property.setPrefsAccessorClass( ClassName.from( PrimitiveIntAccessor.class ) );
+        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
+    }   //  createProperty_string2()
 
     /**
      *  Creates a code generation configuration for the generation of a session
@@ -779,8 +841,31 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
      *
      *  @param  name    The property name.
      *  @return The field name.
+     *
+     *  @throws ClassNotFoundException  Unable to load the class
+     *      {@link ConfigAnnotationProcessor}.
+     *  @throws NoSuchMethodException   Unable to find the method
+     *      {@code composeFieldName(String} in
+     *      {@link ConfigAnnotationProcessor}.
+     *  @throws InvocationTargetException  {@code composeFieldName(String}
+     *      threw an exception.
+     *  @throws IllegalAccessException  Not allowed accessing
+     *      {@code composeFieldName(String}.
      */
-    protected static final String makeFieldName( final String name ) { return format( "m_%s", capitalize( name ) ); }
+    protected static final String makeFieldName( final String name ) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException
+    {
+        if( isNull( m_ComposeFieldNameMethod ) )
+        {
+            final var annotationProcessorClass = Class.forName( ConfigAnnotationProcessor.class.getName() );
+            m_ComposeFieldNameMethod = annotationProcessorClass.getDeclaredMethod( "composeFieldName", String.class );
+            m_ComposeFieldNameMethod.setAccessible( true );
+        }
+        final var retValue = m_ComposeFieldNameMethod.invoke( null, name ).toString();
+
+
+        //---* Done *----------------------------------------------------------
+        return retValue;
+    }   //  makeFieldName()
 }
 //  class CodeGeneratorTestBase
 

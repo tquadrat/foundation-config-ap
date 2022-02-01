@@ -80,10 +80,12 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static final <a href="../CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CollectionKind.</span><code><a href="../CollectionKind.html#determine(org.tquadrat.foundation.javacomposer.TypeName)" class="member-name-link">determine</a><wbr>(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;type)</code></div>
+<div class="col-first even-row-color"><code>private final <a href="../CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ConfigAnnotationProcessor.</span><code><a href="../ConfigAnnotationProcessor.html#determineCollectionKind(javax.lang.model.type.TypeMirror)" class="member-name-link">determineCollectionKind</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html" title="class or interface in javax.lang.model.type" class="external-link">TypeMirror</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Determines the type of collection for the given type.</div>
+<div class="block">Determines whether the given
+  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html" title="class or interface in javax.lang.model.type" class="external-link"><code>type</code></a>
+  is a collection of some type and returns the respective kind.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">PropertySpec.</span><code><a href="../PropertySpec.html#getCollectionKind()" class="member-name-link">getCollectionKind</a>()</code></div>
@@ -100,6 +102,19 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
+</div>
+</div>
+<div class="caption"><span>Methods in <a href="../package-summary.html">org.tquadrat.foundation.config.ap</a> with parameters of type <a href="../CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>private final <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ConfigAnnotationProcessor.</span><code><a href="../ConfigAnnotationProcessor.html#retrieveAccessorClass(org.tquadrat.foundation.javacomposer.TypeName,javax.lang.model.type.TypeMirror,org.tquadrat.foundation.config.ap.CollectionKind)" class="member-name-link">retrieveAccessorClass</a><wbr>(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;accessorType,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html" title="class or interface in javax.lang.model.type" class="external-link">TypeMirror</a>&nbsp;propertyType,
+ <a href="../CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a>&nbsp;collectionKind)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Retrieves the class for the preference accessor.</div>
 </div>
 </div>
 </section>

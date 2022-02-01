@@ -40,13 +40,13 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  The specification for a property of a configuration bean.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: PropertySpec.java 946 2021-12-23 14:48:19Z tquadrat $
+ *  @version $Id: PropertySpec.java 1001 2022-01-29 16:42:15Z tquadrat $
  *  @since 0.1.0
  *
  *  @UMLGraph.link
  */
 @SuppressWarnings( "ClassWithTooManyMethods" )
-@ClassVersion( sourceVersion = "$Id: PropertySpec.java 946 2021-12-23 14:48:19Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: PropertySpec.java 1001 2022-01-29 16:42:15Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public interface PropertySpec
 {
@@ -57,12 +57,12 @@ public interface PropertySpec
      *  The flags for a property.
      *
      *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
-     *  @version $Id: PropertySpec.java 946 2021-12-23 14:48:19Z tquadrat $
+     *  @version $Id: PropertySpec.java 1001 2022-01-29 16:42:15Z tquadrat $
      *  @since 0.1.0
      *
      *  @UMLGraph.link
      */
-    @ClassVersion( sourceVersion = "$Id: PropertySpec.java 946 2021-12-23 14:48:19Z tquadrat $" )
+    @ClassVersion( sourceVersion = "$Id: PropertySpec.java 1001 2022-01-29 16:42:15Z tquadrat $" )
     @API( status = MAINTAINED, since = "0.1.0" )
     public static enum PropertyFlag
     {
@@ -308,9 +308,12 @@ public interface PropertySpec
     /**
      *  Returns the name of the 'add' method's argument.
      *
-     *  @return The argument name.
+     *  @return The argument name; is probable {@code null} when
+     *      {@link #getAddMethodName()}
+     *      returns
+     *      {@link Optional#empty()}.
      */
-    public String getAddMethodArgumentName();
+    public Name getAddMethodArgumentName();
 
     /**
      *  Returns the name of the 'add' method for this property.
@@ -549,9 +552,12 @@ public interface PropertySpec
     /**
      *  Returns the name of the setter's argument.
      *
-     *  @return The argument name.
+     *  @return The argument name; is probably {@code null} when
+     *      {@link #getSetterMethodName()}
+     *      returns
+     *      {@link Optional#empty()}.
      */
-    public String getSetterArgumentName();
+    public Name getSetterArgumentName();
 
     /**
      *  Returns a builder for the setter for this property.

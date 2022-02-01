@@ -28,7 +28,10 @@ import static javax.tools.Diagnostic.Kind.ERROR;
 import static javax.tools.Diagnostic.Kind.NOTE;
 import static org.apiguardian.api.API.Status.INTERNAL;
 import static org.apiguardian.api.API.Status.STABLE;
+import static org.tquadrat.foundation.config.ap.CollectionKind.LIST;
+import static org.tquadrat.foundation.config.ap.CollectionKind.MAP;
 import static org.tquadrat.foundation.config.ap.CollectionKind.NO_COLLECTION;
+import static org.tquadrat.foundation.config.ap.CollectionKind.SET;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ALLOWS_INIFILE;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ALLOWS_PREFERENCES;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.EXEMPT_FROM_TOSTRING;
@@ -51,13 +54,12 @@ import static org.tquadrat.foundation.lang.DebugOutput.ifDebug;
 import static org.tquadrat.foundation.lang.Objects.isNull;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
 import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
-import static org.tquadrat.foundation.lang.Objects.requireNotEmptyArgument;
 import static org.tquadrat.foundation.util.JavaUtils.PREFIX_GET;
 import static org.tquadrat.foundation.util.JavaUtils.PREFIX_IS;
 import static org.tquadrat.foundation.util.JavaUtils.isAddMethod;
 import static org.tquadrat.foundation.util.JavaUtils.isGetter;
 import static org.tquadrat.foundation.util.JavaUtils.isSetter;
-import static org.tquadrat.foundation.util.JavaUtils.loadClass;
+import static org.tquadrat.foundation.util.StringUtils.capitalize;
 import static org.tquadrat.foundation.util.StringUtils.decapitalize;
 import static org.tquadrat.foundation.util.StringUtils.format;
 import static org.tquadrat.foundation.util.StringUtils.isEmpty;
@@ -67,13 +69,16 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedOptions;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
+import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.Name;
 import javax.lang.model.element.NestingKind;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.VariableElement;
+import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.TypeMirror;
+import javax.lang.model.util.SimpleTypeVisitor14;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
@@ -125,6 +130,7 @@ import org.tquadrat.foundation.config.spi.prefs.PreferenceAccessor;
 import org.tquadrat.foundation.config.spi.prefs.SetAccessor;
 import org.tquadrat.foundation.config.spi.prefs.SimplePreferenceAccessor;
 import org.tquadrat.foundation.exception.UnexpectedExceptionError;
+import org.tquadrat.foundation.exception.UnsupportedEnumError;
 import org.tquadrat.foundation.i18n.BaseBundleName;
 import org.tquadrat.foundation.i18n.MessagePrefix;
 import org.tquadrat.foundation.javacomposer.ClassName;
@@ -137,14 +143,14 @@ import org.tquadrat.foundation.util.stringconverter.PathStringConverter;
  *  The annotation processor for the {@code org.tquadrat.foundation.config}
  *  module.
  *
- *  @version $Id: ConfigAnnotationProcessor.java 997 2022-01-26 14:55:05Z tquadrat $
+ *  @version $Id: ConfigAnnotationProcessor.java 1001 2022-01-29 16:42:15Z tquadrat $
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"OverlyCoupledClass", "OverlyComplexClass"} )
-@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 997 2022-01-26 14:55:05Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1001 2022-01-29 16:42:15Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @SupportedSourceVersion( SourceVersion.RELEASE_17 )
 @SupportedOptions( { APBase.ADD_DEBUG_OUTPUT, APBase.MAVEN_GOAL } )
@@ -355,6 +361,7 @@ public class ConfigAnnotationProcessor extends APBase
     /**
      *  The message that indicates that an 'add' method was provided for a non-collection property.
      */
+    @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
     public static final String MSG_NoCollection = "Method '%1$s' not allowed for property '%2$s': property type is not List, Set or Map";
 
     /**
@@ -368,6 +375,12 @@ public class ConfigAnnotationProcessor extends APBase
      */
     @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
     public static final String MSG_NoOptionName = "No option name for property '%s'";
+
+    /**
+     *   The message that indicates that a given method is not a setter:
+     *   {@value}.
+     */
+    public static final String MSG_NoSetter = "The method '%1$s' is neither a setter nor an add method";
 
     /**
      *  The message that indicates a missing property type.
@@ -533,12 +546,12 @@ public class ConfigAnnotationProcessor extends APBase
     ====** Methods **==========================================================
         \*---------*/
     /**
-     *  Checks whether the given type name is inappropriate for a configuration
-     *  bean property and deserves that an
+     *  Checks whether the given type is inappropriate for a configuration bean
+     *  property and therefore deserves that an
      *  {@link InappropriateTypeError}
      *  is thrown.
      *
-     *  @param  typeName    The type name to check.
+     *  @param  typeName    The type to check.
      *  @throws InappropriateTypeError  The given type may not be chosen for
      *      a configuration bean property.
      *
@@ -548,85 +561,86 @@ public class ConfigAnnotationProcessor extends APBase
      *  @see    IntStream
      *  @see    LongStream
      */
-    private static final void checkAppropriate( final TypeName typeName ) throws InappropriateTypeError
+    private final void checkAppropriate( final TypeMirror typeName ) throws InappropriateTypeError
     {
-        if( !(typeName.isPrimitive() || typeName.isBoxedPrimitive()) )
+        KindSwitch: switch( requireNonNullArgument( typeName, "type" ).getKind() )
         {
-            //---* InputStream and the "primitive" Streams are not allowed *---
-            if( typeName.equals( TypeName.from( DoubleStream.class ) )
-                || typeName.equals( TypeName.from( IntStream.class ) )
-                || typeName.equals( TypeName.from( LongStream.class ) )
-                || typeName.equals( TypeName.from( InputStream.class ) ) )
+            case ARRAY ->
             {
-                throw new InappropriateTypeError( typeName );
-            }
-
-            //noinspection ChainOfInstanceofChecks
-            if( typeName instanceof ParameterizedTypeName parameterizedTypeName )
-            {
-                //---* Stream is not allowed *---------------------------------
-                if( parameterizedTypeName.rawType().equals( TypeName.from( Stream.class ) ) )
+                //---* Check the component type *------------------------------
+                final var componentType = typeName.accept( new SimpleTypeVisitor14<TypeMirror,Void>()
                 {
-                    throw new InappropriateTypeError( typeName );
-                }
-            }
-
-            /*
-             * Classes that are derived from InputStream or implement stream
-             * are not allowed.
-             */
-            if( typeName instanceof ClassName className )
-            {
-                loadClass( className.canonicalName() ).ifPresent( c ->
-                {
-                    if( Stream.class.isAssignableFrom( c ) || InputStream.class.isAssignableFrom( c ) )
+                    /**
+                     *  {@inheritDoc}
+                     */
+                    @Override
+                    public final TypeMirror visitArray( final ArrayType arrayType, final Void ignore )
                     {
-                        throw new InappropriateTypeError( typeName );
-                    }
-                } );
+                        return arrayType.getComponentType();
+                    }   //  visitArray()
+                }, null );
+
+                if( nonNull( componentType ) ) checkAppropriate( componentType );
             }
-        }
+
+            case BOOLEAN, BYTE, CHAR, DOUBLE, FLOAT, INT, LONG, SHORT ->
+            { /* The primitives work just fine */}
+
+            case DECLARED ->
+            {
+                final var erasure = getTypeUtils().erasure( typeName );
+                final var unwantedTypes = List.of( DoubleStream.class, IntStream.class, LongStream.class, InputStream.class, Stream.class );
+                final var isInappropriate = unwantedTypes.stream()
+                    .map( Class::getName )
+                    .map( n -> getElementUtils().getTypeElement( n ) )
+                    .map( Element::asType )
+                    .map( e -> getTypeUtils().erasure( e ) )
+                    .anyMatch( t -> getTypeUtils().isAssignable( erasure, t ) );
+                if( isInappropriate ) throw new InappropriateTypeError( TypeName.from( typeName ) );
+            }
+
+            default -> throw new UnsupportedEnumError( typeName.getKind() );
+        }   //  KindSwitch:
     }   //  checkAppropriate()
 
     /**
-     *  <p>{@summary Composes an argument name from the given formal
-     *  parameter.}</p>
-     *  <p>Setters and 'add' methods use internal variables whose names can
-     *  conflict with the names of the formal parameters, as the latter can be
-     *  chosen freely by the user. Therefore this method will prefix the given
-     *  formal parameter name with &quot;{@code ;_$}&quot; to avoid any
-     *  possible collision.</p>
+     *  <p>Composes the name of the field from the given property name.</p>
      *
-     *  @param  parameter   The formal parameter.
-     *  @return The argument name.
+     *  @param  propertyName    The name of the property.
+     *  @return The name of the field.
      */
-    private static final String composeArgumentName( final VariableElement parameter )
+    private static final String composeFieldName( final String propertyName )
     {
-        final var retValue = composeArgumentName( requireNonNullArgument( parameter, "parameter" ).getSimpleName() );
+        final var retValue = format( "m_%s", capitalize( propertyName ) );
 
         //---* Done *----------------------------------------------------------
         return retValue;
-    }   //  composeArgumentName()
+    }   //  composeFieldName()
 
     /**
-     *  <p>{@summary Composes an argument name from the given formal
-     *  parameter.}</p>
-     *  <p>Setters and 'add' methods use internal variables whose names can
-     *  conflict with the names of the formal parameters, as the latter can be
-     *  chosen freely by the user. Therefore this method will prefix the given
-     *  formal parameter name with &quot;{@code ;_$}&quot; to avoid any
-     *  possible collision.</p>
+     *  Determines whether the given
+     *  {@link TypeMirror type}
+     *  is a collection of some type and returns the respective kind.
      *
-     *  @param  parameter   The formal parameter.
-     *  @return The argument name.
+     *  @param  type The type to check.
+     *  @return The collection kind.
      */
-    private static final String composeArgumentName( final CharSequence parameter )
+    private final CollectionKind determineCollectionKind( final TypeMirror type )
     {
-        final var retValue = format( "_$%s", requireNotEmptyArgument( parameter, "parameter" ) );
+        final var focusType = getTypeUtils().erasure( requireNonNullArgument( type, "type" ) );
+
+        final var listType = getTypeUtils().erasure( getElementUtils().getTypeElement( List.class.getName() ).asType() );
+        final var mapType = getTypeUtils().erasure( getElementUtils().getTypeElement( Map.class.getName() ).asType() );
+        final var setType = getTypeUtils().erasure( getElementUtils().getTypeElement( Set.class.getName() ).asType() );
+
+        var retValue = NO_COLLECTION;
+        if( getTypeUtils().isAssignable( focusType, listType ) ) retValue = LIST;
+        if( getTypeUtils().isAssignable( focusType, mapType ) ) retValue = MAP;
+        if( getTypeUtils().isAssignable( focusType, setType ) ) retValue = SET;
 
         //---* Done *----------------------------------------------------------
         return retValue;
-    }   //  composeArgumentName()
+    }   //  determineCollectionKind()
 
     /**
      *  <p>{@summary Retrieves the name of the property from the name of the
@@ -681,25 +695,34 @@ public class ConfigAnnotationProcessor extends APBase
     }   //  determinePropertyNameFromMethod()
 
     /**
-     *  <p>{@summary Determines the property type from the return type of the
-     *  given getter.}</p>
-     *  <p>Usually this will be the return type as is, only in case of
+     *  <p>{@summary Determines the property type from the given
+     *  {@link TypeMirror} instance.} This is either the return type of a
+     *  getter or the argument type of a setter.</p>
+     *  <p>Usually the property type will be the respective
+     *  {@link TypeName}
+     *  for the given type as is, only in case of
      *  {@link Optional},
      *  it will be the parameter type.</p>
      *
-     *  @param  getter  The getter to inspect.
+     *  @param  type   The type.
      *  @return The property type.
      */
-    private static final TypeName determinePropertyType( final ExecutableElement getter )
+    private final TypeMirror determinePropertyType( final TypeMirror type )
     {
-        var retValue = TypeName.from( requireNonNullArgument( getter, "getter" ).getReturnType() );
-        if( retValue instanceof ParameterizedTypeName returnType )
+        var retValue = requireNonNullArgument( type, "type" );
+        final var optionalType = getTypeUtils().erasure( getElementUtils().getTypeElement( Optional.class.getName() ).asType() );
+        if( getTypeUtils().isAssignable( getTypeUtils().erasure( retValue ), optionalType ) )
         {
-            if( returnType.rawType().equals( TypeName.from( Optional.class ) ) )
-            {
-                retValue = returnType.typeArguments().get( 0 );
-            }
+            /*
+             * The return type is Optional, we need to get the type parameter
+             * and have to look at that.
+             */
+            final var genericTypes = retrieveGenericTypes( retValue );
+            if( genericTypes.size() == 1 ) retValue = genericTypes.get( 0 );
         }
+
+        //---* Check whether the property type is appropriate *----------------
+        checkAppropriate( retValue );
 
         //---* Done *----------------------------------------------------------
         return retValue;
@@ -790,7 +813,7 @@ public class ConfigAnnotationProcessor extends APBase
             //---* Only collections may have 'add' methods *-------------------
             if( property.getCollectionKind() == NO_COLLECTION )
             {
-                throw new CodeGenerationError( format( MSG_NoCollection, addMethodName, propertyName ) );
+                throw new CodeGenerationError( format( MSG_AddMethodNotAllowed, addMethodName ) );
             }
 
             //---* Immutable special properties may not have an add method *---
@@ -804,8 +827,7 @@ public class ConfigAnnotationProcessor extends APBase
 
             //---* Save the method name and variable name *--------------------
             property.setAddMethodName( addMethodName );
-            final var argumentName = composeArgumentName( addMethod.getParameters().get( 0 ) );
-            property.setAddMethodArgumentName( argumentName );
+            property.setAddMethodArgumentName( retrieveSetterArgumentName( addMethod ) );
 
             //---* We have an add method, so the property is mutable *---------
             property.setFlag( PROPERTY_IS_MUTABLE );
@@ -821,15 +843,6 @@ public class ConfigAnnotationProcessor extends APBase
                 if( isNull( propertyType ) )
                 {
                     throw new CodeGenerationError( format( MSG_NoType, addMethodName, propertyName ) );
-                }
-
-                /*
-                 * 'add' methods are only allowed (useful?) for properties that are
-                 * collections.
-                 */
-                if( CollectionKind.determine( propertyType ) == NO_COLLECTION )
-                {
-                    throw new CodeGenerationError( format( MSG_AddMethodNotAllowed, addMethodName ) );
                 }
 
                 /*
@@ -850,8 +863,8 @@ public class ConfigAnnotationProcessor extends APBase
             }
 
             //---* … and now we create the method spec *-----------------------
-            final var methodBuilder = configuration.getComposer().overridingMethodBuilder( addMethod )
-                .addAnnotation( Override.class );
+            final var methodBuilder = configuration.getComposer()
+                .overridingMethodBuilder( addMethod );
             property.setAddMethodBuilder( methodBuilder );
         }
     }   //  handleAddMethod()
@@ -919,11 +932,13 @@ public class ConfigAnnotationProcessor extends APBase
         }
         var allowsPreferences = !isDefault;
 
-        //---* Determine the property type *-------------------------------
-        final var propertyType = determinePropertyType( getter );
-        checkAppropriate( propertyType );
+        //---* Determine the property type *-----------------------------------
+        final var rawReturnType = getter.getReturnType();
+        final var rawPropertyType = determinePropertyType( rawReturnType );
+        final var propertyType = TypeName.from( rawPropertyType );
+        final var returnType = TypeName.from( rawReturnType );
         property.setPropertyType( propertyType );
-        final var collectionKind = CollectionKind.determine( propertyType );
+        final var collectionKind = determineCollectionKind( rawPropertyType );
         property.setCollectionKind( collectionKind );
 
         /*
@@ -941,9 +956,7 @@ public class ConfigAnnotationProcessor extends APBase
         }
         else
         {
-            //---* Determine the return type *---------------------------------
-            final var returnType = TypeName.from( getter.getReturnType() );
-            checkAppropriate( returnType );
+            //---* Keep the return type *--------------------------------------
             property.setGetterReturnType( returnType );
 
             /*
@@ -957,6 +970,12 @@ public class ConfigAnnotationProcessor extends APBase
              * annotation or guess it from the property type.
              */
             configuration.determineStringConverterClass( getter, propertyType ).ifPresent( property::setStringConverterClass );
+
+            if( !isDefault )
+            {
+                //---* Set the field name *------------------------------------
+                property.setFieldName( composeFieldName( propertyName ) );
+            }
 
             //---* Additional annotations *------------------------------------
             final Optional<INIValue> iniValue = property.getStringConverterClass().isPresent()
@@ -1115,7 +1134,7 @@ public class ConfigAnnotationProcessor extends APBase
                 }
 
                 //---* Translate the default, if required *--------------------
-                accessorClass = retrieveAccessorClass( accessorClass, propertyType );
+                accessorClass = retrieveAccessorClass( accessorClass, rawPropertyType, collectionKind );
 
                 //---* Keep the values *---------------------------------------
                 property.setPrefsKey( preferenceKey );
@@ -1123,8 +1142,8 @@ public class ConfigAnnotationProcessor extends APBase
             }
 
             //---* … and now we create the method spec *-------------------
-            final var methodBuilder = configuration.getComposer().overridingMethodBuilder( getter )
-                .addAnnotation( Override.class );
+            final var methodBuilder = configuration.getComposer()
+                .overridingMethodBuilder( getter );
             property.setGetterBuilder( methodBuilder );
         }
     }   //  handleGetter()
@@ -1171,7 +1190,9 @@ public class ConfigAnnotationProcessor extends APBase
          */
         final PropertySpecImpl property;
         final TypeName propertyType;
+        final CollectionKind collectionKind;
         ifDebug( "propertyName: %s"::formatted, propertyName );
+        final var rawArgumentType = setter.getParameters().get( 0 ).asType();
         if( configuration.hasProperty( propertyName ) )
         {
             ifDebug( "property '%s' exists already"::formatted, propertyName );
@@ -1195,13 +1216,18 @@ public class ConfigAnnotationProcessor extends APBase
             {
                 throw new CodeGenerationError( format( MSG_TypeMismatch, TypeName.from( setter.getParameters().get( 0 ).asType() ).toString(), setterMethodName, propertyType.toString() ) );
             }
+            collectionKind = property.getCollectionKind();
         }
         else
         {
+            //---* Create the new property *-----------------------------------
             property = new PropertySpecImpl( propertyName );
             configuration.addProperty( property );
-            propertyType = TypeName.from( setter.getParameters().get( 0 ).asType() );
+            checkAppropriate( rawArgumentType );
+            propertyType = TypeName.from( rawArgumentType );
             property.setPropertyType( propertyType );
+            collectionKind = determineCollectionKind( rawArgumentType );
+            property.setCollectionKind( collectionKind );
         }
 
         //---* Immutable special properties may not have a setter *------------
@@ -1298,8 +1324,8 @@ public class ConfigAnnotationProcessor extends APBase
                  */
                 if( nonNull( preferenceAnnotation ) || nonNull( noPreferenceAnnotation ) )
                 {
-                    final var a = nonNull( preferenceAnnotation ) ? preferenceAnnotation : noPreferenceAnnotation;
-                    throw new IllegalAnnotationError( format( MSG_IllegalAnnotationOnSetter, a.getClass().getName(), setterMethodName ) );
+                    final var currentAnnotation = nonNull( preferenceAnnotation ) ? preferenceAnnotation : noPreferenceAnnotation;
+                    throw new IllegalAnnotationError( format( MSG_IllegalAnnotationOnSetter, currentAnnotation.getClass().getName(), setterMethodName ) );
                 }
             }
             else
@@ -1331,7 +1357,7 @@ public class ConfigAnnotationProcessor extends APBase
                     }
 
                     //---* Translate the default, if required *--------------------
-                    accessorClass = retrieveAccessorClass( accessorClass, propertyType );
+                    accessorClass = retrieveAccessorClass( accessorClass, rawArgumentType, collectionKind );
 
                     //---* Keep the values *-----------------------------------
                     property.setPrefsKey( preferenceKey );
@@ -1347,8 +1373,8 @@ public class ConfigAnnotationProcessor extends APBase
             property.getStringConverterClass()
                 .ifPresentOrElse( stringConverterClass ->
                 {
-                    final var e = new CodeGenerationError( format( MSG_StringConverterMismatch, setterMethodName ) );
-                    if( !stringConverterClass.equals( stringConverterOptional.orElseThrow( () -> e ) ) ) throw e;
+                    final var error = new CodeGenerationError( format( MSG_StringConverterMismatch, setterMethodName ) );
+                    if( !stringConverterClass.equals( stringConverterOptional.orElseThrow( () -> error ) ) ) throw error;
                 },
                 () -> stringConverterOptional.ifPresent( property::setStringConverterClass ) );
 
@@ -1383,48 +1409,13 @@ public class ConfigAnnotationProcessor extends APBase
         }
 
         //---* Create the setter's argument *----------------------------------
-        final var argumentName = composeArgumentName( setter.getParameters().get( 0 ) );
-        property.setSetterArgumentName( argumentName );
+        property.setSetterArgumentName( retrieveSetterArgumentName( setter ) );
 
         //---* … and now we create the method spec *---------------------------
-        final var methodBuilder = configuration.getComposer().overridingMethodBuilder( setter )
-            .addAnnotation( Override.class );
+        final var methodBuilder = configuration.getComposer()
+            .overridingMethodBuilder( setter );
         property.setSetterBuilder( methodBuilder );
     }   //  handleSetter()
-
-    /**
-     *  Determines whether the given instance of
-     *  {@link TypeName}
-     *  is for an {@code Enum} type.
-     *
-     *  @note  This requires that the class that is represented by the
-     *      {@code typeName} argument exists on the {@code CLASSPATH}.
-     *
-     *  @param  typeName    The {@code TypeName} to check.
-     *  @return {@code true} if the given type is an {@code Enum} type,
-     *      {@code false} otherwise.
-     */
-    private final boolean isEnumType( final TypeName typeName )
-    {
-        var retValue = false;
-        if( typeName instanceof ClassName className )
-        {
-            try
-            {
-                final var candidateClass = Class.forName( className.canonicalName(), false, getClass().getClassLoader() );
-                retValue = candidateClass.isEnum();
-            }
-            catch( @SuppressWarnings( "unused" ) final ClassNotFoundException e )
-            {
-                /*
-                 * Deliberately ignored; return value is already set.
-                 */
-            }
-        }
-
-        //---* Done *----------------------------------------------------------
-        return retValue;
-    }   //  isEnumType()
 
     /**
      *  <p>{@summary Parses the given CLI annotation and updates the given
@@ -1792,12 +1783,14 @@ public class ConfigAnnotationProcessor extends APBase
      *      {@code propertyType}.
      *  @param  propertyType    The type of the property that should be
      *      accessed.
+     *  @param collectionKind   The kind of collection that is represented by
+     *      the property type.
      *  @return The effective accessor class.
      *  @throws IllegalAnnotationError  There is no accessor for the given
      *      property type.
      */
     @API( status = INTERNAL, since = "0.0.1" )
-    private final TypeName retrieveAccessorClass( final TypeName accessorType, final TypeName propertyType ) throws IllegalAnnotationError
+    private final TypeName retrieveAccessorClass( final TypeName accessorType, final TypeMirror propertyType, final CollectionKind collectionKind ) throws IllegalAnnotationError
     {
         var retValue = accessorType;
         if( accessorType.equals( PREFS_ACCESSOR_TYPE ) )
@@ -1809,12 +1802,12 @@ public class ConfigAnnotationProcessor extends APBase
             }
             else
             {
-                retValue = switch( CollectionKind.determine( propertyType ) )
+                retValue = switch( collectionKind )
                 {
                     case NO_COLLECTION ->
                     {
-                        final var c = m_PrefsAccessorClasses.get( propertyType.toString() );
-                        yield nonNull( c ) ? ClassName.from( c ) : DEFAULT_ACCESSOR_TYPE;
+                        final var accessorClass = m_PrefsAccessorClasses.get( propertyType.toString() );
+                        yield nonNull( accessorClass ) ? ClassName.from( accessorClass ) : DEFAULT_ACCESSOR_TYPE;
                     }
 
                     case LIST -> LIST_ACCESSOR_TYPE;
@@ -1959,6 +1952,28 @@ public class ConfigAnnotationProcessor extends APBase
         //---* Process the 'add' methods *-------------------------------------
         addMethods.forEach( addMethod -> handleAddMethod( configuration, addMethod ) );
     }   //  retrieveProperties()
+
+    /**
+     *  <p>{@summary Retrieves the name of the single argument of a setter
+     *  method.}</p>
+     *  <p>This method will return the name of the argument as defined in the
+     *  configuration bean specification if the compiler flag
+     *  {@code -parameters} is set; otherwise, the arguments are just counted
+     *  ({@code arg0}, {@code arg1}, {@code arg2}, …).</p>
+     *
+     *  @param  setter  The setter method.
+     *  @return The name of the argument as defined in the configuration bean
+     *      specification, or &quot;arg0&quot;
+     */
+    private final Name retrieveSetterArgumentName( final ExecutableElement setter )
+    {
+        final var parameters = retrieveArgumentNames( setter );
+        if( parameters.size() != 1 ) throw new CodeGenerationError( format( MSG_NoSetter, setter.getSimpleName() ) );
+        final var retValue = parameters.get( 0 );
+
+        //---* Done *----------------------------------------------------------
+        return retValue;
+    }   //  retrieveSetterArgumentName()
 }
 //  class ConfigAnnotationProcessor
 

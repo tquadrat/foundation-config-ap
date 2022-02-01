@@ -61,10 +61,10 @@ import org.tquadrat.foundation.testutil.TestBaseClass;
 /**
  *  Generation caused &quot;cannot unindent 1 from 0&quot;.
  *
- *  @version $Id: BugHunt_20220126_002.java 999 2022-01-27 23:23:26Z tquadrat $
+ *  @version $Id: BugHunt_20220126_002.java 1001 2022-01-29 16:42:15Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
-@ClassVersion( sourceVersion = "$Id: BugHunt_20220126_002.java 999 2022-01-27 23:23:26Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: BugHunt_20220126_002.java 1001 2022-01-29 16:42:15Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.BugHunt_20220126_002" )
 public class BugHunt_20220126_002 extends TestBaseClass
@@ -133,9 +133,10 @@ public class BugHunt_20220126_002 extends TestBaseClass
      *
      *  @param  configuration   The configuration that takes the created
      *      properties.
+     *  @throws Exception   Something went unexpectedly wrong.
      */
     @SuppressWarnings( "UseOfConcreteClass" )
-    private void createProperties( final CodeGenerationConfiguration configuration )
+    private void createProperties( final CodeGenerationConfiguration configuration ) throws Exception
     {
         createProperty_charset( configuration );
         createProperty_clock( configuration );

@@ -68,7 +68,7 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  @since 0.1.0
  *  @UMLGraph.link
  */
-@SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods", "OverlyComplexClass"} )
+@SuppressWarnings( {"ClassWithTooManyFields", "OverlyComplexClass"} )
 @ClassVersion( sourceVersion = "$Id: PropertySpecImpl.java 946 2021-12-23 14:48:19Z tquadrat $" )
 @API( status = INTERNAL, since = "0.1.0" )
 public final class PropertySpecImpl implements PropertySpec
@@ -79,7 +79,7 @@ public final class PropertySpecImpl implements PropertySpec
     /**
      *  The name for the 'add' method's argument.
      */
-    private String m_AddMethodArgumentName = "_$";
+    private Name m_AddMethodArgumentName = null;
 
     /**
      *  The builder for the 'add' method of this property.
@@ -252,7 +252,7 @@ public final class PropertySpecImpl implements PropertySpec
     /**
      *  The name for the setter's argument.
      */
-    private String m_SetterArgumentName = "_$";
+    private Name m_SetterArgumentName = null;
 
     /**
      *  The builder for the setter of this property.
@@ -388,7 +388,7 @@ public final class PropertySpecImpl implements PropertySpec
      *  {@inheritDoc}
      */
     @Override
-    public final String getAddMethodArgumentName() { return m_AddMethodArgumentName; }
+    public final Name getAddMethodArgumentName() { return m_AddMethodArgumentName; }
 
     /**
      *  <p>{@summary Returns a builder for the 'add' method for this
@@ -540,7 +540,7 @@ public final class PropertySpecImpl implements PropertySpec
      *  {@inheritDoc}
      */
     @Override
-    public final String getSetterArgumentName() { return m_SetterArgumentName; }
+    public final Name getSetterArgumentName() { return m_SetterArgumentName; }
 
     /**
      *  {@inheritDoc}
@@ -603,7 +603,7 @@ public final class PropertySpecImpl implements PropertySpec
             flags.addAll( otherSpec.getAllFlags() );
             retValue.setFlag( flags.toArray( PropertyFlag []::new ) );
 
-            retValue.setAddMethodArgumentName( getAddMethodArgumentName() );
+            retValue.m_AddMethodArgumentName = m_AddMethodArgumentName;
             getAddMethodBuilder().ifPresent( retValue::setAddMethodBuilder );
             retValue.m_AddMethodComposer = otherSpec.getAddMethodComposer().orElse( m_AddMethodComposer );
             getAddMethodName().ifPresent( retValue::setAddMethodName );
@@ -629,7 +629,7 @@ public final class PropertySpecImpl implements PropertySpec
             otherSpec.getPrefsAccessorClass().ifPresent( retValue::setPrefsAccessorClass );
             otherSpec.getPrefsKey().ifPresent( retValue::setPrefsKey );
             retValue.setPropertyType( otherSpec.getPropertyType() );
-            retValue.setSetterArgumentName( getSetterArgumentName() );
+            retValue.m_SetterArgumentName = m_SetterArgumentName;
             otherSpec.getSystemPrefsPath().ifPresent( retValue::setSystemPrefsPath );
             getSetterBuilder().ifPresent( retValue::setSetterBuilder );
             retValue.m_SetterComposer = otherSpec.getSetterComposer().orElse( m_SetterComposer );
@@ -653,9 +653,9 @@ public final class PropertySpecImpl implements PropertySpec
      *  @param  name    The name of the argument.
      */
     @SuppressWarnings( "PublicMethodNotExposedInInterface" )
-    public final void setAddMethodArgumentName( final String name )
+    public final void setAddMethodArgumentName( final Name name )
     {
-        m_AddMethodArgumentName = requireNotEmptyArgument( name, "name" );
+        m_AddMethodArgumentName = requireNonNullArgument( name, "name" );
     }   //  setAddMethodArgumentName()
 
     /**
@@ -938,9 +938,9 @@ public final class PropertySpecImpl implements PropertySpec
      *  @param  name    The name of the argument.
      */
     @SuppressWarnings( "PublicMethodNotExposedInInterface" )
-    public final void setSetterArgumentName( final String name )
+    public final void setSetterArgumentName( final Name name )
     {
-        m_SetterArgumentName = requireNotEmptyArgument( name, "name" );
+        m_SetterArgumentName = requireNonNullArgument( name, "name" );
     }   //  setSetterArgumentName()
 
     /**

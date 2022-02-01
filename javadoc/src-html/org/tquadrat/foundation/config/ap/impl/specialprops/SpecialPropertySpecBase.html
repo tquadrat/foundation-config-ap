@@ -65,11 +65,11 @@
 <span class="source-line-no">052</span><span id="line-52"> *  The base class for the special property specifications.</span>
 <span class="source-line-no">053</span><span id="line-53"> *</span>
 <span class="source-line-no">054</span><span id="line-54"> *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org</span>
-<span class="source-line-no">055</span><span id="line-55"> *  @version $Id: SpecialPropertySpecBase.java 947 2021-12-23 21:44:25Z tquadrat $</span>
+<span class="source-line-no">055</span><span id="line-55"> *  @version $Id: SpecialPropertySpecBase.java 1001 2022-01-29 16:42:15Z tquadrat $</span>
 <span class="source-line-no">056</span><span id="line-56"> *  @UMLGraph.link</span>
 <span class="source-line-no">057</span><span id="line-57"> *  @since 0.1.0</span>
 <span class="source-line-no">058</span><span id="line-58"> */</span>
-<span class="source-line-no">059</span><span id="line-59">@ClassVersion( sourceVersion = "$Id: SpecialPropertySpecBase.java 947 2021-12-23 21:44:25Z tquadrat $" )</span>
+<span class="source-line-no">059</span><span id="line-59">@ClassVersion( sourceVersion = "$Id: SpecialPropertySpecBase.java 1001 2022-01-29 16:42:15Z tquadrat $" )</span>
 <span class="source-line-no">060</span><span id="line-60">@API( status = MAINTAINED, since = "0.1.0" )</span>
 <span class="source-line-no">061</span><span id="line-61">abstract sealed class SpecialPropertySpecBase implements SpecialPropertySpec</span>
 <span class="source-line-no">062</span><span id="line-62">    permits CharsetProperty, ClockProperty, LocaleProperty, MessagePrefixProperty, ProcessIdProperty, RandomProperty, ResourceBundleProperty, SessionKeyProperty, TimeZoneProperty</span>
@@ -140,7 +140,7 @@
 <span class="source-line-no">127</span><span id="line-127">     * {@inheritDoc}</span>
 <span class="source-line-no">128</span><span id="line-128">     */</span>
 <span class="source-line-no">129</span><span id="line-129">    @Override</span>
-<span class="source-line-no">130</span><span id="line-130">    public final String getAddMethodArgumentName() { return null; }</span>
+<span class="source-line-no">130</span><span id="line-130">    public final Name getAddMethodArgumentName() { return null; }</span>
 <span class="source-line-no">131</span><span id="line-131"></span>
 <span class="source-line-no">132</span><span id="line-132">    /**</span>
 <span class="source-line-no">133</span><span id="line-133">     * {@inheritDoc}</span>
@@ -286,7 +286,7 @@
 <span class="source-line-no">273</span><span id="line-273">     * {@inheritDoc}</span>
 <span class="source-line-no">274</span><span id="line-274">     */</span>
 <span class="source-line-no">275</span><span id="line-275">    @Override</span>
-<span class="source-line-no">276</span><span id="line-276">    public final String getSetterArgumentName() { return null; }</span>
+<span class="source-line-no">276</span><span id="line-276">    public final Name getSetterArgumentName() { return null; }</span>
 <span class="source-line-no">277</span><span id="line-277"></span>
 <span class="source-line-no">278</span><span id="line-278">    /**</span>
 <span class="source-line-no">279</span><span id="line-279">     * {@inheritDoc}</span>

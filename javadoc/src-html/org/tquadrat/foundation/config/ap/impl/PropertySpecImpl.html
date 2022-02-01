@@ -81,7 +81,7 @@
 <span class="source-line-no">068</span><span id="line-68"> *  @since 0.1.0</span>
 <span class="source-line-no">069</span><span id="line-69"> *  @UMLGraph.link</span>
 <span class="source-line-no">070</span><span id="line-70"> */</span>
-<span class="source-line-no">071</span><span id="line-71">@SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods", "OverlyComplexClass"} )</span>
+<span class="source-line-no">071</span><span id="line-71">@SuppressWarnings( {"ClassWithTooManyFields", "OverlyComplexClass"} )</span>
 <span class="source-line-no">072</span><span id="line-72">@ClassVersion( sourceVersion = "$Id: PropertySpecImpl.java 946 2021-12-23 14:48:19Z tquadrat $" )</span>
 <span class="source-line-no">073</span><span id="line-73">@API( status = INTERNAL, since = "0.1.0" )</span>
 <span class="source-line-no">074</span><span id="line-74">public final class PropertySpecImpl implements PropertySpec</span>
@@ -92,7 +92,7 @@
 <span class="source-line-no">079</span><span id="line-79">    /**</span>
 <span class="source-line-no">080</span><span id="line-80">     *  The name for the 'add' method's argument.</span>
 <span class="source-line-no">081</span><span id="line-81">     */</span>
-<span class="source-line-no">082</span><span id="line-82">    private String m_AddMethodArgumentName = "_$";</span>
+<span class="source-line-no">082</span><span id="line-82">    private Name m_AddMethodArgumentName = null;</span>
 <span class="source-line-no">083</span><span id="line-83"></span>
 <span class="source-line-no">084</span><span id="line-84">    /**</span>
 <span class="source-line-no">085</span><span id="line-85">     *  The builder for the 'add' method of this property.</span>
@@ -265,7 +265,7 @@
 <span class="source-line-no">252</span><span id="line-252">    /**</span>
 <span class="source-line-no">253</span><span id="line-253">     *  The name for the setter's argument.</span>
 <span class="source-line-no">254</span><span id="line-254">     */</span>
-<span class="source-line-no">255</span><span id="line-255">    private String m_SetterArgumentName = "_$";</span>
+<span class="source-line-no">255</span><span id="line-255">    private Name m_SetterArgumentName = null;</span>
 <span class="source-line-no">256</span><span id="line-256"></span>
 <span class="source-line-no">257</span><span id="line-257">    /**</span>
 <span class="source-line-no">258</span><span id="line-258">     *  The builder for the setter of this property.</span>
@@ -401,7 +401,7 @@
 <span class="source-line-no">388</span><span id="line-388">     *  {@inheritDoc}</span>
 <span class="source-line-no">389</span><span id="line-389">     */</span>
 <span class="source-line-no">390</span><span id="line-390">    @Override</span>
-<span class="source-line-no">391</span><span id="line-391">    public final String getAddMethodArgumentName() { return m_AddMethodArgumentName; }</span>
+<span class="source-line-no">391</span><span id="line-391">    public final Name getAddMethodArgumentName() { return m_AddMethodArgumentName; }</span>
 <span class="source-line-no">392</span><span id="line-392"></span>
 <span class="source-line-no">393</span><span id="line-393">    /**</span>
 <span class="source-line-no">394</span><span id="line-394">     *  &lt;p&gt;{@summary Returns a builder for the 'add' method for this</span>
@@ -553,7 +553,7 @@
 <span class="source-line-no">540</span><span id="line-540">     *  {@inheritDoc}</span>
 <span class="source-line-no">541</span><span id="line-541">     */</span>
 <span class="source-line-no">542</span><span id="line-542">    @Override</span>
-<span class="source-line-no">543</span><span id="line-543">    public final String getSetterArgumentName() { return m_SetterArgumentName; }</span>
+<span class="source-line-no">543</span><span id="line-543">    public final Name getSetterArgumentName() { return m_SetterArgumentName; }</span>
 <span class="source-line-no">544</span><span id="line-544"></span>
 <span class="source-line-no">545</span><span id="line-545">    /**</span>
 <span class="source-line-no">546</span><span id="line-546">     *  {@inheritDoc}</span>
@@ -616,7 +616,7 @@
 <span class="source-line-no">603</span><span id="line-603">            flags.addAll( otherSpec.getAllFlags() );</span>
 <span class="source-line-no">604</span><span id="line-604">            retValue.setFlag( flags.toArray( PropertyFlag []::new ) );</span>
 <span class="source-line-no">605</span><span id="line-605"></span>
-<span class="source-line-no">606</span><span id="line-606">            retValue.setAddMethodArgumentName( getAddMethodArgumentName() );</span>
+<span class="source-line-no">606</span><span id="line-606">            retValue.m_AddMethodArgumentName = m_AddMethodArgumentName;</span>
 <span class="source-line-no">607</span><span id="line-607">            getAddMethodBuilder().ifPresent( retValue::setAddMethodBuilder );</span>
 <span class="source-line-no">608</span><span id="line-608">            retValue.m_AddMethodComposer = otherSpec.getAddMethodComposer().orElse( m_AddMethodComposer );</span>
 <span class="source-line-no">609</span><span id="line-609">            getAddMethodName().ifPresent( retValue::setAddMethodName );</span>
@@ -642,7 +642,7 @@
 <span class="source-line-no">629</span><span id="line-629">            otherSpec.getPrefsAccessorClass().ifPresent( retValue::setPrefsAccessorClass );</span>
 <span class="source-line-no">630</span><span id="line-630">            otherSpec.getPrefsKey().ifPresent( retValue::setPrefsKey );</span>
 <span class="source-line-no">631</span><span id="line-631">            retValue.setPropertyType( otherSpec.getPropertyType() );</span>
-<span class="source-line-no">632</span><span id="line-632">            retValue.setSetterArgumentName( getSetterArgumentName() );</span>
+<span class="source-line-no">632</span><span id="line-632">            retValue.m_SetterArgumentName = m_SetterArgumentName;</span>
 <span class="source-line-no">633</span><span id="line-633">            otherSpec.getSystemPrefsPath().ifPresent( retValue::setSystemPrefsPath );</span>
 <span class="source-line-no">634</span><span id="line-634">            getSetterBuilder().ifPresent( retValue::setSetterBuilder );</span>
 <span class="source-line-no">635</span><span id="line-635">            retValue.m_SetterComposer = otherSpec.getSetterComposer().orElse( m_SetterComposer );</span>
@@ -666,9 +666,9 @@
 <span class="source-line-no">653</span><span id="line-653">     *  @param  name    The name of the argument.</span>
 <span class="source-line-no">654</span><span id="line-654">     */</span>
 <span class="source-line-no">655</span><span id="line-655">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">656</span><span id="line-656">    public final void setAddMethodArgumentName( final String name )</span>
+<span class="source-line-no">656</span><span id="line-656">    public final void setAddMethodArgumentName( final Name name )</span>
 <span class="source-line-no">657</span><span id="line-657">    {</span>
-<span class="source-line-no">658</span><span id="line-658">        m_AddMethodArgumentName = requireNotEmptyArgument( name, "name" );</span>
+<span class="source-line-no">658</span><span id="line-658">        m_AddMethodArgumentName = requireNonNullArgument( name, "name" );</span>
 <span class="source-line-no">659</span><span id="line-659">    }   //  setAddMethodArgumentName()</span>
 <span class="source-line-no">660</span><span id="line-660"></span>
 <span class="source-line-no">661</span><span id="line-661">    /**</span>
@@ -951,9 +951,9 @@
 <span class="source-line-no">938</span><span id="line-938">     *  @param  name    The name of the argument.</span>
 <span class="source-line-no">939</span><span id="line-939">     */</span>
 <span class="source-line-no">940</span><span id="line-940">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">941</span><span id="line-941">    public final void setSetterArgumentName( final String name )</span>
+<span class="source-line-no">941</span><span id="line-941">    public final void setSetterArgumentName( final Name name )</span>
 <span class="source-line-no">942</span><span id="line-942">    {</span>
-<span class="source-line-no">943</span><span id="line-943">        m_SetterArgumentName = requireNotEmptyArgument( name, "name" );</span>
+<span class="source-line-no">943</span><span id="line-943">        m_SetterArgumentName = requireNonNullArgument( name, "name" );</span>
 <span class="source-line-no">944</span><span id="line-944">    }   //  setSetterArgumentName()</span>
 <span class="source-line-no">945</span><span id="line-945"></span>
 <span class="source-line-no">946</span><span id="line-946">    /**</span>

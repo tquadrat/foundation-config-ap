@@ -83,12 +83,12 @@ import org.tquadrat.foundation.javacomposer.TypeSpec;
  *  Generates the code for the new configuration bean.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CodeGenerator.java 947 2021-12-23 21:44:25Z tquadrat $
+ *  @version $Id: CodeGenerator.java 1001 2022-01-29 16:42:15Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: CodeGenerator.java 947 2021-12-23 21:44:25Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeGenerator.java 1001 2022-01-29 16:42:15Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public final class CodeGenerator implements CodeGeneratorContext
 {
