@@ -81,12 +81,12 @@ import org.tquadrat.foundation.util.stringconverter.EnumStringConverter;
  *  generation, and it collects the results from the different code generators.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CodeGenerationConfiguration.java 1001 2022-01-29 16:42:15Z tquadrat $
+ *  @version $Id: CodeGenerationConfiguration.java 1002 2022-02-01 21:33:00Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 1001 2022-01-29 16:42:15Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 1002 2022-02-01 21:33:00Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class CodeGenerationConfiguration
 {
@@ -581,6 +581,7 @@ public final class CodeGenerationConfiguration
      *
      * @see org.tquadrat.foundation.config.INIFileConfig#mustExist()
      */
+    @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )
     public final boolean getINIFileMustExist() { return m_INIFileMustExist; }
 
     /**
@@ -721,6 +722,7 @@ public final class CodeGenerationConfiguration
      *  @return {@code true} if synchronisation/locking is required,
      *      {@code false} if not.
      */
+    @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )
     public final boolean getSynchronizationRequired() { return m_SynchronizeAccess; }
 
     /**
@@ -741,6 +743,7 @@ public final class CodeGenerationConfiguration
      *  @return {@code true} if the given interface must be implemented,
      *      {@code false} otherwise.
      */
+    @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )
     public final boolean implementInterface( final TypeName interfaceToImplement )
     {
         final var retValue = m_InterfacesToImplement.contains( requireNonNullArgument( interfaceToImplement, "interfaceToImplement" ) );
@@ -758,6 +761,7 @@ public final class CodeGenerationConfiguration
      *  @return {@code true} if the given interface must be implemented,
      *      {@code false} otherwise.
      */
+    @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )
     public final boolean implementInterface( final Type interfaceToImplement )
     {
         final var element = TypeName.from( interfaceToImplement );
@@ -969,6 +973,7 @@ public final class CodeGenerationConfiguration
      *  @return {@code true} if the string converter works for the target type,
      *      {@code false} otherwise.
      */
+    @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )
     public static final boolean validateStringConverterClass( final TypeName targetType, final ClassName stringConverterClass )
     {
         /*

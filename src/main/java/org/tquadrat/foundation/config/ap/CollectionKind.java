@@ -29,12 +29,12 @@ import org.tquadrat.foundation.javacomposer.TypeName;
 /**
  * The kind of collection for a property type that is a collection.
  *
- * @version $Id: CollectionKind.java 919 2021-05-22 19:40:36Z tquadrat $
+ * @version $Id: CollectionKind.java 1002 2022-02-01 21:33:00Z tquadrat $
  * @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  * @UMLGraph.link
  * @since 0.1.0
  */
-@ClassVersion( sourceVersion = "$Id: CollectionKind.java 919 2021-05-22 19:40:36Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CollectionKind.java 1002 2022-02-01 21:33:00Z tquadrat $" )
 @API( status = INTERNAL, since = "0.1.0" )
 public enum CollectionKind
 {

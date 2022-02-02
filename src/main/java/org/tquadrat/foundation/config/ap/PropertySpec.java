@@ -40,13 +40,13 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  The specification for a property of a configuration bean.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: PropertySpec.java 1001 2022-01-29 16:42:15Z tquadrat $
+ *  @version $Id: PropertySpec.java 1002 2022-02-01 21:33:00Z tquadrat $
  *  @since 0.1.0
  *
  *  @UMLGraph.link
  */
 @SuppressWarnings( "ClassWithTooManyMethods" )
-@ClassVersion( sourceVersion = "$Id: PropertySpec.java 1001 2022-01-29 16:42:15Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: PropertySpec.java 1002 2022-02-01 21:33:00Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public interface PropertySpec
 {
@@ -57,12 +57,12 @@ public interface PropertySpec
      *  The flags for a property.
      *
      *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
-     *  @version $Id: PropertySpec.java 1001 2022-01-29 16:42:15Z tquadrat $
+     *  @version $Id: PropertySpec.java 1002 2022-02-01 21:33:00Z tquadrat $
      *  @since 0.1.0
      *
      *  @UMLGraph.link
      */
-    @ClassVersion( sourceVersion = "$Id: PropertySpec.java 1001 2022-01-29 16:42:15Z tquadrat $" )
+    @ClassVersion( sourceVersion = "$Id: PropertySpec.java 1002 2022-02-01 21:33:00Z tquadrat $" )
     @API( status = MAINTAINED, since = "0.1.0" )
     public static enum PropertyFlag
     {

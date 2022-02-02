@@ -94,12 +94,12 @@
 <span class="source-line-no">081</span><span id="line-81"> *  generation, and it collects the results from the different code generators.</span>
 <span class="source-line-no">082</span><span id="line-82"> *</span>
 <span class="source-line-no">083</span><span id="line-83"> *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org</span>
-<span class="source-line-no">084</span><span id="line-84"> *  @version $Id: CodeGenerationConfiguration.java 1001 2022-01-29 16:42:15Z tquadrat $</span>
+<span class="source-line-no">084</span><span id="line-84"> *  @version $Id: CodeGenerationConfiguration.java 1002 2022-02-01 21:33:00Z tquadrat $</span>
 <span class="source-line-no">085</span><span id="line-85"> *  @UMLGraph.link</span>
 <span class="source-line-no">086</span><span id="line-86"> *  @since 0.1.0</span>
 <span class="source-line-no">087</span><span id="line-87"> */</span>
 <span class="source-line-no">088</span><span id="line-88">@SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods"} )</span>
-<span class="source-line-no">089</span><span id="line-89">@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 1001 2022-01-29 16:42:15Z tquadrat $" )</span>
+<span class="source-line-no">089</span><span id="line-89">@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 1002 2022-02-01 21:33:00Z tquadrat $" )</span>
 <span class="source-line-no">090</span><span id="line-90">@API( status = MAINTAINED, since = "0.1.0" )</span>
 <span class="source-line-no">091</span><span id="line-91">public final class CodeGenerationConfiguration</span>
 <span class="source-line-no">092</span><span id="line-92">{</span>
@@ -594,439 +594,444 @@
 <span class="source-line-no">581</span><span id="line-581">     *</span>
 <span class="source-line-no">582</span><span id="line-582">     * @see org.tquadrat.foundation.config.INIFileConfig#mustExist()</span>
 <span class="source-line-no">583</span><span id="line-583">     */</span>
-<span class="source-line-no">584</span><span id="line-584">    public final boolean getINIFileMustExist() { return m_INIFileMustExist; }</span>
-<span class="source-line-no">585</span><span id="line-585"></span>
-<span class="source-line-no">586</span><span id="line-586">    /**</span>
-<span class="source-line-no">587</span><span id="line-587">     *  Returns the {@code INI} file path.</span>
-<span class="source-line-no">588</span><span id="line-588">     *</span>
-<span class="source-line-no">589</span><span id="line-589">     *  @return An instance of</span>
-<span class="source-line-no">590</span><span id="line-590">     *      {@link Optional}</span>
-<span class="source-line-no">591</span><span id="line-591">     *      that holds the path.</span>
-<span class="source-line-no">592</span><span id="line-592">     */</span>
-<span class="source-line-no">593</span><span id="line-593">    public final Optional&lt;Path&gt; getINIFilePath() { return Optional.ofNullable( m_INIFilePath ); }</span>
-<span class="source-line-no">594</span><span id="line-594"></span>
-<span class="source-line-no">595</span><span id="line-595">    /**</span>
-<span class="source-line-no">596</span><span id="line-596">     *  Returns the {@code INI} file groups.</span>
-<span class="source-line-no">597</span><span id="line-597">     *</span>
-<span class="source-line-no">598</span><span id="line-598">     *  @return The group names and the related comments.</span>
-<span class="source-line-no">599</span><span id="line-599">     */</span>
-<span class="source-line-no">600</span><span id="line-600">    public final Map&lt;String,String&gt; getINIGroups() { return unmodifiableMap( m_INIGroups ); }</span>
-<span class="source-line-no">601</span><span id="line-601"></span>
-<span class="source-line-no">602</span><span id="line-602">    /**</span>
-<span class="source-line-no">603</span><span id="line-603">     *  &lt;p&gt;{@summary Returns the method that is provided as a source for the</span>
-<span class="source-line-no">604</span><span id="line-604">     *  initialisation of the properties of the configuration bean.}&lt;/p&gt;</span>
-<span class="source-line-no">605</span><span id="line-605">     *  &lt;p&gt;It it is {@code default} or {@code static}, the implementation of</span>
-<span class="source-line-no">606</span><span id="line-606">     *  the method has to be part of the configuration bean specification</span>
-<span class="source-line-no">607</span><span id="line-607">     *  interface itself, otherwise it has to be implemented in base class.&lt;/p&gt;</span>
-<span class="source-line-no">608</span><span id="line-608">     *  &lt;p&gt;It is an error if there is an {@code initData()} method that is</span>
-<span class="source-line-no">609</span><span id="line-609">     *  neither {@code default} nor {@code static}, and no base class is</span>
-<span class="source-line-no">610</span><span id="line-610">     *  defined with the</span>
-<span class="source-line-no">611</span><span id="line-611">     *  {@link org.tquadrat.foundation.config.ConfigurationBeanSpecification &amp;#64;ConfigurationBeanSpecificatgion}</span>
-<span class="source-line-no">612</span><span id="line-612">     *  annotation.&lt;/p&gt;</span>
-<span class="source-line-no">613</span><span id="line-613">     *  &lt;p&gt;The signature for the method has to be&lt;/p&gt;</span>
-<span class="source-line-no">614</span><span id="line-614">     *  &lt;pre&gt;&lt;code&gt;public Map&amp;lt;String,Object&amp;gt; initData() throws Exception&lt;/code&gt;&lt;/pre&gt;</span>
-<span class="source-line-no">615</span><span id="line-615">     *  &lt;p&gt;and the return value is a map with the initialisation values, where</span>
-<span class="source-line-no">616</span><span id="line-616">     *  the property names are the keys.&lt;/p&gt;</span>
-<span class="source-line-no">617</span><span id="line-617">     *</span>
-<span class="source-line-no">618</span><span id="line-618">     *  @return An instance of</span>
-<span class="source-line-no">619</span><span id="line-619">     *      {@link Optional}</span>
-<span class="source-line-no">620</span><span id="line-620">     *      that holds the method.</span>
-<span class="source-line-no">621</span><span id="line-621">     *</span>
-<span class="source-line-no">622</span><span id="line-622">     *  @see org.tquadrat.foundation.config.ConfigurationBeanSpecification#baseClass()</span>
-<span class="source-line-no">623</span><span id="line-623">     */</span>
-<span class="source-line-no">624</span><span id="line-624">    public final Optional&lt;MethodSpec&gt; getInitDataMethod() { return Optional.ofNullable( m_InitDataMethod ); }</span>
-<span class="source-line-no">625</span><span id="line-625"></span>
-<span class="source-line-no">626</span><span id="line-626">    /**</span>
-<span class="source-line-no">627</span><span id="line-627">     *  Returns the name of the resource that is used to initialise the</span>
-<span class="source-line-no">628</span><span id="line-628">     *  properties of the configuration bean.</span>
-<span class="source-line-no">629</span><span id="line-629">     *</span>
-<span class="source-line-no">630</span><span id="line-630">     *  @return An instance of</span>
-<span class="source-line-no">631</span><span id="line-631">     *      {@link Optional}</span>
-<span class="source-line-no">632</span><span id="line-632">     *      that holds the resource name.</span>
-<span class="source-line-no">633</span><span id="line-633">     */</span>
-<span class="source-line-no">634</span><span id="line-634">    public final Optional&lt;String&gt; getInitDataResource() { return Optional.ofNullable( m_InitDataResource ); }</span>
-<span class="source-line-no">635</span><span id="line-635"></span>
-<span class="source-line-no">636</span><span id="line-636">    /**</span>
-<span class="source-line-no">637</span><span id="line-637">     *  Returns the interfaces that have to be implemented by the new</span>
-<span class="source-line-no">638</span><span id="line-638">     *  configuration bean.</span>
-<span class="source-line-no">639</span><span id="line-639">     *</span>
-<span class="source-line-no">640</span><span id="line-640">     *  @return The interfaces to implement.</span>
-<span class="source-line-no">641</span><span id="line-641">     */</span>
-<span class="source-line-no">642</span><span id="line-642">    public final Collection&lt;TypeName&gt; getInterfacesToImplement() { return List.copyOf( m_InterfacesToImplement ); }</span>
-<span class="source-line-no">643</span><span id="line-643"></span>
-<span class="source-line-no">644</span><span id="line-644">    /**</span>
-<span class="source-line-no">645</span><span id="line-645">     *  Returns the name of the field that holds the message prefix, in case</span>
-<span class="source-line-no">646</span><span id="line-646">     *  i18n support is configured.</span>
-<span class="source-line-no">647</span><span id="line-647">     *</span>
-<span class="source-line-no">648</span><span id="line-648">     *  @return An instance of</span>
-<span class="source-line-no">649</span><span id="line-649">     *      {@link Optional}</span>
-<span class="source-line-no">650</span><span id="line-650">     *      holding the fully qualified field name.</span>
-<span class="source-line-no">651</span><span id="line-651">     */</span>
-<span class="source-line-no">652</span><span id="line-652">    public final Optional&lt;String&gt; getMessagePrefix() { return Optional.ofNullable( m_MessagePrefix ); }</span>
-<span class="source-line-no">653</span><span id="line-653"></span>
-<span class="source-line-no">654</span><span id="line-654">    /**</span>
-<span class="source-line-no">655</span><span id="line-655">     *  Returns the name of the package for the new configuration bean.</span>
-<span class="source-line-no">656</span><span id="line-656">     *</span>
-<span class="source-line-no">657</span><span id="line-657">     *  @return The package name.</span>
-<span class="source-line-no">658</span><span id="line-658">     */</span>
-<span class="source-line-no">659</span><span id="line-659">    public final Name getPackageName() { return m_PackageName; }</span>
-<span class="source-line-no">660</span><span id="line-660"></span>
-<span class="source-line-no">661</span><span id="line-661">    /**</span>
-<span class="source-line-no">662</span><span id="line-662">     *  &lt;p&gt;{@summary Returns the class for the {@code Preferences} change</span>
-<span class="source-line-no">663</span><span id="line-663">     *  listener.} If no listener class is defined, the change listener support</span>
-<span class="source-line-no">664</span><span id="line-664">     *  for the {@code Preferences} will be omitted.</span>
-<span class="source-line-no">665</span><span id="line-665">     *</span>
-<span class="source-line-no">666</span><span id="line-666">     *  @return An instance of</span>
-<span class="source-line-no">667</span><span id="line-667">     *      {@link Optional}</span>
-<span class="source-line-no">668</span><span id="line-668">     *      that holds the listener class.</span>
-<span class="source-line-no">669</span><span id="line-669">     *</span>
-<span class="source-line-no">670</span><span id="line-670">     *  @see org.tquadrat.foundation.config.PreferencesRoot#changeListenerClass()</span>
-<span class="source-line-no">671</span><span id="line-671">     */</span>
-<span class="source-line-no">672</span><span id="line-672">    public final Optional&lt;TypeName&gt; getPreferenceChangeListenerClass()</span>
-<span class="source-line-no">673</span><span id="line-673">    {</span>
-<span class="source-line-no">674</span><span id="line-674">        final var retValue = Optional.ofNullable( m_PreferenceChangeListenerClass );</span>
-<span class="source-line-no">675</span><span id="line-675"></span>
-<span class="source-line-no">676</span><span id="line-676">        //---* Done *----------------------------------------------------------</span>
-<span class="source-line-no">677</span><span id="line-677">        return retValue;</span>
-<span class="source-line-no">678</span><span id="line-678">    }   //  getPreferenceChangeListenerClass()</span>
-<span class="source-line-no">679</span><span id="line-679"></span>
-<span class="source-line-no">680</span><span id="line-680">    /**</span>
-<span class="source-line-no">681</span><span id="line-681">     *  Returns the name for the {@code Preferences} root node.</span>
-<span class="source-line-no">682</span><span id="line-682">     *</span>
-<span class="source-line-no">683</span><span id="line-683">     *  @return The name for the {@code Preferences} root node.</span>
-<span class="source-line-no">684</span><span id="line-684">     *</span>
-<span class="source-line-no">685</span><span id="line-685">     *  @see org.tquadrat.foundation.config.PreferencesRoot#nodeName()</span>
-<span class="source-line-no">686</span><span id="line-686">     */</span>
-<span class="source-line-no">687</span><span id="line-687">    public final String getPreferencesRoot()</span>
-<span class="source-line-no">688</span><span id="line-688">    {</span>
-<span class="source-line-no">689</span><span id="line-689">        final var retValue = isNotEmptyOrBlank( m_PreferencesRoot) ? m_PreferencesRoot : m_Specification.canonicalName();</span>
-<span class="source-line-no">690</span><span id="line-690"></span>
-<span class="source-line-no">691</span><span id="line-691">        //---* Done *----------------------------------------------------------</span>
-<span class="source-line-no">692</span><span id="line-692">        return retValue;</span>
-<span class="source-line-no">693</span><span id="line-693">    }   //  getPreferencesRoot()</span>
-<span class="source-line-no">694</span><span id="line-694">    /**</span>
-<span class="source-line-no">695</span><span id="line-695">     *  Returns the property with the given name.</span>
-<span class="source-line-no">696</span><span id="line-696">     *</span>
-<span class="source-line-no">697</span><span id="line-697">     *  @param  propertyName    The name of the property.</span>
-<span class="source-line-no">698</span><span id="line-698">     *  @return An instance of</span>
-<span class="source-line-no">699</span><span id="line-699">     *      {@link Optional}</span>
-<span class="source-line-no">700</span><span id="line-700">     *      that holds the retrieved property.</span>
-<span class="source-line-no">701</span><span id="line-701">     */</span>
-<span class="source-line-no">702</span><span id="line-702">    public final Optional&lt;PropertySpec&gt; getProperty( final String propertyName )</span>
-<span class="source-line-no">703</span><span id="line-703">    {</span>
-<span class="source-line-no">704</span><span id="line-704">        final Optional&lt;PropertySpec&gt; retValue = Optional.ofNullable( m_Properties.get( requireNotEmptyArgument( propertyName, "propertyName" ) ) );</span>
-<span class="source-line-no">705</span><span id="line-705"></span>
-<span class="source-line-no">706</span><span id="line-706">        //---* Done *----------------------------------------------------------</span>
-<span class="source-line-no">707</span><span id="line-707">        return retValue;</span>
-<span class="source-line-no">708</span><span id="line-708">    }   //  getProperty()</span>
-<span class="source-line-no">709</span><span id="line-709"></span>
-<span class="source-line-no">710</span><span id="line-710">    /**</span>
-<span class="source-line-no">711</span><span id="line-711">     *  Returns the configuration bean specification.</span>
-<span class="source-line-no">712</span><span id="line-712">     *</span>
-<span class="source-line-no">713</span><span id="line-713">     *  @return The configuration bean specification.</span>
-<span class="source-line-no">714</span><span id="line-714">     */</span>
-<span class="source-line-no">715</span><span id="line-715">    public final ClassName getSpecification() { return m_Specification;}</span>
-<span class="source-line-no">716</span><span id="line-716"></span>
-<span class="source-line-no">717</span><span id="line-717">    /**</span>
-<span class="source-line-no">718</span><span id="line-718">     *  Returns the flag that controls whether the generated code for the</span>
-<span class="source-line-no">719</span><span id="line-719">     *  access to the configuration bean properties has to be thread-safe.</span>
-<span class="source-line-no">720</span><span id="line-720">     *</span>
-<span class="source-line-no">721</span><span id="line-721">     *  @return {@code true} if synchronisation/locking is required,</span>
-<span class="source-line-no">722</span><span id="line-722">     *      {@code false} if not.</span>
-<span class="source-line-no">723</span><span id="line-723">     */</span>
-<span class="source-line-no">724</span><span id="line-724">    public final boolean getSynchronizationRequired() { return m_SynchronizeAccess; }</span>
-<span class="source-line-no">725</span><span id="line-725"></span>
-<span class="source-line-no">726</span><span id="line-726">    /**</span>
-<span class="source-line-no">727</span><span id="line-727">     *  Checks whether a property with the given name does already exist.</span>
-<span class="source-line-no">728</span><span id="line-728">     *</span>
-<span class="source-line-no">729</span><span id="line-729">     *  @param  propertyName    The name of the property.</span>
-<span class="source-line-no">730</span><span id="line-730">     *  @return {@code true} if the property with the given name already</span>
-<span class="source-line-no">731</span><span id="line-731">     *      exists, {@code false} otherwise.</span>
-<span class="source-line-no">732</span><span id="line-732">     */</span>
-<span class="source-line-no">733</span><span id="line-733">    public final boolean hasProperty( final String propertyName ) { return m_Properties.containsKey( propertyName ); }</span>
-<span class="source-line-no">734</span><span id="line-734"></span>
-<span class="source-line-no">735</span><span id="line-735">    /**</span>
-<span class="source-line-no">736</span><span id="line-736">     *  Checks whether the given interface must be implemented by the new</span>
-<span class="source-line-no">737</span><span id="line-737">     *  configuration bean.</span>
-<span class="source-line-no">738</span><span id="line-738">     *</span>
-<span class="source-line-no">739</span><span id="line-739">     *  @param  interfaceToImplement    The class for the interface that has to</span>
-<span class="source-line-no">740</span><span id="line-740">     *      be implemented.</span>
-<span class="source-line-no">741</span><span id="line-741">     *  @return {@code true} if the given interface must be implemented,</span>
-<span class="source-line-no">742</span><span id="line-742">     *      {@code false} otherwise.</span>
-<span class="source-line-no">743</span><span id="line-743">     */</span>
-<span class="source-line-no">744</span><span id="line-744">    public final boolean implementInterface( final TypeName interfaceToImplement )</span>
-<span class="source-line-no">745</span><span id="line-745">    {</span>
-<span class="source-line-no">746</span><span id="line-746">        final var retValue = m_InterfacesToImplement.contains( requireNonNullArgument( interfaceToImplement, "interfaceToImplement" ) );</span>
-<span class="source-line-no">747</span><span id="line-747"></span>
-<span class="source-line-no">748</span><span id="line-748">        //---* Done *----------------------------------------------------------</span>
-<span class="source-line-no">749</span><span id="line-749">        return retValue;</span>
-<span class="source-line-no">750</span><span id="line-750">    }   //  implementInterface()</span>
-<span class="source-line-no">751</span><span id="line-751"></span>
-<span class="source-line-no">752</span><span id="line-752">    /**</span>
-<span class="source-line-no">753</span><span id="line-753">     *  Checks whether the given interface must be implemented by the new</span>
-<span class="source-line-no">754</span><span id="line-754">     *  configuration bean.</span>
-<span class="source-line-no">755</span><span id="line-755">     *</span>
-<span class="source-line-no">756</span><span id="line-756">     *  @param  interfaceToImplement    The class for the interface that has to</span>
-<span class="source-line-no">757</span><span id="line-757">     *      be implemented.</span>
-<span class="source-line-no">758</span><span id="line-758">     *  @return {@code true} if the given interface must be implemented,</span>
-<span class="source-line-no">759</span><span id="line-759">     *      {@code false} otherwise.</span>
-<span class="source-line-no">760</span><span id="line-760">     */</span>
-<span class="source-line-no">761</span><span id="line-761">    public final boolean implementInterface( final Type interfaceToImplement )</span>
-<span class="source-line-no">762</span><span id="line-762">    {</span>
-<span class="source-line-no">763</span><span id="line-763">        final var element = TypeName.from( interfaceToImplement );</span>
-<span class="source-line-no">764</span><span id="line-764">        final var retValue = implementInterface( element );</span>
-<span class="source-line-no">765</span><span id="line-765"></span>
-<span class="source-line-no">766</span><span id="line-766">        //---* Done *----------------------------------------------------------</span>
-<span class="source-line-no">767</span><span id="line-767">        return retValue;</span>
-<span class="source-line-no">768</span><span id="line-768">    }   //  implementInterface()</span>
+<span class="source-line-no">584</span><span id="line-584">    @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )</span>
+<span class="source-line-no">585</span><span id="line-585">    public final boolean getINIFileMustExist() { return m_INIFileMustExist; }</span>
+<span class="source-line-no">586</span><span id="line-586"></span>
+<span class="source-line-no">587</span><span id="line-587">    /**</span>
+<span class="source-line-no">588</span><span id="line-588">     *  Returns the {@code INI} file path.</span>
+<span class="source-line-no">589</span><span id="line-589">     *</span>
+<span class="source-line-no">590</span><span id="line-590">     *  @return An instance of</span>
+<span class="source-line-no">591</span><span id="line-591">     *      {@link Optional}</span>
+<span class="source-line-no">592</span><span id="line-592">     *      that holds the path.</span>
+<span class="source-line-no">593</span><span id="line-593">     */</span>
+<span class="source-line-no">594</span><span id="line-594">    public final Optional&lt;Path&gt; getINIFilePath() { return Optional.ofNullable( m_INIFilePath ); }</span>
+<span class="source-line-no">595</span><span id="line-595"></span>
+<span class="source-line-no">596</span><span id="line-596">    /**</span>
+<span class="source-line-no">597</span><span id="line-597">     *  Returns the {@code INI} file groups.</span>
+<span class="source-line-no">598</span><span id="line-598">     *</span>
+<span class="source-line-no">599</span><span id="line-599">     *  @return The group names and the related comments.</span>
+<span class="source-line-no">600</span><span id="line-600">     */</span>
+<span class="source-line-no">601</span><span id="line-601">    public final Map&lt;String,String&gt; getINIGroups() { return unmodifiableMap( m_INIGroups ); }</span>
+<span class="source-line-no">602</span><span id="line-602"></span>
+<span class="source-line-no">603</span><span id="line-603">    /**</span>
+<span class="source-line-no">604</span><span id="line-604">     *  &lt;p&gt;{@summary Returns the method that is provided as a source for the</span>
+<span class="source-line-no">605</span><span id="line-605">     *  initialisation of the properties of the configuration bean.}&lt;/p&gt;</span>
+<span class="source-line-no">606</span><span id="line-606">     *  &lt;p&gt;It it is {@code default} or {@code static}, the implementation of</span>
+<span class="source-line-no">607</span><span id="line-607">     *  the method has to be part of the configuration bean specification</span>
+<span class="source-line-no">608</span><span id="line-608">     *  interface itself, otherwise it has to be implemented in base class.&lt;/p&gt;</span>
+<span class="source-line-no">609</span><span id="line-609">     *  &lt;p&gt;It is an error if there is an {@code initData()} method that is</span>
+<span class="source-line-no">610</span><span id="line-610">     *  neither {@code default} nor {@code static}, and no base class is</span>
+<span class="source-line-no">611</span><span id="line-611">     *  defined with the</span>
+<span class="source-line-no">612</span><span id="line-612">     *  {@link org.tquadrat.foundation.config.ConfigurationBeanSpecification &amp;#64;ConfigurationBeanSpecificatgion}</span>
+<span class="source-line-no">613</span><span id="line-613">     *  annotation.&lt;/p&gt;</span>
+<span class="source-line-no">614</span><span id="line-614">     *  &lt;p&gt;The signature for the method has to be&lt;/p&gt;</span>
+<span class="source-line-no">615</span><span id="line-615">     *  &lt;pre&gt;&lt;code&gt;public Map&amp;lt;String,Object&amp;gt; initData() throws Exception&lt;/code&gt;&lt;/pre&gt;</span>
+<span class="source-line-no">616</span><span id="line-616">     *  &lt;p&gt;and the return value is a map with the initialisation values, where</span>
+<span class="source-line-no">617</span><span id="line-617">     *  the property names are the keys.&lt;/p&gt;</span>
+<span class="source-line-no">618</span><span id="line-618">     *</span>
+<span class="source-line-no">619</span><span id="line-619">     *  @return An instance of</span>
+<span class="source-line-no">620</span><span id="line-620">     *      {@link Optional}</span>
+<span class="source-line-no">621</span><span id="line-621">     *      that holds the method.</span>
+<span class="source-line-no">622</span><span id="line-622">     *</span>
+<span class="source-line-no">623</span><span id="line-623">     *  @see org.tquadrat.foundation.config.ConfigurationBeanSpecification#baseClass()</span>
+<span class="source-line-no">624</span><span id="line-624">     */</span>
+<span class="source-line-no">625</span><span id="line-625">    public final Optional&lt;MethodSpec&gt; getInitDataMethod() { return Optional.ofNullable( m_InitDataMethod ); }</span>
+<span class="source-line-no">626</span><span id="line-626"></span>
+<span class="source-line-no">627</span><span id="line-627">    /**</span>
+<span class="source-line-no">628</span><span id="line-628">     *  Returns the name of the resource that is used to initialise the</span>
+<span class="source-line-no">629</span><span id="line-629">     *  properties of the configuration bean.</span>
+<span class="source-line-no">630</span><span id="line-630">     *</span>
+<span class="source-line-no">631</span><span id="line-631">     *  @return An instance of</span>
+<span class="source-line-no">632</span><span id="line-632">     *      {@link Optional}</span>
+<span class="source-line-no">633</span><span id="line-633">     *      that holds the resource name.</span>
+<span class="source-line-no">634</span><span id="line-634">     */</span>
+<span class="source-line-no">635</span><span id="line-635">    public final Optional&lt;String&gt; getInitDataResource() { return Optional.ofNullable( m_InitDataResource ); }</span>
+<span class="source-line-no">636</span><span id="line-636"></span>
+<span class="source-line-no">637</span><span id="line-637">    /**</span>
+<span class="source-line-no">638</span><span id="line-638">     *  Returns the interfaces that have to be implemented by the new</span>
+<span class="source-line-no">639</span><span id="line-639">     *  configuration bean.</span>
+<span class="source-line-no">640</span><span id="line-640">     *</span>
+<span class="source-line-no">641</span><span id="line-641">     *  @return The interfaces to implement.</span>
+<span class="source-line-no">642</span><span id="line-642">     */</span>
+<span class="source-line-no">643</span><span id="line-643">    public final Collection&lt;TypeName&gt; getInterfacesToImplement() { return List.copyOf( m_InterfacesToImplement ); }</span>
+<span class="source-line-no">644</span><span id="line-644"></span>
+<span class="source-line-no">645</span><span id="line-645">    /**</span>
+<span class="source-line-no">646</span><span id="line-646">     *  Returns the name of the field that holds the message prefix, in case</span>
+<span class="source-line-no">647</span><span id="line-647">     *  i18n support is configured.</span>
+<span class="source-line-no">648</span><span id="line-648">     *</span>
+<span class="source-line-no">649</span><span id="line-649">     *  @return An instance of</span>
+<span class="source-line-no">650</span><span id="line-650">     *      {@link Optional}</span>
+<span class="source-line-no">651</span><span id="line-651">     *      holding the fully qualified field name.</span>
+<span class="source-line-no">652</span><span id="line-652">     */</span>
+<span class="source-line-no">653</span><span id="line-653">    public final Optional&lt;String&gt; getMessagePrefix() { return Optional.ofNullable( m_MessagePrefix ); }</span>
+<span class="source-line-no">654</span><span id="line-654"></span>
+<span class="source-line-no">655</span><span id="line-655">    /**</span>
+<span class="source-line-no">656</span><span id="line-656">     *  Returns the name of the package for the new configuration bean.</span>
+<span class="source-line-no">657</span><span id="line-657">     *</span>
+<span class="source-line-no">658</span><span id="line-658">     *  @return The package name.</span>
+<span class="source-line-no">659</span><span id="line-659">     */</span>
+<span class="source-line-no">660</span><span id="line-660">    public final Name getPackageName() { return m_PackageName; }</span>
+<span class="source-line-no">661</span><span id="line-661"></span>
+<span class="source-line-no">662</span><span id="line-662">    /**</span>
+<span class="source-line-no">663</span><span id="line-663">     *  &lt;p&gt;{@summary Returns the class for the {@code Preferences} change</span>
+<span class="source-line-no">664</span><span id="line-664">     *  listener.} If no listener class is defined, the change listener support</span>
+<span class="source-line-no">665</span><span id="line-665">     *  for the {@code Preferences} will be omitted.</span>
+<span class="source-line-no">666</span><span id="line-666">     *</span>
+<span class="source-line-no">667</span><span id="line-667">     *  @return An instance of</span>
+<span class="source-line-no">668</span><span id="line-668">     *      {@link Optional}</span>
+<span class="source-line-no">669</span><span id="line-669">     *      that holds the listener class.</span>
+<span class="source-line-no">670</span><span id="line-670">     *</span>
+<span class="source-line-no">671</span><span id="line-671">     *  @see org.tquadrat.foundation.config.PreferencesRoot#changeListenerClass()</span>
+<span class="source-line-no">672</span><span id="line-672">     */</span>
+<span class="source-line-no">673</span><span id="line-673">    public final Optional&lt;TypeName&gt; getPreferenceChangeListenerClass()</span>
+<span class="source-line-no">674</span><span id="line-674">    {</span>
+<span class="source-line-no">675</span><span id="line-675">        final var retValue = Optional.ofNullable( m_PreferenceChangeListenerClass );</span>
+<span class="source-line-no">676</span><span id="line-676"></span>
+<span class="source-line-no">677</span><span id="line-677">        //---* Done *----------------------------------------------------------</span>
+<span class="source-line-no">678</span><span id="line-678">        return retValue;</span>
+<span class="source-line-no">679</span><span id="line-679">    }   //  getPreferenceChangeListenerClass()</span>
+<span class="source-line-no">680</span><span id="line-680"></span>
+<span class="source-line-no">681</span><span id="line-681">    /**</span>
+<span class="source-line-no">682</span><span id="line-682">     *  Returns the name for the {@code Preferences} root node.</span>
+<span class="source-line-no">683</span><span id="line-683">     *</span>
+<span class="source-line-no">684</span><span id="line-684">     *  @return The name for the {@code Preferences} root node.</span>
+<span class="source-line-no">685</span><span id="line-685">     *</span>
+<span class="source-line-no">686</span><span id="line-686">     *  @see org.tquadrat.foundation.config.PreferencesRoot#nodeName()</span>
+<span class="source-line-no">687</span><span id="line-687">     */</span>
+<span class="source-line-no">688</span><span id="line-688">    public final String getPreferencesRoot()</span>
+<span class="source-line-no">689</span><span id="line-689">    {</span>
+<span class="source-line-no">690</span><span id="line-690">        final var retValue = isNotEmptyOrBlank( m_PreferencesRoot) ? m_PreferencesRoot : m_Specification.canonicalName();</span>
+<span class="source-line-no">691</span><span id="line-691"></span>
+<span class="source-line-no">692</span><span id="line-692">        //---* Done *----------------------------------------------------------</span>
+<span class="source-line-no">693</span><span id="line-693">        return retValue;</span>
+<span class="source-line-no">694</span><span id="line-694">    }   //  getPreferencesRoot()</span>
+<span class="source-line-no">695</span><span id="line-695">    /**</span>
+<span class="source-line-no">696</span><span id="line-696">     *  Returns the property with the given name.</span>
+<span class="source-line-no">697</span><span id="line-697">     *</span>
+<span class="source-line-no">698</span><span id="line-698">     *  @param  propertyName    The name of the property.</span>
+<span class="source-line-no">699</span><span id="line-699">     *  @return An instance of</span>
+<span class="source-line-no">700</span><span id="line-700">     *      {@link Optional}</span>
+<span class="source-line-no">701</span><span id="line-701">     *      that holds the retrieved property.</span>
+<span class="source-line-no">702</span><span id="line-702">     */</span>
+<span class="source-line-no">703</span><span id="line-703">    public final Optional&lt;PropertySpec&gt; getProperty( final String propertyName )</span>
+<span class="source-line-no">704</span><span id="line-704">    {</span>
+<span class="source-line-no">705</span><span id="line-705">        final Optional&lt;PropertySpec&gt; retValue = Optional.ofNullable( m_Properties.get( requireNotEmptyArgument( propertyName, "propertyName" ) ) );</span>
+<span class="source-line-no">706</span><span id="line-706"></span>
+<span class="source-line-no">707</span><span id="line-707">        //---* Done *----------------------------------------------------------</span>
+<span class="source-line-no">708</span><span id="line-708">        return retValue;</span>
+<span class="source-line-no">709</span><span id="line-709">    }   //  getProperty()</span>
+<span class="source-line-no">710</span><span id="line-710"></span>
+<span class="source-line-no">711</span><span id="line-711">    /**</span>
+<span class="source-line-no">712</span><span id="line-712">     *  Returns the configuration bean specification.</span>
+<span class="source-line-no">713</span><span id="line-713">     *</span>
+<span class="source-line-no">714</span><span id="line-714">     *  @return The configuration bean specification.</span>
+<span class="source-line-no">715</span><span id="line-715">     */</span>
+<span class="source-line-no">716</span><span id="line-716">    public final ClassName getSpecification() { return m_Specification;}</span>
+<span class="source-line-no">717</span><span id="line-717"></span>
+<span class="source-line-no">718</span><span id="line-718">    /**</span>
+<span class="source-line-no">719</span><span id="line-719">     *  Returns the flag that controls whether the generated code for the</span>
+<span class="source-line-no">720</span><span id="line-720">     *  access to the configuration bean properties has to be thread-safe.</span>
+<span class="source-line-no">721</span><span id="line-721">     *</span>
+<span class="source-line-no">722</span><span id="line-722">     *  @return {@code true} if synchronisation/locking is required,</span>
+<span class="source-line-no">723</span><span id="line-723">     *      {@code false} if not.</span>
+<span class="source-line-no">724</span><span id="line-724">     */</span>
+<span class="source-line-no">725</span><span id="line-725">    @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )</span>
+<span class="source-line-no">726</span><span id="line-726">    public final boolean getSynchronizationRequired() { return m_SynchronizeAccess; }</span>
+<span class="source-line-no">727</span><span id="line-727"></span>
+<span class="source-line-no">728</span><span id="line-728">    /**</span>
+<span class="source-line-no">729</span><span id="line-729">     *  Checks whether a property with the given name does already exist.</span>
+<span class="source-line-no">730</span><span id="line-730">     *</span>
+<span class="source-line-no">731</span><span id="line-731">     *  @param  propertyName    The name of the property.</span>
+<span class="source-line-no">732</span><span id="line-732">     *  @return {@code true} if the property with the given name already</span>
+<span class="source-line-no">733</span><span id="line-733">     *      exists, {@code false} otherwise.</span>
+<span class="source-line-no">734</span><span id="line-734">     */</span>
+<span class="source-line-no">735</span><span id="line-735">    public final boolean hasProperty( final String propertyName ) { return m_Properties.containsKey( propertyName ); }</span>
+<span class="source-line-no">736</span><span id="line-736"></span>
+<span class="source-line-no">737</span><span id="line-737">    /**</span>
+<span class="source-line-no">738</span><span id="line-738">     *  Checks whether the given interface must be implemented by the new</span>
+<span class="source-line-no">739</span><span id="line-739">     *  configuration bean.</span>
+<span class="source-line-no">740</span><span id="line-740">     *</span>
+<span class="source-line-no">741</span><span id="line-741">     *  @param  interfaceToImplement    The class for the interface that has to</span>
+<span class="source-line-no">742</span><span id="line-742">     *      be implemented.</span>
+<span class="source-line-no">743</span><span id="line-743">     *  @return {@code true} if the given interface must be implemented,</span>
+<span class="source-line-no">744</span><span id="line-744">     *      {@code false} otherwise.</span>
+<span class="source-line-no">745</span><span id="line-745">     */</span>
+<span class="source-line-no">746</span><span id="line-746">    @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )</span>
+<span class="source-line-no">747</span><span id="line-747">    public final boolean implementInterface( final TypeName interfaceToImplement )</span>
+<span class="source-line-no">748</span><span id="line-748">    {</span>
+<span class="source-line-no">749</span><span id="line-749">        final var retValue = m_InterfacesToImplement.contains( requireNonNullArgument( interfaceToImplement, "interfaceToImplement" ) );</span>
+<span class="source-line-no">750</span><span id="line-750"></span>
+<span class="source-line-no">751</span><span id="line-751">        //---* Done *----------------------------------------------------------</span>
+<span class="source-line-no">752</span><span id="line-752">        return retValue;</span>
+<span class="source-line-no">753</span><span id="line-753">    }   //  implementInterface()</span>
+<span class="source-line-no">754</span><span id="line-754"></span>
+<span class="source-line-no">755</span><span id="line-755">    /**</span>
+<span class="source-line-no">756</span><span id="line-756">     *  Checks whether the given interface must be implemented by the new</span>
+<span class="source-line-no">757</span><span id="line-757">     *  configuration bean.</span>
+<span class="source-line-no">758</span><span id="line-758">     *</span>
+<span class="source-line-no">759</span><span id="line-759">     *  @param  interfaceToImplement    The class for the interface that has to</span>
+<span class="source-line-no">760</span><span id="line-760">     *      be implemented.</span>
+<span class="source-line-no">761</span><span id="line-761">     *  @return {@code true} if the given interface must be implemented,</span>
+<span class="source-line-no">762</span><span id="line-762">     *      {@code false} otherwise.</span>
+<span class="source-line-no">763</span><span id="line-763">     */</span>
+<span class="source-line-no">764</span><span id="line-764">    @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )</span>
+<span class="source-line-no">765</span><span id="line-765">    public final boolean implementInterface( final Type interfaceToImplement )</span>
+<span class="source-line-no">766</span><span id="line-766">    {</span>
+<span class="source-line-no">767</span><span id="line-767">        final var element = TypeName.from( interfaceToImplement );</span>
+<span class="source-line-no">768</span><span id="line-768">        final var retValue = implementInterface( element );</span>
 <span class="source-line-no">769</span><span id="line-769"></span>
-<span class="source-line-no">770</span><span id="line-770">    /**</span>
-<span class="source-line-no">771</span><span id="line-771">     *  Initialises the internal attribute</span>
-<span class="source-line-no">772</span><span id="line-772">     *  {@link #m_StringConvertersForTypeNames}.</span>
-<span class="source-line-no">773</span><span id="line-773">     *</span>
-<span class="source-line-no">774</span><span id="line-774">     *  @return The map of</span>
-<span class="source-line-no">775</span><span id="line-775">     *      {@link StringConverter}</span>
-<span class="source-line-no">776</span><span id="line-776">     *      implementations.</span>
-<span class="source-line-no">777</span><span id="line-777">     */</span>
-<span class="source-line-no">778</span><span id="line-778">    @API( status = INTERNAL, since = "0.1.0" )</span>
-<span class="source-line-no">779</span><span id="line-779">    private final Map&lt;TypeName,ClassName&gt; initStringConvertersForTypeNames()</span>
-<span class="source-line-no">780</span><span id="line-780">    {</span>
-<span class="source-line-no">781</span><span id="line-781">        final Map&lt;TypeName,ClassName&gt; retValue;</span>
-<span class="source-line-no">782</span><span id="line-782">        try</span>
-<span class="source-line-no">783</span><span id="line-783">        {</span>
-<span class="source-line-no">784</span><span id="line-784">            retValue = createStringConverterRegistry();</span>
-<span class="source-line-no">785</span><span id="line-785">        }</span>
-<span class="source-line-no">786</span><span id="line-786">        catch( final IOException e )</span>
+<span class="source-line-no">770</span><span id="line-770">        //---* Done *----------------------------------------------------------</span>
+<span class="source-line-no">771</span><span id="line-771">        return retValue;</span>
+<span class="source-line-no">772</span><span id="line-772">    }   //  implementInterface()</span>
+<span class="source-line-no">773</span><span id="line-773"></span>
+<span class="source-line-no">774</span><span id="line-774">    /**</span>
+<span class="source-line-no">775</span><span id="line-775">     *  Initialises the internal attribute</span>
+<span class="source-line-no">776</span><span id="line-776">     *  {@link #m_StringConvertersForTypeNames}.</span>
+<span class="source-line-no">777</span><span id="line-777">     *</span>
+<span class="source-line-no">778</span><span id="line-778">     *  @return The map of</span>
+<span class="source-line-no">779</span><span id="line-779">     *      {@link StringConverter}</span>
+<span class="source-line-no">780</span><span id="line-780">     *      implementations.</span>
+<span class="source-line-no">781</span><span id="line-781">     */</span>
+<span class="source-line-no">782</span><span id="line-782">    @API( status = INTERNAL, since = "0.1.0" )</span>
+<span class="source-line-no">783</span><span id="line-783">    private final Map&lt;TypeName,ClassName&gt; initStringConvertersForTypeNames()</span>
+<span class="source-line-no">784</span><span id="line-784">    {</span>
+<span class="source-line-no">785</span><span id="line-785">        final Map&lt;TypeName,ClassName&gt; retValue;</span>
+<span class="source-line-no">786</span><span id="line-786">        try</span>
 <span class="source-line-no">787</span><span id="line-787">        {</span>
-<span class="source-line-no">788</span><span id="line-788">            throw new ExceptionInInitializerError( e );</span>
+<span class="source-line-no">788</span><span id="line-788">            retValue = createStringConverterRegistry();</span>
 <span class="source-line-no">789</span><span id="line-789">        }</span>
-<span class="source-line-no">790</span><span id="line-790">        ifDebug( retValue.isEmpty(), $ -&gt; "No StringConverters??" );</span>
-<span class="source-line-no">791</span><span id="line-791"></span>
-<span class="source-line-no">792</span><span id="line-792">        //---* Done *----------------------------------------------------------</span>
-<span class="source-line-no">793</span><span id="line-793">        return retValue;</span>
-<span class="source-line-no">794</span><span id="line-794">    }   //  initStringConvertersForTypeNames()</span>
+<span class="source-line-no">790</span><span id="line-790">        catch( final IOException e )</span>
+<span class="source-line-no">791</span><span id="line-791">        {</span>
+<span class="source-line-no">792</span><span id="line-792">            throw new ExceptionInInitializerError( e );</span>
+<span class="source-line-no">793</span><span id="line-793">        }</span>
+<span class="source-line-no">794</span><span id="line-794">        ifDebug( retValue.isEmpty(), $ -&gt; "No StringConverters??" );</span>
 <span class="source-line-no">795</span><span id="line-795"></span>
-<span class="source-line-no">796</span><span id="line-796">    /**</span>
-<span class="source-line-no">797</span><span id="line-797">     *  Determines whether the given instance of</span>
-<span class="source-line-no">798</span><span id="line-798">     *  {@link TypeName}</span>
-<span class="source-line-no">799</span><span id="line-799">     *  is for an {@code Enum} type.</span>
-<span class="source-line-no">800</span><span id="line-800">     *</span>
-<span class="source-line-no">801</span><span id="line-801">     *  @param  typeName    The {@code TypeName} to check.</span>
-<span class="source-line-no">802</span><span id="line-802">     *  @return {@code true} if the given type is an {@code Enum} type,</span>
-<span class="source-line-no">803</span><span id="line-803">     *      {@code false} otherwise.</span>
-<span class="source-line-no">804</span><span id="line-804">     */</span>
-<span class="source-line-no">805</span><span id="line-805">    public final boolean isEnumType( final TypeName typeName )</span>
-<span class="source-line-no">806</span><span id="line-806">    {</span>
-<span class="source-line-no">807</span><span id="line-807">        var retValue = false;</span>
-<span class="source-line-no">808</span><span id="line-808">        if( requireNonNullArgument( typeName, "typeName" ) instanceof ClassName className )</span>
-<span class="source-line-no">809</span><span id="line-809">        {</span>
-<span class="source-line-no">810</span><span id="line-810">            try</span>
-<span class="source-line-no">811</span><span id="line-811">            {</span>
-<span class="source-line-no">812</span><span id="line-812">                final var candidateClass = Class.forName( className.canonicalName(), false, getClass().getClassLoader() );</span>
-<span class="source-line-no">813</span><span id="line-813">                retValue = candidateClass.isEnum();</span>
-<span class="source-line-no">814</span><span id="line-814">            }</span>
-<span class="source-line-no">815</span><span id="line-815">            catch( @SuppressWarnings( "unused" ) final ClassNotFoundException e )</span>
-<span class="source-line-no">816</span><span id="line-816">            {</span>
-<span class="source-line-no">817</span><span id="line-817">                retValue = false;</span>
+<span class="source-line-no">796</span><span id="line-796">        //---* Done *----------------------------------------------------------</span>
+<span class="source-line-no">797</span><span id="line-797">        return retValue;</span>
+<span class="source-line-no">798</span><span id="line-798">    }   //  initStringConvertersForTypeNames()</span>
+<span class="source-line-no">799</span><span id="line-799"></span>
+<span class="source-line-no">800</span><span id="line-800">    /**</span>
+<span class="source-line-no">801</span><span id="line-801">     *  Determines whether the given instance of</span>
+<span class="source-line-no">802</span><span id="line-802">     *  {@link TypeName}</span>
+<span class="source-line-no">803</span><span id="line-803">     *  is for an {@code Enum} type.</span>
+<span class="source-line-no">804</span><span id="line-804">     *</span>
+<span class="source-line-no">805</span><span id="line-805">     *  @param  typeName    The {@code TypeName} to check.</span>
+<span class="source-line-no">806</span><span id="line-806">     *  @return {@code true} if the given type is an {@code Enum} type,</span>
+<span class="source-line-no">807</span><span id="line-807">     *      {@code false} otherwise.</span>
+<span class="source-line-no">808</span><span id="line-808">     */</span>
+<span class="source-line-no">809</span><span id="line-809">    public final boolean isEnumType( final TypeName typeName )</span>
+<span class="source-line-no">810</span><span id="line-810">    {</span>
+<span class="source-line-no">811</span><span id="line-811">        var retValue = false;</span>
+<span class="source-line-no">812</span><span id="line-812">        if( requireNonNullArgument( typeName, "typeName" ) instanceof ClassName className )</span>
+<span class="source-line-no">813</span><span id="line-813">        {</span>
+<span class="source-line-no">814</span><span id="line-814">            try</span>
+<span class="source-line-no">815</span><span id="line-815">            {</span>
+<span class="source-line-no">816</span><span id="line-816">                final var candidateClass = Class.forName( className.canonicalName(), false, getClass().getClassLoader() );</span>
+<span class="source-line-no">817</span><span id="line-817">                retValue = candidateClass.isEnum();</span>
 <span class="source-line-no">818</span><span id="line-818">            }</span>
-<span class="source-line-no">819</span><span id="line-819">        }</span>
-<span class="source-line-no">820</span><span id="line-820"></span>
-<span class="source-line-no">821</span><span id="line-821">        //---* Done *----------------------------------------------------------</span>
-<span class="source-line-no">822</span><span id="line-822">        return retValue;</span>
-<span class="source-line-no">823</span><span id="line-823">    }   //  isEnumType()</span>
+<span class="source-line-no">819</span><span id="line-819">            catch( @SuppressWarnings( "unused" ) final ClassNotFoundException e )</span>
+<span class="source-line-no">820</span><span id="line-820">            {</span>
+<span class="source-line-no">821</span><span id="line-821">                retValue = false;</span>
+<span class="source-line-no">822</span><span id="line-822">            }</span>
+<span class="source-line-no">823</span><span id="line-823">        }</span>
 <span class="source-line-no">824</span><span id="line-824"></span>
-<span class="source-line-no">825</span><span id="line-825">    /**</span>
-<span class="source-line-no">826</span><span id="line-826">     *  Returns an</span>
-<span class="source-line-no">827</span><span id="line-827">     *  {@link java.util.Iterator}</span>
-<span class="source-line-no">828</span><span id="line-828">     *  over the defined properties.</span>
-<span class="source-line-no">829</span><span id="line-829">     *</span>
-<span class="source-line-no">830</span><span id="line-830">     *  @return The iterator.</span>
-<span class="source-line-no">831</span><span id="line-831">     */</span>
-<span class="source-line-no">832</span><span id="line-832">    public final Iterator&lt;PropertySpec&gt; propertyIterator()</span>
-<span class="source-line-no">833</span><span id="line-833">    {</span>
-<span class="source-line-no">834</span><span id="line-834">        final var iterator = m_Properties.values().iterator();</span>
-<span class="source-line-no">835</span><span id="line-835">        final Iterator&lt;PropertySpec&gt; retValue = new Iterator&lt;&gt;()</span>
-<span class="source-line-no">836</span><span id="line-836">        {</span>
-<span class="source-line-no">837</span><span id="line-837">            /**</span>
-<span class="source-line-no">838</span><span id="line-838">             *  {@inheritDoc}</span>
-<span class="source-line-no">839</span><span id="line-839">             */</span>
-<span class="source-line-no">840</span><span id="line-840">            @Override</span>
-<span class="source-line-no">841</span><span id="line-841">            public final boolean hasNext() { return iterator.hasNext(); }</span>
-<span class="source-line-no">842</span><span id="line-842"></span>
-<span class="source-line-no">843</span><span id="line-843">            /**</span>
-<span class="source-line-no">844</span><span id="line-844">             *  {@inheritDoc}</span>
-<span class="source-line-no">845</span><span id="line-845">             */</span>
-<span class="source-line-no">846</span><span id="line-846">            @Override</span>
-<span class="source-line-no">847</span><span id="line-847">            public final PropertySpec next() { return iterator.next(); }</span>
-<span class="source-line-no">848</span><span id="line-848">        };</span>
-<span class="source-line-no">849</span><span id="line-849"></span>
-<span class="source-line-no">850</span><span id="line-850">        //---* Done *----------------------------------------------------------</span>
-<span class="source-line-no">851</span><span id="line-851">        return retValue;</span>
-<span class="source-line-no">852</span><span id="line-852">    }   //  propertyIterator()</span>
+<span class="source-line-no">825</span><span id="line-825">        //---* Done *----------------------------------------------------------</span>
+<span class="source-line-no">826</span><span id="line-826">        return retValue;</span>
+<span class="source-line-no">827</span><span id="line-827">    }   //  isEnumType()</span>
+<span class="source-line-no">828</span><span id="line-828"></span>
+<span class="source-line-no">829</span><span id="line-829">    /**</span>
+<span class="source-line-no">830</span><span id="line-830">     *  Returns an</span>
+<span class="source-line-no">831</span><span id="line-831">     *  {@link java.util.Iterator}</span>
+<span class="source-line-no">832</span><span id="line-832">     *  over the defined properties.</span>
+<span class="source-line-no">833</span><span id="line-833">     *</span>
+<span class="source-line-no">834</span><span id="line-834">     *  @return The iterator.</span>
+<span class="source-line-no">835</span><span id="line-835">     */</span>
+<span class="source-line-no">836</span><span id="line-836">    public final Iterator&lt;PropertySpec&gt; propertyIterator()</span>
+<span class="source-line-no">837</span><span id="line-837">    {</span>
+<span class="source-line-no">838</span><span id="line-838">        final var iterator = m_Properties.values().iterator();</span>
+<span class="source-line-no">839</span><span id="line-839">        final Iterator&lt;PropertySpec&gt; retValue = new Iterator&lt;&gt;()</span>
+<span class="source-line-no">840</span><span id="line-840">        {</span>
+<span class="source-line-no">841</span><span id="line-841">            /**</span>
+<span class="source-line-no">842</span><span id="line-842">             *  {@inheritDoc}</span>
+<span class="source-line-no">843</span><span id="line-843">             */</span>
+<span class="source-line-no">844</span><span id="line-844">            @Override</span>
+<span class="source-line-no">845</span><span id="line-845">            public final boolean hasNext() { return iterator.hasNext(); }</span>
+<span class="source-line-no">846</span><span id="line-846"></span>
+<span class="source-line-no">847</span><span id="line-847">            /**</span>
+<span class="source-line-no">848</span><span id="line-848">             *  {@inheritDoc}</span>
+<span class="source-line-no">849</span><span id="line-849">             */</span>
+<span class="source-line-no">850</span><span id="line-850">            @Override</span>
+<span class="source-line-no">851</span><span id="line-851">            public final PropertySpec next() { return iterator.next(); }</span>
+<span class="source-line-no">852</span><span id="line-852">        };</span>
 <span class="source-line-no">853</span><span id="line-853"></span>
-<span class="source-line-no">854</span><span id="line-854">    /**</span>
-<span class="source-line-no">855</span><span id="line-855">     *  &lt;p&gt;{@summary Determines the key class for the given instance of</span>
-<span class="source-line-no">856</span><span id="line-856">     *  {@link StringConverter}.}&lt;/p&gt;</span>
-<span class="source-line-no">857</span><span id="line-857">     *</span>
-<span class="source-line-no">858</span><span id="line-858">     *  @note   This method was copied from</span>
-<span class="source-line-no">859</span><span id="line-859">     *      {@code org.tquadrat.foundation.base/org.tquadrat.foundation.lang.internal.StringConverterService}.</span>
-<span class="source-line-no">860</span><span id="line-860">     *</span>
-<span class="source-line-no">861</span><span id="line-861">     *  @param  converter   The converter instance.</span>
-<span class="source-line-no">862</span><span id="line-862">     *  @return The subject class.</span>
-<span class="source-line-no">863</span><span id="line-863">     */</span>
-<span class="source-line-no">864</span><span id="line-864">    @SuppressWarnings( {"NestedTryStatement", "unchecked"} )</span>
-<span class="source-line-no">865</span><span id="line-865">    public static final Collection&lt;Class&lt;?&gt;&gt; retrieveSubjectClasses( final StringConverter&lt;?&gt; converter )</span>
-<span class="source-line-no">866</span><span id="line-866">    {</span>
-<span class="source-line-no">867</span><span id="line-867">        final var converterClass = requireNonNullArgument( converter, "converter" ).getClass();</span>
-<span class="source-line-no">868</span><span id="line-868">        Collection&lt;Class&lt;?&gt;&gt; retValue;</span>
-<span class="source-line-no">869</span><span id="line-869">        try</span>
-<span class="source-line-no">870</span><span id="line-870">        {</span>
-<span class="source-line-no">871</span><span id="line-871">            try</span>
-<span class="source-line-no">872</span><span id="line-872">            {</span>
-<span class="source-line-no">873</span><span id="line-873">                final var getSubjectClassMethod = converterClass.getMethod( METHOD_NAME_GetSubjectClass );</span>
-<span class="source-line-no">874</span><span id="line-874">                //noinspection unchecked</span>
-<span class="source-line-no">875</span><span id="line-875">                retValue = (Collection&lt;Class&lt;?&gt;&gt;) getSubjectClassMethod.invoke( converter );</span>
-<span class="source-line-no">876</span><span id="line-876">            }</span>
-<span class="source-line-no">877</span><span id="line-877">            catch( @SuppressWarnings( "unused" ) final NoSuchMethodException e )</span>
-<span class="source-line-no">878</span><span id="line-878">            {</span>
-<span class="source-line-no">879</span><span id="line-879">                final var fromStringMethod = converterClass.getMethod( "fromString", CharSequence.class );</span>
-<span class="source-line-no">880</span><span id="line-880">                retValue = List.of( fromStringMethod.getReturnType() );</span>
-<span class="source-line-no">881</span><span id="line-881">            }</span>
-<span class="source-line-no">882</span><span id="line-882">        }</span>
-<span class="source-line-no">883</span><span id="line-883">        catch( final NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException e )</span>
-<span class="source-line-no">884</span><span id="line-884">        {</span>
-<span class="source-line-no">885</span><span id="line-885">            throw new UnexpectedExceptionError( e );</span>
+<span class="source-line-no">854</span><span id="line-854">        //---* Done *----------------------------------------------------------</span>
+<span class="source-line-no">855</span><span id="line-855">        return retValue;</span>
+<span class="source-line-no">856</span><span id="line-856">    }   //  propertyIterator()</span>
+<span class="source-line-no">857</span><span id="line-857"></span>
+<span class="source-line-no">858</span><span id="line-858">    /**</span>
+<span class="source-line-no">859</span><span id="line-859">     *  &lt;p&gt;{@summary Determines the key class for the given instance of</span>
+<span class="source-line-no">860</span><span id="line-860">     *  {@link StringConverter}.}&lt;/p&gt;</span>
+<span class="source-line-no">861</span><span id="line-861">     *</span>
+<span class="source-line-no">862</span><span id="line-862">     *  @note   This method was copied from</span>
+<span class="source-line-no">863</span><span id="line-863">     *      {@code org.tquadrat.foundation.base/org.tquadrat.foundation.lang.internal.StringConverterService}.</span>
+<span class="source-line-no">864</span><span id="line-864">     *</span>
+<span class="source-line-no">865</span><span id="line-865">     *  @param  converter   The converter instance.</span>
+<span class="source-line-no">866</span><span id="line-866">     *  @return The subject class.</span>
+<span class="source-line-no">867</span><span id="line-867">     */</span>
+<span class="source-line-no">868</span><span id="line-868">    @SuppressWarnings( {"NestedTryStatement", "unchecked"} )</span>
+<span class="source-line-no">869</span><span id="line-869">    public static final Collection&lt;Class&lt;?&gt;&gt; retrieveSubjectClasses( final StringConverter&lt;?&gt; converter )</span>
+<span class="source-line-no">870</span><span id="line-870">    {</span>
+<span class="source-line-no">871</span><span id="line-871">        final var converterClass = requireNonNullArgument( converter, "converter" ).getClass();</span>
+<span class="source-line-no">872</span><span id="line-872">        Collection&lt;Class&lt;?&gt;&gt; retValue;</span>
+<span class="source-line-no">873</span><span id="line-873">        try</span>
+<span class="source-line-no">874</span><span id="line-874">        {</span>
+<span class="source-line-no">875</span><span id="line-875">            try</span>
+<span class="source-line-no">876</span><span id="line-876">            {</span>
+<span class="source-line-no">877</span><span id="line-877">                final var getSubjectClassMethod = converterClass.getMethod( METHOD_NAME_GetSubjectClass );</span>
+<span class="source-line-no">878</span><span id="line-878">                //noinspection unchecked</span>
+<span class="source-line-no">879</span><span id="line-879">                retValue = (Collection&lt;Class&lt;?&gt;&gt;) getSubjectClassMethod.invoke( converter );</span>
+<span class="source-line-no">880</span><span id="line-880">            }</span>
+<span class="source-line-no">881</span><span id="line-881">            catch( @SuppressWarnings( "unused" ) final NoSuchMethodException e )</span>
+<span class="source-line-no">882</span><span id="line-882">            {</span>
+<span class="source-line-no">883</span><span id="line-883">                final var fromStringMethod = converterClass.getMethod( "fromString", CharSequence.class );</span>
+<span class="source-line-no">884</span><span id="line-884">                retValue = List.of( fromStringMethod.getReturnType() );</span>
+<span class="source-line-no">885</span><span id="line-885">            }</span>
 <span class="source-line-no">886</span><span id="line-886">        }</span>
-<span class="source-line-no">887</span><span id="line-887"></span>
-<span class="source-line-no">888</span><span id="line-888">        //---* Done *----------------------------------------------------------</span>
-<span class="source-line-no">889</span><span id="line-889">        return retValue;</span>
-<span class="source-line-no">890</span><span id="line-890">    }   //  retrieveSubjectClass()</span>
+<span class="source-line-no">887</span><span id="line-887">        catch( final NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException e )</span>
+<span class="source-line-no">888</span><span id="line-888">        {</span>
+<span class="source-line-no">889</span><span id="line-889">            throw new UnexpectedExceptionError( e );</span>
+<span class="source-line-no">890</span><span id="line-890">        }</span>
 <span class="source-line-no">891</span><span id="line-891"></span>
-<span class="source-line-no">892</span><span id="line-892">    /**</span>
-<span class="source-line-no">893</span><span id="line-893">     *  Sets the i18n parameters.</span>
-<span class="source-line-no">894</span><span id="line-894">     *</span>
-<span class="source-line-no">895</span><span id="line-895">     *  @param  messagePrefix   The value for the message prefix.</span>
-<span class="source-line-no">896</span><span id="line-896">     *  @param  baseBundleName  The name of the base bundle.</span>
-<span class="source-line-no">897</span><span id="line-897">     */</span>
-<span class="source-line-no">898</span><span id="line-898">    public final void setI18NParameters( final String messagePrefix, final String baseBundleName )</span>
-<span class="source-line-no">899</span><span id="line-899">    {</span>
-<span class="source-line-no">900</span><span id="line-900">        m_MessagePrefix = messagePrefix;</span>
-<span class="source-line-no">901</span><span id="line-901">        m_BaseBundleName = baseBundleName;</span>
-<span class="source-line-no">902</span><span id="line-902">    }   //  setI18NParameters()</span>
-<span class="source-line-no">903</span><span id="line-903"></span>
-<span class="source-line-no">904</span><span id="line-904">    /**</span>
-<span class="source-line-no">905</span><span id="line-905">     *  Sets the configuration for the {@code INI} file.</span>
-<span class="source-line-no">906</span><span id="line-906">     *</span>
-<span class="source-line-no">907</span><span id="line-907">     *  @param  path    The path; can be {@code null}.</span>
-<span class="source-line-no">908</span><span id="line-908">     *  @param  flag    The flag that indicates whether the configuration file</span>
-<span class="source-line-no">909</span><span id="line-909">     *      must exist before the program starts.{@code true} if the file must</span>
-<span class="source-line-no">910</span><span id="line-910">     *      exist, {@code false} if it will be created on startup.</span>
-<span class="source-line-no">911</span><span id="line-911">     *  @param  comment The comment; can be {@code null}.</span>
-<span class="source-line-no">912</span><span id="line-912">     */</span>
-<span class="source-line-no">913</span><span id="line-913">    public final void setINIFileConfig( final Path path, final boolean flag,  final String comment )</span>
-<span class="source-line-no">914</span><span id="line-914">    {</span>
-<span class="source-line-no">915</span><span id="line-915">        m_INIFilePath = path;</span>
-<span class="source-line-no">916</span><span id="line-916">        m_INIFileComment = isNull( m_INIFilePath ) ? null : comment;</span>
-<span class="source-line-no">917</span><span id="line-917">        m_INIFileMustExist = flag;</span>
-<span class="source-line-no">918</span><span id="line-918">    }   //  setINIFileConfig()</span>
-<span class="source-line-no">919</span><span id="line-919"></span>
-<span class="source-line-no">920</span><span id="line-920">    /**</span>
-<span class="source-line-no">921</span><span id="line-921">     *  Set the method that is provided as a source for the initialisation of</span>
-<span class="source-line-no">922</span><span id="line-922">     *  the properties of the configuration bean.</span>
-<span class="source-line-no">923</span><span id="line-923">     *</span>
-<span class="source-line-no">924</span><span id="line-924">     *  @param  method  The method; can be {@code null}.</span>
-<span class="source-line-no">925</span><span id="line-925">     */</span>
-<span class="source-line-no">926</span><span id="line-926">    public final void setInitDataMethod( final MethodSpec method ) { m_InitDataMethod = method; }</span>
-<span class="source-line-no">927</span><span id="line-927"></span>
-<span class="source-line-no">928</span><span id="line-928">    /**</span>
-<span class="source-line-no">929</span><span id="line-929">     *  Set the name of the resource that is used to initialise the</span>
-<span class="source-line-no">930</span><span id="line-930">     *  properties of the configuration bean.</span>
-<span class="source-line-no">931</span><span id="line-931">     *</span>
-<span class="source-line-no">932</span><span id="line-932">     *  @param  initDataResource    The resource name; can be {@code null}.</span>
-<span class="source-line-no">933</span><span id="line-933">     */</span>
-<span class="source-line-no">934</span><span id="line-934">    public final void setInitDataResource( final String initDataResource ) { m_InitDataResource = initDataResource; }</span>
-<span class="source-line-no">935</span><span id="line-935"></span>
-<span class="source-line-no">936</span><span id="line-936">    /**</span>
-<span class="source-line-no">937</span><span id="line-937">     *  Sets the class for the {@code Preferences} change listener.</span>
-<span class="source-line-no">938</span><span id="line-938">     *</span>
-<span class="source-line-no">939</span><span id="line-939">     *  @param  listenerClass   The listener class; can be {@code null}.</span>
-<span class="source-line-no">940</span><span id="line-940">     *</span>
-<span class="source-line-no">941</span><span id="line-941">     *  @see org.tquadrat.foundation.config.PreferencesRoot#changeListenerClass()</span>
-<span class="source-line-no">942</span><span id="line-942">     */</span>
-<span class="source-line-no">943</span><span id="line-943">    public final void setPreferenceChangeListenerClass( final TypeName listenerClass )</span>
-<span class="source-line-no">944</span><span id="line-944">    {</span>
-<span class="source-line-no">945</span><span id="line-945">        m_PreferenceChangeListenerClass = listenerClass;</span>
-<span class="source-line-no">946</span><span id="line-946">    }   //  setPreferenceChangeListenerClass()</span>
-<span class="source-line-no">947</span><span id="line-947"></span>
-<span class="source-line-no">948</span><span id="line-948">    /**</span>
-<span class="source-line-no">949</span><span id="line-949">     *  Sets the name for the preferences root node.</span>
-<span class="source-line-no">950</span><span id="line-950">     *</span>
-<span class="source-line-no">951</span><span id="line-951">     *  @param  name    The name for the preferences root node.</span>
-<span class="source-line-no">952</span><span id="line-952">     */</span>
-<span class="source-line-no">953</span><span id="line-953">    public final void setPreferencesRoot( final String name )</span>
-<span class="source-line-no">954</span><span id="line-954">    {</span>
-<span class="source-line-no">955</span><span id="line-955">        m_PreferencesRoot = requireNotEmptyArgument( name, "name" );</span>
-<span class="source-line-no">956</span><span id="line-956">    }   //  setPreferencesRoot()</span>
-<span class="source-line-no">957</span><span id="line-957"></span>
-<span class="source-line-no">958</span><span id="line-958">    /**</span>
-<span class="source-line-no">959</span><span id="line-959">     *  Validates whether the provided implementation of</span>
-<span class="source-line-no">960</span><span id="line-960">     *  {@link StringConverter}</span>
-<span class="source-line-no">961</span><span id="line-961">     *  can be used to translate a String into an instance of the given target</span>
-<span class="source-line-no">962</span><span id="line-962">     *  type.</span>
-<span class="source-line-no">963</span><span id="line-963">     *</span>
-<span class="source-line-no">964</span><span id="line-964">     *  @param  targetType  The target type.</span>
-<span class="source-line-no">965</span><span id="line-965">     *  @param  stringConverterClass    The</span>
-<span class="source-line-no">966</span><span id="line-966">     *      {@link TypeName }</span>
-<span class="source-line-no">967</span><span id="line-967">     *      for the implementation of</span>
-<span class="source-line-no">968</span><span id="line-968">     *      {@link StringConverter}.</span>
-<span class="source-line-no">969</span><span id="line-969">     *  @return {@code true} if the string converter works for the target type,</span>
-<span class="source-line-no">970</span><span id="line-970">     *      {@code false} otherwise.</span>
-<span class="source-line-no">971</span><span id="line-971">     */</span>
-<span class="source-line-no">972</span><span id="line-972">    public static final boolean validateStringConverterClass( final TypeName targetType, final ClassName stringConverterClass )</span>
-<span class="source-line-no">973</span><span id="line-973">    {</span>
-<span class="source-line-no">974</span><span id="line-974">        /*</span>
-<span class="source-line-no">975</span><span id="line-975">         * There are no specialised StringConverter implementations for the</span>
-<span class="source-line-no">976</span><span id="line-976">         * primitives, we make use of auto-boxing/-unboxing instead and provide</span>
-<span class="source-line-no">977</span><span id="line-977">         * implementations only for the box types.</span>
-<span class="source-line-no">978</span><span id="line-978">         */</span>
-<span class="source-line-no">979</span><span id="line-979">        final var effectiveTargetType = requireNonNullArgument( targetType, "targetType" ).box();</span>
-<span class="source-line-no">980</span><span id="line-980"></span>
-<span class="source-line-no">981</span><span id="line-981">        var retValue = false;</span>
-<span class="source-line-no">982</span><span id="line-982">        try</span>
-<span class="source-line-no">983</span><span id="line-983">        {</span>
-<span class="source-line-no">984</span><span id="line-984">            final var candidateClass = Class.forName( stringConverterClass.canonicalName(), false, CodeGenerationConfiguration.class.getClassLoader() );</span>
-<span class="source-line-no">985</span><span id="line-985">            if( StringConverter.class.isAssignableFrom( candidateClass ) )</span>
-<span class="source-line-no">986</span><span id="line-986">            {</span>
-<span class="source-line-no">987</span><span id="line-987">                /*</span>
-<span class="source-line-no">988</span><span id="line-988">                 * We need the fromString() method from the converter; more</span>
-<span class="source-line-no">989</span><span id="line-989">                 * precisely, we need the type of the return value for that</span>
-<span class="source-line-no">990</span><span id="line-990">                 * method. We do not regard a potentially existing method</span>
-<span class="source-line-no">991</span><span id="line-991">                 * getSubjectClass() on the StringConverter class.</span>
-<span class="source-line-no">992</span><span id="line-992">                 */</span>
-<span class="source-line-no">993</span><span id="line-993">                final var fromStringMethod = candidateClass.getMethod( "fromString", CharSequence.class );</span>
-<span class="source-line-no">994</span><span id="line-994">                final var returnType = TypeName.from( fromStringMethod.getReturnType() );</span>
-<span class="source-line-no">995</span><span id="line-995">                retValue = returnType.equals( effectiveTargetType );</span>
-<span class="source-line-no">996</span><span id="line-996">            }</span>
-<span class="source-line-no">997</span><span id="line-997">        }</span>
-<span class="source-line-no">998</span><span id="line-998">        catch( final NoSuchMethodException | SecurityException e )</span>
-<span class="source-line-no">999</span><span id="line-999">        {</span>
-<span class="source-line-no">1000</span><span id="line-1000">            throw new CodeGenerationError( format( MSG_IllegalImplementation, StringConverter.class.getName(), stringConverterClass.canonicalName() ), e );</span>
-<span class="source-line-no">1001</span><span id="line-1001">        }</span>
-<span class="source-line-no">1002</span><span id="line-1002">        catch( final ClassNotFoundException e )</span>
-<span class="source-line-no">1003</span><span id="line-1003">        {</span>
-<span class="source-line-no">1004</span><span id="line-1004">            //---* Deliberately ignored! *---------------------------------</span>
-<span class="source-line-no">1005</span><span id="line-1005">            ifDebug( e );</span>
+<span class="source-line-no">892</span><span id="line-892">        //---* Done *----------------------------------------------------------</span>
+<span class="source-line-no">893</span><span id="line-893">        return retValue;</span>
+<span class="source-line-no">894</span><span id="line-894">    }   //  retrieveSubjectClass()</span>
+<span class="source-line-no">895</span><span id="line-895"></span>
+<span class="source-line-no">896</span><span id="line-896">    /**</span>
+<span class="source-line-no">897</span><span id="line-897">     *  Sets the i18n parameters.</span>
+<span class="source-line-no">898</span><span id="line-898">     *</span>
+<span class="source-line-no">899</span><span id="line-899">     *  @param  messagePrefix   The value for the message prefix.</span>
+<span class="source-line-no">900</span><span id="line-900">     *  @param  baseBundleName  The name of the base bundle.</span>
+<span class="source-line-no">901</span><span id="line-901">     */</span>
+<span class="source-line-no">902</span><span id="line-902">    public final void setI18NParameters( final String messagePrefix, final String baseBundleName )</span>
+<span class="source-line-no">903</span><span id="line-903">    {</span>
+<span class="source-line-no">904</span><span id="line-904">        m_MessagePrefix = messagePrefix;</span>
+<span class="source-line-no">905</span><span id="line-905">        m_BaseBundleName = baseBundleName;</span>
+<span class="source-line-no">906</span><span id="line-906">    }   //  setI18NParameters()</span>
+<span class="source-line-no">907</span><span id="line-907"></span>
+<span class="source-line-no">908</span><span id="line-908">    /**</span>
+<span class="source-line-no">909</span><span id="line-909">     *  Sets the configuration for the {@code INI} file.</span>
+<span class="source-line-no">910</span><span id="line-910">     *</span>
+<span class="source-line-no">911</span><span id="line-911">     *  @param  path    The path; can be {@code null}.</span>
+<span class="source-line-no">912</span><span id="line-912">     *  @param  flag    The flag that indicates whether the configuration file</span>
+<span class="source-line-no">913</span><span id="line-913">     *      must exist before the program starts.{@code true} if the file must</span>
+<span class="source-line-no">914</span><span id="line-914">     *      exist, {@code false} if it will be created on startup.</span>
+<span class="source-line-no">915</span><span id="line-915">     *  @param  comment The comment; can be {@code null}.</span>
+<span class="source-line-no">916</span><span id="line-916">     */</span>
+<span class="source-line-no">917</span><span id="line-917">    public final void setINIFileConfig( final Path path, final boolean flag,  final String comment )</span>
+<span class="source-line-no">918</span><span id="line-918">    {</span>
+<span class="source-line-no">919</span><span id="line-919">        m_INIFilePath = path;</span>
+<span class="source-line-no">920</span><span id="line-920">        m_INIFileComment = isNull( m_INIFilePath ) ? null : comment;</span>
+<span class="source-line-no">921</span><span id="line-921">        m_INIFileMustExist = flag;</span>
+<span class="source-line-no">922</span><span id="line-922">    }   //  setINIFileConfig()</span>
+<span class="source-line-no">923</span><span id="line-923"></span>
+<span class="source-line-no">924</span><span id="line-924">    /**</span>
+<span class="source-line-no">925</span><span id="line-925">     *  Set the method that is provided as a source for the initialisation of</span>
+<span class="source-line-no">926</span><span id="line-926">     *  the properties of the configuration bean.</span>
+<span class="source-line-no">927</span><span id="line-927">     *</span>
+<span class="source-line-no">928</span><span id="line-928">     *  @param  method  The method; can be {@code null}.</span>
+<span class="source-line-no">929</span><span id="line-929">     */</span>
+<span class="source-line-no">930</span><span id="line-930">    public final void setInitDataMethod( final MethodSpec method ) { m_InitDataMethod = method; }</span>
+<span class="source-line-no">931</span><span id="line-931"></span>
+<span class="source-line-no">932</span><span id="line-932">    /**</span>
+<span class="source-line-no">933</span><span id="line-933">     *  Set the name of the resource that is used to initialise the</span>
+<span class="source-line-no">934</span><span id="line-934">     *  properties of the configuration bean.</span>
+<span class="source-line-no">935</span><span id="line-935">     *</span>
+<span class="source-line-no">936</span><span id="line-936">     *  @param  initDataResource    The resource name; can be {@code null}.</span>
+<span class="source-line-no">937</span><span id="line-937">     */</span>
+<span class="source-line-no">938</span><span id="line-938">    public final void setInitDataResource( final String initDataResource ) { m_InitDataResource = initDataResource; }</span>
+<span class="source-line-no">939</span><span id="line-939"></span>
+<span class="source-line-no">940</span><span id="line-940">    /**</span>
+<span class="source-line-no">941</span><span id="line-941">     *  Sets the class for the {@code Preferences} change listener.</span>
+<span class="source-line-no">942</span><span id="line-942">     *</span>
+<span class="source-line-no">943</span><span id="line-943">     *  @param  listenerClass   The listener class; can be {@code null}.</span>
+<span class="source-line-no">944</span><span id="line-944">     *</span>
+<span class="source-line-no">945</span><span id="line-945">     *  @see org.tquadrat.foundation.config.PreferencesRoot#changeListenerClass()</span>
+<span class="source-line-no">946</span><span id="line-946">     */</span>
+<span class="source-line-no">947</span><span id="line-947">    public final void setPreferenceChangeListenerClass( final TypeName listenerClass )</span>
+<span class="source-line-no">948</span><span id="line-948">    {</span>
+<span class="source-line-no">949</span><span id="line-949">        m_PreferenceChangeListenerClass = listenerClass;</span>
+<span class="source-line-no">950</span><span id="line-950">    }   //  setPreferenceChangeListenerClass()</span>
+<span class="source-line-no">951</span><span id="line-951"></span>
+<span class="source-line-no">952</span><span id="line-952">    /**</span>
+<span class="source-line-no">953</span><span id="line-953">     *  Sets the name for the preferences root node.</span>
+<span class="source-line-no">954</span><span id="line-954">     *</span>
+<span class="source-line-no">955</span><span id="line-955">     *  @param  name    The name for the preferences root node.</span>
+<span class="source-line-no">956</span><span id="line-956">     */</span>
+<span class="source-line-no">957</span><span id="line-957">    public final void setPreferencesRoot( final String name )</span>
+<span class="source-line-no">958</span><span id="line-958">    {</span>
+<span class="source-line-no">959</span><span id="line-959">        m_PreferencesRoot = requireNotEmptyArgument( name, "name" );</span>
+<span class="source-line-no">960</span><span id="line-960">    }   //  setPreferencesRoot()</span>
+<span class="source-line-no">961</span><span id="line-961"></span>
+<span class="source-line-no">962</span><span id="line-962">    /**</span>
+<span class="source-line-no">963</span><span id="line-963">     *  Validates whether the provided implementation of</span>
+<span class="source-line-no">964</span><span id="line-964">     *  {@link StringConverter}</span>
+<span class="source-line-no">965</span><span id="line-965">     *  can be used to translate a String into an instance of the given target</span>
+<span class="source-line-no">966</span><span id="line-966">     *  type.</span>
+<span class="source-line-no">967</span><span id="line-967">     *</span>
+<span class="source-line-no">968</span><span id="line-968">     *  @param  targetType  The target type.</span>
+<span class="source-line-no">969</span><span id="line-969">     *  @param  stringConverterClass    The</span>
+<span class="source-line-no">970</span><span id="line-970">     *      {@link TypeName }</span>
+<span class="source-line-no">971</span><span id="line-971">     *      for the implementation of</span>
+<span class="source-line-no">972</span><span id="line-972">     *      {@link StringConverter}.</span>
+<span class="source-line-no">973</span><span id="line-973">     *  @return {@code true} if the string converter works for the target type,</span>
+<span class="source-line-no">974</span><span id="line-974">     *      {@code false} otherwise.</span>
+<span class="source-line-no">975</span><span id="line-975">     */</span>
+<span class="source-line-no">976</span><span id="line-976">    @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )</span>
+<span class="source-line-no">977</span><span id="line-977">    public static final boolean validateStringConverterClass( final TypeName targetType, final ClassName stringConverterClass )</span>
+<span class="source-line-no">978</span><span id="line-978">    {</span>
+<span class="source-line-no">979</span><span id="line-979">        /*</span>
+<span class="source-line-no">980</span><span id="line-980">         * There are no specialised StringConverter implementations for the</span>
+<span class="source-line-no">981</span><span id="line-981">         * primitives, we make use of auto-boxing/-unboxing instead and provide</span>
+<span class="source-line-no">982</span><span id="line-982">         * implementations only for the box types.</span>
+<span class="source-line-no">983</span><span id="line-983">         */</span>
+<span class="source-line-no">984</span><span id="line-984">        final var effectiveTargetType = requireNonNullArgument( targetType, "targetType" ).box();</span>
+<span class="source-line-no">985</span><span id="line-985"></span>
+<span class="source-line-no">986</span><span id="line-986">        var retValue = false;</span>
+<span class="source-line-no">987</span><span id="line-987">        try</span>
+<span class="source-line-no">988</span><span id="line-988">        {</span>
+<span class="source-line-no">989</span><span id="line-989">            final var candidateClass = Class.forName( stringConverterClass.canonicalName(), false, CodeGenerationConfiguration.class.getClassLoader() );</span>
+<span class="source-line-no">990</span><span id="line-990">            if( StringConverter.class.isAssignableFrom( candidateClass ) )</span>
+<span class="source-line-no">991</span><span id="line-991">            {</span>
+<span class="source-line-no">992</span><span id="line-992">                /*</span>
+<span class="source-line-no">993</span><span id="line-993">                 * We need the fromString() method from the converter; more</span>
+<span class="source-line-no">994</span><span id="line-994">                 * precisely, we need the type of the return value for that</span>
+<span class="source-line-no">995</span><span id="line-995">                 * method. We do not regard a potentially existing method</span>
+<span class="source-line-no">996</span><span id="line-996">                 * getSubjectClass() on the StringConverter class.</span>
+<span class="source-line-no">997</span><span id="line-997">                 */</span>
+<span class="source-line-no">998</span><span id="line-998">                final var fromStringMethod = candidateClass.getMethod( "fromString", CharSequence.class );</span>
+<span class="source-line-no">999</span><span id="line-999">                final var returnType = TypeName.from( fromStringMethod.getReturnType() );</span>
+<span class="source-line-no">1000</span><span id="line-1000">                retValue = returnType.equals( effectiveTargetType );</span>
+<span class="source-line-no">1001</span><span id="line-1001">            }</span>
+<span class="source-line-no">1002</span><span id="line-1002">        }</span>
+<span class="source-line-no">1003</span><span id="line-1003">        catch( final NoSuchMethodException | SecurityException e )</span>
+<span class="source-line-no">1004</span><span id="line-1004">        {</span>
+<span class="source-line-no">1005</span><span id="line-1005">            throw new CodeGenerationError( format( MSG_IllegalImplementation, StringConverter.class.getName(), stringConverterClass.canonicalName() ), e );</span>
 <span class="source-line-no">1006</span><span id="line-1006">        }</span>
-<span class="source-line-no">1007</span><span id="line-1007"></span>
-<span class="source-line-no">1008</span><span id="line-1008">        //---* Done *----------------------------------------------------------</span>
-<span class="source-line-no">1009</span><span id="line-1009">        return retValue;</span>
-<span class="source-line-no">1010</span><span id="line-1010">    }   //  validateStringConverterClass()</span>
-<span class="source-line-no">1011</span><span id="line-1011">}</span>
-<span class="source-line-no">1012</span><span id="line-1012">//  class CodeGenerationConfiguration</span>
-<span class="source-line-no">1013</span><span id="line-1013"></span>
-<span class="source-line-no">1014</span><span id="line-1014">/*</span>
-<span class="source-line-no">1015</span><span id="line-1015"> *  End of File</span>
-<span class="source-line-no">1016</span><span id="line-1016"> */</span>
+<span class="source-line-no">1007</span><span id="line-1007">        catch( final ClassNotFoundException e )</span>
+<span class="source-line-no">1008</span><span id="line-1008">        {</span>
+<span class="source-line-no">1009</span><span id="line-1009">            //---* Deliberately ignored! *---------------------------------</span>
+<span class="source-line-no">1010</span><span id="line-1010">            ifDebug( e );</span>
+<span class="source-line-no">1011</span><span id="line-1011">        }</span>
+<span class="source-line-no">1012</span><span id="line-1012"></span>
+<span class="source-line-no">1013</span><span id="line-1013">        //---* Done *----------------------------------------------------------</span>
+<span class="source-line-no">1014</span><span id="line-1014">        return retValue;</span>
+<span class="source-line-no">1015</span><span id="line-1015">    }   //  validateStringConverterClass()</span>
+<span class="source-line-no">1016</span><span id="line-1016">}</span>
+<span class="source-line-no">1017</span><span id="line-1017">//  class CodeGenerationConfiguration</span>
+<span class="source-line-no">1018</span><span id="line-1018"></span>
+<span class="source-line-no">1019</span><span id="line-1019">/*</span>
+<span class="source-line-no">1020</span><span id="line-1020"> *  End of File</span>
+<span class="source-line-no">1021</span><span id="line-1021"> */</span>
 
 
 

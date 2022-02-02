@@ -44,9 +44,9 @@ import org.tquadrat.foundation.test.helper.CodeGeneratorTestBase;
  *  interface.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: TestI18nSupportBuilder.java 1001 2022-01-29 16:42:15Z tquadrat $
+ *  @version $Id: TestI18nSupportBuilder.java 1002 2022-02-01 21:33:00Z tquadrat $
  */
-@ClassVersion( sourceVersion = "$Id: TestI18nSupportBuilder.java 1001 2022-01-29 16:42:15Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: TestI18nSupportBuilder.java 1002 2022-02-01 21:33:00Z tquadrat $" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.TestConfigBeanBuilder" )
 public class TestI18nSupportBuilder extends CodeGeneratorTestBase
 {
