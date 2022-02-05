@@ -64,12 +64,12 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  {@link PropertySpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: PropertySpecImpl.java 1002 2022-02-01 21:33:00Z tquadrat $
+ *  @version $Id: PropertySpecImpl.java 1006 2022-02-03 23:03:04Z tquadrat $
  *  @since 0.1.0
  *  @UMLGraph.link
  */
 @SuppressWarnings( {"ClassWithTooManyFields", "OverlyComplexClass"} )
-@ClassVersion( sourceVersion = "$Id: PropertySpecImpl.java 1002 2022-02-01 21:33:00Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: PropertySpecImpl.java 1006 2022-02-03 23:03:04Z tquadrat $" )
 @API( status = INTERNAL, since = "0.1.0" )
 public final class PropertySpecImpl implements PropertySpec
 {
@@ -212,6 +212,12 @@ public final class PropertySpecImpl implements PropertySpec
      *  The key for this property when stored in an {@code INI} file.
      */
     private String m_INIKey = null;
+
+    /**
+     *  The flag that indicates whether the property type is an {@code enum}
+     *  type.
+     */
+    private boolean m_IsEnum = false;
 
     /**
      *  <p>{@summary The {@code Preferences} accessor class.}</p>
@@ -585,6 +591,12 @@ public final class PropertySpecImpl implements PropertySpec
      *  {@inheritDoc}
      */
     @Override
+    public final boolean isEnum() { return m_IsEnum; }
+
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
     public final boolean hasFlag( final PropertyFlag flag ) { return m_PropertyFlags.contains( requireNonNullArgument( flag, "flag" ) ); }
 
     /**
@@ -626,6 +638,7 @@ public final class PropertySpecImpl implements PropertySpec
             otherSpec.getINIComment().ifPresent( c -> retValue.m_INIComment = c );
             otherSpec.getINIGroup().ifPresent( g -> retValue.m_INIGroup = g );
             otherSpec.getINIKey().ifPresent( k -> retValue.m_INIKey = k );
+            retValue.setIsEnum( otherSpec.isEnum() );
             otherSpec.getPrefsAccessorClass().ifPresent( retValue::setPrefsAccessorClass );
             otherSpec.getPrefsKey().ifPresent( retValue::setPrefsKey );
             retValue.setPropertyType( otherSpec.getPropertyType() );
@@ -898,6 +911,16 @@ public final class PropertySpecImpl implements PropertySpec
     {
         setINIConfiguration( requireNonNullArgument( configuration, "configuration" ).group(), configuration.key(), configuration.comment() );
     }   //  setINIConfiguration()
+
+    /**
+     *  Sets the flag that indicates whether the property is an
+     *  {@link Enum enum}
+     *  type.
+     *
+     *  @param  flag    {@code true} if the property type is an {@code enum}
+     *      type, {@code false} otherwise.
+     */
+    public final void setIsEnum( final boolean flag ) { m_IsEnum = flag; }
 
     /**
      *  Sets the preferences accessor class for this property.

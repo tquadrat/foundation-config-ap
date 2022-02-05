@@ -43,6 +43,8 @@ import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.UNCHECKE
 import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.createSuppressWarningsAnnotation;
 import static org.tquadrat.foundation.lang.CommonConstants.EMPTY_STRING;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
+import static org.tquadrat.foundation.util.StringUtils.format;
+import static org.tquadrat.foundation.util.StringUtils.repeat;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -71,12 +73,12 @@ import org.tquadrat.foundation.util.StringUtils;
  *  {@link org.tquadrat.foundation.config.ConfigBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: ConfigBeanBuilder.java 1002 2022-02-01 21:33:00Z tquadrat $
+ *  @version $Id: ConfigBeanBuilder.java 1008 2022-02-05 03:18:07Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: ConfigBeanBuilder.java 1002 2022-02-01 21:33:00Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ConfigBeanBuilder.java 1008 2022-02-05 03:18:07Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class ConfigBeanBuilder extends CodeBuilderBase
 {
@@ -413,7 +415,14 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
             }
             else
             {
-                builder.addStatement( "final var stringConverter = new $1T()", stringConverter );
+                if( propertySpec.isEnum() )
+                {
+                    builder.addStatement( "final var stringConverter = new $1T( $2T)", stringConverter, propertySpec.getPropertyType() );
+                }
+                else
+                {
+                    builder.addStatement( "final var stringConverter = new $1T()", stringConverter );
+                }
             }
 
             builder.addStatement( "$N = stringConverter.fromString( value )", field )
@@ -440,7 +449,8 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
         final var builder = getComposer().createToStringBuilder()
             .addStatement( "final var prefix = format ( $1S, getClass().getName() )", "%s [" )
             .addStaticImport( StringUtils.class, "format" )
-            .addStatement( "final var joiner = new $1T( $2S, prefix, $3S )", StringJoiner.class, ", ", "]" );
+            .addStatement( "final var joiner = new $1T( $2S, prefix, $3S )", StringJoiner.class, ", ", "]" )
+            .addCode( "\n" );
 
         //---* Add the locking *-----------------------------------------------
         final var lock = getConfiguration().getSynchronizationRequired()
@@ -450,6 +460,7 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
             """
             try( final var ignored = $N.lock() )
             """, lock );
+        final var commentLen = nonNull( lock ) ? 67 : 71;
 
         //---* Add the code *--------------------------------------------------
         var addEmptyLine = false;
@@ -463,7 +474,11 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
             if( addEmptyLine ) builder.addCode( "\n" );
             addEmptyLine = true;
             final var propertyName = propertySpec.getPropertyName();
-            builder.addComment( "Property $1S", propertyName )
+            final var comment = format( "//---* Property \"%1$s\" *%2$s", propertyName, repeat( '-', 80 ) ).substring( 0, commentLen );
+            builder.addCode(
+                """
+                $L
+                """, comment )
                 .beginControlFlow( EMPTY_STRING );
 
             if( !propertySpec.hasFlag( GETTER_IS_DEFAULT ) )
@@ -480,35 +495,28 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
                     }
                     else
                     {
-                        builder.addStatement( "final var stringConverter = new $1T()", stringConverter );
+                        if( propertySpec.isEnum() )
+                        {
+                            builder.addStatement( "final var stringConverter = new $1T( $2T.class )", stringConverter, propertySpec.getPropertyType() );
+                        }
+                        else
+                        {
+                            builder.addStatement( "final var stringConverter = new $1T()", stringConverter );
+                        }
                     }
                     builder.addStatement( "final var value = stringConverter.toString( $1L )", field )
-                        .beginControlFlow(
-                        """
-                            if( nonNull( value ) )
-                            """ )
+                        .addStatement(
+                            """
+                            joiner.add( format( "$1N = \\\"%1$$s\\\"", nonNull( value ) ? value : NULL_STRING ) )""", propertyName )
                         .addStaticImport( Objects.class, "nonNull" )
-                        .addStatement(
-                            """
-                            joiner.add( format( "$1N = \\\"%1S\\\"", value ) )""", propertyName )
-                        .addStaticImport( StringUtils.class, "format" )
-                        .nextControlFlow(
-                        """
-                            
-                            else
-                            """ )
-                        .addStatement(
-                            """
-                            joiner.add( format( "$1N = \\\"%1S\\\"", NULL_STRING ) )""", propertyName )
                         .addStaticImport( CommonConstants.class, "NULL_STRING" )
-                        .addStaticImport( StringUtils.class, "format" )
-                        .endControlFlow();
+                        .addStaticImport( StringUtils.class, "format" );
                 }
                 else
                 {
                     builder.addStatement(
                         """
-                        joiner.add( format( "$1N = \\\"%1S\\\"", $2T.toString( $3L ) ) )""", propertyName, Objects.class, field )
+                        joiner.add( format( "$1N = \\\"%1$$S\\\"", $2T.toString( $3L ) ) )""", propertyName, Objects.class, field )
                         .addStaticImport( StringUtils.class, "format" );
                 }
             }
@@ -528,32 +536,18 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
                         builder.addStatement( "final var stringConverter = new $1T()", stringConverter );
                     }
                     builder.addStatement( "final var value = stringConverter.toString( $1L() )", getterMethod )
-                        .beginControlFlow(
+                        .addStatement(
                             """
-                                if( nonNull( value ) )
-                                """ )
+                            joiner.add( format( "$1N = \\\"%1$$s\\\"", nonNull( value ) ? value : NULL_STRING ) )""", propertyName )
                         .addStaticImport( Objects.class, "nonNull" )
-                        .addStatement(
-                            """
-                            joiner.add( format( "$1N = \\\"%1S\\\"", value ) )""", propertyName )
-                        .addStaticImport( StringUtils.class, "format" )
-                        .nextControlFlow(
-                            """
-                                
-                                else
-                                """ )
-                        .addStatement(
-                            """
-                            joiner.add( format( "$1N = \\\"%1S\\\"", NULL_STRING ) )""", propertyName )
                         .addStaticImport( CommonConstants.class, "NULL_STRING" )
-                        .addStaticImport( StringUtils.class, "format" )
-                        .endControlFlow();
+                        .addStaticImport( StringUtils.class, "format" );
                 }
                 else
                 {
                     builder.addStatement(
                         """
-                        joiner.add( format( "$1N = \\\"%1S\\\"", $2T.toString( $3L() ) ) )""", propertyName, Objects.class, getterMethod )
+                        joiner.add( format( "$1N = \\\"%1$$s\\\"", $2T.toString( $3L() ) ) )""", propertyName, Objects.class, getterMethod )
                         .addStaticImport( StringUtils.class, "format" );
                 }
             }

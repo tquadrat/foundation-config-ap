@@ -40,13 +40,13 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  The specification for a property of a configuration bean.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: PropertySpec.java 1002 2022-02-01 21:33:00Z tquadrat $
+ *  @version $Id: PropertySpec.java 1006 2022-02-03 23:03:04Z tquadrat $
  *  @since 0.1.0
  *
  *  @UMLGraph.link
  */
 @SuppressWarnings( "ClassWithTooManyMethods" )
-@ClassVersion( sourceVersion = "$Id: PropertySpec.java 1002 2022-02-01 21:33:00Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: PropertySpec.java 1006 2022-02-03 23:03:04Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public interface PropertySpec
 {
@@ -57,12 +57,12 @@ public interface PropertySpec
      *  The flags for a property.
      *
      *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
-     *  @version $Id: PropertySpec.java 1002 2022-02-01 21:33:00Z tquadrat $
+     *  @version $Id: PropertySpec.java 1006 2022-02-03 23:03:04Z tquadrat $
      *  @since 0.1.0
      *
      *  @UMLGraph.link
      */
-    @ClassVersion( sourceVersion = "$Id: PropertySpec.java 1002 2022-02-01 21:33:00Z tquadrat $" )
+    @ClassVersion( sourceVersion = "$Id: PropertySpec.java 1006 2022-02-03 23:03:04Z tquadrat $" )
     @API( status = MAINTAINED, since = "0.1.0" )
     public static enum PropertyFlag
     {
@@ -637,6 +637,16 @@ public interface PropertySpec
      *      otherwise.
      */
     public default boolean isCollection() { return getCollectionKind() != NO_COLLECTION; }
+
+    /**
+     *  Returns the flag that indicates whether the property is an
+     *  {@link Enum enum}
+     *  type.
+     *
+     *  @return {@code true} if the property type is an {@code enum},
+     *      {@code false} otherwise.
+     */
+    public boolean isEnum();
 
     /**
      *  {@summary Checks whether this property is exposed to the CLI.} This

@@ -34,20 +34,24 @@ import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.S
 import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_CLIError;
 import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_WriteLock;
 import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardMethod.STD_METHOD_GetRessourceBundle;
-import static org.tquadrat.foundation.config.internal.ClassRegistry.m_HandlerClasses;
 import static org.tquadrat.foundation.javacomposer.Primitives.BOOLEAN;
 import static org.tquadrat.foundation.javacomposer.Primitives.VOID;
 import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.REDUNDANT_EXPLICIT_VARIABLE_TYPE;
 import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.createSuppressWarningsAnnotation;
+import static org.tquadrat.foundation.lang.DebugOutput.ifDebug;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
+import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
+import static org.tquadrat.foundation.util.StringUtils.capitalize;
 import static org.tquadrat.foundation.util.StringUtils.format;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
@@ -59,6 +63,7 @@ import org.tquadrat.foundation.config.ConfigUtil;
 import org.tquadrat.foundation.config.ap.PropertySpec;
 import org.tquadrat.foundation.config.cli.CmdLineValueHandler;
 import org.tquadrat.foundation.config.cli.SimpleCmdLineValueHandler;
+import org.tquadrat.foundation.config.internal.ClassRegistry;
 import org.tquadrat.foundation.config.spi.CLIArgumentDefinition;
 import org.tquadrat.foundation.config.spi.CLIDefinition;
 import org.tquadrat.foundation.config.spi.CLIOptionDefinition;
@@ -68,6 +73,7 @@ import org.tquadrat.foundation.javacomposer.FieldSpec;
 import org.tquadrat.foundation.javacomposer.ParameterizedTypeName;
 import org.tquadrat.foundation.javacomposer.TypeName;
 import org.tquadrat.foundation.javacomposer.WildcardTypeName;
+import org.tquadrat.foundation.lang.Objects;
 
 /**
  *  The
@@ -76,15 +82,23 @@ import org.tquadrat.foundation.javacomposer.WildcardTypeName;
  *  {@link org.tquadrat.foundation.config.CLIBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CLIBeanBuilder.java 999 2022-01-27 23:23:26Z tquadrat $
+ *  @version $Id: CLIBeanBuilder.java 1008 2022-02-05 03:18:07Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: CLIBeanBuilder.java 999 2022-01-27 23:23:26Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CLIBeanBuilder.java 1008 2022-02-05 03:18:07Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class CLIBeanBuilder extends CodeBuilderBase
 {
+        /*------------*\
+    ====** Attributes **=======================================================
+        \*------------*/
+    /**
+     *  The handler classes.
+     */
+    private final Map<TypeName,ClassName> m_HandlerClasses = new HashMap<>();
+
         /*--------------*\
     ====** Constructors **=====================================================
         \*--------------*/
@@ -96,6 +110,11 @@ public final class CLIBeanBuilder extends CodeBuilderBase
     public CLIBeanBuilder( final CodeGeneratorContext context )
     {
         super( context );
+
+        for( final var entry : ClassRegistry.m_HandlerClasses.entrySet() )
+        {
+            m_HandlerClasses.put( TypeName.from( entry.getKey() ), ClassName.from( entry.getValue() ) );
+        }
     }   //  CLIBeanBuilder()
 
         /*---------*\
@@ -136,7 +155,7 @@ public final class CLIBeanBuilder extends CodeBuilderBase
     private final String composeValueHandlerCreation( final PropertySpec property )
     {
         //---* The method name *-----------------------------------------------
-        final var retValue = format( "composeValueHandler_%s", property.getPropertyName() );
+        final var retValue = format( "composeValueHandler_%s", capitalize( property.getPropertyName() ) );
 
         //---* The lambda that sets the value to the attribute *---------------
         final var lambdaType = ParameterizedTypeName.from( ClassName.from( BiConsumer.class ), ClassName.from( String.class ), property.getPropertyType().box() );
@@ -155,14 +174,22 @@ public final class CLIBeanBuilder extends CodeBuilderBase
             t -> builder.addStatement( "final $T retValue = new $T( lambda ) ", handlerType, t ),
             () ->
             {
-                final var stringConverter = property.getStringConverterClass().orElseThrow( () -> new IllegalAnnotationError( format( "No String converter for property '%s'", property.getPropertyName() ) ) );
+                final var stringConverter = property.getStringConverterClass()
+                    .orElseThrow( () -> new IllegalAnnotationError( format( "No String converter for property '%s'", property.getPropertyName() ) ) );
                 if( determineStringConverterInstantiation( stringConverter ) )
                 {
-                    builder.addStatement( "final $T retValue = new $T<>( lambda, $T.INSTANCE )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
+                    builder.addStatement( "final $1T retValue = new $2T<>( lambda, $3T.INSTANCE )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
                 }
                 else
                 {
-                    builder.addStatement( "final $T retValue = new $T<>( lambda, new $T() )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
+                    if( property.isEnum() )
+                    {
+                        builder.addStatement( "final $1T retValue = new $2T<>( lambda, new $3T( $4T.class ) )", handlerType, SimpleCmdLineValueHandler.class, stringConverter, property.getPropertyType() );
+                    }
+                    else
+                    {
+                        builder.addStatement( "final $1T retValue = new $2T<>( lambda, new $3T() )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
+                    }
                 }
             });
 
@@ -391,7 +418,9 @@ public final class CLIBeanBuilder extends CodeBuilderBase
             final var format = property.getCLIFormat().orElse( null );
             if( property.hasFlag( PROPERTY_IS_ARGUMENT ) )
             {
-                builder.addStatement( "$L = new $T( $S, $L, $S, $S, $S, $L, $L, $L, $S )", definitionName, CLIArgumentDefinition.class,
+                builder.addStatement( "$1L = new $2T( $3S, $4L, $5S, $6S, $7S, $8L, $9L, $10L, $1S )",
+                    definitionName,
+                    CLIArgumentDefinition.class,
                     property.getPropertyName(),
                     Integer.valueOf( property.getCLIArgumentIndex().orElseThrow( () -> new IllegalAnnotationError( format( MSG_NoArgumentIndex, property.getPropertyName() ) ) ) ),
                     usage,
@@ -415,7 +444,9 @@ public final class CLIBeanBuilder extends CodeBuilderBase
                 final var names = optionNames.stream()
                     .map( n -> format( "\"%s\"", n ) )
                     .collect( joining( ", ", "List.of( ", " )" ) );
-                builder.addStatement( "$L = new $T( $S, $L, $S, $S, $S, $L, $L, $L, $S )", definitionName, CLIOptionDefinition.class,
+                builder.addStatement( "$1L = new $2T( $3S, $4L, $5S, $6S, $7S, $8L, $9L, $10L, $11S )",
+                    definitionName,
+                    CLIOptionDefinition.class,
                     property.getPropertyName(),
                     names,
                     usage,
@@ -453,12 +484,23 @@ public final class CLIBeanBuilder extends CodeBuilderBase
      */
     private final Optional<TypeName> retrieveValueHandlerClass( final PropertySpec property )
     {
-        var retValue = property.getCLIValueHandlerClass();
+        var retValue = requireNonNullArgument( property, "property" ).getCLIValueHandlerClass();
         if( retValue.isEmpty() )
         {
-            final var c = m_HandlerClasses.get( property.getPropertyType().toString() );
-            if( nonNull( c ) ) retValue = Optional.of( TypeName.from( c ) );
+            final var handlerClass = m_HandlerClasses.get( property.getPropertyType() );
+            if( nonNull( handlerClass ) )
+            {
+                retValue = Optional.of( handlerClass );
+            }
         }
+        ifDebug( a ->
+        {
+            final var propertyName = ((PropertySpec) a [0]).getPropertyName();
+            final var propertyType = ((PropertySpec) a [0]).getPropertyType().toString();
+            //noinspection unchecked
+            final var handlerClass = Objects.toString( ((Optional<TypeName>) a [1]).orElse( null ) );
+            return format( "property: %1$s%n\tpropertyType: %2$s%n\thandlerClass: %3$s", propertyName, propertyType, handlerClass );
+        }, property, retValue );
 
         //---* Done *----------------------------------------------------------
         return retValue;

@@ -44,9 +44,9 @@ import org.tquadrat.foundation.test.helper.CodeGeneratorTestBase;
  *  interface.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: TestI18nSupportBuilder.java 1002 2022-02-01 21:33:00Z tquadrat $
+ *  @version $Id: TestI18nSupportBuilder.java 1008 2022-02-05 03:18:07Z tquadrat $
  */
-@ClassVersion( sourceVersion = "$Id: TestI18nSupportBuilder.java 1002 2022-02-01 21:33:00Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: TestI18nSupportBuilder.java 1008 2022-02-05 03:18:07Z tquadrat $" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.TestConfigBeanBuilder" )
 public class TestI18nSupportBuilder extends CodeGeneratorTestBase
 {
@@ -107,1115 +107,1025 @@ public class TestI18nSupportBuilder extends CodeGeneratorTestBase
              */
             final var expected =
                 """
-                /*
-                 * ============================================================================
-                 * This file inherits the copyright and license(s) from the interface that is
-                 * implemented by the class
-                 *
-                 *     org.tquadrat.foundation.test.generated.MyConfigurationBean
-                 *
-                 * Refer to
-                 *
-                 *     org.tquadrat.foundation.test.MyConfigurationBeanSpecification
-                 *
-                 * and the file comment there for the details.
-                 * ============================================================================
-                 */
-
-                package org.tquadrat.foundation.test.generated;
-
-                import static java.lang.System.getProperty;
-                import static java.nio.charset.Charset.defaultCharset;
-                import static java.util.stream.Collectors.toUnmodifiableList;
-                import static org.tquadrat.foundation.lang.CommonConstants.NULL_STRING;
-                import static org.tquadrat.foundation.lang.Objects.isNull;
-                import static org.tquadrat.foundation.lang.Objects.nonNull;
-                import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
-                import static org.tquadrat.foundation.util.StringUtils.format;
-                import static org.tquadrat.foundation.util.SystemUtils.getPID;
-
-                import java.io.FileNotFoundException;
-                import java.io.IOException;
-                import java.lang.ExceptionInInitializerError;
-                import java.lang.Integer;
-                import java.lang.Object;
-                import java.lang.Override;
-                import java.lang.String;
-                import java.lang.SuppressWarnings;
-                import java.lang.Throwable;
-                import java.lang.UnsupportedOperationException;
-                import java.nio.charset.Charset;
-                import java.security.SecureRandom;
-                import java.time.Clock;
-                import java.time.Instant;
-                import java.time.ZoneId;
-                import java.util.Collection;
-                import java.util.HashSet;
-                import java.util.Locale;
-                import java.util.Map;
-                import java.util.MissingResourceException;
-                import java.util.Optional;
-                import java.util.Properties;
-                import java.util.Random;
-                import java.util.ResourceBundle;
-                import java.util.Set;
-                import java.util.StringJoiner;
-                import java.util.TreeMap;
-                import java.util.concurrent.locks.ReentrantReadWriteLock;
-                import java.util.function.Supplier;
-                import org.tquadrat.foundation.annotation.ClassVersion;
-                import org.tquadrat.foundation.config.ConfigurationChangeListener;
-                import org.tquadrat.foundation.config.spi.ConfigChangeListenerSupport;
-                import org.tquadrat.foundation.exception.ValidationException;
-                import org.tquadrat.foundation.lang.AutoLock;
-                import org.tquadrat.foundation.lang.Objects;
-                import org.tquadrat.foundation.test.MyConfigurationBeanSpecification;
-                import org.tquadrat.foundation.test.config.BaseClass;
-                import org.tquadrat.foundation.util.stringconverter.BooleanStringConverter;
-                import org.tquadrat.foundation.util.stringconverter.CharsetStringConverter;
-                import org.tquadrat.foundation.util.stringconverter.InstantStringConverter;
-                import org.tquadrat.foundation.util.stringconverter.IntegerStringConverter;
-                import org.tquadrat.foundation.util.stringconverter.LocaleStringConverter;
-                import org.tquadrat.foundation.util.stringconverter.StringStringConverter;
-                import org.tquadrat.foundation.util.stringconverter.ZoneIdStringConverter;
-
-                /**
-                 * The configuration bean that implements
-                 * {@link MyConfigurationBeanSpecification}.
-                 */
-                @ClassVersion( sourceVersion = "Generated through org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor at [[[BUILD_DATETIME]]]", isGenerated = true )
-                @SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods", "OverlyComplexClass", "OverlyCoupledClass"} )
-                public final class MyConfigurationBean extends BaseClass implements MyConfigurationBeanSpecification
-                {
-                        /*------------*\\
-                    ====** Attributes **=======================================================
-                        \\*------------*/
-                    /**
-                     * Property: &quot;charset&quot;.
-                     */
-                    private Charset m_Charset;
-
-                    /**
-                     * Special Property: &quot;clock&quot;.
-                     */
-                    private Clock m_Clock;
-
-                    /**
-                     * The
-                     * {@link Locale}
-                     * for the currently loaded
-                     * {@link ResourceBundle}.
+                    /*
+                     * ============================================================================
+                     * This file inherits the copyright and license(s) from the interface that is
+                     * implemented by the class
                      *
-                     * @see #getResourceBundle()
+                     *     org.tquadrat.foundation.test.generated.MyConfigurationBean
+                     *
+                     * Refer to
+                     *
+                     *     org.tquadrat.foundation.test.MyConfigurationBeanSpecification
+                     *
+                     * and the file comment there for the details.
+                     * ============================================================================
                      */
-                    private Locale m_CurrentResourceBundleLocale = null;
+
+                    package org.tquadrat.foundation.test.generated;
+
+                    import static java.lang.System.getProperty;
+                    import static java.nio.charset.Charset.defaultCharset;
+                    import static java.util.stream.Collectors.toUnmodifiableList;
+                    import static org.tquadrat.foundation.lang.CommonConstants.NULL_STRING;
+                    import static org.tquadrat.foundation.lang.Objects.isNull;
+                    import static org.tquadrat.foundation.lang.Objects.nonNull;
+                    import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
+                    import static org.tquadrat.foundation.util.StringUtils.format;
+                    import static org.tquadrat.foundation.util.SystemUtils.getPID;
+
+                    import java.io.FileNotFoundException;
+                    import java.io.IOException;
+                    import java.lang.ExceptionInInitializerError;
+                    import java.lang.Integer;
+                    import java.lang.Object;
+                    import java.lang.Override;
+                    import java.lang.String;
+                    import java.lang.SuppressWarnings;
+                    import java.lang.Throwable;
+                    import java.lang.UnsupportedOperationException;
+                    import java.nio.charset.Charset;
+                    import java.security.SecureRandom;
+                    import java.time.Clock;
+                    import java.time.Instant;
+                    import java.time.ZoneId;
+                    import java.util.Collection;
+                    import java.util.HashSet;
+                    import java.util.Locale;
+                    import java.util.Map;
+                    import java.util.MissingResourceException;
+                    import java.util.Optional;
+                    import java.util.Properties;
+                    import java.util.Random;
+                    import java.util.ResourceBundle;
+                    import java.util.Set;
+                    import java.util.StringJoiner;
+                    import java.util.TreeMap;
+                    import java.util.concurrent.locks.ReentrantReadWriteLock;
+                    import java.util.function.Supplier;
+                    import org.tquadrat.foundation.annotation.ClassVersion;
+                    import org.tquadrat.foundation.config.ConfigurationChangeListener;
+                    import org.tquadrat.foundation.config.spi.ConfigChangeListenerSupport;
+                    import org.tquadrat.foundation.exception.ValidationException;
+                    import org.tquadrat.foundation.lang.AutoLock;
+                    import org.tquadrat.foundation.lang.Objects;
+                    import org.tquadrat.foundation.test.MyConfigurationBeanSpecification;
+                    import org.tquadrat.foundation.test.config.BaseClass;
+                    import org.tquadrat.foundation.util.stringconverter.BooleanStringConverter;
+                    import org.tquadrat.foundation.util.stringconverter.CharsetStringConverter;
+                    import org.tquadrat.foundation.util.stringconverter.InstantStringConverter;
+                    import org.tquadrat.foundation.util.stringconverter.IntegerStringConverter;
+                    import org.tquadrat.foundation.util.stringconverter.LocaleStringConverter;
+                    import org.tquadrat.foundation.util.stringconverter.StringStringConverter;
+                    import org.tquadrat.foundation.util.stringconverter.ZoneIdStringConverter;
 
                     /**
-                     * Property: &quot;date1&quot;.
+                     * The configuration bean that implements
+                     * {@link MyConfigurationBeanSpecification}.
                      */
-                    private Instant m_Date1;
-
-                    /**
-                     * Property: &quot;date2&quot;.
-                     */
-                    private Instant m_Date2;
-
-                    /**
-                     * Property: &quot;int1&quot;.
-                     */
-                    private int m_Int1;
-
-                    /**
-                     * Property: &quot;int2&quot;.
-                     */
-                    private Integer m_Int2;
-
-                    /**
-                     * Property: &quot;int3&quot;.
-                     */
-                    private int m_Int3;
-
-                    /**
-                     * Property: &quot;int4&quot;.
-                     */
-                    private Integer m_Int4;
-
-                    /**
-                     * Property: &quot;isDebug&quot;.
-                     */
-                    private final boolean m_IsDebug;
-
-                    /**
-                     * Property: &quot;isTest&quot;.
-                     */
-                    private final boolean m_IsTest;
-
-                    /**
-                     * The support for the configuration change listener.
-                     */
-                    @SuppressWarnings( "InstanceVariableOfConcreteClass" )
-                    private final ConfigChangeListenerSupport m_ListenerSupport;
-
-                    /**
-                     * Property: &quot;locale&quot;.
-                     */
-                    private Locale m_Locale;
-
-                    /**
-                     * Special Property: &quot;processId&quot;.
-                     */
-                    private final long m_ProcessId;
-
-                    /**
-                     * Special Property: &quot;random&quot;.
-                     */
-                    private final Random m_Random;
-
-                    /**
-                     * The &quot;read&quot; lock.
-                     */
-                    private final AutoLock m_ReadLock;
-
-                    /**
-                     * Special Property: &quot;resourceBundle&quot;.
-                     */
-                    private ResourceBundle m_ResourceBundle = null;
-
-                    /**
-                     * The shadow map for the properties, used for the implementation of the
-                     * {@link Map}
-                     * interface.
-                     */
-                    private final Map<String, Supplier<?>> m_ShadowMap = new TreeMap<>();
-
-                    /**
-                     * Property: &quot;string1&quot;.
-                     */
-                    private String m_String1;
-
-                    /**
-                     * Property: &quot;string2&quot;.
-                     */
-                    private String m_String2;
-
-                    /**
-                     * Property: &quot;timezone&quot;.
-                     */
-                    private ZoneId m_Timezone;
-
-                    /**
-                     * The &quot;write&quot; lock.
-                     */
-                    private final AutoLock m_WriteLock;
-
-                        /*--------------*\\
-                    ====** Constructors **=====================================================
-                        \\*--------------*/
-                    /**
-                     * Creates a new {@code MyConfigurationBean} instance.
-                     */
-                    @SuppressWarnings( "ThrowCaughtLocally" )
-                    public MyConfigurationBean()
+                    @ClassVersion( sourceVersion = "Generated through org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor at [[[BUILD_DATETIME]]]", isGenerated = true )
+                    @SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods", "OverlyComplexClass", "OverlyCoupledClass"} )
+                    public final class MyConfigurationBean extends BaseClass implements MyConfigurationBeanSpecification
                     {
-                        //---* Initialise the listener support *-------------------------------
-                        m_ListenerSupport = new ConfigChangeListenerSupport( this );
-
-                        //---* Create the locks and initialise them *--------------------------
-                        final var lock = new ReentrantReadWriteLock();
-                        m_ReadLock = AutoLock.of( lock.readLock() );
-                        m_WriteLock = AutoLock.of( lock.writeLock() );
-
-                        /*
-                         * Initialise the property 'charset'.
+                            /*------------*\\
+                        ====** Attributes **=======================================================
+                            \\*------------*/
+                        /**
+                         * Property: &quot;charset&quot;.
                          */
-                        m_Charset = defaultCharset();
+                        private Charset m_Charset;
 
-                        /*
-                         * Initialise the property 'clock'.
+                        /**
+                         * Special Property: &quot;clock&quot;.
                          */
-                        m_Clock = Clock.systemDefaultZone();
+                        private Clock m_Clock;
 
-                        /*
-                         * Initialise the property 'isDebug' from the system properties.
+                        /**
+                         * The
+                         * {@link Locale}
+                         * for the currently loaded
+                         * {@link ResourceBundle}.
+                         *
+                         * @see #getResourceBundle()
                          */
+                        private Locale m_CurrentResourceBundleLocale = null;
+
+                        /**
+                         * Property: &quot;date1&quot;.
+                         */
+                        private Instant m_Date1;
+
+                        /**
+                         * Property: &quot;date2&quot;.
+                         */
+                        private Instant m_Date2;
+
+                        /**
+                         * Property: &quot;int1&quot;.
+                         */
+                        private int m_Int1;
+
+                        /**
+                         * Property: &quot;int2&quot;.
+                         */
+                        private Integer m_Int2;
+
+                        /**
+                         * Property: &quot;int3&quot;.
+                         */
+                        private int m_Int3;
+
+                        /**
+                         * Property: &quot;int4&quot;.
+                         */
+                        private Integer m_Int4;
+
+                        /**
+                         * Property: &quot;isDebug&quot;.
+                         */
+                        private final boolean m_IsDebug;
+
+                        /**
+                         * Property: &quot;isTest&quot;.
+                         */
+                        private final boolean m_IsTest;
+
+                        /**
+                         * The support for the configuration change listener.
+                         */
+                        @SuppressWarnings( "InstanceVariableOfConcreteClass" )
+                        private final ConfigChangeListenerSupport m_ListenerSupport;
+
+                        /**
+                         * Property: &quot;locale&quot;.
+                         */
+                        private Locale m_Locale;
+
+                        /**
+                         * Special Property: &quot;processId&quot;.
+                         */
+                        private final long m_ProcessId;
+
+                        /**
+                         * Special Property: &quot;random&quot;.
+                         */
+                        private final Random m_Random;
+
+                        /**
+                         * The &quot;read&quot; lock.
+                         */
+                        private final AutoLock m_ReadLock;
+
+                        /**
+                         * Special Property: &quot;resourceBundle&quot;.
+                         */
+                        private ResourceBundle m_ResourceBundle = null;
+
+                        /**
+                         * The shadow map for the properties, used for the implementation of the
+                         * {@link Map}
+                         * interface.
+                         */
+                        private final Map<String, Supplier<?>> m_ShadowMap = new TreeMap<>();
+
+                        /**
+                         * Property: &quot;string1&quot;.
+                         */
+                        private String m_String1;
+
+                        /**
+                         * Property: &quot;string2&quot;.
+                         */
+                        private String m_String2;
+
+                        /**
+                         * Property: &quot;timezone&quot;.
+                         */
+                        private ZoneId m_Timezone;
+
+                        /**
+                         * The &quot;write&quot; lock.
+                         */
+                        private final AutoLock m_WriteLock;
+
+                            /*--------------*\\
+                        ====** Constructors **=====================================================
+                            \\*--------------*/
+                        /**
+                         * Creates a new {@code MyConfigurationBean} instance.
+                         */
+                        @SuppressWarnings( "ThrowCaughtLocally" )
+                        public MyConfigurationBean()
                         {
-                            final var stringConverter = BooleanStringConverter.INSTANCE;
-                            final var value = getProperty( "isDebug" );
-                            m_IsDebug = stringConverter.fromString( value );
-                        }
+                            //---* Initialise the listener support *-------------------------------
+                            m_ListenerSupport = new ConfigChangeListenerSupport( this );
 
-                        /*
-                         * Initialise the property 'isTest' from the system properties.
-                         */
-                        {
-                            final var stringConverter = BooleanStringConverter.INSTANCE;
-                            final var value = getProperty( "isTest" );
-                            m_IsTest = stringConverter.fromString( value );
-                        }
+                            //---* Create the locks and initialise them *--------------------------
+                            final var lock = new ReentrantReadWriteLock();
+                            m_ReadLock = AutoLock.of( lock.readLock() );
+                            m_WriteLock = AutoLock.of( lock.writeLock() );
 
-                        /*
-                         * Initialise the property 'locale'.
-                         */
-                        m_Locale = Locale.getDefault();
+                            /*
+                             * Initialise the property 'charset'.
+                             */
+                            m_Charset = defaultCharset();
 
-                        /*
-                         * Initialise the property 'processId'.
-                         */
-                        m_ProcessId = getPID();
+                            /*
+                             * Initialise the property 'clock'.
+                             */
+                            m_Clock = Clock.systemDefaultZone();
 
-                        /*
-                         * Initialise the property 'random'.
-                         */
-                        m_Random = new SecureRandom();
-
-                        /*
-                         * Initialise the property 'timezone'.
-                         */
-                        m_Timezone = ZoneId.systemDefault();
-
-                        /*
-                         * Initialise the properties from 'initData()'.
-                         */
-                        try
-                        {
-                            final var initData = initData();
-                            if( isNull( initData ) )
+                            /*
+                             * Initialise the property 'isDebug' from the system properties.
+                             */
                             {
-                                throw new ValidationException( "initData() returns null" );
-                            }
-                            if( initData.containsKey( "date1" ) )
-                            {
-                                m_Date1 = (Instant) initData.get( "date1" );
-                            }
-                            if( initData.containsKey( "date2" ) )
-                            {
-                                m_Date2 = (Instant) initData.get( "date2" );
-                            }
-                            if( initData.containsKey( "int1" ) )
-                            {
-                                m_Int1 = (Integer) initData.get( "int1" );
-                            }
-                            if( initData.containsKey( "int2" ) )
-                            {
-                                m_Int2 = (Integer) initData.get( "int2" );
-                            }
-                            if( initData.containsKey( "int3" ) )
-                            {
-                                m_Int3 = (Integer) initData.get( "int3" );
-                            }
-                            if( initData.containsKey( "int4" ) )
-                            {
-                                m_Int4 = (Integer) initData.get( "int4" );
-                            }
-                            if( initData.containsKey( "resourceBundle" ) )
-                            {
-                                m_ResourceBundle = (ResourceBundle) initData.get( "resourceBundle" );
-                            }
-                            if( initData.containsKey( "string1" ) )
-                            {
-                                m_String1 = (String) initData.get( "string1" );
-                            }
-                            if( initData.containsKey( "string2" ) )
-                            {
-                                m_String2 = (String) initData.get( "string2" );
-                            }
-                        }
-                        catch( final Throwable t )
-                        {
-                            final var eiie = new ExceptionInInitializerError( "initData() failed" );
-                            eiie.addSuppressed( t );
-                            throw eiie;
-                        }
-
-                        /*
-                         * Load initialisation data from resource "MyConfigurationBeanSpecification.properties".
-                         */
-                        {
-                            final var resource = MyConfigurationBeanSpecification.class.getResource( "MyConfigurationBeanSpecification.properties" );
-                            if( isNull( resource ) )
-                            {
-                                final var fnfe = new FileNotFoundException( "Resource 'MyConfigurationBeanSpecification.properties'" );
-                                final var eiie = new ExceptionInInitializerError( "Cannot find resource 'MyConfigurationBeanSpecification.properties'" );
-                                eiie.addSuppressed( fnfe );
-                                throw eiie;
+                                final var stringConverter = BooleanStringConverter.INSTANCE;
+                                final var value = getProperty( "isDebug" );
+                                m_IsDebug = stringConverter.fromString( value );
                             }
 
-                            final var initData = new Properties();
-                            try( final var inputStream = resource.openStream() )
+                            /*
+                             * Initialise the property 'isTest' from the system properties.
+                             */
                             {
-                                initData.load( inputStream );
+                                final var stringConverter = BooleanStringConverter.INSTANCE;
+                                final var value = getProperty( "isTest" );
+                                m_IsTest = stringConverter.fromString( value );
                             }
-                            catch( final IOException e )
+
+                            /*
+                             * Initialise the property 'locale'.
+                             */
+                            m_Locale = Locale.getDefault();
+
+                            /*
+                             * Initialise the property 'processId'.
+                             */
+                            m_ProcessId = getPID();
+
+                            /*
+                             * Initialise the property 'random'.
+                             */
+                            m_Random = new SecureRandom();
+
+                            /*
+                             * Initialise the property 'timezone'.
+                             */
+                            m_Timezone = ZoneId.systemDefault();
+
+                            /*
+                             * Initialise the properties from 'initData()'.
+                             */
+                            try
                             {
-                                final var eiie = new ExceptionInInitializerError( format( "Cannot load resource '%s'", resource.toExternalForm() ) );
-                                eiie.addSuppressed( e );
+                                final var initData = initData();
+                                if( isNull( initData ) )
+                                {
+                                    throw new ValidationException( "initData() returns null" );
+                                }
+                                if( initData.containsKey( "date1" ) )
+                                {
+                                    m_Date1 = (Instant) initData.get( "date1" );
+                                }
+                                if( initData.containsKey( "date2" ) )
+                                {
+                                    m_Date2 = (Instant) initData.get( "date2" );
+                                }
+                                if( initData.containsKey( "int1" ) )
+                                {
+                                    m_Int1 = (Integer) initData.get( "int1" );
+                                }
+                                if( initData.containsKey( "int2" ) )
+                                {
+                                    m_Int2 = (Integer) initData.get( "int2" );
+                                }
+                                if( initData.containsKey( "int3" ) )
+                                {
+                                    m_Int3 = (Integer) initData.get( "int3" );
+                                }
+                                if( initData.containsKey( "int4" ) )
+                                {
+                                    m_Int4 = (Integer) initData.get( "int4" );
+                                }
+                                if( initData.containsKey( "resourceBundle" ) )
+                                {
+                                    m_ResourceBundle = (ResourceBundle) initData.get( "resourceBundle" );
+                                }
+                                if( initData.containsKey( "string1" ) )
+                                {
+                                    m_String1 = (String) initData.get( "string1" );
+                                }
+                                if( initData.containsKey( "string2" ) )
+                                {
+                                    m_String2 = (String) initData.get( "string2" );
+                                }
+                            }
+                            catch( final Throwable t )
+                            {
+                                final var eiie = new ExceptionInInitializerError( "initData() failed" );
+                                eiie.addSuppressed( t );
                                 throw eiie;
                             }
 
                             /*
-                             * Initialise the properties.
+                             * Load initialisation data from resource "MyConfigurationBeanSpecification.properties".
                              */
-                            String value;
-
-                            value = initData.getProperty( "date1" );
-                            if( nonNull( value ) )
                             {
-                                final var stringConverter = InstantStringConverter.INSTANCE;
-                                m_Date1 = stringConverter.fromString( value );
+                                final var resource = MyConfigurationBeanSpecification.class.getResource( "MyConfigurationBeanSpecification.properties" );
+                                if( isNull( resource ) )
+                                {
+                                    final var fnfe = new FileNotFoundException( "Resource 'MyConfigurationBeanSpecification.properties'" );
+                                    final var eiie = new ExceptionInInitializerError( "Cannot find resource 'MyConfigurationBeanSpecification.properties'" );
+                                    eiie.addSuppressed( fnfe );
+                                    throw eiie;
+                                }
+
+                                final var initData = new Properties();
+                                try( final var inputStream = resource.openStream() )
+                                {
+                                    initData.load( inputStream );
+                                }
+                                catch( final IOException e )
+                                {
+                                    final var eiie = new ExceptionInInitializerError( format( "Cannot load resource '%s'", resource.toExternalForm() ) );
+                                    eiie.addSuppressed( e );
+                                    throw eiie;
+                                }
+
+                                /*
+                                 * Initialise the properties.
+                                 */
+                                String value;
+
+                                value = initData.getProperty( "date1" );
+                                if( nonNull( value ) )
+                                {
+                                    final var stringConverter = InstantStringConverter.INSTANCE;
+                                    m_Date1 = stringConverter.fromString( value );
+                                }
+
+                                value = initData.getProperty( "date2" );
+                                if( nonNull( value ) )
+                                {
+                                    final var stringConverter = InstantStringConverter.INSTANCE;
+                                    m_Date2 = stringConverter.fromString( value );
+                                }
+
+                                value = initData.getProperty( "int1" );
+                                if( nonNull( value ) )
+                                {
+                                    final var stringConverter = IntegerStringConverter.INSTANCE;
+                                    m_Int1 = stringConverter.fromString( value );
+                                }
+
+                                value = initData.getProperty( "int2" );
+                                if( nonNull( value ) )
+                                {
+                                    final var stringConverter = IntegerStringConverter.INSTANCE;
+                                    m_Int2 = stringConverter.fromString( value );
+                                }
+
+                                value = initData.getProperty( "int3" );
+                                if( nonNull( value ) )
+                                {
+                                    final var stringConverter = IntegerStringConverter.INSTANCE;
+                                    m_Int3 = stringConverter.fromString( value );
+                                }
+
+                                value = initData.getProperty( "int4" );
+                                if( nonNull( value ) )
+                                {
+                                    final var stringConverter = IntegerStringConverter.INSTANCE;
+                                    m_Int4 = stringConverter.fromString( value );
+                                }
+
+                                value = initData.getProperty( "string1" );
+                                if( nonNull( value ) )
+                                {
+                                    final var stringConverter = StringStringConverter.INSTANCE;
+                                    m_String1 = stringConverter.fromString( value );
+                                }
+
+                                value = initData.getProperty( "string2" );
+                                if( nonNull( value ) )
+                                {
+                                    final var stringConverter = StringStringConverter.INSTANCE;
+                                    m_String2 = stringConverter.fromString( value );
+                                }
                             }
 
-                            value = initData.getProperty( "date2" );
-                            if( nonNull( value ) )
-                            {
-                                final var stringConverter = InstantStringConverter.INSTANCE;
-                                m_Date2 = stringConverter.fromString( value );
-                            }
+                            /*
+                             * Initialising the shadow map.
+                             */
+                            m_ShadowMap.put( "charset", () -> m_Charset );
+                            m_ShadowMap.put( "clock", () -> m_Clock );
+                            m_ShadowMap.put( "date1", () -> m_Date1 );
+                            m_ShadowMap.put( "date2", () -> m_Date2 );
+                            m_ShadowMap.put( "int1", () -> m_Int1 );
+                            m_ShadowMap.put( "int2", () -> m_Int2 );
+                            m_ShadowMap.put( "int3", () -> m_Int3 );
+                            m_ShadowMap.put( "int4", () -> m_Int4 );
+                            m_ShadowMap.put( "isDebug", () -> m_IsDebug );
+                            m_ShadowMap.put( "isTest", () -> m_IsTest );
+                            m_ShadowMap.put( "locale", () -> m_Locale );
+                            m_ShadowMap.put( "messagePrefix", this::getMessagePrefix );
+                            m_ShadowMap.put( "object1", this::getObject1 );
+                            m_ShadowMap.put( "processId", () -> m_ProcessId );
+                            m_ShadowMap.put( "random", () -> m_Random );
+                            m_ShadowMap.put( "resourceBundle", () -> m_ResourceBundle );
+                            m_ShadowMap.put( "string1", () -> m_String1 );
+                            m_ShadowMap.put( "string2", () -> m_String2 );
+                            m_ShadowMap.put( "timezone", () -> m_Timezone );
+                        }  //  MyConfigurationBean()
 
-                            value = initData.getProperty( "int1" );
-                            if( nonNull( value ) )
-                            {
-                                final var stringConverter = IntegerStringConverter.INSTANCE;
-                                m_Int1 = stringConverter.fromString( value );
-                            }
-
-                            value = initData.getProperty( "int2" );
-                            if( nonNull( value ) )
-                            {
-                                final var stringConverter = IntegerStringConverter.INSTANCE;
-                                m_Int2 = stringConverter.fromString( value );
-                            }
-
-                            value = initData.getProperty( "int3" );
-                            if( nonNull( value ) )
-                            {
-                                final var stringConverter = IntegerStringConverter.INSTANCE;
-                                m_Int3 = stringConverter.fromString( value );
-                            }
-
-                            value = initData.getProperty( "int4" );
-                            if( nonNull( value ) )
-                            {
-                                final var stringConverter = IntegerStringConverter.INSTANCE;
-                                m_Int4 = stringConverter.fromString( value );
-                            }
-
-                            value = initData.getProperty( "string1" );
-                            if( nonNull( value ) )
-                            {
-                                final var stringConverter = StringStringConverter.INSTANCE;
-                                m_String1 = stringConverter.fromString( value );
-                            }
-
-                            value = initData.getProperty( "string2" );
-                            if( nonNull( value ) )
-                            {
-                                final var stringConverter = StringStringConverter.INSTANCE;
-                                m_String2 = stringConverter.fromString( value );
-                            }
-                        }
-
-                        /*
-                         * Initialising the shadow map.
+                            /*---------*\\
+                        ====** Methods **==========================================================
+                            \\*---------*/
+                        /**
+                         * {@inheritDoc}
                          */
-                        m_ShadowMap.put( "charset", () -> m_Charset );
-                        m_ShadowMap.put( "clock", () -> m_Clock );
-                        m_ShadowMap.put( "date1", () -> m_Date1 );
-                        m_ShadowMap.put( "date2", () -> m_Date2 );
-                        m_ShadowMap.put( "int1", () -> m_Int1 );
-                        m_ShadowMap.put( "int2", () -> m_Int2 );
-                        m_ShadowMap.put( "int3", () -> m_Int3 );
-                        m_ShadowMap.put( "int4", () -> m_Int4 );
-                        m_ShadowMap.put( "isDebug", () -> m_IsDebug );
-                        m_ShadowMap.put( "isTest", () -> m_IsTest );
-                        m_ShadowMap.put( "locale", () -> m_Locale );
-                        m_ShadowMap.put( "messagePrefix", this::getMessagePrefix );
-                        m_ShadowMap.put( "object1", this::getObject1 );
-                        m_ShadowMap.put( "processId", () -> m_ProcessId );
-                        m_ShadowMap.put( "random", () -> m_Random );
-                        m_ShadowMap.put( "resourceBundle", () -> m_ResourceBundle );
-                        m_ShadowMap.put( "string1", () -> m_String1 );
-                        m_ShadowMap.put( "string2", () -> m_String2 );
-                        m_ShadowMap.put( "timezone", () -> m_Timezone );
-                    }  //  MyConfigurationBean()
-
-                        /*---------*\\
-                    ====** Methods **==========================================================
-                        \\*---------*/
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void addListener( final ConfigurationChangeListener listener )
-                    {
-                        m_ListenerSupport.addListener( listener );
-                    }  //  addListener()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void clear()
-                    {
-                        throw new UnsupportedOperationException();
-                    }  //  clear()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @SuppressWarnings( "unlikely-arg-type" )
-                    @Override
-                    public final boolean containsKey( final Object key )
-                    {
-                        return m_ShadowMap.containsKey( key );
-                    }  //  containsKey()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final boolean containsValue( final Object value )
-                    {
-                        return values().stream().anyMatch( v -> Objects.equals( v, value ) );
-                    }  //  containsValue()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Set<Map.Entry<String, Object>> entrySet()
-                    {
-                        final Set<Map.Entry<String, Object>> retValue = new HashSet<>();
-                        try( final var ignored = m_ReadLock.lock() )
+                        @Override
+                        public final void addListener( final ConfigurationChangeListener listener )
                         {
-                            for( final var entry : m_ShadowMap.entrySet() )
+                            m_ListenerSupport.addListener( listener );
+                        }  //  addListener()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void clear()
+                        {
+                            throw new UnsupportedOperationException();
+                        }  //  clear()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @SuppressWarnings( "unlikely-arg-type" )
+                        @Override
+                        public final boolean containsKey( final Object key )
+                        {
+                            return m_ShadowMap.containsKey( key );
+                        }  //  containsKey()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final boolean containsValue( final Object value )
+                        {
+                            return values().stream().anyMatch( v -> Objects.equals( v, value ) );
+                        }  //  containsValue()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Set<Map.Entry<String, Object>> entrySet()
+                        {
+                            final Set<Map.Entry<String, Object>> retValue = new HashSet<>();
+                            try( final var ignored = m_ReadLock.lock() )
                             {
-                                final var key = entry.getKey();
-                                final var value = entry.getValue().get();
-                                retValue.add( Map.entry( key, value ) );
+                                for( final var entry : m_ShadowMap.entrySet() )
+                                {
+                                    final var key = entry.getKey();
+                                    final var value = entry.getValue().get();
+                                    retValue.add( Map.entry( key, value ) );
+                                }
                             }
-                        }
 
-                        //---* Done *----------------------------------------------------------
-                        return retValue;
-                    }  //  entrySet()
+                            //---* Done *----------------------------------------------------------
+                            return retValue;
+                        }  //  entrySet()
 
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final boolean equals( final Object o )
-                    {
-                        return this == o;
-                    }  //  equals()
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final boolean equals( final Object o )
+                        {
+                            return this == o;
+                        }  //  equals()
 
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @SuppressWarnings( "unlikely-arg-type" )
-                    @Override
-                    public final Object get( final Object key )
-                    {
-                        Object retValue = null;
-                        final var supplier = m_ShadowMap.get( key );
-                        if( nonNull( supplier) )
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @SuppressWarnings( "unlikely-arg-type" )
+                        @Override
+                        public final Object get( final Object key )
+                        {
+                            Object retValue = null;
+                            final var supplier = m_ShadowMap.get( key );
+                            if( nonNull( supplier) )
+                            {
+                                try( final var ignored = m_ReadLock.lock() )
+                                {
+                                    retValue = supplier.get();
+                                }
+                            }
+
+                            //---* Done *----------------------------------------------------------
+                            return retValue;
+                        }  //  get()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Charset getCharset()
                         {
                             try( final var ignored = m_ReadLock.lock() )
                             {
-                                retValue = supplier.get();
+                                return m_Charset;
                             }
-                        }
+                        }  //  getCharset()
 
-                        //---* Done *----------------------------------------------------------
-                        return retValue;
-                    }  //  get()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Charset getCharset()
-                    {
-                        try( final var ignored = m_ReadLock.lock() )
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Clock getClock()
                         {
-                            return m_Charset;
-                        }
-                    }  //  getCharset()
+                            try( final var ignored = m_ReadLock.lock() )
+                            {
+                                return m_Clock;
+                            }
+                        }  //  getClock()
 
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Clock getClock()
-                    {
-                        try( final var ignored = m_ReadLock.lock() )
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Optional<Instant> getDate1()
                         {
-                            return m_Clock;
-                        }
-                    }  //  getClock()
+                            return Optional.ofNullable( m_Date1 );
+                        }  //  getDate1()
 
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Optional<Instant> getDate1()
-                    {
-                        return Optional.ofNullable( m_Date1 );
-                    }  //  getDate1()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final int getInt1()
-                    {
-                        return m_Int1;
-                    }  //  getInt1()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Integer getInt2()
-                    {
-                        return m_Int2;
-                    }  //  getInt2()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Locale getLocale()
-                    {
-                        try( final var ignored = m_ReadLock.lock() )
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final int getInt1()
                         {
-                            return m_Locale;
-                        }
-                    }  //  getLocale()
+                            return m_Int1;
+                        }  //  getInt1()
 
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final String getMessagePrefix()
-                    {
-                        return "MSG";
-                    }  //  getMessagePrefix()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final long getProcessId()
-                    {
-                        return m_ProcessId;
-                    }  //  getProcessId()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Random getRandom()
-                    {
-                        return m_Random;
-                    }  //  getRandom()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Optional<ResourceBundle> getResourceBundle()
-                    {
-                        ResourceBundle bundle = null;
-                        final var currentLocale = getLocale();
-                        if( currentLocale.equals( m_CurrentResourceBundleLocale ) )
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Integer getInt2()
                         {
-                            bundle = m_ResourceBundle;
-                        }
-                        if( isNull( bundle ) )
+                            return m_Int2;
+                        }  //  getInt2()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Locale getLocale()
+                        {
+                            try( final var ignored = m_ReadLock.lock() )
+                            {
+                                return m_Locale;
+                            }
+                        }  //  getLocale()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final String getMessagePrefix()
+                        {
+                            return "MSG";
+                        }  //  getMessagePrefix()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final long getProcessId()
+                        {
+                            return m_ProcessId;
+                        }  //  getProcessId()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Random getRandom()
+                        {
+                            return m_Random;
+                        }  //  getRandom()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Optional<ResourceBundle> getResourceBundle()
+                        {
+                            ResourceBundle bundle = null;
+                            final var currentLocale = getLocale();
+                            if( currentLocale.equals( m_CurrentResourceBundleLocale ) )
+                            {
+                                bundle = m_ResourceBundle;
+                            }
+                            if( isNull( bundle ) )
+                            {
+                                try( final var ignored = m_WriteLock.lock() )
+                                {
+                                    var module = getClass().getModule();
+                                    if( module.isNamed() )
+                                    {
+                                        bundle = ResourceBundle.getBundle( "org.tquadrat.foundation.config.ap.impl.TextsAndMessages", currentLocale, module );
+                                    }
+                                    else
+                                    {
+                                        bundle = ResourceBundle.getBundle( "org.tquadrat.foundation.config.ap.impl.TextsAndMessages", currentLocale );
+                                    }
+                                    m_ResourceBundle = bundle;
+                                    m_CurrentResourceBundleLocale = currentLocale;
+                                }
+                                catch( @SuppressWarnings( "unused" ) final MissingResourceException e )
+                                {
+                                    /* Deliberately ignored */
+                                }
+                            }
+                            final var retValue = Optional.ofNullable( bundle );
+
+                            //---* Done *----------------------------------------------------------
+                            return retValue;
+                        }  //  getResourceBundle()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final String getString1()
+                        {
+                            return m_String1;
+                        }  //  getString1()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final ZoneId getTimezone()
+                        {
+                            try( final var ignored = m_ReadLock.lock() )
+                            {
+                                return m_Timezone;
+                            }
+                        }  //  getTimezone()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final int hashCode()
+                        {
+                            return m_ShadowMap.hashCode();
+                        }  //  hashCode()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final boolean isDebug()
+                        {
+                            return m_IsDebug;
+                        }  //  isDebug()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final boolean isEmpty()
+                        {
+                            return m_ShadowMap.isEmpty();
+                        }  //  isEmpty()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final boolean isTest()
+                        {
+                            return m_IsTest;
+                        }  //  isTest()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Set<String> keySet()
+                        {
+                            return m_ShadowMap.keySet();
+                        }  //  keySet()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Object put( final String key, final Object value )
+                        {
+                            throw new UnsupportedOperationException();
+                        }  //  put()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void putAll( final Map<? extends String, ?> m )
+                        {
+                            throw new UnsupportedOperationException();
+                        }  //  putAll()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Object remove( final Object key )
+                        {
+                            throw new UnsupportedOperationException();
+                        }  //  remove()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void removeListener( final ConfigurationChangeListener listener )
+                        {
+                            m_ListenerSupport.removeListener( listener );
+                        }  //  removeListener()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void setCharset( final Charset charset )
                         {
                             try( final var ignored = m_WriteLock.lock() )
                             {
-                                var module = getClass().getModule();
-                                if( module.isNamed() )
-                                {
-                                    bundle = ResourceBundle.getBundle( "org.tquadrat.foundation.config.ap.impl.TextsAndMessages", currentLocale, module );
-                                }
-                                else
-                                {
-                                    bundle = ResourceBundle.getBundle( "org.tquadrat.foundation.config.ap.impl.TextsAndMessages", currentLocale );
-                                }
-                                m_ResourceBundle = bundle;
-                                m_CurrentResourceBundleLocale = currentLocale;
+                                final var newValue = requireNonNullArgument( charset, "charset" );
+                                m_ListenerSupport.fireEvent( "charset", m_Charset, newValue );
+                                m_Charset = newValue;
                             }
-                            catch( @SuppressWarnings( "unused" ) final MissingResourceException e )
-                            {
-                                /* Deliberately ignored */
-                            }
-                        }
-                        final var retValue = Optional.ofNullable( bundle );
+                        }  //  setCharset()
 
-                        //---* Done *----------------------------------------------------------
-                        return retValue;
-                    }  //  getResourceBundle()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final String getString1()
-                    {
-                        return m_String1;
-                    }  //  getString1()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final ZoneId getTimezone()
-                    {
-                        try( final var ignored = m_ReadLock.lock() )
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void setClock( final Clock clock )
                         {
-                            return m_Timezone;
-                        }
-                    }  //  getTimezone()
+                            try( final var ignored = m_WriteLock.lock() )
+                            {
+                                final var newValue = requireNonNullArgument( clock, "clock" );
+                                m_ListenerSupport.fireEvent( "clock", m_Clock, newValue );
+                                m_Clock = newValue;
+                            }
+                        }  //  setClock()
 
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final int hashCode()
-                    {
-                        return m_ShadowMap.hashCode();
-                    }  //  hashCode()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final boolean isDebug()
-                    {
-                        return m_IsDebug;
-                    }  //  isDebug()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final boolean isEmpty()
-                    {
-                        return m_ShadowMap.isEmpty();
-                    }  //  isEmpty()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final boolean isTest()
-                    {
-                        return m_IsTest;
-                    }  //  isTest()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Set<String> keySet()
-                    {
-                        return m_ShadowMap.keySet();
-                    }  //  keySet()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Object put( final String key, final Object value )
-                    {
-                        throw new UnsupportedOperationException();
-                    }  //  put()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void putAll( final Map<? extends String, ?> m )
-                    {
-                        throw new UnsupportedOperationException();
-                    }  //  putAll()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Object remove( final Object key )
-                    {
-                        throw new UnsupportedOperationException();
-                    }  //  remove()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void removeListener( final ConfigurationChangeListener listener )
-                    {
-                        m_ListenerSupport.removeListener( listener );
-                    }  //  removeListener()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void setCharset( final Charset charset )
-                    {
-                        try( final var ignored = m_WriteLock.lock() )
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void setDate2( final Instant date2 )
                         {
-                            final var newValue = requireNonNullArgument( charset, "charset" );
-                            m_ListenerSupport.fireEvent( "charset", m_Charset, newValue );
-                            m_Charset = newValue;
-                        }
-                    }  //  setCharset()
+                            try( final var ignored = m_WriteLock.lock() )
+                            {
+                                final var newValue = date2;
+                                m_ListenerSupport.fireEvent( "date2", m_Date2, newValue );
+                                m_Date2 = newValue;
+                            }
+                        }  //  setDate2()
 
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void setClock( final Clock clock )
-                    {
-                        try( final var ignored = m_WriteLock.lock() )
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void setInt3( final int int3 )
                         {
-                            final var newValue = requireNonNullArgument( clock, "clock" );
-                            m_ListenerSupport.fireEvent( "clock", m_Clock, newValue );
-                            m_Clock = newValue;
-                        }
-                    }  //  setClock()
+                            try( final var ignored = m_WriteLock.lock() )
+                            {
+                                final var newValue = int3;
+                                m_ListenerSupport.fireEvent( "int3", m_Int3, newValue );
+                                m_Int3 = newValue;
+                            }
+                        }  //  setInt3()
 
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void setDate2( final Instant date2 )
-                    {
-                        try( final var ignored = m_WriteLock.lock() )
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void setInt4( final Integer int4 )
                         {
-                            final var newValue = date2;
-                            m_ListenerSupport.fireEvent( "date2", m_Date2, newValue );
-                            m_Date2 = newValue;
-                        }
-                    }  //  setDate2()
+                            try( final var ignored = m_WriteLock.lock() )
+                            {
+                                final var newValue = int4;
+                                m_ListenerSupport.fireEvent( "int4", m_Int4, newValue );
+                                m_Int4 = newValue;
+                            }
+                        }  //  setInt4()
 
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void setInt3( final int int3 )
-                    {
-                        try( final var ignored = m_WriteLock.lock() )
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void setLocale( final Locale locale )
                         {
-                            final var newValue = int3;
-                            m_ListenerSupport.fireEvent( "int3", m_Int3, newValue );
-                            m_Int3 = newValue;
-                        }
-                    }  //  setInt3()
+                            try( final var ignored = m_WriteLock.lock() )
+                            {
+                                final var newValue = requireNonNullArgument( locale, "locale" );
+                                m_ListenerSupport.fireEvent( "locale", m_Locale, newValue );
+                                m_Locale = newValue;
+                            }
+                        }  //  setLocale()
 
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void setInt4( final Integer int4 )
-                    {
-                        try( final var ignored = m_WriteLock.lock() )
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void setString2( final String string2 )
                         {
-                            final var newValue = int4;
-                            m_ListenerSupport.fireEvent( "int4", m_Int4, newValue );
-                            m_Int4 = newValue;
-                        }
-                    }  //  setInt4()
+                            try( final var ignored = m_WriteLock.lock() )
+                            {
+                                final var newValue = string2;
+                                m_ListenerSupport.fireEvent( "string2", m_String2, newValue );
+                                m_String2 = newValue;
+                            }
+                        }  //  setString2()
 
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void setLocale( final Locale locale )
-                    {
-                        try( final var ignored = m_WriteLock.lock() )
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void setTimezone( final ZoneId timezone )
                         {
-                            final var newValue = requireNonNullArgument( locale, "locale" );
-                            m_ListenerSupport.fireEvent( "locale", m_Locale, newValue );
-                            m_Locale = newValue;
-                        }
-                    }  //  setLocale()
+                            try( final var ignored = m_WriteLock.lock() )
+                            {
+                                final var newValue = requireNonNullArgument( timezone, "timezone" );
+                                m_ListenerSupport.fireEvent( "timezone", m_Timezone, newValue );
+                                m_Timezone = newValue;
+                            }
+                        }  //  setTimezone()
 
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void setString2( final String string2 )
-                    {
-                        try( final var ignored = m_WriteLock.lock() )
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final int size()
                         {
-                            final var newValue = string2;
-                            m_ListenerSupport.fireEvent( "string2", m_String2, newValue );
-                            m_String2 = newValue;
-                        }
-                    }  //  setString2()
+                            return m_ShadowMap.size();
+                        }  //  size()
 
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void setTimezone( final ZoneId timezone )
-                    {
-                        try( final var ignored = m_WriteLock.lock() )
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public String toString()
                         {
-                            final var newValue = requireNonNullArgument( timezone, "timezone" );
-                            m_ListenerSupport.fireEvent( "timezone", m_Timezone, newValue );
-                            m_Timezone = newValue;
-                        }
-                    }  //  setTimezone()
+                            final var prefix = format ( "%s [", getClass().getName() );
+                            final var joiner = new StringJoiner( ", ", prefix, "]" );
 
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final int size()
-                    {
-                        return m_ShadowMap.size();
-                    }  //  size()
+                            try( final var ignored = m_ReadLock.lock() )
+                            {
+                                //---* Property "charset" *----------------------------------------
+                                {
+                                    final var stringConverter = CharsetStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_Charset );
+                                    joiner.add( format( "charset = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+    
+                                //---* Property "date1" *------------------------------------------
+                                {
+                                    final var stringConverter = InstantStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_Date1 );
+                                    joiner.add( format( "date1 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+    
+                                //---* Property "date2" *------------------------------------------
+                                {
+                                    final var stringConverter = InstantStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_Date2 );
+                                    joiner.add( format( "date2 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+    
+                                //---* Property "int1" *-------------------------------------------
+                                {
+                                    final var stringConverter = IntegerStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_Int1 );
+                                    joiner.add( format( "int1 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+    
+                                //---* Property "int2" *-------------------------------------------
+                                {
+                                    final var stringConverter = IntegerStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_Int2 );
+                                    joiner.add( format( "int2 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+    
+                                //---* Property "int3" *-------------------------------------------
+                                {
+                                    final var stringConverter = IntegerStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_Int3 );
+                                    joiner.add( format( "int3 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+    
+                                //---* Property "int4" *-------------------------------------------
+                                {
+                                    final var stringConverter = IntegerStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_Int4 );
+                                    joiner.add( format( "int4 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+    
+                                //---* Property "isDebug" *----------------------------------------
+                                {
+                                    final var stringConverter = BooleanStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_IsDebug );
+                                    joiner.add( format( "isDebug = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+    
+                                //---* Property "isTest" *-----------------------------------------
+                                {
+                                    final var stringConverter = BooleanStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_IsTest );
+                                    joiner.add( format( "isTest = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+    
+                                //---* Property "locale" *-----------------------------------------
+                                {
+                                    final var stringConverter = LocaleStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_Locale );
+                                    joiner.add( format( "locale = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+    
+                                //---* Property "object1" *----------------------------------------
+                                {
+                                    joiner.add( format( "object1 = \\"%1$s\\"", Objects.toString( getObject1() ) ) );
+                                }
+    
+                                //---* Property "processId" *--------------------------------------
+                                {
+                                    joiner.add( format( "processId = \\"%1$S\\"", Objects.toString( m_ProcessId ) ) );
+                                }
+    
+                                //---* Property "string1" *----------------------------------------
+                                {
+                                    final var stringConverter = StringStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_String1 );
+                                    joiner.add( format( "string1 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+    
+                                //---* Property "string2" *----------------------------------------
+                                {
+                                    final var stringConverter = StringStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_String2 );
+                                    joiner.add( format( "string2 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+    
+                                //---* Property "timezone" *---------------------------------------
+                                {
+                                    final var stringConverter = ZoneIdStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_Timezone );
+                                    joiner.add( format( "timezone = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+                            }
 
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public String toString()
-                    {
-                        final var prefix = format ( "%s [", getClass().getName() );
-                        final var joiner = new StringJoiner( ", ", prefix, "]" );
-                        try( final var ignored = m_ReadLock.lock() )
+                            //---* Create the return value *---------------------------------------
+                            final var retValue = joiner.toString();
+
+                            //---* Done *----------------------------------------------------------
+                            return retValue;
+                        }  //  toString()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        @SuppressWarnings( "SimplifyStreamApiCallChains" )
+                        public final Collection<Object> values()
                         {
-                            // Property "charset"
+                            final Collection<Object> retValue;
+                            try( final var ignored = m_ReadLock.lock() )
                             {
-                                final var stringConverter = CharsetStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_Charset );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "charset = \\"%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "charset = \\"%1S\\"", NULL_STRING ) );
-                                }
+                                retValue = m_ShadowMap.values()
+                                            .stream()
+                                            .map( Supplier::get )
+                                            .collect( toUnmodifiableList() );
                             }
 
-                            // Property "date1"
-                            {
-                                final var stringConverter = InstantStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_Date1 );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "date1 = \\"%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "date1 = \\"%1S\\"", NULL_STRING ) );
-                                }
-                            }
+                            //---* Done *----------------------------------------------------------
+                            return retValue;
+                        }  //  values()
+                    }
+                    //  class MyConfigurationBean
 
-                            // Property "date2"
-                            {
-                                final var stringConverter = InstantStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_Date2 );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "date2 = \\"%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "date2 = \\"%1S\\"", NULL_STRING ) );
-                                }
-                            }
-
-                            // Property "int1"
-                            {
-                                final var stringConverter = IntegerStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_Int1 );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "int1 = \\"%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "int1 = \\"%1S\\"", NULL_STRING ) );
-                                }
-                            }
-
-                            // Property "int2"
-                            {
-                                final var stringConverter = IntegerStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_Int2 );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "int2 = \\"%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "int2 = \\"%1S\\"", NULL_STRING ) );
-                                }
-                            }
-
-                            // Property "int3"
-                            {
-                                final var stringConverter = IntegerStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_Int3 );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "int3 = \\"%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "int3 = \\"%1S\\"", NULL_STRING ) );
-                                }
-                            }
-
-                            // Property "int4"
-                            {
-                                final var stringConverter = IntegerStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_Int4 );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "int4 = \\"%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "int4 = \\"%1S\\"", NULL_STRING ) );
-                                }
-                            }
-
-                            // Property "isDebug"
-                            {
-                                final var stringConverter = BooleanStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_IsDebug );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "isDebug = \\"%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "isDebug = \\"%1S\\"", NULL_STRING ) );
-                                }
-                            }
-
-                            // Property "isTest"
-                            {
-                                final var stringConverter = BooleanStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_IsTest );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "isTest = \\"%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "isTest = \\"%1S\\"", NULL_STRING ) );
-                                }
-                            }
-
-                            // Property "locale"
-                            {
-                                final var stringConverter = LocaleStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_Locale );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "locale = \\"%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "locale = \\"%1S\\"", NULL_STRING ) );
-                                }
-                            }
-
-                            // Property "object1"
-                            {
-                                joiner.add( format( "object1 = \\"%1S\\"", Objects.toString( getObject1() ) ) );
-                            }
-
-                            // Property "processId"
-                            {
-                                joiner.add( format( "processId = \\"%1S\\"", Objects.toString( m_ProcessId ) ) );
-                            }
-
-                            // Property "string1"
-                            {
-                                final var stringConverter = StringStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_String1 );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "string1 = \\"%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "string1 = \\"%1S\\"", NULL_STRING ) );
-                                }
-                            }
-
-                            // Property "string2"
-                            {
-                                final var stringConverter = StringStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_String2 );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "string2 = \\"%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "string2 = \\"%1S\\"", NULL_STRING ) );
-                                }
-                            }
-
-                            // Property "timezone"
-                            {
-                                final var stringConverter = ZoneIdStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_Timezone );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "timezone = \\"%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "timezone = \\"%1S\\"", NULL_STRING ) );
-                                }
-                            }
-                        }
-
-                        //---* Create the return value *---------------------------------------
-                        final var retValue = joiner.toString();
-
-                        //---* Done *----------------------------------------------------------
-                        return retValue;
-                    }  //  toString()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    @SuppressWarnings( "SimplifyStreamApiCallChains" )
-                    public final Collection<Object> values()
-                    {
-                        final Collection<Object> retValue;
-                        try( final var ignored = m_ReadLock.lock() )
-                        {
-                            retValue = m_ShadowMap.values()
-                                        .stream()
-                                        .map( Supplier::get )
-                                        .collect( toUnmodifiableList() );
-                        }
-
-                        //---* Done *----------------------------------------------------------
-                        return retValue;
-                    }  //  values()
-                }
-                //  class MyConfigurationBean
-
-                /*
-                 * End of File
-                 */"""
+                    /*
+                     * End of File
+                     */"""
                 .replace( "[[[BUILD_DATETIME]]]", configuration.getBuildTime().toString() );
             assertNotNull( expected );
             if( isNotEmpty( expected ) )

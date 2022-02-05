@@ -31,6 +31,7 @@
 <meta name="keywords" content="m_INIComment">
 <meta name="keywords" content="m_INIGroup">
 <meta name="keywords" content="m_INIKey">
+<meta name="keywords" content="m_IsEnum">
 <meta name="keywords" content="m_PrefsAccessorClass">
 <meta name="keywords" content="m_PrefsKey">
 <meta name="keywords" content="m_PropertyFlags">
@@ -79,6 +80,7 @@
 <meta name="keywords" content="getStringConverterClass()">
 <meta name="keywords" content="getSystemPrefsPath()">
 <meta name="keywords" content="getSystemPropertyName()">
+<meta name="keywords" content="isEnum()">
 <meta name="keywords" content="hasFlag()">
 <meta name="keywords" content="merge()">
 <meta name="keywords" content="setAddMethodArgumentName()">
@@ -99,6 +101,7 @@
 <meta name="keywords" content="setGetterMethodName()">
 <meta name="keywords" content="setGetterReturnType()">
 <meta name="keywords" content="setINIConfiguration()">
+<meta name="keywords" content="setIsEnum()">
 <meta name="keywords" content="setPrefsAccessorClass()">
 <meta name="keywords" content="setPrefsKey()">
 <meta name="keywords" content="setPropertyType()">
@@ -183,7 +186,7 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="../PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="annotations"><a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">@ClassVersion</a>(<a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html#sourceVersion()" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">sourceVersion</a>="$Id: PropertySpecImpl.java 1002 2022-02-01 21:33:00Z tquadrat $")
+<div class="type-signature"><span class="annotations"><a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">@ClassVersion</a>(<a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html#sourceVersion()" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">sourceVersion</a>="$Id: PropertySpecImpl.java 1006 2022-02-03 23:03:04Z tquadrat $")
 <a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html" title="class or interface in org.apiguardian.api" class="external-link">@API</a>(<a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html#status()" title="class or interface in org.apiguardian.api" class="external-link">status</a>=<a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.Status.html#INTERNAL" title="class or interface in org.apiguardian.api" class="external-link">INTERNAL</a>,
      <a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html#since()" title="class or interface in org.apiguardian.api" class="external-link">since</a>="0.1.0")
 </span><span class="modifiers">public final class </span><span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-71">PropertySpecImpl</a></span>
@@ -195,7 +198,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <dt><span class="simpleTagLabel">Author:</span></dt>
   <dd>Thomas Thrien (<a href="mailto:thomas.thrien@tquadrat.org">thomas.thrien@tquadrat.org</a>)</dd>
 <dt>Version:</dt>
-<dd>$Id: PropertySpecImpl.java 1002 2022-02-01 21:33:00Z tquadrat $</dd>
+<dd>$Id: PropertySpecImpl.java 1006 2022-02-03 23:03:04Z tquadrat $</dd>
 <dt>Since:</dt>
 <dd>0.1.0</dd>
 
@@ -355,71 +358,77 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <div class="col-last even-row-color">
 <div class="block">The key for this property when stored in an <code>INI</code> file.</div>
 </div>
-<div class="col-first odd-row-color"><code>private <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#m_PrefsAccessorClass" class="member-name-link">m_PrefsAccessorClass</a></code></div>
+<div class="col-first odd-row-color"><code>private boolean</code></div>
+<div class="col-second odd-row-color"><code><a href="#m_IsEnum" class="member-name-link">m_IsEnum</a></code></div>
 <div class="col-last odd-row-color">
+<div class="block">The flag that indicates whether the property type is an <code>enum</code>
+  type.</div>
+</div>
+<div class="col-first even-row-color"><code>private <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></code></div>
+<div class="col-second even-row-color"><code><a href="#m_PrefsAccessorClass" class="member-name-link">m_PrefsAccessorClass</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">The <code>Preferences</code> accessor class.</div>
 </div>
-<div class="col-first even-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#m_PrefsKey" class="member-name-link">m_PrefsKey</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#m_PrefsKey" class="member-name-link">m_PrefsKey</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">The <code>Preferences</code> key.</div>
 </div>
-<div class="col-first odd-row-color"><code>private final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/EnumSet.html" title="class or interface in java.util" class="external-link">EnumSet</a>&lt;<a href="../PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a>&gt;</code></div>
-<div class="col-second odd-row-color"><code><a href="#m_PropertyFlags" class="member-name-link">m_PropertyFlags</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>private final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/EnumSet.html" title="class or interface in java.util" class="external-link">EnumSet</a>&lt;<a href="../PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a>&gt;</code></div>
+<div class="col-second even-row-color"><code><a href="#m_PropertyFlags" class="member-name-link">m_PropertyFlags</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">The property flags.</div>
 </div>
-<div class="col-first even-row-color"><code>private final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#m_PropertyName" class="member-name-link">m_PropertyName</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>private final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#m_PropertyName" class="member-name-link">m_PropertyName</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">The name of the property.</div>
 </div>
-<div class="col-first odd-row-color"><code>private <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#m_PropertyType" class="member-name-link">m_PropertyType</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>private <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></code></div>
+<div class="col-second even-row-color"><code><a href="#m_PropertyType" class="member-name-link">m_PropertyType</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">The type of the property.</div>
 </div>
-<div class="col-first even-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></code></div>
-<div class="col-second even-row-color"><code><a href="#m_SetterArgumentName" class="member-name-link">m_SetterArgumentName</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#m_SetterArgumentName" class="member-name-link">m_SetterArgumentName</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">The name for the setter's argument.</div>
 </div>
-<div class="col-first odd-row-color"><code>private <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#m_SetterBuilder" class="member-name-link">m_SetterBuilder</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>private <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a></code></div>
+<div class="col-second even-row-color"><code><a href="#m_SetterBuilder" class="member-name-link">m_SetterBuilder</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">The builder for the setter of this property.</div>
 </div>
-<div class="col-first even-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiFunction.html" title="class or interface in java.util.function" class="external-link">BiFunction</a>&lt;<a href="CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>,<wbr><a href="PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>,<wbr><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</code></div>
-<div class="col-second even-row-color"><code><a href="#m_SetterComposer" class="member-name-link">m_SetterComposer</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiFunction.html" title="class or interface in java.util.function" class="external-link">BiFunction</a>&lt;<a href="CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>,<wbr><a href="PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>,<wbr><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</code></div>
+<div class="col-second odd-row-color"><code><a href="#m_SetterComposer" class="member-name-link">m_SetterComposer</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">The method that creates the setter for this property.</div>
 </div>
-<div class="col-first odd-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#m_SetterMethodName" class="member-name-link">m_SetterMethodName</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></code></div>
+<div class="col-second even-row-color"><code><a href="#m_SetterMethodName" class="member-name-link">m_SetterMethodName</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">The name for the setter method.</div>
 </div>
-<div class="col-first even-row-color"><code>private <a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/SpecialPropertyType.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">SpecialPropertyType</a></code></div>
-<div class="col-second even-row-color"><code><a href="#m_SpecialPropertyType" class="member-name-link">m_SpecialPropertyType</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>private <a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/SpecialPropertyType.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">SpecialPropertyType</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#m_SpecialPropertyType" class="member-name-link">m_SpecialPropertyType</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">The speciality type for this property; usually, this is <code>null</code>.</div>
 </div>
-<div class="col-first odd-row-color"><code>private <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#m_StringConverterClass" class="member-name-link">m_StringConverterClass</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>private <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></code></div>
+<div class="col-second even-row-color"><code><a href="#m_StringConverterClass" class="member-name-link">m_StringConverterClass</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">The class that implements the String converter for the type of this
   property.</div>
 </div>
-<div class="col-first even-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#m_SystemPrefsPath" class="member-name-link">m_SystemPrefsPath</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#m_SystemPrefsPath" class="member-name-link">m_SystemPrefsPath</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">The path for the SYSTEM preferences node that holds the initialisation
   data for this property.</div>
 </div>
-<div class="col-first odd-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#m_SystemPropertyName" class="member-name-link">m_SystemPropertyName</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#m_SystemPropertyName" class="member-name-link">m_SystemPropertyName</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">The name of the system property that is used to initialise this
   property.</div>
 </div>
@@ -640,111 +649,125 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Checks whether the given flag is set for this property.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#merge()" class="member-name-link">merge</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isEnum()" class="member-name-link">isEnum</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the flag that indicates whether the property is an
+  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link"><code>enum</code></a>
+  type.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#merge()" class="member-name-link">merge</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">'Merges' the attributes from a
   <a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/SpecialPropertyType.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">special property</a>
   with the attributes retrieved from the configuration bean
   specification and returns a new instance of <code>PropertySpec</code>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setAddMethodArgumentName(javax.lang.model.element.Name)" class="member-name-link">setAddMethodArgumentName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&nbsp;name)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setAddMethodArgumentName(javax.lang.model.element.Name)" class="member-name-link">setAddMethodArgumentName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the name for the 'add' method's argument.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setAddMethodBuilder(org.tquadrat.foundation.javacomposer.MethodSpec.Builder)" class="member-name-link">setAddMethodBuilder</a><wbr>(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&nbsp;builder)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setAddMethodBuilder(org.tquadrat.foundation.javacomposer.MethodSpec.Builder)" class="member-name-link">setAddMethodBuilder</a><wbr>(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&nbsp;builder)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the builder for the 'add' method of this property.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setAddMethodName(javax.lang.model.element.Name)" class="member-name-link">setAddMethodName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&nbsp;name)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setAddMethodName(javax.lang.model.element.Name)" class="member-name-link">setAddMethodName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the name of the 'add'' method for this property.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCLIArgumentIndex(int)" class="member-name-link">setCLIArgumentIndex</a><wbr>(int&nbsp;index)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCLIArgumentIndex(int)" class="member-name-link">setCLIArgumentIndex</a><wbr>(int&nbsp;index)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the index for an argument on the command line.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCLIFormat(java.lang.String)" class="member-name-link">setCLIFormat</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;format)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCLIFormat(java.lang.String)" class="member-name-link">setCLIFormat</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;format)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the special CLI format.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCLIMetaVar(java.lang.String)" class="member-name-link">setCLIMetaVar</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;metaVar)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCLIMetaVar(java.lang.String)" class="member-name-link">setCLIMetaVar</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;metaVar)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the CLI meta variable.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCLIOptionNames(java.util.List)" class="member-name-link">setCLIOptionNames</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;names)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCLIOptionNames(java.util.List)" class="member-name-link">setCLIOptionNames</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;names)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the CLI option names.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCLIUsage(java.lang.String)" class="member-name-link">setCLIUsage</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCLIUsage(java.lang.String)" class="member-name-link">setCLIUsage</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the CLI usage text.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCLIUsageKey(java.lang.String)" class="member-name-link">setCLIUsageKey</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCLIUsageKey(java.lang.String)" class="member-name-link">setCLIUsageKey</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the CLI usage key.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCLIValueHandlerClass(org.tquadrat.foundation.javacomposer.TypeName)" class="member-name-link">setCLIValueHandlerClass</a><wbr>(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;handlerClass)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCLIValueHandlerClass(org.tquadrat.foundation.javacomposer.TypeName)" class="member-name-link">setCLIValueHandlerClass</a><wbr>(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;handlerClass)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the CLI value handler class.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCollectionKind(org.tquadrat.foundation.config.ap.CollectionKind)" class="member-name-link">setCollectionKind</a><wbr>(<a href="../CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a>&nbsp;collectionKind)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCollectionKind(org.tquadrat.foundation.config.ap.CollectionKind)" class="member-name-link">setCollectionKind</a><wbr>(<a href="../CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a>&nbsp;collectionKind)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the kind of collection for this property.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setEnvironmentVariableName(java.lang.String)" class="member-name-link">setEnvironmentVariableName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setEnvironmentVariableName(java.lang.String)" class="member-name-link">setEnvironmentVariableName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the name of the environment variable that provides the (initial)
   value for this property.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setFieldName(java.lang.String)" class="member-name-link">setFieldName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setFieldName(java.lang.String)" class="member-name-link">setFieldName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the name of the field for the property.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setFlag(org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag...)" class="member-name-link">setFlag</a><wbr>(<a href="../PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a>...&nbsp;flag)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setFlag(org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag...)" class="member-name-link">setFlag</a><wbr>(<a href="../PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a>...&nbsp;flag)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the given flags to the property.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setGetterBuilder(org.tquadrat.foundation.javacomposer.MethodSpec.Builder)" class="member-name-link">setGetterBuilder</a><wbr>(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&nbsp;builder)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setGetterBuilder(org.tquadrat.foundation.javacomposer.MethodSpec.Builder)" class="member-name-link">setGetterBuilder</a><wbr>(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&nbsp;builder)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the builder for the getter of this property.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setGetterMethodName(javax.lang.model.element.Name)" class="member-name-link">setGetterMethodName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&nbsp;name)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setGetterMethodName(javax.lang.model.element.Name)" class="member-name-link">setGetterMethodName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the method name for the getter.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setGetterReturnType(org.tquadrat.foundation.javacomposer.TypeName)" class="member-name-link">setGetterReturnType</a><wbr>(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;type)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setGetterReturnType(org.tquadrat.foundation.javacomposer.TypeName)" class="member-name-link">setGetterReturnType</a><wbr>(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;type)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the return type for the getter.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setINIConfiguration(java.lang.String,java.lang.String,java.lang.String)" class="member-name-link">setINIConfiguration</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;group,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setINIConfiguration(java.lang.String,java.lang.String,java.lang.String)" class="member-name-link">setINIConfiguration</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;group,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;comment)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the <code>INI</code> file configuration for this property.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setINIConfiguration(org.tquadrat.foundation.config.INIValue)" class="member-name-link">setINIConfiguration</a><wbr>(<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/INIValue.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">INIValue</a>&nbsp;configuration)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the <code>INI</code> file configuration for this property.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setINIConfiguration(org.tquadrat.foundation.config.INIValue)" class="member-name-link">setINIConfiguration</a><wbr>(<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/INIValue.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">INIValue</a>&nbsp;configuration)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setIsEnum(boolean)" class="member-name-link">setIsEnum</a><wbr>(boolean&nbsp;flag)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the <code>INI</code> file configuration for this property.</div>
+<div class="block">Sets the flag that indicates whether the property is an
+  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link"><code>enum</code></a>
+  type.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPrefsAccessorClass(org.tquadrat.foundation.javacomposer.TypeName)" class="member-name-link">setPrefsAccessorClass</a><wbr>(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;accessorClass)</code></div>
@@ -1046,9 +1069,17 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 </section>
 </li>
 <li>
+<section class="detail" id="m_IsEnum">
+<h3>m_IsEnum</h3>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-220">m_IsEnum</a></span></div>
+<div class="block">The flag that indicates whether the property type is an <code>enum</code>
+  type.</div>
+</section>
+</li>
+<li>
 <section class="detail" id="m_PrefsAccessorClass">
 <h3>m_PrefsAccessorClass</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-224">m_PrefsAccessorClass</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-230">m_PrefsAccessorClass</a></span></div>
 <div class="block"><p>The <code>Preferences</code> accessor class.</p>
   <p>This is used when this property is linked to a preference, but also
   to initialise it from a SYSTEM preference.</p></div>
@@ -1066,7 +1097,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="m_PrefsKey">
 <h3>m_PrefsKey</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-235">m_PrefsKey</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-241">m_PrefsKey</a></span></div>
 <div class="block"><p>The <code>Preferences</code> key.</p>
   <p>This is used when this property is linked to a preference, but also
   to initialise it from a SYSTEM preference. In first case, the name is
@@ -1085,63 +1116,63 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="m_PropertyFlags">
 <h3>m_PropertyFlags</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/EnumSet.html" title="class or interface in java.util" class="external-link">EnumSet</a>&lt;<a href="../PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-240">m_PropertyFlags</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/EnumSet.html" title="class or interface in java.util" class="external-link">EnumSet</a>&lt;<a href="../PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-246">m_PropertyFlags</a></span></div>
 <div class="block">The property flags.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_PropertyName">
 <h3>m_PropertyName</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-245">m_PropertyName</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-251">m_PropertyName</a></span></div>
 <div class="block">The name of the property.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_PropertyType">
 <h3>m_PropertyType</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-250">m_PropertyType</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-256">m_PropertyType</a></span></div>
 <div class="block">The type of the property.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_SetterArgumentName">
 <h3>m_SetterArgumentName</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-255">m_SetterArgumentName</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-261">m_SetterArgumentName</a></span></div>
 <div class="block">The name for the setter's argument.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_SetterBuilder">
 <h3>m_SetterBuilder</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-260">m_SetterBuilder</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-266">m_SetterBuilder</a></span></div>
 <div class="block">The builder for the setter of this property.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_SetterComposer">
 <h3>m_SetterComposer</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiFunction.html" title="class or interface in java.util.function" class="external-link">BiFunction</a>&lt;<a href="CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>,<wbr><a href="PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>,<wbr><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-265">m_SetterComposer</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiFunction.html" title="class or interface in java.util.function" class="external-link">BiFunction</a>&lt;<a href="CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>,<wbr><a href="PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>,<wbr><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-271">m_SetterComposer</a></span></div>
 <div class="block">The method that creates the setter for this property.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_SetterMethodName">
 <h3>m_SetterMethodName</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-270">m_SetterMethodName</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-276">m_SetterMethodName</a></span></div>
 <div class="block">The name for the setter method.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_SpecialPropertyType">
 <h3>m_SpecialPropertyType</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/SpecialPropertyType.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">SpecialPropertyType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-275">m_SpecialPropertyType</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/SpecialPropertyType.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">SpecialPropertyType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-281">m_SpecialPropertyType</a></span></div>
 <div class="block">The speciality type for this property; usually, this is <code>null</code>.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_StringConverterClass">
 <h3>m_StringConverterClass</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-281">m_StringConverterClass</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-287">m_StringConverterClass</a></span></div>
 <div class="block">The class that implements the String converter for the type of this
   property.</div>
 </section>
@@ -1149,7 +1180,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="m_SystemPrefsPath">
 <h3>m_SystemPrefsPath</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-289">m_SystemPrefsPath</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-295">m_SystemPrefsPath</a></span></div>
 <div class="block">The path for the SYSTEM preferences node that holds the initialisation
   data for this property.</div>
 <dl class="notes">
@@ -1165,7 +1196,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="m_SystemPropertyName">
 <h3>m_SystemPropertyName</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-295">m_SystemPropertyName</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-301">m_SystemPropertyName</a></span></div>
 <div class="block">The name of the system property that is used to initialise this
   property.</div>
 </section>
@@ -1181,7 +1212,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="&lt;init&gt;(java.lang.String)">
 <h3>PropertySpecImpl</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-309">PropertySpecImpl</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;propertyName)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-315">PropertySpecImpl</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;propertyName)</span></div>
 <div class="block">Creates a new <code>PropertySpecImpl</code> instance.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -1200,7 +1231,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="createAddMethod(org.tquadrat.foundation.config.ap.impl.CodeBuilder)">
 <h3>createAddMethod</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-320">createAddMethod</a></span><wbr><span class="parameters">(<a href="CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-326">createAddMethod</a></span><wbr><span class="parameters">(<a href="CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
 <div class="block">Creates the specification of the 'add' method for this property.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1217,7 +1248,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="createConstructorFragment(org.tquadrat.foundation.config.ap.impl.CodeBuilder)">
 <h3>createConstructorFragment</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/CodeBlock.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">CodeBlock</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-334">createConstructorFragment</a></span><wbr><span class="parameters">(<a href="CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/CodeBlock.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">CodeBlock</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-340">createConstructorFragment</a></span><wbr><span class="parameters">(<a href="CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
 <div class="block">Creates a code block that is a fragment for the constructor of the new
   configuration bean and that initialises this property.</div>
 <dl class="notes">
@@ -1235,7 +1266,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="createField(org.tquadrat.foundation.config.ap.impl.CodeBuilder)">
 <h3>createField</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/FieldSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">FieldSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-348">createField</a></span><wbr><span class="parameters">(<a href="CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/FieldSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">FieldSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-354">createField</a></span><wbr><span class="parameters">(<a href="CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
 <div class="block">Creates the field specification for this property.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1252,7 +1283,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="createGetter(org.tquadrat.foundation.config.ap.impl.CodeBuilder)">
 <h3>createGetter</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-362">createGetter</a></span><wbr><span class="parameters">(<a href="CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-368">createGetter</a></span><wbr><span class="parameters">(<a href="CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
 <div class="block">Creates the specification of the getter for this property.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1269,7 +1300,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="createSetter(org.tquadrat.foundation.config.ap.impl.CodeBuilder)">
 <h3>createSetter</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-376">createSetter</a></span><wbr><span class="parameters">(<a href="CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-382">createSetter</a></span><wbr><span class="parameters">(<a href="CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder)</span></div>
 <div class="block">Creates the specification of the setter for this property.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1286,7 +1317,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getAddMethodArgumentName()">
 <h3>getAddMethodArgumentName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-390">getAddMethodArgumentName</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-396">getAddMethodArgumentName</a></span>()</div>
 <div class="block">Returns the name of the 'add' method's argument.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1302,7 +1333,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getAddMethodBuilder()">
 <h3>getAddMethodBuilder</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-403">getAddMethodBuilder</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-409">getAddMethodBuilder</a></span>()</div>
 <div class="block"><p>Returns a builder for the 'add' method for this
   property.</p>
   <p>This is a convenience method that allows to benefit from
@@ -1318,7 +1349,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getAddMethodName()">
 <h3>getAddMethodName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-409">getAddMethodName</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-415">getAddMethodName</a></span>()</div>
 <div class="block">Returns the name of the 'add' method for this property.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1333,7 +1364,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getCLIArgumentIndex()">
 <h3>getCLIArgumentIndex</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/OptionalInt.html" title="class or interface in java.util" class="external-link">OptionalInt</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-415">getCLIArgumentIndex</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/OptionalInt.html" title="class or interface in java.util" class="external-link">OptionalInt</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-421">getCLIArgumentIndex</a></span>()</div>
 <div class="block"><p>Returns the index for an argument on the command
   line.</p>
   <p>The return value will be
@@ -1358,7 +1389,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getCLIFormat()">
 <h3>getCLIFormat</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-421">getCLIFormat</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-427">getCLIFormat</a></span>()</div>
 <div class="block">Returns the special CLI format.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1380,7 +1411,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getCLIMetaVar()">
 <h3>getCLIMetaVar</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-427">getCLIMetaVar</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-433">getCLIMetaVar</a></span>()</div>
 <div class="block">Returns the name of the CLI meta variable for this property.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1402,7 +1433,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getCLIOptionNames()">
 <h3>getCLIOptionNames</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-433">getCLIOptionNames</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-439">getCLIOptionNames</a></span>()</div>
 <div class="block"><p>Returns the CLI option names. The mandatory first name in
   the list is the primary name, the optional others are the aliases.</p>
   <p>The return value will be
@@ -1428,7 +1459,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getCLIUsage()">
 <h3>getCLIUsage</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-440">getCLIUsage</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-446">getCLIUsage</a></span>()</div>
 <div class="block">Returns the CLI usage text for this property. This text will not be
   localised.</div>
 <dl class="notes">
@@ -1451,7 +1482,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getCLIUsageKey()">
 <h3>getCLIUsageKey</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-446">getCLIUsageKey</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-452">getCLIUsageKey</a></span>()</div>
 <div class="block">Returns the CLI usage key for this property. This key is used to
   retrieve a localised usage text.</div>
 <dl class="notes">
@@ -1474,7 +1505,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getCLIValueHandlerClass()">
 <h3>getCLIValueHandlerClass</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-452">getCLIValueHandlerClass</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-458">getCLIValueHandlerClass</a></span>()</div>
 <div class="block">Returns the CLI value handler class for this property.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1498,7 +1529,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getCollectionKind()">
 <h3>getCollectionKind</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="../CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-458">getCollectionKind</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="../CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-464">getCollectionKind</a></span>()</div>
 <div class="block">Returns the kind of collection for this property.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1511,7 +1542,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getEnvironmentVariableName()">
 <h3>getEnvironmentVariableName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-464">getEnvironmentVariableName</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-470">getEnvironmentVariableName</a></span>()</div>
 <div class="block">Returns the name of the environment variable that is used to initialise
   this property.</div>
 <dl class="notes">
@@ -1533,7 +1564,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getFieldName()">
 <h3>getFieldName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-470">getFieldName</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-476">getFieldName</a></span>()</div>
 <div class="block">Returns the name of the field for the property.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1546,7 +1577,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getGetterBuilder()">
 <h3>getGetterBuilder</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-482">getGetterBuilder</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-488">getGetterBuilder</a></span>()</div>
 <div class="block">Returns a builder for the getter for this property.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1561,7 +1592,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getGetterMethodName()">
 <h3>getGetterMethodName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-488">getGetterMethodName</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-494">getGetterMethodName</a></span>()</div>
 <div class="block">Returns the name of the getter method name. If there is no name for the
   method, it will not be generated.</div>
 <dl class="notes">
@@ -1577,7 +1608,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getGetterReturnType()">
 <h3>getGetterReturnType</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-494">getGetterReturnType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-500">getGetterReturnType</a></span>()</div>
 <div class="block">Returns the return type of the getter. This is not necessarily the same
   as the
   <a href="../PropertySpec.html#getPropertyType()">property type</a>.</div>
@@ -1592,7 +1623,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getINIComment()">
 <h3>getINIComment</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-500">getINIComment</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-506">getINIComment</a></span>()</div>
 <div class="block">Returns the comment for this property in the <code>INI</code> file.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1607,7 +1638,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getINIGroup()">
 <h3>getINIGroup</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-506">getINIGroup</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-512">getINIGroup</a></span>()</div>
 <div class="block">Returns the group for this property in the <code>INI</code> file.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1622,7 +1653,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getINIKey()">
 <h3>getINIKey</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-512">getINIKey</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-518">getINIKey</a></span>()</div>
 <div class="block">Returns the key for this property in the <code>INI</code> file.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1637,7 +1668,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getPrefsAccessorClass()">
 <h3>getPrefsAccessorClass</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-518">getPrefsAccessorClass</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-524">getPrefsAccessorClass</a></span>()</div>
 <div class="block"><p>Returns the <code>Preferences</code> accessor class.</p>
   <p>This is used when this property is linked to a preference, but also
   to initialise it from a SYSTEM preference.</p></div>
@@ -1664,7 +1695,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getPrefsKey()">
 <h3>getPrefsKey</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-524">getPrefsKey</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-530">getPrefsKey</a></span>()</div>
 <div class="block"><p>Returns the <code>Preferences</code> key for this
   property.</p>
   <p>This is used when this property is linked to a preference, but also
@@ -1691,7 +1722,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getPropertyName()">
 <h3>getPropertyName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-530">getPropertyName</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-536">getPropertyName</a></span>()</div>
 <div class="block">Returns the name of the configuration property.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1704,7 +1735,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getPropertyType()">
 <h3>getPropertyType</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-536">getPropertyType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-542">getPropertyType</a></span>()</div>
 <div class="block">Returns the property type.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1717,7 +1748,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getSetterArgumentName()">
 <h3>getSetterArgumentName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-542">getSetterArgumentName</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-548">getSetterArgumentName</a></span>()</div>
 <div class="block">Returns the name of the setter's argument.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1733,7 +1764,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getSetterBuilder()">
 <h3>getSetterBuilder</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-548">getSetterBuilder</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-554">getSetterBuilder</a></span>()</div>
 <div class="block">Returns a builder for the setter for this property.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1748,7 +1779,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getSetterMethodName()">
 <h3>getSetterMethodName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-554">getSetterMethodName</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-560">getSetterMethodName</a></span>()</div>
 <div class="block">Returns the name of the setter method name. If there is no name for the
   method, it will not be generated.</div>
 <dl class="notes">
@@ -1764,7 +1795,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getSpecialPropertyType()">
 <h3>getSpecialPropertyType</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/SpecialPropertyType.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">SpecialPropertyType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-560">getSpecialPropertyType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/SpecialPropertyType.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">SpecialPropertyType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-566">getSpecialPropertyType</a></span>()</div>
 <div class="block">Return the 'speciality' type for this property.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1779,7 +1810,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getStringConverterClass()">
 <h3>getStringConverterClass</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-566">getStringConverterClass</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-572">getStringConverterClass</a></span>()</div>
 <div class="block">Returns the class that implements the String converter for the type of
   this property.</div>
 <dl class="notes">
@@ -1796,7 +1827,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getSystemPrefsPath()">
 <h3>getSystemPrefsPath</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-572">getSystemPrefsPath</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-578">getSystemPrefsPath</a></span>()</div>
 <div class="block">Returns the path to the SYSTEM <code>Preferences</code> node that holds the
   data for the initialisation of this property.</div>
 <dl class="notes">
@@ -1818,7 +1849,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="getSystemPropertyName()">
 <h3>getSystemPropertyName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-581">getSystemPropertyName</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-587">getSystemPropertyName</a></span>()</div>
 <div class="block">Returns the name of the system property that is used to initialise this
   property.</div>
 <dl class="notes">
@@ -1838,9 +1869,25 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 </section>
 </li>
 <li>
+<section class="detail" id="isEnum()">
+<h3>isEnum</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-593">isEnum</a></span>()</div>
+<div class="block">Returns the flag that indicates whether the property is an
+  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link"><code>enum</code></a>
+  type.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../PropertySpec.html#isEnum()">isEnum</a></code>&nbsp;in interface&nbsp;<code><a href="../PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a></code></dd>
+<dt>Returns:</dt>
+<dd><code>true</code> if the property type is an <code>enum</code>,
+      <code>false</code> otherwise.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="hasFlag(org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag)">
 <h3>hasFlag</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-587">hasFlag</a></span><wbr><span class="parameters">(<a href="../PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a>&nbsp;flag)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-599">hasFlag</a></span><wbr><span class="parameters">(<a href="../PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a>&nbsp;flag)</span></div>
 <div class="block">Checks whether the given flag is set for this property.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1855,7 +1902,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="merge()">
 <h3>merge</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="../PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-593">merge</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="../PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-605">merge</a></span>()</div>
 <div class="block"><p>'Merges' the attributes from a
   <a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/SpecialPropertyType.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">special property</a>
   with the attributes retrieved from the configuration bean
@@ -1875,7 +1922,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setAddMethodArgumentName(javax.lang.model.element.Name)">
 <h3>setAddMethodArgumentName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-655">setAddMethodArgumentName</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&nbsp;name)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-668">setAddMethodArgumentName</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&nbsp;name)</span></div>
 <div class="block">Sets the name for the 'add' method's argument.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -1886,7 +1933,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setAddMethodBuilder(org.tquadrat.foundation.javacomposer.MethodSpec.Builder)">
 <h3>setAddMethodBuilder</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-666">setAddMethodBuilder</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&nbsp;builder)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-679">setAddMethodBuilder</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&nbsp;builder)</span></div>
 <div class="block">Sets the builder for the 'add' method of this property.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -1897,7 +1944,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setAddMethodName(javax.lang.model.element.Name)">
 <h3>setAddMethodName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-677">setAddMethodName</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&nbsp;name)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-690">setAddMethodName</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&nbsp;name)</span></div>
 <div class="block">Sets the name of the 'add'' method for this property.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -1908,7 +1955,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setCLIArgumentIndex(int)">
 <h3>setCLIArgumentIndex</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-692">setCLIArgumentIndex</a></span><wbr><span class="parameters">(int&nbsp;index)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-705">setCLIArgumentIndex</a></span><wbr><span class="parameters">(int&nbsp;index)</span></div>
 <div class="block">Sets the index for an argument on the command line.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -1926,7 +1973,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setCLIFormat(java.lang.String)">
 <h3>setCLIFormat</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-703">setCLIFormat</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;format)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-716">setCLIFormat</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;format)</span></div>
 <div class="block">Sets the special CLI format.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -1944,7 +1991,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setCLIMetaVar(java.lang.String)">
 <h3>setCLIMetaVar</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-714">setCLIMetaVar</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;metaVar)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-727">setCLIMetaVar</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;metaVar)</span></div>
 <div class="block">Sets the CLI meta variable.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -1962,7 +2009,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setCLIOptionNames(java.util.List)">
 <h3>setCLIOptionNames</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-728">setCLIOptionNames</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;names)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-741">setCLIOptionNames</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;names)</span></div>
 <div class="block"><p>Sets the CLI option names.</p>
   <p>The first entry of the list is the option name, the others are the
   aliases.</p></div>
@@ -1983,7 +2030,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setCLIUsage(java.lang.String)">
 <h3>setCLIUsage</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-742">setCLIUsage</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-755">setCLIUsage</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</span></div>
 <div class="block">Sets the CLI usage text.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -2001,7 +2048,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setCLIUsageKey(java.lang.String)">
 <h3>setCLIUsageKey</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-756">setCLIUsageKey</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-769">setCLIUsageKey</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
 <div class="block">Sets the CLI usage key.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -2019,7 +2066,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setCLIValueHandlerClass(org.tquadrat.foundation.javacomposer.TypeName)">
 <h3>setCLIValueHandlerClass</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-773">setCLIValueHandlerClass</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;handlerClass)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-786">setCLIValueHandlerClass</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;handlerClass)</span></div>
 <div class="block">Sets the CLI value handler class.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -2040,7 +2087,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setCollectionKind(org.tquadrat.foundation.config.ap.CollectionKind)">
 <h3>setCollectionKind</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-784">setCollectionKind</a></span><wbr><span class="parameters">(<a href="../CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a>&nbsp;collectionKind)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-797">setCollectionKind</a></span><wbr><span class="parameters">(<a href="../CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a>&nbsp;collectionKind)</span></div>
 <div class="block">Sets the kind of collection for this property.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -2051,7 +2098,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setEnvironmentVariableName(java.lang.String)">
 <h3>setEnvironmentVariableName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-796">setEnvironmentVariableName</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-809">setEnvironmentVariableName</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
 <div class="block">Sets the name of the environment variable that provides the (initial)
   value for this property.</div>
 <dl class="notes">
@@ -2063,7 +2110,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setFieldName(java.lang.String)">
 <h3>setFieldName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-817">setFieldName</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-830">setFieldName</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
 <div class="block">Sets the name of the field for the property.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -2074,7 +2121,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setFlag(org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag...)">
 <h3>setFlag</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-829">setFlag</a></span><wbr><span class="parameters">(<a href="../PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a>...&nbsp;flag)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-842">setFlag</a></span><wbr><span class="parameters">(<a href="../PropertySpec.PropertyFlag.html" title="enum class in org.tquadrat.foundation.config.ap">PropertySpec.PropertyFlag</a>...&nbsp;flag)</span></div>
 <div class="block">Sets the given flags to the property.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -2085,7 +2132,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setGetterBuilder(org.tquadrat.foundation.javacomposer.MethodSpec.Builder)">
 <h3>setGetterBuilder</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-847">setGetterBuilder</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&nbsp;builder)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-860">setGetterBuilder</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&nbsp;builder)</span></div>
 <div class="block">Sets the builder for the getter of this property.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -2096,7 +2143,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setGetterMethodName(javax.lang.model.element.Name)">
 <h3>setGetterMethodName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-858">setGetterMethodName</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&nbsp;name)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-871">setGetterMethodName</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&nbsp;name)</span></div>
 <div class="block">Sets the method name for the getter.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -2107,7 +2154,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setGetterReturnType(org.tquadrat.foundation.javacomposer.TypeName)">
 <h3>setGetterReturnType</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-870">setGetterReturnType</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;type)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-883">setGetterReturnType</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;type)</span></div>
 <div class="block">Sets the return type for the getter.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -2118,7 +2165,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setINIConfiguration(java.lang.String,java.lang.String,java.lang.String)">
 <h3>setINIConfiguration</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-883">setINIConfiguration</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;group,
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-896">setINIConfiguration</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;group,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;comment)</span></div>
 <div class="block">Sets the <code>INI</code> file configuration for this property.</div>
@@ -2133,7 +2180,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setINIConfiguration(org.tquadrat.foundation.config.INIValue)">
 <h3>setINIConfiguration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-896">setINIConfiguration</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/INIValue.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">INIValue</a>&nbsp;configuration)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-909">setINIConfiguration</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/INIValue.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">INIValue</a>&nbsp;configuration)</span></div>
 <div class="block">Sets the <code>INI</code> file configuration for this property.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -2142,9 +2189,23 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 </section>
 </li>
 <li>
+<section class="detail" id="setIsEnum(boolean)">
+<h3>setIsEnum</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-923">setIsEnum</a></span><wbr><span class="parameters">(boolean&nbsp;flag)</span></div>
+<div class="block">Sets the flag that indicates whether the property is an
+  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link"><code>enum</code></a>
+  type.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>flag</code> - <code>true</code> if the property type is an <code>enum</code>
+      type, <code>false</code> otherwise.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="setPrefsAccessorClass(org.tquadrat.foundation.javacomposer.TypeName)">
 <h3>setPrefsAccessorClass</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-907">setPrefsAccessorClass</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;accessorClass)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-930">setPrefsAccessorClass</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;accessorClass)</span></div>
 <div class="block">Sets the preferences accessor class for this property.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -2155,7 +2216,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setPrefsKey(java.lang.String)">
 <h3>setPrefsKey</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-918">setPrefsKey</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;preferenceKey)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-941">setPrefsKey</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;preferenceKey)</span></div>
 <div class="block">Sets the preferences key for this property.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -2166,7 +2227,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setPropertyType(org.tquadrat.foundation.javacomposer.TypeName)">
 <h3>setPropertyType</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-929">setPropertyType</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;type)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-952">setPropertyType</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;type)</span></div>
 <div class="block">Sets the property type.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -2177,7 +2238,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setSetterArgumentName(javax.lang.model.element.Name)">
 <h3>setSetterArgumentName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-940">setSetterArgumentName</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&nbsp;name)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-963">setSetterArgumentName</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&nbsp;name)</span></div>
 <div class="block">Sets the name for the setter's argument.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -2188,7 +2249,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setSetterBuilder(org.tquadrat.foundation.javacomposer.MethodSpec.Builder)">
 <h3>setSetterBuilder</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-951">setSetterBuilder</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&nbsp;builder)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-974">setSetterBuilder</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec.Builder</a>&nbsp;builder)</span></div>
 <div class="block">Sets the builder for the setter of this property.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -2199,7 +2260,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setSetterMethodName(javax.lang.model.element.Name)">
 <h3>setSetterMethodName</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-962">setSetterMethodName</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&nbsp;name)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-985">setSetterMethodName</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&nbsp;name)</span></div>
 <div class="block">Sets the name of the setter method for this property.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -2210,7 +2271,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setSpecialPropertyType(org.tquadrat.foundation.config.SpecialPropertyType)">
 <h3>setSpecialPropertyType</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-974">setSpecialPropertyType</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/SpecialPropertyType.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">SpecialPropertyType</a>&nbsp;type)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-997">setSpecialPropertyType</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/SpecialPropertyType.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">SpecialPropertyType</a>&nbsp;type)</span></div>
 <div class="block">Sets the speciality type for this property.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -2221,7 +2282,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setStringConverterClass(org.tquadrat.foundation.javacomposer.TypeName)">
 <h3>setStringConverterClass</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-995">setStringConverterClass</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;typeName)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-1018">setStringConverterClass</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;typeName)</span></div>
 <div class="block">Sets the name for the class that implements
   <a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/lang/StringConverter.html" title="class or interface in org.tquadrat.foundation.lang" class="external-link"><code>StringConverter</code></a>
   for the type of this property.</div>
@@ -2234,7 +2295,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setSystemPrefsPath(java.lang.String)">
 <h3>setSystemPrefsPath</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-1007">setSystemPrefsPath</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-1030">setSystemPrefsPath</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</span></div>
 <div class="block">Sets the path for the SYSTEM <code>Preferences</code> node that holds the
   initialisation data for this property.</div>
 <dl class="notes">
@@ -2246,7 +2307,7 @@ implements <a href="../PropertySpec.html" title="interface in org.tquadrat.found
 <li>
 <section class="detail" id="setSystemPropertyName(java.lang.String)">
 <h3>setSystemPropertyName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-1029">setSystemPropertyName</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/PropertySpecImpl.html#line-1052">setSystemPropertyName</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
 <div class="block">Sets the name of the system property that provides the (initial) value
   for this property.</div>
 <dl class="notes">

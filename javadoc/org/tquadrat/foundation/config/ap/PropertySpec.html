@@ -44,6 +44,7 @@
 <meta name="keywords" content="getSystemPropertyName()">
 <meta name="keywords" content="hasFlag()">
 <meta name="keywords" content="isCollection()">
+<meta name="keywords" content="isEnum()">
 <meta name="keywords" content="isOnCLI()">
 <meta name="keywords" content="merge()">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
@@ -121,7 +122,7 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="impl/specialprops/CharsetProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">CharsetProperty</a></code>, <code><a href="impl/specialprops/ClockProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">ClockProperty</a></code>, <code><a href="impl/specialprops/LocaleProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">LocaleProperty</a></code>, <code><a href="impl/specialprops/MessagePrefixProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">MessagePrefixProperty</a></code>, <code><a href="impl/specialprops/ProcessIdProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">ProcessIdProperty</a></code>, <code><a href="impl/PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a></code>, <code><a href="impl/specialprops/RandomProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">RandomProperty</a></code>, <code><a href="impl/specialprops/ResourceBundleProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">ResourceBundleProperty</a></code>, <code><a href="impl/specialprops/SessionKeyProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">SessionKeyProperty</a></code>, <code><a href="impl/specialprops/SpecialPropertySpecBase.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">SpecialPropertySpecBase</a></code>, <code><a href="impl/specialprops/TimeZoneProperty.html" title="class in org.tquadrat.foundation.config.ap.impl.specialprops">TimeZoneProperty</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="annotations"><a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">@ClassVersion</a>(<a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html#sourceVersion()" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">sourceVersion</a>="$Id: PropertySpec.java 1002 2022-02-01 21:33:00Z tquadrat $")
+<div class="type-signature"><span class="annotations"><a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">@ClassVersion</a>(<a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html#sourceVersion()" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">sourceVersion</a>="$Id: PropertySpec.java 1006 2022-02-03 23:03:04Z tquadrat $")
 <a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html" title="class or interface in org.apiguardian.api" class="external-link">@API</a>(<a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html#status()" title="class or interface in org.apiguardian.api" class="external-link">status</a>=<a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.Status.html#MAINTAINED" title="class or interface in org.apiguardian.api" class="external-link">MAINTAINED</a>,
      <a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html#since()" title="class or interface in org.apiguardian.api" class="external-link">since</a>="0.1.0")
 </span><span class="modifiers">public interface </span><span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-48">PropertySpec</a></span></div>
@@ -130,7 +131,7 @@ loadScripts(document, 'script');</script>
 <dt><span class="simpleTagLabel">Author:</span></dt>
   <dd>Thomas Thrien (<a href="mailto:thomas.thrien@tquadrat.org">thomas.thrien@tquadrat.org</a>)</dd>
 <dt>Version:</dt>
-<dd>$Id: PropertySpec.java 1002 2022-02-01 21:33:00Z tquadrat $</dd>
+<dd>$Id: PropertySpec.java 1006 2022-02-03 23:03:04Z tquadrat $</dd>
 <dt>Since:</dt>
 <dd>0.1.0</dd>
 
@@ -370,14 +371,21 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Checks whether this property is a collection of some kind.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#isOnCLI()" class="member-name-link">isOnCLI</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isEnum()" class="member-name-link">isEnum</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the flag that indicates whether the property is an
+  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link"><code>enum</code></a>
+  type.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#isOnCLI()" class="member-name-link">isOnCLI</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Checks whether this property is exposed to the CLI.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#merge()" class="member-name-link">merge</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#merge()" class="member-name-link">merge</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">'Merges' the attributes from a
   <a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/SpecialPropertyType.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">special property</a>
   with the attributes retrieved from the configuration bean
@@ -979,9 +987,23 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="isEnum()">
+<h3>isEnum</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-649">isEnum</a></span>()</div>
+<div class="block">Returns the flag that indicates whether the property is an
+  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link"><code>enum</code></a>
+  type.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>true</code> if the property type is an <code>enum</code>,
+      <code>false</code> otherwise.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="isOnCLI()">
 <h3>isOnCLI</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-652">isOnCLI</a></span>()</div>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-662">isOnCLI</a></span>()</div>
 <div class="block">Checks whether this property is exposed to the CLI. This
   means that it has either the flag
   <a href="PropertySpec.PropertyFlag.html#PROPERTY_IS_ARGUMENT"><code>PropertySpec.PropertyFlag.PROPERTY_IS_ARGUMENT</code></a>
@@ -998,7 +1020,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="merge()">
 <h3>merge</h3>
-<div class="member-signature"><span class="return-type"><a href="PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-666">merge</a></span>()</div>
+<div class="member-signature"><span class="return-type"><a href="PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/PropertySpec.html#line-676">merge</a></span>()</div>
 <div class="block"><p>'Merges' the attributes from a
   <a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/SpecialPropertyType.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">special property</a>
   with the attributes retrieved from the configuration bean

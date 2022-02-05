@@ -22,7 +22,7 @@ import static java.lang.System.out;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.tquadrat.foundation.config.ap.CodeGenerationConfiguration.createStringConverterRegistry;
+import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.createStringConverterRegistry;
 
 import java.util.ServiceLoader;
 
@@ -38,9 +38,9 @@ import org.tquadrat.foundation.testutil.TestBaseClass;
  *  does not work in the context of an annotation processor.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: BugHunt_20220125_001.java 997 2022-01-26 14:55:05Z tquadrat $
+ *  @version $Id: BugHunt_20220125_001.java 1006 2022-02-03 23:03:04Z tquadrat $
  */
-@ClassVersion( sourceVersion = "$Id: BugHunt_20220125_001.java 997 2022-01-26 14:55:05Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: BugHunt_20220125_001.java 1006 2022-02-03 23:03:04Z tquadrat $" )
 @DisplayName( "org.tquadrat.foundation.config.ap.BugHunt_20220125_001" )
 public class BugHunt_20220125_001 extends TestBaseClass
 {

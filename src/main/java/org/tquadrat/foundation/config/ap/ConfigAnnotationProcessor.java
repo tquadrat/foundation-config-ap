@@ -19,6 +19,7 @@ package org.tquadrat.foundation.config.ap;
 
 import static java.lang.Boolean.FALSE;
 import static java.util.Arrays.asList;
+import static java.util.Collections.list;
 import static java.util.stream.Collectors.joining;
 import static javax.lang.model.element.ElementKind.METHOD;
 import static javax.lang.model.element.Modifier.DEFAULT;
@@ -48,17 +49,18 @@ import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPER
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER_CHECK_EMPTY;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER_CHECK_NULL;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER_IS_DEFAULT;
-import static org.tquadrat.foundation.config.internal.ClassRegistry.m_PrefsAccessorClasses;
 import static org.tquadrat.foundation.javacomposer.Layout.LAYOUT_FOUNDATION;
 import static org.tquadrat.foundation.lang.DebugOutput.ifDebug;
 import static org.tquadrat.foundation.lang.Objects.isNull;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
 import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
+import static org.tquadrat.foundation.lang.StringConverter.METHOD_NAME_GetSubjectClass;
 import static org.tquadrat.foundation.util.JavaUtils.PREFIX_GET;
 import static org.tquadrat.foundation.util.JavaUtils.PREFIX_IS;
 import static org.tquadrat.foundation.util.JavaUtils.isAddMethod;
 import static org.tquadrat.foundation.util.JavaUtils.isGetter;
 import static org.tquadrat.foundation.util.JavaUtils.isSetter;
+import static org.tquadrat.foundation.util.JavaUtils.loadClass;
 import static org.tquadrat.foundation.util.StringUtils.capitalize;
 import static org.tquadrat.foundation.util.StringUtils.decapitalize;
 import static org.tquadrat.foundation.util.StringUtils.format;
@@ -79,12 +81,16 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.ArrayType;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.SimpleTypeVisitor14;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -119,10 +125,13 @@ import org.tquadrat.foundation.config.Preference;
 import org.tquadrat.foundation.config.PreferencesRoot;
 import org.tquadrat.foundation.config.SpecialProperty;
 import org.tquadrat.foundation.config.SpecialPropertyType;
+import org.tquadrat.foundation.config.StringConversion;
 import org.tquadrat.foundation.config.SystemPreference;
 import org.tquadrat.foundation.config.SystemProperty;
 import org.tquadrat.foundation.config.ap.impl.CodeGenerator;
 import org.tquadrat.foundation.config.ap.impl.PropertySpecImpl;
+import org.tquadrat.foundation.config.cli.CmdLineValueHandler;
+import org.tquadrat.foundation.config.internal.ClassRegistry;
 import org.tquadrat.foundation.config.spi.prefs.EnumAccessor;
 import org.tquadrat.foundation.config.spi.prefs.ListAccessor;
 import org.tquadrat.foundation.config.spi.prefs.MapAccessor;
@@ -137,20 +146,24 @@ import org.tquadrat.foundation.javacomposer.ClassName;
 import org.tquadrat.foundation.javacomposer.JavaComposer;
 import org.tquadrat.foundation.javacomposer.ParameterizedTypeName;
 import org.tquadrat.foundation.javacomposer.TypeName;
+import org.tquadrat.foundation.lang.StringConverter;
+import org.tquadrat.foundation.util.JavaUtils;
+import org.tquadrat.foundation.util.LazyMap;
+import org.tquadrat.foundation.util.stringconverter.EnumStringConverter;
 import org.tquadrat.foundation.util.stringconverter.PathStringConverter;
 
 /**
  *  The annotation processor for the {@code org.tquadrat.foundation.config}
  *  module.
  *
- *  @version $Id: ConfigAnnotationProcessor.java 1002 2022-02-01 21:33:00Z tquadrat $
+ *  @version $Id: ConfigAnnotationProcessor.java 1006 2022-02-03 23:03:04Z tquadrat $
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@SuppressWarnings( {"OverlyCoupledClass", "OverlyComplexClass"} )
-@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1002 2022-02-01 21:33:00Z tquadrat $" )
+@SuppressWarnings( {"OverlyCoupledClass", "OverlyComplexClass", "ClassWithTooManyMethods"} )
+@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1006 2022-02-03 23:03:04Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @SupportedSourceVersion( SourceVersion.RELEASE_17 )
 @SupportedOptions( { APBase.ADD_DEBUG_OUTPUT, APBase.MAVEN_GOAL } )
@@ -478,14 +491,40 @@ public class ConfigAnnotationProcessor extends APBase
     @SuppressWarnings( "OptionalUsedAsFieldOrParameterType" )
     private Optional<String> m_MessagePrefix;
 
+    /**
+     *  The preferences accessor classes.
+     */
+    @API( status = INTERNAL, since = "0.1.0" )
+    private final Map<TypeName,ClassName> m_PrefsAccessorClasses;
+
+    /**
+     *  A map of
+     *  {@link StringConverter}
+     *  implementations that use instances of
+     *  {@link TypeName}
+     *  as keys.
+     */
+    private final LazyMap<TypeName,ClassName> m_StringConvertersForTypeNames;
+
         /*--------------*\
     ====** Constructors **=====================================================
         \*--------------*/
     /**
      *  Creates a new {@code ConfigAnnotationProcessor} instance.
      */
-    @SuppressWarnings( "RedundantNoArgConstructor" )
-    public ConfigAnnotationProcessor() { super(); }
+    public ConfigAnnotationProcessor()
+    {
+        super();
+
+        m_StringConvertersForTypeNames = LazyMap.use( true, this::initStringConvertersForTypeNames );
+
+        final var buffer = new HashMap<TypeName,ClassName>();
+        for( final var entry : ClassRegistry.m_PrefsAccessorClasses.entrySet() )
+        {
+            buffer.put( TypeName.from( entry.getKey() ), ClassName.from( entry.getValue() ) );
+        }
+        m_PrefsAccessorClasses = Map.copyOf( buffer );
+    }   //  ConfigAnnotationProcessor()
 
         /*------------------------*\
     ====** Static Initialisations **===========================================
@@ -618,6 +657,116 @@ public class ConfigAnnotationProcessor extends APBase
     }   //  composeFieldName()
 
     /**
+     *  <p>{@summary Creates a registry of the known
+     *  {@link StringConverter}
+     *  implementations.}</p>
+     *  <p>The
+     *  {@link TypeName}
+     *  of the subject class is the key for that map, the {@code TypeName} for
+     *  the {@code Class} implementing the {@code StringConverter} is the
+     *  value.</p>
+     *
+     *  @return An immutable map of
+     *      {@link StringConverter}
+     *      implementations.
+     *
+     *  @throws IOException Failed to read the resource files with the
+     *      {@code StringConverter} implementations.
+     */
+    @SuppressWarnings( "NestedTryStatement" )
+    @API( status = INTERNAL, since = "0.1.0" )
+    public static final Map<TypeName,ClassName> createStringConverterRegistry() throws IOException
+    {
+        final Map<TypeName,ClassName> buffer = new HashMap<>();
+
+        /*
+         * For some reason, the original code for this method does not work:
+         *
+         * for( final var c : StringConverter.list() )
+         * {
+         *    final var container = StringConverter.forClass( c );
+         *    if( container.isPresent() )
+         *    {
+         *       final var stringConverterClass = TypeName.from( container.get().getClass() );
+         *       final var key = TypeName.from( c );
+         *       buffer.put( key, stringConverterClass );
+         *       ifDebug( "StringConverters: %1$s => %2$s"::formatted, key, stringConverterClass );
+         *    }
+         * }
+         *
+         * This code relies on the code in the foundation-util module, so I
+         * assumed the problem there and move the code to here:
+         *
+         * final var moduleLayer = StringConverter.class.getModule().getLayer();
+         * final var converters = isNull( moduleLayer )
+         *   ? ServiceLoader.load( StringConverter.class )
+         *   : ServiceLoader.load( moduleLayer, StringConverter.class );
+         *
+         * for( final StringConverter<?> c : converters )
+         * {
+         *   StringConverter<?> converter;
+         *   try
+         *   {
+         *     final var providerMethod = c.getClass().getMethod( METHOD_NAME_Provider );
+         *     converter = (StringConverter<?>) providerMethod.invoke( null );
+         *   }
+         *   catch( final NoSuchMethodException | IllegalAccessException | InvocationTargetException e )
+         *   {
+         *     converter = c;
+         *   }
+         *
+         *   for( final var subjectClass : retrieveSubjectClasses( converter ) )
+         *   {
+         *     buffer.put( TypeName.from( subjectClass ), TypeName.from( converter.getClass() ) );
+         *   }
+         * }
+         *
+         * I raised a question on StackOverflow regarding this issue:
+         *   https://stackoverflow.com/questions/70861635/java-util-serviceloader-does-not-work-inside-of-an-annotationprocessor
+         */
+
+        final var classLoader = CodeGenerationConfiguration.class.getClassLoader();
+        final var resources = classLoader.getResources( format( "META-INF/services/%s", StringConverter.class.getName() ) );
+        for( final var file : list( resources ) )
+        {
+            try( final var reader = new BufferedReader( new InputStreamReader( file.openStream() ) ) )
+            {
+                final var converterClasses = reader.lines()
+                    .map( String::trim )
+                    .filter( l -> !l.startsWith( "#" ) )
+                    .map( l -> loadClass( classLoader, l, StringConverter.class ) )
+                    .filter( Optional::isPresent )
+                    .map( Optional::get )
+                    .toList();
+                CreateLoop: for( final var c : converterClasses )
+                {
+                    try
+                    {
+                        final var constructor = c.getConstructor();
+                        final var instance = constructor.newInstance();
+                        for( final var subjectClass : retrieveSubjectClasses( instance ) )
+                        {
+                            buffer.put( TypeName.from( subjectClass ), ClassName.from( c ) );
+                        }
+                    }
+                    catch( final InvocationTargetException | NoSuchMethodException |InstantiationException | IllegalAccessException e )
+                    {
+                        ifDebug( e );
+
+                        //---* Deliberately ignored! *-------------------------
+                        continue CreateLoop;
+                    }
+                }   //  CreateLoop:
+            }
+        }
+
+        final var retValue = Map.copyOf( buffer );
+
+        //---* Done *----------------------------------------------------------
+        return retValue;
+    }   //  createStringConverterRegistry()
+
+    /**
      *  Determines whether the given
      *  {@link TypeMirror type}
      *  is a collection of some type and returns the respective kind.
@@ -727,6 +876,74 @@ public class ConfigAnnotationProcessor extends APBase
         //---* Done *----------------------------------------------------------
         return retValue;
     }   //  determinePropertyType()
+
+    /**
+     *  Determines the implementation of
+     *  {@link StringConverter}
+     *  that can translate a String into an instance of the given type and
+     *  vice-versa.
+     *
+     *  @param  method  The annotated method; it is only used to get the
+     *      instance of
+     *      {@link StringConversion &#64;StringConversion}
+     *      from it.
+     *  @param  type    The target type.
+     *  @param  isEnum  {@code true} if the target type is an
+     *      {@link Enum enum}
+     *      type, {@code false} otherwise.
+     *  @return An instance of
+     *      {@link Optional}
+     *      that holds the determined class.
+     */
+    private final Optional<ClassName> determineStringConverterClass( final ExecutableElement method, final TypeName type, final boolean isEnum )
+    {
+        requireNonNullArgument( type, "type" );
+        requireNonNullArgument( method, "method" );
+        ifDebug( a -> format( "Method: %2$s%n\tType for StringConverter request: %1$s%n\tisEnum: %3$b", a [0].toString(), ((Element) a[1]).getSimpleName(), a [2] ), type, method, Boolean.valueOf( isEnum ) );
+
+        //---* Retrieve the StringConverter from the annotation *--------------
+        final var retValue = extractStringConverterClass( method )
+            .or( () -> Optional.ofNullable( isEnum ? ClassName.from( EnumStringConverter.class ) : m_StringConvertersForTypeNames.get( type ) ) );
+        //noinspection unchecked
+        ifDebug( a -> ((Optional<TypeName>) a [0]).map( "Detected StringConverter: %1$s"::formatted ).orElse( "Could not find a StringConverter" ), retValue );
+
+        //---* Done *----------------------------------------------------------
+        return retValue;
+    }   //  determineStringConverterClass
+
+    /**
+     *  <p>{@summary Retrieves the value for the
+     *  {@link StringConversion &#64;StringConversion}
+     *  annotation from the given method.}</p>
+     *  <p>The type for the annotation value is an instance of
+     *  {@link Class Class&lt;? extends StringConverter&gt;},
+     *  so it cannot be retrieved directly. Therefore this method will return
+     *  the
+     *  {@link TypeName}
+     *  for the
+     *  {@link StringConverter}
+     *  implementation class.</p>
+     *
+     *  @param  method  The annotated method.
+     *  @return An instance of
+     *      {@link Optional}
+     *      holding the type name that represents the annotation value
+     *      &quot;<i>stringConverter</i>&quot;.
+     */
+    public final Optional<ClassName> extractStringConverterClass( final ExecutableElement method )
+    {
+        final var retValue = getAnnotationMirror( requireNonNullArgument( method, "method" ), StringConversion.class )
+            .flatMap( this::getAnnotationValue )
+            .map( annotationValue -> TypeName.from( (TypeMirror) annotationValue.getValue() ) )
+            .map( TypeName::toString )
+            .map( JavaUtils::loadClass )
+            .filter( Optional::isPresent )
+            .map( Optional::get )
+            .map( ClassName::from );
+
+        //---* Done *----------------------------------------------------------
+        return retValue;
+    }   //  extractStringConverterClass()
 
     /**
      *  {@inheritDoc}
@@ -850,7 +1067,7 @@ public class ConfigAnnotationProcessor extends APBase
                  * taken from the annotation @StringConversion, if present. And
                  * then it will override the already set one.
                  */
-                configuration.extractStringConverterClass( addMethod )
+                extractStringConverterClass( addMethod )
                     .ifPresent( property::setStringConverterClass );
             }
 
@@ -940,6 +1157,8 @@ public class ConfigAnnotationProcessor extends APBase
         property.setPropertyType( propertyType );
         final var collectionKind = determineCollectionKind( rawPropertyType );
         property.setCollectionKind( collectionKind );
+        final var isEnum = isEnumType( rawPropertyType );
+        property.setIsEnum( isEnum );
 
         /*
          * Some properties are 'special', and that is reflected by the
@@ -969,7 +1188,7 @@ public class ConfigAnnotationProcessor extends APBase
              * Determine the string converter instance, either from the
              * annotation or guess it from the property type.
              */
-            configuration.determineStringConverterClass( getter, propertyType ).ifPresent( property::setStringConverterClass );
+            determineStringConverterClass( getter, propertyType, isEnum ).ifPresent( property::setStringConverterClass );
 
             if( !isDefault )
             {
@@ -1193,6 +1412,7 @@ public class ConfigAnnotationProcessor extends APBase
         final CollectionKind collectionKind;
         ifDebug( "propertyName: %s"::formatted, propertyName );
         final var rawArgumentType = setter.getParameters().get( 0 ).asType();
+        final boolean isEnum;
         if( configuration.hasProperty( propertyName ) )
         {
             ifDebug( "property '%s' exists already"::formatted, propertyName );
@@ -1217,6 +1437,7 @@ public class ConfigAnnotationProcessor extends APBase
                 throw new CodeGenerationError( format( MSG_TypeMismatch, TypeName.from( setter.getParameters().get( 0 ).asType() ).toString(), setterMethodName, propertyType.toString() ) );
             }
             collectionKind = property.getCollectionKind();
+            isEnum = property.isEnum();
         }
         else
         {
@@ -1228,6 +1449,8 @@ public class ConfigAnnotationProcessor extends APBase
             property.setPropertyType( propertyType );
             collectionKind = determineCollectionKind( rawArgumentType );
             property.setCollectionKind( collectionKind );
+            isEnum = isEnumType( rawArgumentType );
+            property.setIsEnum( isEnum );
         }
 
         //---* Immutable special properties may not have a setter *------------
@@ -1369,7 +1592,7 @@ public class ConfigAnnotationProcessor extends APBase
              * Determine the string converter instance, either from the
              * annotation or guess it from the property type.
              */
-            final var stringConverterOptional = configuration.determineStringConverterClass( setter, propertyType );
+            final var stringConverterOptional = determineStringConverterClass( setter, propertyType, isEnum );
             property.getStringConverterClass()
                 .ifPresentOrElse( stringConverterClass ->
                 {
@@ -1418,6 +1641,32 @@ public class ConfigAnnotationProcessor extends APBase
     }   //  handleSetter()
 
     /**
+     *  Initialises the internal attribute
+     *  {@link #m_StringConvertersForTypeNames}.
+     *
+     *  @return The map of
+     *      {@link StringConverter}
+     *      implementations.
+     */
+    @API( status = INTERNAL, since = "0.1.0" )
+    private final Map<TypeName,ClassName> initStringConvertersForTypeNames()
+    {
+        final Map<TypeName,ClassName> retValue;
+        try
+        {
+            retValue = createStringConverterRegistry();
+        }
+        catch( final IOException e )
+        {
+            throw new ExceptionInInitializerError( e );
+        }
+        ifDebug( retValue.isEmpty(), $ -> "No StringConverters??" );
+
+        //---* Done *----------------------------------------------------------
+        return retValue;
+    }   //  initStringConvertersForTypeNames()
+
+    /**
      *  <p>{@summary Parses the given CLI annotation and updates the given
      *  property accordingly.}</p>
      *  <p>{@code annotation} may be only of type
@@ -1446,8 +1695,12 @@ public class ConfigAnnotationProcessor extends APBase
             final var name = "handler";
             final var annotationValue = getAnnotationValue( annotationMirror, name )
                 .orElseThrow( () -> new CodeGenerationError( format( MSG_NoValueForMirror, annotation.getClass().getName(), name ) ) );
-            final var handlerClass = TypeName.from( (TypeMirror) annotationValue.getValue() );
-            property.setCLIValueHandlerClass( handlerClass );
+            final var defaultClass = getTypeUtils().erasure( getElementUtils().getTypeElement( CmdLineValueHandler.class.getName() ).asType() );
+            final var handlerClass = getTypeUtils().erasure( (TypeMirror) annotationValue.getValue() );
+            if( !getTypeUtils().isSameType( defaultClass, handlerClass ) )
+            {
+                property.setCLIValueHandlerClass( TypeName.from( handlerClass ) );
+            }
         }
 
         //---* The format *----------------------------------------------------
@@ -1793,7 +2046,7 @@ public class ConfigAnnotationProcessor extends APBase
     private final TypeName retrieveAccessorClass( final TypeName accessorType, final TypeMirror propertyType, final CollectionKind collectionKind ) throws IllegalAnnotationError
     {
         var retValue = accessorType;
-        if( accessorType.equals( PREFS_ACCESSOR_TYPE ) )
+        if( isNull( accessorType ) || accessorType.equals( PREFS_ACCESSOR_TYPE ) )
         {
             //---* Infer the effective accessor class from the property type *-
             if( isEnumType( propertyType ) )
@@ -1804,12 +2057,7 @@ public class ConfigAnnotationProcessor extends APBase
             {
                 retValue = switch( collectionKind )
                 {
-                    case NO_COLLECTION ->
-                    {
-                        final var accessorClass = m_PrefsAccessorClasses.get( propertyType.toString() );
-                        yield nonNull( accessorClass ) ? ClassName.from( accessorClass ) : DEFAULT_ACCESSOR_TYPE;
-                    }
-
+                    case NO_COLLECTION -> m_PrefsAccessorClasses.getOrDefault( TypeName.from( propertyType ), (ClassName) DEFAULT_ACCESSOR_TYPE );
                     case LIST -> LIST_ACCESSOR_TYPE;
                     case MAP -> MAP_ACCESSOR_TYPE;
                     case SET -> SET_ACCESSOR_TYPE;
@@ -1974,6 +2222,44 @@ public class ConfigAnnotationProcessor extends APBase
         //---* Done *----------------------------------------------------------
         return retValue;
     }   //  retrieveSetterArgumentName()
+
+    /**
+     *  <p>{@summary Determines the key class for the given instance of
+     *  {@link StringConverter}.}</p>
+     *
+     *  @note   This method was copied from
+     *      {@code org.tquadrat.foundation.base/org.tquadrat.foundation.lang.internal.StringConverterService}.
+     *
+     *  @param  converter   The converter instance.
+     *  @return The subject class.
+     */
+    @SuppressWarnings( {"NestedTryStatement", "unchecked"} )
+    private static final Collection<Class<?>> retrieveSubjectClasses( final StringConverter<?> converter )
+    {
+        final var converterClass = requireNonNullArgument( converter, "converter" ).getClass();
+        Collection<Class<?>> retValue;
+        try
+        {
+            try
+            {
+                final var getSubjectClassMethod = converterClass.getMethod( METHOD_NAME_GetSubjectClass );
+                //noinspection unchecked
+                retValue = (Collection<Class<?>>) getSubjectClassMethod.invoke( converter );
+            }
+            catch( @SuppressWarnings( "unused" ) final NoSuchMethodException e )
+            {
+                final var fromStringMethod = converterClass.getMethod( "fromString", CharSequence.class );
+                retValue = List.of( fromStringMethod.getReturnType() );
+            }
+        }
+        catch( final NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException e )
+        {
+            throw new UnexpectedExceptionError( e );
+        }
+
+        //---* Done *----------------------------------------------------------
+        return retValue;
+    }   //  retrieveSubjectClass()
 }
 //  class ConfigAnnotationProcessor
 

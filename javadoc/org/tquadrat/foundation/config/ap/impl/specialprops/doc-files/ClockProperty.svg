@@ -7,7 +7,7 @@
      version='1.1'
      baseProfile='full'
      width='1494.000'
-     height='1655.000'>
+     height='1677.000'>
     <defs>
         <style><![CDATA[
             line
@@ -171,7 +171,7 @@
         </symbol>
         <clipPath id='ID000002'>
             <rect class='otherClass'
-                  height='480.000'
+                  height='491.000'
                   width='1444.000'
                   x='0.000'
                   y='0.000'/>
@@ -182,7 +182,7 @@
                     <rect x='0.000'
                           y='0.000'
                           width='1444.000'
-                          height='480.000'
+                          height='491.000'
                           class='otherClass'/>
                     <line x1='0.000'
                           y1='28.000'
@@ -279,7 +279,9 @@
                     <text x='5.000'
                           y='465.000'>+ hasFlag(flag:org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag):boolean</text>
                     <text x='5.000'
-                          y='476.000'>+ merge():org.tquadrat.foundation.config.ap.PropertySpec</text>
+                          y='476.000'>+ isEnum():boolean</text>
+                    <text x='5.000'
+                          y='487.000'>+ merge():org.tquadrat.foundation.config.ap.PropertySpec</text>
                 </g>
             </g>
         </symbol>
@@ -395,7 +397,7 @@
         </symbol>
         <clipPath id='ID000005'>
             <rect class='otherClass'
-                  height='469.000'
+                  height='480.000'
                   width='958.000'
                   x='0.000'
                   y='0.000'/>
@@ -406,7 +408,7 @@
                     <rect x='0.000'
                           y='0.000'
                           width='958.000'
-                          height='469.000'
+                          height='480.000'
                           class='otherClass'/>
                     <line x1='0.000'
                           y1='28.000'
@@ -533,25 +535,28 @@
                     <text x='5.000'
                           y='443.000'>&#x2A22; isCollection():boolean</text>
                     <text x='5.000'
-                          y='454.000'>&#x2A22; isOnCLI():boolean</text>
+                          y='454.000'
+                          class='abstract'>+ isEnum():boolean</text>
                     <text x='5.000'
-                          y='465.000'
+                          y='465.000'>&#x2A22; isOnCLI():boolean</text>
+                    <text x='5.000'
+                          y='476.000'
                           class='abstract'>+ merge():org.tquadrat.foundation.config.ap.PropertySpec</text>
                 </g>
             </g>
         </symbol>
     </defs>
     <path class='inheritance'
-          d='M747.000,1391.000 L747.000,1291.000'
+          d='M747.000,1413.000 L747.000,1313.000'
           marker-end='url(#inheritance)'/>
     <path class='inheritance'
-          d='M722.000,811.000 c0.000,-599.000,-575.000,0.000,-575.000,-599.000 v-15'
+          d='M722.000,822.000 c0.000,-610.000,-575.000,0.000,-575.000,-610.000 v-15'
           marker-end='url(#inheritance)'/>
     <path class='implementation'
-          d='M772.000,811.000 c0.000,-85.000,-25.000,0.000,-25.000,-85.000 v-15'
+          d='M772.000,822.000 c0.000,-85.000,-25.000,0.000,-25.000,-85.000 v-15'
           marker-end='url(#implementation)'/>
     <path class='inheritance'
-          d='M747.000,594.000 c0.000,-85.000,51.000,0.000,51.000,-85.000 v-15'
+          d='M747.000,605.000 c0.000,-85.000,51.000,0.000,51.000,-85.000 v-15'
           marker-end='url(#inheritance)'/>
     <use x='25.000'
          y='25.000'
@@ -560,12 +565,12 @@
          y='25.000'
          xlink:href='#org.tquadrat.foundation.config.ap.PropertySpec'/>
     <use x='25.000'
-         y='594.000'
+         y='605.000'
          xlink:href='#org.tquadrat.foundation.config.ap.impl.SpecialPropertySpec'/>
     <use x='25.000'
-         y='811.000'
+         y='822.000'
          xlink:href='#org.tquadrat.foundation.config.ap.impl.specialprops.SpecialPropertySpecBase'/>
     <use x='25.000'
-         y='1391.000'
+         y='1413.000'
          xlink:href='#org.tquadrat.foundation.config.ap.impl.specialprops.ClockProperty'/>
 </svg>

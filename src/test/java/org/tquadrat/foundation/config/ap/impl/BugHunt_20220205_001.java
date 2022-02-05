@@ -26,6 +26,7 @@ import static org.tquadrat.foundation.javacomposer.Layout.LAYOUT_FOUNDATION;
 import static org.tquadrat.foundation.lang.Objects.requireNotEmptyArgument;
 import static org.tquadrat.foundation.test.helper.CodeGeneratorTestBase.createProperty_charset;
 import static org.tquadrat.foundation.test.helper.CodeGeneratorTestBase.createProperty_clock;
+import static org.tquadrat.foundation.test.helper.CodeGeneratorTestBase.createProperty_enum1;
 import static org.tquadrat.foundation.test.helper.CodeGeneratorTestBase.createProperty_isDebug;
 import static org.tquadrat.foundation.test.helper.CodeGeneratorTestBase.createProperty_isTest;
 import static org.tquadrat.foundation.test.helper.CodeGeneratorTestBase.createProperty_locale;
@@ -49,8 +50,6 @@ import org.tquadrat.foundation.annotation.ClassVersion;
 import org.tquadrat.foundation.ap.APHelper;
 import org.tquadrat.foundation.config.CLIBeanSpec;
 import org.tquadrat.foundation.config.ConfigBeanSpec;
-import org.tquadrat.foundation.config.I18nSupport;
-import org.tquadrat.foundation.config.INIBeanSpec;
 import org.tquadrat.foundation.config.ap.CodeGenerationConfiguration;
 import org.tquadrat.foundation.config.spi.prefs.PreferenceChangeListenerImpl;
 import org.tquadrat.foundation.javacomposer.ClassName;
@@ -59,15 +58,15 @@ import org.tquadrat.foundation.test.NameImpl;
 import org.tquadrat.foundation.testutil.TestBaseClass;
 
 /**
- *  Generation caused &quot;cannot unindent 1 from 0&quot;.
+ *  Enum properties are causing issues.
  *
- *  @version $Id: BugHunt_20220126_002.java 1008 2022-02-05 03:18:07Z tquadrat $
+ *  @version $Id: BugHunt_20220205_001.java 1008 2022-02-05 03:18:07Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
-@ClassVersion( sourceVersion = "$Id: BugHunt_20220126_002.java 1008 2022-02-05 03:18:07Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: BugHunt_20220205_001.java 1008 2022-02-05 03:18:07Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
-@DisplayName( "org.tquadrat.foundation.config.ap.impl.BugHunt_20220126_002" )
-public class BugHunt_20220126_002 extends TestBaseClass
+@DisplayName( "org.tquadrat.foundation.config.ap.impl.BugHunt_20220205_001" )
+public class BugHunt_20220205_001 extends TestBaseClass
 {
         /*---------*\
     ====** Methods **==========================================================
@@ -148,6 +147,7 @@ public class BugHunt_20220126_002 extends TestBaseClass
         createProperty_random( configuration );
         createProperty_resourceBundle( configuration, true );
         createProperty_timezone( configuration );
+        createProperty_enum1( configuration );
     }   //  createProperties()
 
     /**
@@ -173,14 +173,13 @@ public class BugHunt_20220126_002 extends TestBaseClass
         final var interfacesToImplement =
             List.of(
                 ClassName.from( ConfigBeanSpec.class ),
-                ClassName.from( CLIBeanSpec.class ),
-                ClassName.from( I18nSupport.class ),
-                ClassName.from( INIBeanSpec.class )
+                ClassName.from( CLIBeanSpec.class )
             );
         configuration.addInterfacesToImplement( interfacesToImplement );
 
         //---* Add the properties *--------------------------------------------
         createProperties( configuration );
+
         //---* Run the test *--------------------------------------------------
         replayAll();
         final var candidate = new CodeGenerator( configuration );
@@ -222,50 +221,54 @@ public class BugHunt_20220126_002 extends TestBaseClass
                      * and the file comment there for the details.
                      * ============================================================================
                      */
-                                    
+
                     package org.tquadrat.foundation.test.generated;
-                                    
+
                     import static java.lang.System.getProperty;
                     import static java.nio.charset.Charset.defaultCharset;
-                    import static java.nio.file.Files.exists;
                     import static org.tquadrat.foundation.lang.CommonConstants.NULL_STRING;
-                    import static org.tquadrat.foundation.lang.Objects.isNull;
                     import static org.tquadrat.foundation.lang.Objects.nonNull;
                     import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
                     import static org.tquadrat.foundation.util.StringUtils.format;
                     import static org.tquadrat.foundation.util.SystemUtils.getPID;
-                                    
-                    import java.io.FileNotFoundException;
+
                     import java.io.IOException;
-                    import java.lang.ExceptionInInitializerError;
+                    import java.io.OutputStream;
+                    import java.lang.CharSequence;
                     import java.lang.Override;
                     import java.lang.String;
                     import java.lang.SuppressWarnings;
                     import java.nio.charset.Charset;
-                    import java.nio.file.Path;
                     import java.security.SecureRandom;
                     import java.time.Clock;
                     import java.time.ZoneId;
+                    import java.util.ArrayList;
+                    import java.util.List;
                     import java.util.Locale;
-                    import java.util.MissingResourceException;
                     import java.util.Optional;
                     import java.util.Random;
                     import java.util.ResourceBundle;
                     import java.util.StringJoiner;
+                    import java.util.function.BiConsumer;
+                    import org.tquadrat.config.test.MyEnum;
                     import org.tquadrat.foundation.annotation.ClassVersion;
+                    import org.tquadrat.foundation.config.CmdLineException;
+                    import org.tquadrat.foundation.config.ConfigUtil;
                     import org.tquadrat.foundation.config.ConfigurationChangeListener;
+                    import org.tquadrat.foundation.config.cli.CmdLineValueHandler;
+                    import org.tquadrat.foundation.config.cli.SimpleCmdLineValueHandler;
+                    import org.tquadrat.foundation.config.spi.CLIDefinition;
+                    import org.tquadrat.foundation.config.spi.CLIOptionDefinition;
                     import org.tquadrat.foundation.config.spi.ConfigChangeListenerSupport;
-                    import org.tquadrat.foundation.config.spi.prefs.PreferencesException;
-                    import org.tquadrat.foundation.inifile.INIFile;
                     import org.tquadrat.foundation.lang.Objects;
                     import org.tquadrat.foundation.test.BugHuntSpec;
                     import org.tquadrat.foundation.test.config.BaseClass;
                     import org.tquadrat.foundation.util.stringconverter.BooleanStringConverter;
                     import org.tquadrat.foundation.util.stringconverter.CharsetStringConverter;
+                    import org.tquadrat.foundation.util.stringconverter.EnumStringConverter;
                     import org.tquadrat.foundation.util.stringconverter.LocaleStringConverter;
-                    import org.tquadrat.foundation.util.stringconverter.PathStringConverter;
                     import org.tquadrat.foundation.util.stringconverter.ZoneIdStringConverter;
-                                    
+
                     /**
                      * The configuration bean that implements
                      * {@link BugHuntSpec}.
@@ -281,75 +284,71 @@ public class BugHunt_20220126_002 extends TestBaseClass
                          * Property: &quot;charset&quot;.
                          */
                         private Charset m_Charset;
-                                    
+
+                        /**
+                         * The registry for the CLI definitions
+                         */
+                        private final List<CLIDefinition> m_CLIDefinitions = new ArrayList<>();
+
+                        /**
+                         * The last error message from a call to
+                         * {@link #parseCommandLine(String[])}.
+                         *
+                         * @see #retrieveParseErrorMessage()
+                         */
+                        private String m_CLIErrorMessage = null;
+
                         /**
                          * Special Property: &quot;clock&quot;.
                          */
                         private Clock m_Clock;
-                                    
+
                         /**
-                         * The
-                         * {@link Locale}
-                         * for the currently loaded
-                         * {@link ResourceBundle}.
-                         *
-                         * @see #getResourceBundle()
+                         * Property: &quot;enum1&quot;.
                          */
-                        private Locale m_CurrentResourceBundleLocale = null;
-                                    
-                        /**
-                         * The INIFile instance that is used by this configuration bean to
-                         * persist (some of) its properties.
-                         */
-                        private final INIFile m_INIFile;
-                                    
-                        /**
-                         * The file that backs the INIFile used by this configuration bean.
-                         */
-                        @SuppressWarnings( "FieldCanBeLocal" )
-                        private final Path m_INIFilePath = PathStringConverter.INSTANCE.fromString( "/home/tquadrat/config/dummy.ini" );
-                                    
+                        private MyEnum m_Enum1;
+
                         /**
                          * Property: &quot;isDebug&quot;.
                          */
                         private final boolean m_IsDebug;
-                                    
+
                         /**
                          * Property: &quot;isTest&quot;.
                          */
                         private final boolean m_IsTest;
-                                    
+
                         /**
                          * The support for the configuration change listener.
                          */
                         @SuppressWarnings( "InstanceVariableOfConcreteClass" )
                         private final ConfigChangeListenerSupport m_ListenerSupport;
-                                    
+
                         /**
                          * Property: &quot;locale&quot;.
                          */
                         private Locale m_Locale;
-                                    
+
                         /**
                          * Special Property: &quot;processId&quot;.
                          */
                         private final long m_ProcessId;
-                                    
+
                         /**
                          * Special Property: &quot;random&quot;.
                          */
                         private final Random m_Random;
-                                    
+
                         /**
                          * Special Property: &quot;resourceBundle&quot;.
                          */
                         private ResourceBundle m_ResourceBundle = null;
-                                    
+
                         /**
                          * Property: &quot;timezone&quot;.
                          */
                         private ZoneId m_Timezone;
-                                    
+
                             /*--------------*\\
                         ====** Constructors **=====================================================
                             \\*--------------*/
@@ -360,17 +359,17 @@ public class BugHunt_20220126_002 extends TestBaseClass
                         {
                             //---* Initialise the listener support *-------------------------------
                             m_ListenerSupport = new ConfigChangeListenerSupport( this );
-                                    
+
                             /*
                              * Initialise the property 'charset'.
                              */
                             m_Charset = defaultCharset();
-                                    
+
                             /*
                              * Initialise the property 'clock'.
                              */
                             m_Clock = Clock.systemDefaultZone();
-                                    
+
                             /*
                              * Initialise the property 'isDebug' from the system properties.
                              */
@@ -379,7 +378,7 @@ public class BugHunt_20220126_002 extends TestBaseClass
                                 final var value = getProperty( "isDebug" );
                                 m_IsDebug = stringConverter.fromString( value );
                             }
-                                    
+
                             /*
                              * Initialise the property 'isTest' from the system properties.
                              */
@@ -388,31 +387,41 @@ public class BugHunt_20220126_002 extends TestBaseClass
                                 final var value = getProperty( "isTest" );
                                 m_IsTest = stringConverter.fromString( value );
                             }
-                                    
+
                             /*
                              * Initialise the property 'locale'.
                              */
                             m_Locale = Locale.getDefault();
-                                    
+
                             /*
                              * Initialise the property 'processId'.
                              */
                             m_ProcessId = getPID();
-                                    
+
                             /*
                              * Initialise the property 'random'.
                              */
                             m_Random = new SecureRandom();
-                                    
+
                             /*
                              * Initialise the property 'timezone'.
                              */
                             m_Timezone = ZoneId.systemDefault();
-                                    
-                            //---* Initialise the INI file *----------------------------------------
-                            m_INIFile = createINIFile( m_INIFilePath );
+
+                            /*
+                             * Initialise the CLI definitions.
+                             */
+                            CmdLineValueHandler<?> valueHandler;
+                            CLIDefinition cliDefinition;
+
+                            /*
+                             * CLI definition for Property &quot;enum1&quot;.
+                             */
+                            valueHandler = composeValueHandler_Enum1();
+                            cliDefinition = new CLIOptionDefinition( "enum1", List.of( "--enum1" ), null, null, null, true, valueHandler, false, null );
+                            m_CLIDefinitions.add( cliDefinition );
                         }  //  BugHuntImpl()
-                                    
+
                             /*---------*\\
                         ====** Methods **==========================================================
                             \\*---------*/
@@ -424,51 +433,31 @@ public class BugHunt_20220126_002 extends TestBaseClass
                         {
                             m_ListenerSupport.addListener( listener );
                         }  //  addListener()
-                                    
+
                         /**
-                         * Creates the
-                         * {@link INIFile}
-                         * instance that is connected with this configuration bean.
+                         * Creates the value handler for the property &quot;enum1.&quot;.
                          *
-                         * @throws ExceptionInInitializerError Something went wrong on creating/opening the INI file.
-                         * @param path The path for the file that backs the {@code INIFile}.
-                         * @return The {@code INIFile} instance.
+                         * @return The value handler.
                          */
-                        @SuppressWarnings( "ThrowCaughtLocally" )
-                        private static final INIFile createINIFile( final Path path ) throws ExceptionInInitializerError
+                        private final CmdLineValueHandler<?> composeValueHandler_Enum1()
                         {
-                            final INIFile retValue;
-                            try
-                            {
-                                if( !exists( requireNonNullArgument( path, "path" ) ) )
-                                {
-                                    throw new FileNotFoundException( path.toString() );
-                                }
-                                retValue = INIFile.open( path );
-                            }
-                            catch( final IOException e )
-                            {
-                                throw new ExceptionInInitializerError( e );
-                            }
-                                    
-                            // Sets the structure of the INIFile
-                            if( !retValue.hasGroup( "Group1" ) )
-                            {
-                                retValue.addComment( "Group1", "The comment for group 1.\\n" );
-                            }
-                            if( !retValue.hasGroup( "Group2" ) )
-                            {
-                                retValue.addComment( "Group2", "The comment for group 2.\\n" );
-                            }
-                            if( !retValue.hasGroup( "Group3" ) )
-                            {
-                                retValue.addComment( "Group3", "The comment for group 3.\\n" );
-                            }
-                                    
+                            @SuppressWarnings( "RedundantExplicitVariableType" )
+                            final BiConsumer<String, MyEnum> lambda = (propertyName,value) -> m_Enum1 = value;
+                            final CmdLineValueHandler<?> retValue = new SimpleCmdLineValueHandler<>( lambda, new EnumStringConverter( MyEnum.class ) );
+
                             //---* Done *----------------------------------------------------------
                             return retValue;
-                        }  //  createINIFile()
-                                    
+                        }  //  composeValueHandler_Enum1()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void dumpParamFileTemplate( final OutputStream outputStream ) throws IOException
+                        {
+                            ConfigUtil.dumpParamFileTemplate( m_CLIDefinitions, outputStream );
+                        }  //  dumpParamFileTemplate()
+
                         /**
                          * {@inheritDoc}
                          */
@@ -477,7 +466,7 @@ public class BugHunt_20220126_002 extends TestBaseClass
                         {
                             return m_Charset;
                         }  //  getCharset()
-                                    
+
                         /**
                          * {@inheritDoc}
                          */
@@ -486,7 +475,7 @@ public class BugHunt_20220126_002 extends TestBaseClass
                         {
                             return m_Clock;
                         }  //  getClock()
-                                    
+
                         /**
                          * {@inheritDoc}
                          */
@@ -495,7 +484,7 @@ public class BugHunt_20220126_002 extends TestBaseClass
                         {
                             return m_Locale;
                         }  //  getLocale()
-                                    
+
                         /**
                          * {@inheritDoc}
                          */
@@ -513,7 +502,7 @@ public class BugHunt_20220126_002 extends TestBaseClass
                         {
                             return m_ProcessId;
                         }  //  getProcessId()
-                                    
+
                         /**
                          * {@inheritDoc}
                          */
@@ -522,46 +511,16 @@ public class BugHunt_20220126_002 extends TestBaseClass
                         {
                             return m_Random;
                         }  //  getRandom()
-                                    
+
                         /**
                          * {@inheritDoc}
                          */
                         @Override
                         public final Optional<ResourceBundle> getResourceBundle()
                         {
-                            ResourceBundle bundle = null;
-                            final var currentLocale = getLocale();
-                            if( currentLocale.equals( m_CurrentResourceBundleLocale ) )
-                            {
-                                bundle = m_ResourceBundle;
-                            }
-                            if( isNull( bundle ) )
-                            {
-                                try
-                                {
-                                    var module = getClass().getModule();
-                                    if( module.isNamed() )
-                                    {
-                                        bundle = ResourceBundle.getBundle( "org.tquadrat.foundation.config.ap.impl.TextsAndMessages", currentLocale, module );
-                                    }
-                                    else
-                                    {
-                                        bundle = ResourceBundle.getBundle( "org.tquadrat.foundation.config.ap.impl.TextsAndMessages", currentLocale );
-                                    }
-                                    m_ResourceBundle = bundle;
-                                    m_CurrentResourceBundleLocale = currentLocale;
-                                }
-                                catch( @SuppressWarnings( "unused" ) final MissingResourceException e )
-                                {
-                                    /* Deliberately ignored */
-                                }
-                            }
-                            final var retValue = Optional.ofNullable( bundle );
-                                    
-                            //---* Done *----------------------------------------------------------
-                            return retValue;
+                            return Optional.ofNullable( m_ResourceBundle );
                         }  //  getResourceBundle()
-                                    
+
                         /**
                          * {@inheritDoc}
                          */
@@ -570,7 +529,7 @@ public class BugHunt_20220126_002 extends TestBaseClass
                         {
                             return m_Timezone;
                         }  //  getTimezone()
-                                    
+
                         /**
                          * {@inheritDoc}
                          */
@@ -579,7 +538,7 @@ public class BugHunt_20220126_002 extends TestBaseClass
                         {
                             return m_IsDebug;
                         }  //  isDebug()
-                                    
+
                         /**
                          * {@inheritDoc}
                          */
@@ -588,36 +547,39 @@ public class BugHunt_20220126_002 extends TestBaseClass
                         {
                             return m_IsTest;
                         }  //  isTest()
-                                    
+
                         /**
                          * {@inheritDoc}
                          */
                         @Override
-                        public final void loadINIFile()
+                        public final boolean parseCommandLine( final String[] args )
                         {
+                            var retValue = true;
                             try
                             {
-                                m_INIFile.refresh();
-                                    
-                                /*
-                                 * Load the data.
-                                 */
+                                ConfigUtil.parseCommandLine( m_CLIDefinitions, args );
+                                m_CLIErrorMessage = null;
                             }
-                            catch( final IOException e )
+                            catch( final CmdLineException e )
                             {
-                                throw new PreferencesException( e );
+                                m_CLIErrorMessage = e.getLocalizedMessage();
+                                retValue = false;
                             }
-                        }  //  loadINIFile()
-                                    
+
+                            //---* Done *----------------------------------------------------------
+                            return retValue;
+                        }  //  parseCommandLine()
+
                         /**
                          * {@inheritDoc}
                          */
                         @Override
-                        public final Optional<INIFile> obtainINIFile()
+                        public final void printUsage( final OutputStream outputStream, final CharSequence command )
+                                throws IOException
                         {
-                            return Optional.of( m_INIFile );
-                        }  //  obtainINIFile()
-                                    
+                            ConfigUtil.printUsage( outputStream, getResourceBundle(), command, m_CLIDefinitions );
+                        }  //  printUsage()
+
                         /**
                          * {@inheritDoc}
                          */
@@ -626,7 +588,16 @@ public class BugHunt_20220126_002 extends TestBaseClass
                         {
                             m_ListenerSupport.removeListener( listener );
                         }  //  removeListener()
-                                    
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Optional<String> retrieveParseErrorMessage()
+                        {
+                            return Optional.ofNullable( m_CLIErrorMessage );
+                        }  //  retrieveParseErrorMessage()
+
                         /**
                          * {@inheritDoc}
                          */
@@ -637,7 +608,7 @@ public class BugHunt_20220126_002 extends TestBaseClass
                             m_ListenerSupport.fireEvent( "charset", m_Charset, newValue );
                             m_Charset = newValue;
                         }  //  setCharset()
-                                    
+
                         /**
                          * {@inheritDoc}
                          */
@@ -648,7 +619,18 @@ public class BugHunt_20220126_002 extends TestBaseClass
                             m_ListenerSupport.fireEvent( "clock", m_Clock, newValue );
                             m_Clock = newValue;
                         }  //  setClock()
-                                    
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void setEnum1( final MyEnum enum1 )
+                        {
+                            final var newValue = enum1;
+                            m_ListenerSupport.fireEvent( "enum1", m_Enum1, newValue );
+                            m_Enum1 = newValue;
+                        }  //  setEnum1()
+
                         /**
                          * {@inheritDoc}
                          */
@@ -659,7 +641,18 @@ public class BugHunt_20220126_002 extends TestBaseClass
                             m_ListenerSupport.fireEvent( "locale", m_Locale, newValue );
                             m_Locale = newValue;
                         }  //  setLocale()
-                                    
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void setResourceBundle( final ResourceBundle resourceBundle )
+                        {
+                            final var newValue = resourceBundle;
+                            m_ListenerSupport.fireEvent( "resourceBundle", m_ResourceBundle, newValue );
+                            m_ResourceBundle = newValue;
+                        }  //  setResourceBundle()
+
                         /**
                          * {@inheritDoc}
                          */
@@ -670,7 +663,7 @@ public class BugHunt_20220126_002 extends TestBaseClass
                             m_ListenerSupport.fireEvent( "timezone", m_Timezone, newValue );
                             m_Timezone = newValue;
                         }  //  setTimezone()
-                                    
+
                         /**
                          * {@inheritDoc}
                          */
@@ -686,69 +679,56 @@ public class BugHunt_20220126_002 extends TestBaseClass
                                 final var value = stringConverter.toString( m_Charset );
                                 joiner.add( format( "charset = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                             }
-        
+
+                            //---* Property "enum1" *----------------------------------------------
+                            {
+                                final var stringConverter = new EnumStringConverter( MyEnum.class );
+                                final var value = stringConverter.toString( m_Enum1 );
+                                joiner.add( format( "enum1 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                            }
+
                             //---* Property "isDebug" *--------------------------------------------
                             {
                                 final var stringConverter = BooleanStringConverter.INSTANCE;
                                 final var value = stringConverter.toString( m_IsDebug );
                                 joiner.add( format( "isDebug = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                             }
-        
+
                             //---* Property "isTest" *---------------------------------------------
                             {
                                 final var stringConverter = BooleanStringConverter.INSTANCE;
                                 final var value = stringConverter.toString( m_IsTest );
                                 joiner.add( format( "isTest = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                             }
-        
+
                             //---* Property "locale" *---------------------------------------------
                             {
                                 final var stringConverter = LocaleStringConverter.INSTANCE;
                                 final var value = stringConverter.toString( m_Locale );
                                 joiner.add( format( "locale = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                             }
-        
+
                             //---* Property "processId" *------------------------------------------
                             {
                                 joiner.add( format( "processId = \\"%1$S\\"", Objects.toString( m_ProcessId ) ) );
                             }
-        
+
                             //---* Property "timezone" *-------------------------------------------
                             {
                                 final var stringConverter = ZoneIdStringConverter.INSTANCE;
                                 final var value = stringConverter.toString( m_Timezone );
                                 joiner.add( format( "timezone = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                             }
-                                                
+
                             //---* Create the return value *---------------------------------------
                             final var retValue = joiner.toString();
-                                    
+
                             //---* Done *----------------------------------------------------------
                             return retValue;
                         }  //  toString()
-                                    
-                        /**
-                         * {@inheritDoc}
-                         */
-                        @Override
-                        public final void updateINIFile()
-                        {
-                            try
-                            {
-                                /*
-                                 * Write the data.
-                                 */
-                                    
-                                m_INIFile.save();
-                            }
-                            catch( final IOException e )
-                            {
-                                throw new PreferencesException( e );
-                            }
-                        }  //  updateINIFile()
                     }
                     //  class BugHuntImpl
-                                    
+
                     /*
                      * End of File
                      */"""
@@ -768,7 +748,7 @@ public class BugHunt_20220126_002 extends TestBaseClass
         }
     }   //  testCodeGeneration()
 }
-//  class BugHunt_20220126_002
+//  class BugHunt_20220205_001
 
 /*
  *  End of File

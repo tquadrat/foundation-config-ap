@@ -68,6 +68,7 @@ import org.tquadrat.foundation.config.SessionBeanSpec;
 import org.tquadrat.foundation.config.ap.CodeGenerationConfiguration;
 import org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor;
 import org.tquadrat.foundation.config.ap.impl.PropertySpecImpl;
+import org.tquadrat.foundation.config.spi.prefs.EnumAccessor;
 import org.tquadrat.foundation.config.spi.prefs.IntegerAccessor;
 import org.tquadrat.foundation.config.spi.prefs.PreferenceChangeListenerImpl;
 import org.tquadrat.foundation.config.spi.prefs.PrimitiveIntAccessor;
@@ -80,6 +81,7 @@ import org.tquadrat.foundation.javacomposer.TypeName;
 import org.tquadrat.foundation.test.NameImpl;
 import org.tquadrat.foundation.testutil.TestBaseClass;
 import org.tquadrat.foundation.util.stringconverter.BooleanStringConverter;
+import org.tquadrat.foundation.util.stringconverter.EnumStringConverter;
 import org.tquadrat.foundation.util.stringconverter.InstantStringConverter;
 import org.tquadrat.foundation.util.stringconverter.IntegerStringConverter;
 import org.tquadrat.foundation.util.stringconverter.StringStringConverter;
@@ -87,11 +89,11 @@ import org.tquadrat.foundation.util.stringconverter.StringStringConverter;
 /**
  *  The base class for the code generation tests.
  *
- *  @version $Id: CodeGeneratorTestBase.java 1002 2022-02-01 21:33:00Z tquadrat $
+ *  @version $Id: CodeGeneratorTestBase.java 1008 2022-02-05 03:18:07Z tquadrat $
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  */
 @SuppressWarnings( {"AbstractClassWithoutAbstractMethods", "OverlyCoupledClass", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: CodeGeneratorTestBase.java 1002 2022-02-01 21:33:00Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeGeneratorTestBase.java 1008 2022-02-05 03:18:07Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public abstract class CodeGeneratorTestBase extends TestBaseClass
 {
@@ -323,8 +325,6 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
     @SuppressWarnings( "UseOfConcreteClass" )
     protected final void createCustomProperties2( final CodeGenerationConfiguration configuration ) throws Exception
     {
-        PropertySpecImpl property;
-
         //---* Create the custom properties *----------------------------------
         createProperty_int3( configuration );
         createProperty_int4( configuration );
@@ -531,6 +531,32 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
         property.setPrefsAccessorClass( ClassName.from( PrimitiveIntAccessor.class ) );
         if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
     }   //  createProperty_date2()
+
+    /**
+     *  Creates the property 'enum1', and adds it to the configuration.
+     *
+     *  @param  configuration   The configuration that takes the created
+     *      property.
+     *  @throws Exception   Something went unexpectedly wrong.
+     */
+    @SuppressWarnings( "UseOfConcreteClass" )
+    public static final void createProperty_enum1( final CodeGenerationConfiguration configuration ) throws Exception
+    {
+        final var propertyName = "enum1";
+        final var property = new PropertySpecImpl( propertyName );
+        configuration.addProperty( property );
+        property.setFlag( PROPERTY_IS_OPTION, PROPERTY_CLI_MANDATORY, ALLOWS_PREFERENCES );
+        property.setPropertyType( ClassName.from( "org.tquadrat.config.test", "MyEnum" ) );
+        property.setIsEnum( true );
+        property.setFieldName( makeFieldName( propertyName ) );
+        property.setSetterMethodName( new NameImpl( composeSetterName( propertyName ) ) );
+        property.setSetterArgumentName( new NameImpl( propertyName ) );
+        property.setStringConverterClass( ClassName.from( EnumStringConverter.class ) );
+        property.setCLIOptionNames( List.of( format( "--%s", propertyName ) ) );
+        property.setPrefsKey( propertyName );
+        property.setPrefsAccessorClass( ClassName.from( EnumAccessor.class ) );
+        if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
+    }   //  createProperty_enum1()
 
     /**
      *  Creates the property 'int3', and adds it to the configuration.

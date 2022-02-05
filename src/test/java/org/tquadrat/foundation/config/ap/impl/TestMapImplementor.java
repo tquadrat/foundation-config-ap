@@ -43,10 +43,10 @@ import org.tquadrat.foundation.test.helper.CodeGeneratorTestBase;
  *  interface.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: TestMapImplementor.java 1002 2022-02-01 21:33:00Z tquadrat $
+ *  @version $Id: TestMapImplementor.java 1008 2022-02-05 03:18:07Z tquadrat $
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: TestMapImplementor.java 1002 2022-02-01 21:33:00Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: TestMapImplementor.java 1008 2022-02-05 03:18:07Z tquadrat $" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.TestMapImplementor" )
 public class TestMapImplementor extends CodeGeneratorTestBase
 {
@@ -940,198 +940,108 @@ public class TestMapImplementor extends CodeGeneratorTestBase
                         {
                             final var prefix = format ( "%s [", getClass().getName() );
                             final var joiner = new StringJoiner( ", ", prefix, "]" );
+
                             try( final var ignored = m_ReadLock.lock() )
                             {
-                                // Property "charset"
+                                //---* Property "charset" *----------------------------------------
                                 {
                                     final var stringConverter = CharsetStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Charset );
-                                    if( nonNull( value ) )
-                                    {
-                                        joiner.add( format( "charset = \\"%1S\\"", value ) );
-                                    }
-                                    else
-                                    {
-                                        joiner.add( format( "charset = \\"%1S\\"", NULL_STRING ) );
-                                    }
+                                    joiner.add( format( "charset = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-
-                                // Property "date1"
+        
+                                //---* Property "date1" *------------------------------------------
                                 {
                                     final var stringConverter = InstantStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Date1 );
-                                    if( nonNull( value ) )
-                                    {
-                                        joiner.add( format( "date1 = \\"%1S\\"", value ) );
-                                    }
-                                    else
-                                    {
-                                        joiner.add( format( "date1 = \\"%1S\\"", NULL_STRING ) );
-                                    }
+                                    joiner.add( format( "date1 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-
-                                // Property "date2"
+        
+                                //---* Property "date2" *------------------------------------------
                                 {
                                     final var stringConverter = InstantStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Date2 );
-                                    if( nonNull( value ) )
-                                    {
-                                        joiner.add( format( "date2 = \\"%1S\\"", value ) );
-                                    }
-                                    else
-                                    {
-                                        joiner.add( format( "date2 = \\"%1S\\"", NULL_STRING ) );
-                                    }
+                                    joiner.add( format( "date2 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-
-                                // Property "int1"
+        
+                                //---* Property "int1" *-------------------------------------------
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Int1 );
-                                    if( nonNull( value ) )
-                                    {
-                                        joiner.add( format( "int1 = \\"%1S\\"", value ) );
-                                    }
-                                    else
-                                    {
-                                        joiner.add( format( "int1 = \\"%1S\\"", NULL_STRING ) );
-                                    }
+                                    joiner.add( format( "int1 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-
-                                // Property "int2"
+        
+                                //---* Property "int2" *-------------------------------------------
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Int2 );
-                                    if( nonNull( value ) )
-                                    {
-                                        joiner.add( format( "int2 = \\"%1S\\"", value ) );
-                                    }
-                                    else
-                                    {
-                                        joiner.add( format( "int2 = \\"%1S\\"", NULL_STRING ) );
-                                    }
+                                    joiner.add( format( "int2 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-
-                                // Property "int3"
+        
+                                //---* Property "int3" *-------------------------------------------
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Int3 );
-                                    if( nonNull( value ) )
-                                    {
-                                        joiner.add( format( "int3 = \\"%1S\\"", value ) );
-                                    }
-                                    else
-                                    {
-                                        joiner.add( format( "int3 = \\"%1S\\"", NULL_STRING ) );
-                                    }
+                                    joiner.add( format( "int3 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-
-                                // Property "int4"
+        
+                                //---* Property "int4" *-------------------------------------------
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Int4 );
-                                    if( nonNull( value ) )
-                                    {
-                                        joiner.add( format( "int4 = \\"%1S\\"", value ) );
-                                    }
-                                    else
-                                    {
-                                        joiner.add( format( "int4 = \\"%1S\\"", NULL_STRING ) );
-                                    }
+                                    joiner.add( format( "int4 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-
-                                // Property "isDebug"
+        
+                                //---* Property "isDebug" *----------------------------------------
                                 {
                                     final var stringConverter = BooleanStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_IsDebug );
-                                    if( nonNull( value ) )
-                                    {
-                                        joiner.add( format( "isDebug = \\"%1S\\"", value ) );
-                                    }
-                                    else
-                                    {
-                                        joiner.add( format( "isDebug = \\"%1S\\"", NULL_STRING ) );
-                                    }
+                                    joiner.add( format( "isDebug = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-
-                                // Property "isTest"
+        
+                                //---* Property "isTest" *-----------------------------------------
                                 {
                                     final var stringConverter = BooleanStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_IsTest );
-                                    if( nonNull( value ) )
-                                    {
-                                        joiner.add( format( "isTest = \\"%1S\\"", value ) );
-                                    }
-                                    else
-                                    {
-                                        joiner.add( format( "isTest = \\"%1S\\"", NULL_STRING ) );
-                                    }
+                                    joiner.add( format( "isTest = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-
-                                // Property "locale"
+        
+                                //---* Property "locale" *-----------------------------------------
                                 {
                                     final var stringConverter = LocaleStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Locale );
-                                    if( nonNull( value ) )
-                                    {
-                                        joiner.add( format( "locale = \\"%1S\\"", value ) );
-                                    }
-                                    else
-                                    {
-                                        joiner.add( format( "locale = \\"%1S\\"", NULL_STRING ) );
-                                    }
+                                    joiner.add( format( "locale = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-
-                                // Property "object1"
+        
+                                //---* Property "object1" *----------------------------------------
                                 {
-                                    joiner.add( format( "object1 = \\"%1S\\"", Objects.toString( getObject1() ) ) );
+                                    joiner.add( format( "object1 = \\"%1$s\\"", Objects.toString( getObject1() ) ) );
                                 }
-
-                                // Property "processId"
+        
+                                //---* Property "processId" *--------------------------------------
                                 {
-                                    joiner.add( format( "processId = \\"%1S\\"", Objects.toString( m_ProcessId ) ) );
+                                    joiner.add( format( "processId = \\"%1$S\\"", Objects.toString( m_ProcessId ) ) );
                                 }
-
-                                // Property "string1"
+        
+                                //---* Property "string1" *----------------------------------------
                                 {
                                     final var stringConverter = StringStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_String1 );
-                                    if( nonNull( value ) )
-                                    {
-                                        joiner.add( format( "string1 = \\"%1S\\"", value ) );
-                                    }
-                                    else
-                                    {
-                                        joiner.add( format( "string1 = \\"%1S\\"", NULL_STRING ) );
-                                    }
+                                    joiner.add( format( "string1 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-
-                                // Property "string2"
+        
+                                //---* Property "string2" *----------------------------------------
                                 {
                                     final var stringConverter = StringStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_String2 );
-                                    if( nonNull( value ) )
-                                    {
-                                        joiner.add( format( "string2 = \\"%1S\\"", value ) );
-                                    }
-                                    else
-                                    {
-                                        joiner.add( format( "string2 = \\"%1S\\"", NULL_STRING ) );
-                                    }
+                                    joiner.add( format( "string2 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-
-                                // Property "timezone"
+        
+                                //---* Property "timezone" *---------------------------------------
                                 {
                                     final var stringConverter = ZoneIdStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Timezone );
-                                    if( nonNull( value ) )
-                                    {
-                                        joiner.add( format( "timezone = \\"%1S\\"", value ) );
-                                    }
-                                    else
-                                    {
-                                        joiner.add( format( "timezone = \\"%1S\\"", NULL_STRING ) );
-                                    }
+                                    joiner.add( format( "timezone = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
                             }
 

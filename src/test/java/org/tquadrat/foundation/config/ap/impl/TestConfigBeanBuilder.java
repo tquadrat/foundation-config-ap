@@ -43,10 +43,10 @@ import org.tquadrat.foundation.test.helper.CodeGeneratorTestBase;
  *  Tests the generation of a configuration bean.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: TestConfigBeanBuilder.java 949 2021-12-28 11:09:25Z tquadrat $
+ *  @version $Id: TestConfigBeanBuilder.java 1008 2022-02-05 03:18:07Z tquadrat $
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: TestConfigBeanBuilder.java 949 2021-12-28 11:09:25Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: TestConfigBeanBuilder.java 1008 2022-02-05 03:18:07Z tquadrat $" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.TestConfigBeanBuilder" )
 public class TestConfigBeanBuilder extends CodeGeneratorTestBase
 {
@@ -144,381 +144,347 @@ public class TestConfigBeanBuilder extends CodeGeneratorTestBase
              */
             final var expected = format(
                 """
-                /*
-                 * ============================================================================
-                 * This file inherits the copyright and license(s) from the interface that is
-                 * implemented by the class
-                 *
-                 *     org.tquadrat.foundation.test.generated.MyConfigurationBean
-                 *
-                 * Refer to
-                 *
-                 *     org.tquadrat.foundation.test.MyConfigurationBeanSpecification
-                 *
-                 * and the file comment there for the details.
-                 * ============================================================================
-                 */
-                 
-                package org.tquadrat.foundation.test.generated;
+                    /*
+                     * ============================================================================
+                     * This file inherits the copyright and license(s) from the interface that is
+                     * implemented by the class
+                     *
+                     *     org.tquadrat.foundation.test.generated.MyConfigurationBean
+                     *
+                     * Refer to
+                     *
+                     *     org.tquadrat.foundation.test.MyConfigurationBeanSpecification
+                     *
+                     * and the file comment there for the details.
+                     * ============================================================================
+                     */
+                     
+                    package org.tquadrat.foundation.test.generated;
 
-                import static java.lang.System.getProperty;
-                import static java.nio.charset.Charset.defaultCharset;
-                import static org.tquadrat.foundation.lang.CommonConstants.NULL_STRING;
-                import static org.tquadrat.foundation.lang.Objects.nonNull;
-                import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
-                import static org.tquadrat.foundation.util.StringUtils.format;
-                                
-                import java.lang.Override;
-                import java.lang.String;
-                import java.lang.SuppressWarnings;
-                import java.nio.charset.Charset;
-                import java.time.ZoneId;
-                import java.util.Locale;
-                import java.util.Optional;
-                import java.util.ResourceBundle;
-                import java.util.StringJoiner;
-                import java.util.concurrent.locks.ReentrantReadWriteLock;
-                import org.tquadrat.foundation.annotation.ClassVersion;
-                import org.tquadrat.foundation.config.ConfigurationChangeListener;
-                import org.tquadrat.foundation.config.spi.ConfigChangeListenerSupport;
-                import org.tquadrat.foundation.lang.AutoLock;
-                import org.tquadrat.foundation.test.MyConfigurationBeanSpecification;
-                import org.tquadrat.foundation.test.config.BaseClass;
-                import org.tquadrat.foundation.util.stringconverter.BooleanStringConverter;
-                import org.tquadrat.foundation.util.stringconverter.CharsetStringConverter;
-                import org.tquadrat.foundation.util.stringconverter.LocaleStringConverter;
-                import org.tquadrat.foundation.util.stringconverter.ZoneIdStringConverter;
-                                
-                /**
-                 * The configuration bean that implements
-                 * {@link MyConfigurationBeanSpecification}.
-                 */
-                @ClassVersion( sourceVersion = "Generated through org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor at %1$s", isGenerated = true )
-                @SuppressWarnings( {"OverlyComplexClass", "OverlyCoupledClass"} )
-                public final class MyConfigurationBean extends BaseClass implements MyConfigurationBeanSpecification
-                {
-                        /*------------*\\
-                    ====** Attributes **=======================================================
-                        \\*------------*/
+                    import static java.lang.System.getProperty;
+                    import static java.nio.charset.Charset.defaultCharset;
+                    import static org.tquadrat.foundation.lang.CommonConstants.NULL_STRING;
+                    import static org.tquadrat.foundation.lang.Objects.nonNull;
+                    import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
+                    import static org.tquadrat.foundation.util.StringUtils.format;
+                                    
+                    import java.lang.Override;
+                    import java.lang.String;
+                    import java.lang.SuppressWarnings;
+                    import java.nio.charset.Charset;
+                    import java.time.ZoneId;
+                    import java.util.Locale;
+                    import java.util.Optional;
+                    import java.util.ResourceBundle;
+                    import java.util.StringJoiner;
+                    import java.util.concurrent.locks.ReentrantReadWriteLock;
+                    import org.tquadrat.foundation.annotation.ClassVersion;
+                    import org.tquadrat.foundation.config.ConfigurationChangeListener;
+                    import org.tquadrat.foundation.config.spi.ConfigChangeListenerSupport;
+                    import org.tquadrat.foundation.lang.AutoLock;
+                    import org.tquadrat.foundation.test.MyConfigurationBeanSpecification;
+                    import org.tquadrat.foundation.test.config.BaseClass;
+                    import org.tquadrat.foundation.util.stringconverter.BooleanStringConverter;
+                    import org.tquadrat.foundation.util.stringconverter.CharsetStringConverter;
+                    import org.tquadrat.foundation.util.stringconverter.LocaleStringConverter;
+                    import org.tquadrat.foundation.util.stringconverter.ZoneIdStringConverter;
+                                    
                     /**
-                     * Property: &quot;charset&quot;.
+                     * The configuration bean that implements
+                     * {@link MyConfigurationBeanSpecification}.
                      */
-                    private Charset m_Charset;
-
-                    /**
-                     * Property: &quot;isDebug&quot;.
-                     */
-                    private final boolean m_IsDebug;
-                                
-                    /**
-                     * Property: &quot;isTest&quot;.
-                     */
-                    private final boolean m_IsTest;
-
-                    /**
-                     * The support for the configuration change listener.
-                     */
-                    @SuppressWarnings( "InstanceVariableOfConcreteClass" )
-                    private final ConfigChangeListenerSupport m_ListenerSupport;
-
-                    /**
-                     * Property: &quot;locale&quot;.
-                     */
-                    private Locale m_Locale;
-
-                    /**
-                     * The &quot;read&quot; lock.
-                     */
-                    private final AutoLock m_ReadLock;
-
-                    /**
-                     * Special Property: &quot;resourceBundle&quot;.
-                     */
-                    @SuppressWarnings( "FieldMayBeFinal" )
-                    private ResourceBundle m_ResourceBundle = null;
-
-                    /**
-                     * Property: &quot;timezone&quot;.
-                     */
-                    private ZoneId m_Timezone;
-
-                    /**
-                     * The &quot;write&quot; lock.
-                     */
-                    private final AutoLock m_WriteLock;
-
-                        /*--------------*\\
-                    ====** Constructors **=====================================================
-                        \\*--------------*/
-                    /**
-                     * Creates a new {@code MyConfigurationBean} instance.
-                     */
-                    public MyConfigurationBean()
+                    @ClassVersion( sourceVersion = "Generated through org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor at %1$s", isGenerated = true )
+                    @SuppressWarnings( {"OverlyComplexClass", "OverlyCoupledClass"} )
+                    public final class MyConfigurationBean extends BaseClass implements MyConfigurationBeanSpecification
                     {
-                        //---* Initialise the listener support *-------------------------------
-                        m_ListenerSupport = new ConfigChangeListenerSupport( this );
-
-                        //---* Create the locks and initialise them *--------------------------
-                        final var lock = new ReentrantReadWriteLock();
-                        m_ReadLock = AutoLock.of( lock.readLock() );
-                        m_WriteLock = AutoLock.of( lock.writeLock() );
-
-                        /*
-                         * Initialise the property 'charset'.
+                            /*------------*\\
+                        ====** Attributes **=======================================================
+                            \\*------------*/
+                        /**
+                         * Property: &quot;charset&quot;.
                          */
-                        m_Charset = defaultCharset();
-                        
-                        /*
-                         * Initialise the property 'isDebug' from the system properties.
+                        private Charset m_Charset;
+
+                        /**
+                         * Property: &quot;isDebug&quot;.
                          */
-                        {
-                            final var stringConverter = BooleanStringConverter.INSTANCE;
-                            final var value = getProperty( "isDebug" );
-                            m_IsDebug = stringConverter.fromString( value );
-                        }
-
-                        /*
-                         * Initialise the property 'isTest' from the system properties.
+                        private final boolean m_IsDebug;
+                                    
+                        /**
+                         * Property: &quot;isTest&quot;.
                          */
-                        {
-                            final var stringConverter = BooleanStringConverter.INSTANCE;
-                            final var value = getProperty( "isTest" );
-                            m_IsTest = stringConverter.fromString( value );
-                        }
+                        private final boolean m_IsTest;
 
-                        /*
-                         * Initialise the property 'locale'.
+                        /**
+                         * The support for the configuration change listener.
                          */
-                        m_Locale = Locale.getDefault();
+                        @SuppressWarnings( "InstanceVariableOfConcreteClass" )
+                        private final ConfigChangeListenerSupport m_ListenerSupport;
 
-                        /*
-                         * Initialise the property 'timezone'.
+                        /**
+                         * Property: &quot;locale&quot;.
                          */
-                        m_Timezone = ZoneId.systemDefault();
-                    }  //  MyConfigurationBean()
+                        private Locale m_Locale;
 
-                        /*---------*\\
-                    ====** Methods **==========================================================
-                        \\*---------*/
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void addListener( final ConfigurationChangeListener listener )
-                    {
-                        m_ListenerSupport.addListener( listener );
-                    }  //  addListener()
+                        /**
+                         * The &quot;read&quot; lock.
+                         */
+                        private final AutoLock m_ReadLock;
 
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Charset getCharset()
-                    {
-                        try( final var ignored = m_ReadLock.lock() )
+                        /**
+                         * Special Property: &quot;resourceBundle&quot;.
+                         */
+                        @SuppressWarnings( "FieldMayBeFinal" )
+                        private ResourceBundle m_ResourceBundle = null;
+
+                        /**
+                         * Property: &quot;timezone&quot;.
+                         */
+                        private ZoneId m_Timezone;
+
+                        /**
+                         * The &quot;write&quot; lock.
+                         */
+                        private final AutoLock m_WriteLock;
+
+                            /*--------------*\\
+                        ====** Constructors **=====================================================
+                            \\*--------------*/
+                        /**
+                         * Creates a new {@code MyConfigurationBean} instance.
+                         */
+                        public MyConfigurationBean()
                         {
-                            return m_Charset;
-                        }
-                    }  //  getCharset()
+                            //---* Initialise the listener support *-------------------------------
+                            m_ListenerSupport = new ConfigChangeListenerSupport( this );
 
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Locale getLocale()
-                    {
-                        try( final var ignored = m_ReadLock.lock() )
-                        {
-                            return m_Locale;
-                        }
-                    }  //  getLocale()
+                            //---* Create the locks and initialise them *--------------------------
+                            final var lock = new ReentrantReadWriteLock();
+                            m_ReadLock = AutoLock.of( lock.readLock() );
+                            m_WriteLock = AutoLock.of( lock.writeLock() );
 
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Optional<ResourceBundle> getResourceBundle()
-                    {
-                        try( final var ignored = m_ReadLock.lock() )
-                        {
-                            return Optional.ofNullable( m_ResourceBundle );
-                        }
-                    }  //  getResourceBundle()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final ZoneId getTimezone()
-                    {
-                        try( final var ignored = m_ReadLock.lock() )
-                        {
-                            return m_Timezone;
-                        }
-                    }  //  getTimezone()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final boolean isDebug()
-                    {
-                        return m_IsDebug;
-                    }  //  isDebug()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final boolean isTest()
-                    {
-                        return m_IsTest;
-                    }  //  isTest()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void removeListener( final ConfigurationChangeListener listener )
-                    {
-                        m_ListenerSupport.removeListener( listener );
-                    }  //  removeListener()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void setCharset( final Charset charset )
-                    {
-                        try( final var ignored = m_WriteLock.lock() )
-                        {
-                            final var newValue = requireNonNullArgument( charset, "charset" );
-                            m_ListenerSupport.fireEvent( "charset", m_Charset, newValue );
-                            m_Charset = newValue;
-                        }
-                    }  //  setCharset()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void setLocale( final Locale locale )
-                    {
-                        try( final var ignored = m_WriteLock.lock() )
-                        {
-                            final var newValue = requireNonNullArgument( locale, "locale" );
-                            m_ListenerSupport.fireEvent( "locale", m_Locale, newValue );
-                            m_Locale = newValue;
-                        }
-                    }  //  setLocale()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void setTimezone( final ZoneId timezone )
-                    {
-                        try( final var ignored = m_WriteLock.lock() )
-                        {
-                            final var newValue = requireNonNullArgument( timezone, "timezone" );
-                            m_ListenerSupport.fireEvent( "timezone", m_Timezone, newValue );
-                            m_Timezone = newValue;
-                        }
-                    }  //  setTimezone()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public String toString()
-                    {
-                        final var prefix = format ( "%%s [", getClass().getName() );
-                        final var joiner = new StringJoiner( ", ", prefix, "]" );
-                        try( final var ignored = m_ReadLock.lock() )
-                        {
-                            // Property "charset"
-                            {
-                                final var stringConverter = CharsetStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_Charset );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "charset = \\"%%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "charset = \\"%%1S\\"", NULL_STRING ) );
-                                }
-                            }
-
-                            // Property "isDebug"
+                            /*
+                             * Initialise the property 'charset'.
+                             */
+                            m_Charset = defaultCharset();
+                            
+                            /*
+                             * Initialise the property 'isDebug' from the system properties.
+                             */
                             {
                                 final var stringConverter = BooleanStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_IsDebug );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "isDebug = \\"%%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "isDebug = \\"%%1S\\"", NULL_STRING ) );
-                                }
+                                final var value = getProperty( "isDebug" );
+                                m_IsDebug = stringConverter.fromString( value );
                             }
 
-                            // Property "isTest"
+                            /*
+                             * Initialise the property 'isTest' from the system properties.
+                             */
                             {
                                 final var stringConverter = BooleanStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_IsTest );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "isTest = \\"%%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "isTest = \\"%%1S\\"", NULL_STRING ) );
-                                }
+                                final var value = getProperty( "isTest" );
+                                m_IsTest = stringConverter.fromString( value );
                             }
 
-                            // Property "locale"
+                            /*
+                             * Initialise the property 'locale'.
+                             */
+                            m_Locale = Locale.getDefault();
+
+                            /*
+                             * Initialise the property 'timezone'.
+                             */
+                            m_Timezone = ZoneId.systemDefault();
+                        }  //  MyConfigurationBean()
+
+                            /*---------*\\
+                        ====** Methods **==========================================================
+                            \\*---------*/
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void addListener( final ConfigurationChangeListener listener )
+                        {
+                            m_ListenerSupport.addListener( listener );
+                        }  //  addListener()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Charset getCharset()
+                        {
+                            try( final var ignored = m_ReadLock.lock() )
                             {
-                                final var stringConverter = LocaleStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_Locale );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "locale = \\"%%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "locale = \\"%%1S\\"", NULL_STRING ) );
-                                }
+                                return m_Charset;
                             }
+                        }  //  getCharset()
 
-                            // Property "timezone"
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Locale getLocale()
+                        {
+                            try( final var ignored = m_ReadLock.lock() )
                             {
-                                final var stringConverter = ZoneIdStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_Timezone );
-                                if( nonNull( value ) )
+                                return m_Locale;
+                            }
+                        }  //  getLocale()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Optional<ResourceBundle> getResourceBundle()
+                        {
+                            try( final var ignored = m_ReadLock.lock() )
+                            {
+                                return Optional.ofNullable( m_ResourceBundle );
+                            }
+                        }  //  getResourceBundle()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final ZoneId getTimezone()
+                        {
+                            try( final var ignored = m_ReadLock.lock() )
+                            {
+                                return m_Timezone;
+                            }
+                        }  //  getTimezone()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final boolean isDebug()
+                        {
+                            return m_IsDebug;
+                        }  //  isDebug()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final boolean isTest()
+                        {
+                            return m_IsTest;
+                        }  //  isTest()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void removeListener( final ConfigurationChangeListener listener )
+                        {
+                            m_ListenerSupport.removeListener( listener );
+                        }  //  removeListener()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void setCharset( final Charset charset )
+                        {
+                            try( final var ignored = m_WriteLock.lock() )
+                            {
+                                final var newValue = requireNonNullArgument( charset, "charset" );
+                                m_ListenerSupport.fireEvent( "charset", m_Charset, newValue );
+                                m_Charset = newValue;
+                            }
+                        }  //  setCharset()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void setLocale( final Locale locale )
+                        {
+                            try( final var ignored = m_WriteLock.lock() )
+                            {
+                                final var newValue = requireNonNullArgument( locale, "locale" );
+                                m_ListenerSupport.fireEvent( "locale", m_Locale, newValue );
+                                m_Locale = newValue;
+                            }
+                        }  //  setLocale()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void setTimezone( final ZoneId timezone )
+                        {
+                            try( final var ignored = m_WriteLock.lock() )
+                            {
+                                final var newValue = requireNonNullArgument( timezone, "timezone" );
+                                m_ListenerSupport.fireEvent( "timezone", m_Timezone, newValue );
+                                m_Timezone = newValue;
+                            }
+                        }  //  setTimezone()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public String toString()
+                        {
+                            final var prefix = format ( "%%s [", getClass().getName() );
+                            final var joiner = new StringJoiner( ", ", prefix, "]" );
+                            
+                            try( final var ignored = m_ReadLock.lock() )
+                            {
+                                //---* Property "charset" *----------------------------------------
                                 {
-                                    joiner.add( format( "timezone = \\"%%1S\\"", value ) );
+                                    final var stringConverter = CharsetStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_Charset );
+                                    joiner.add( format( "charset = \\"%%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                                else
+        
+                                //---* Property "isDebug" *----------------------------------------
                                 {
-                                    joiner.add( format( "timezone = \\"%%1S\\"", NULL_STRING ) );
+                                    final var stringConverter = BooleanStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_IsDebug );
+                                    joiner.add( format( "isDebug = \\"%%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+        
+                                //---* Property "isTest" *-----------------------------------------
+                                {
+                                    final var stringConverter = BooleanStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_IsTest );
+                                    joiner.add( format( "isTest = \\"%%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+        
+                                //---* Property "locale" *-----------------------------------------
+                                {
+                                    final var stringConverter = LocaleStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_Locale );
+                                    joiner.add( format( "locale = \\"%%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+        
+                                //---* Property "timezone" *---------------------------------------
+                                {
+                                    final var stringConverter = ZoneIdStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_Timezone );
+                                    joiner.add( format( "timezone = \\"%%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
                             }
-                        }
 
-                        //---* Create the return value *---------------------------------------
-                        final var retValue = joiner.toString();
+                            //---* Create the return value *---------------------------------------
+                            final var retValue = joiner.toString();
 
-                        //---* Done *----------------------------------------------------------
-                        return retValue;
-                    }  //  toString()
-                }
-                //  class MyConfigurationBean
+                            //---* Done *----------------------------------------------------------
+                            return retValue;
+                        }  //  toString()
+                    }
+                    //  class MyConfigurationBean
 
-                /*
-                 * End of File
-                 */""",
+                    /*
+                     * End of File
+                     */""",
                 configuration.getBuildTime().toString() );
             assertNotNull( expected );
             if( isNotEmpty( expected ) )
@@ -586,691 +552,629 @@ public class TestConfigBeanBuilder extends CodeGeneratorTestBase
              */
             final var expected =
                 """
-                /*
-                 * ============================================================================
-                 * This file inherits the copyright and license(s) from the interface that is
-                 * implemented by the class
-                 *
-                 *     org.tquadrat.foundation.test.generated.MyConfigurationBean
-                 *
-                 * Refer to
-                 *
-                 *     org.tquadrat.foundation.test.MyConfigurationBeanSpecification
-                 *
-                 * and the file comment there for the details.
-                 * ============================================================================
-                 */
-
-                package org.tquadrat.foundation.test.generated;
-
-                import static java.lang.System.getProperty;
-                import static java.nio.charset.Charset.defaultCharset;
-                import static org.tquadrat.foundation.lang.CommonConstants.NULL_STRING;
-                import static org.tquadrat.foundation.lang.Objects.isNull;
-                import static org.tquadrat.foundation.lang.Objects.nonNull;
-                import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
-                import static org.tquadrat.foundation.util.StringUtils.format;
-                import static org.tquadrat.foundation.util.SystemUtils.getPID;
-
-                import java.io.FileNotFoundException;
-                import java.io.IOException;
-                import java.lang.ExceptionInInitializerError;
-                import java.lang.Integer;
-                import java.lang.Override;
-                import java.lang.String;
-                import java.lang.SuppressWarnings;
-                import java.lang.Throwable;
-                import java.nio.charset.Charset;
-                import java.security.SecureRandom;
-                import java.time.Clock;
-                import java.time.Instant;
-                import java.time.ZoneId;
-                import java.util.Locale;
-                import java.util.Optional;
-                import java.util.Properties;
-                import java.util.Random;
-                import java.util.ResourceBundle;
-                import java.util.StringJoiner;
-                import java.util.concurrent.locks.ReentrantReadWriteLock;
-                import org.tquadrat.foundation.annotation.ClassVersion;
-                import org.tquadrat.foundation.config.ConfigurationChangeListener;
-                import org.tquadrat.foundation.config.spi.ConfigChangeListenerSupport;
-                import org.tquadrat.foundation.exception.ValidationException;
-                import org.tquadrat.foundation.lang.AutoLock;
-                import org.tquadrat.foundation.lang.Objects;
-                import org.tquadrat.foundation.test.MyConfigurationBeanSpecification;
-                import org.tquadrat.foundation.test.config.BaseClass;
-                import org.tquadrat.foundation.util.stringconverter.BooleanStringConverter;
-                import org.tquadrat.foundation.util.stringconverter.CharsetStringConverter;
-                import org.tquadrat.foundation.util.stringconverter.InstantStringConverter;
-                import org.tquadrat.foundation.util.stringconverter.IntegerStringConverter;
-                import org.tquadrat.foundation.util.stringconverter.LocaleStringConverter;
-                import org.tquadrat.foundation.util.stringconverter.StringStringConverter;
-                import org.tquadrat.foundation.util.stringconverter.ZoneIdStringConverter;
-
-                /**
-                 * The configuration bean that implements
-                 * {@link MyConfigurationBeanSpecification}.
-                 */
-                @ClassVersion( sourceVersion = "Generated through org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor at [[[BUILD_DATETIME]]]", isGenerated = true )
-                @SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods", "OverlyComplexClass", "OverlyCoupledClass"} )
-                public final class MyConfigurationBean extends BaseClass implements MyConfigurationBeanSpecification
-                {
-                        /*------------*\\
-                    ====** Attributes **=======================================================
-                        \\*------------*/
-                    /**
-                     * Property: &quot;charset&quot;.
+                    /*
+                     * ============================================================================
+                     * This file inherits the copyright and license(s) from the interface that is
+                     * implemented by the class
+                     *
+                     *     org.tquadrat.foundation.test.generated.MyConfigurationBean
+                     *
+                     * Refer to
+                     *
+                     *     org.tquadrat.foundation.test.MyConfigurationBeanSpecification
+                     *
+                     * and the file comment there for the details.
+                     * ============================================================================
                      */
-                    private Charset m_Charset;
+
+                    package org.tquadrat.foundation.test.generated;
+
+                    import static java.lang.System.getProperty;
+                    import static java.nio.charset.Charset.defaultCharset;
+                    import static org.tquadrat.foundation.lang.CommonConstants.NULL_STRING;
+                    import static org.tquadrat.foundation.lang.Objects.isNull;
+                    import static org.tquadrat.foundation.lang.Objects.nonNull;
+                    import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
+                    import static org.tquadrat.foundation.util.StringUtils.format;
+                    import static org.tquadrat.foundation.util.SystemUtils.getPID;
+
+                    import java.io.FileNotFoundException;
+                    import java.io.IOException;
+                    import java.lang.ExceptionInInitializerError;
+                    import java.lang.Integer;
+                    import java.lang.Override;
+                    import java.lang.String;
+                    import java.lang.SuppressWarnings;
+                    import java.lang.Throwable;
+                    import java.nio.charset.Charset;
+                    import java.security.SecureRandom;
+                    import java.time.Clock;
+                    import java.time.Instant;
+                    import java.time.ZoneId;
+                    import java.util.Locale;
+                    import java.util.Optional;
+                    import java.util.Properties;
+                    import java.util.Random;
+                    import java.util.ResourceBundle;
+                    import java.util.StringJoiner;
+                    import java.util.concurrent.locks.ReentrantReadWriteLock;
+                    import org.tquadrat.foundation.annotation.ClassVersion;
+                    import org.tquadrat.foundation.config.ConfigurationChangeListener;
+                    import org.tquadrat.foundation.config.spi.ConfigChangeListenerSupport;
+                    import org.tquadrat.foundation.exception.ValidationException;
+                    import org.tquadrat.foundation.lang.AutoLock;
+                    import org.tquadrat.foundation.lang.Objects;
+                    import org.tquadrat.foundation.test.MyConfigurationBeanSpecification;
+                    import org.tquadrat.foundation.test.config.BaseClass;
+                    import org.tquadrat.foundation.util.stringconverter.BooleanStringConverter;
+                    import org.tquadrat.foundation.util.stringconverter.CharsetStringConverter;
+                    import org.tquadrat.foundation.util.stringconverter.InstantStringConverter;
+                    import org.tquadrat.foundation.util.stringconverter.IntegerStringConverter;
+                    import org.tquadrat.foundation.util.stringconverter.LocaleStringConverter;
+                    import org.tquadrat.foundation.util.stringconverter.StringStringConverter;
+                    import org.tquadrat.foundation.util.stringconverter.ZoneIdStringConverter;
 
                     /**
-                     * Special Property: &quot;clock&quot;.
+                     * The configuration bean that implements
+                     * {@link MyConfigurationBeanSpecification}.
                      */
-                    private Clock m_Clock;
-
-                    /**
-                     * Property: &quot;date1&quot;.
-                     */
-                    private Instant m_Date1;
-
-                    /**
-                     * Property: &quot;int1&quot;.
-                     */
-                    private int m_Int1;
-
-                    /**
-                     * Property: &quot;int2&quot;.
-                     */
-                    private Integer m_Int2;
-
-                    /**
-                     * Property: &quot;isDebug&quot;.
-                     */
-                    private final boolean m_IsDebug;
-
-                    /**
-                     * Property: &quot;isTest&quot;.
-                     */
-                    private final boolean m_IsTest;
-
-                    /**
-                     * The support for the configuration change listener.
-                     */
-                    @SuppressWarnings( "InstanceVariableOfConcreteClass" )
-                    private final ConfigChangeListenerSupport m_ListenerSupport;
-
-                    /**
-                     * Property: &quot;locale&quot;.
-                     */
-                    private Locale m_Locale;
-
-                    /**
-                     * Special Property: &quot;processId&quot;.
-                     */
-                    private final long m_ProcessId;
-
-                    /**
-                     * Special Property: &quot;random&quot;.
-                     */
-                    private final Random m_Random;
-
-                    /**
-                     * The &quot;read&quot; lock.
-                     */
-                    private final AutoLock m_ReadLock;
-
-                    /**
-                     * Special Property: &quot;resourceBundle&quot;.
-                     */
-                    private ResourceBundle m_ResourceBundle = null;
-
-                    /**
-                     * Property: &quot;string1&quot;.
-                     */
-                    private String m_String1;
-
-                    /**
-                     * Property: &quot;timezone&quot;.
-                     */
-                    private ZoneId m_Timezone;
-
-                    /**
-                     * The &quot;write&quot; lock.
-                     */
-                    private final AutoLock m_WriteLock;
-
-                        /*--------------*\\
-                    ====** Constructors **=====================================================
-                        \\*--------------*/
-                    /**
-                     * Creates a new {@code MyConfigurationBean} instance.
-                     */
-                    @SuppressWarnings( "ThrowCaughtLocally" )
-                    public MyConfigurationBean()
+                    @ClassVersion( sourceVersion = "Generated through org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor at [[[BUILD_DATETIME]]]", isGenerated = true )
+                    @SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods", "OverlyComplexClass", "OverlyCoupledClass"} )
+                    public final class MyConfigurationBean extends BaseClass implements MyConfigurationBeanSpecification
                     {
-                        //---* Initialise the listener support *-------------------------------
-                        m_ListenerSupport = new ConfigChangeListenerSupport( this );
-
-                        //---* Create the locks and initialise them *--------------------------
-                        final var lock = new ReentrantReadWriteLock();
-                        m_ReadLock = AutoLock.of( lock.readLock() );
-                        m_WriteLock = AutoLock.of( lock.writeLock() );
-
-                        /*
-                         * Initialise the property 'charset'.
+                            /*------------*\\
+                        ====** Attributes **=======================================================
+                            \\*------------*/
+                        /**
+                         * Property: &quot;charset&quot;.
                          */
-                        m_Charset = defaultCharset();
+                        private Charset m_Charset;
 
-                        /*
-                         * Initialise the property 'clock'.
+                        /**
+                         * Special Property: &quot;clock&quot;.
                          */
-                        m_Clock = Clock.systemDefaultZone();
+                        private Clock m_Clock;
 
-                        /*
-                         * Initialise the property 'isDebug' from the system properties.
+                        /**
+                         * Property: &quot;date1&quot;.
                          */
+                        private Instant m_Date1;
+
+                        /**
+                         * Property: &quot;int1&quot;.
+                         */
+                        private int m_Int1;
+
+                        /**
+                         * Property: &quot;int2&quot;.
+                         */
+                        private Integer m_Int2;
+
+                        /**
+                         * Property: &quot;isDebug&quot;.
+                         */
+                        private final boolean m_IsDebug;
+
+                        /**
+                         * Property: &quot;isTest&quot;.
+                         */
+                        private final boolean m_IsTest;
+
+                        /**
+                         * The support for the configuration change listener.
+                         */
+                        @SuppressWarnings( "InstanceVariableOfConcreteClass" )
+                        private final ConfigChangeListenerSupport m_ListenerSupport;
+
+                        /**
+                         * Property: &quot;locale&quot;.
+                         */
+                        private Locale m_Locale;
+
+                        /**
+                         * Special Property: &quot;processId&quot;.
+                         */
+                        private final long m_ProcessId;
+
+                        /**
+                         * Special Property: &quot;random&quot;.
+                         */
+                        private final Random m_Random;
+
+                        /**
+                         * The &quot;read&quot; lock.
+                         */
+                        private final AutoLock m_ReadLock;
+
+                        /**
+                         * Special Property: &quot;resourceBundle&quot;.
+                         */
+                        private ResourceBundle m_ResourceBundle = null;
+
+                        /**
+                         * Property: &quot;string1&quot;.
+                         */
+                        private String m_String1;
+
+                        /**
+                         * Property: &quot;timezone&quot;.
+                         */
+                        private ZoneId m_Timezone;
+
+                        /**
+                         * The &quot;write&quot; lock.
+                         */
+                        private final AutoLock m_WriteLock;
+
+                            /*--------------*\\
+                        ====** Constructors **=====================================================
+                            \\*--------------*/
+                        /**
+                         * Creates a new {@code MyConfigurationBean} instance.
+                         */
+                        @SuppressWarnings( "ThrowCaughtLocally" )
+                        public MyConfigurationBean()
                         {
-                            final var stringConverter = BooleanStringConverter.INSTANCE;
-                            final var value = getProperty( "isDebug" );
-                            m_IsDebug = stringConverter.fromString( value );
-                        }
+                            //---* Initialise the listener support *-------------------------------
+                            m_ListenerSupport = new ConfigChangeListenerSupport( this );
 
-                        /*
-                         * Initialise the property 'isTest' from the system properties.
-                         */
-                        {
-                            final var stringConverter = BooleanStringConverter.INSTANCE;
-                            final var value = getProperty( "isTest" );
-                            m_IsTest = stringConverter.fromString( value );
-                        }
+                            //---* Create the locks and initialise them *--------------------------
+                            final var lock = new ReentrantReadWriteLock();
+                            m_ReadLock = AutoLock.of( lock.readLock() );
+                            m_WriteLock = AutoLock.of( lock.writeLock() );
 
-                        /*
-                         * Initialise the property 'locale'.
-                         */
-                        m_Locale = Locale.getDefault();
+                            /*
+                             * Initialise the property 'charset'.
+                             */
+                            m_Charset = defaultCharset();
 
-                        /*
-                         * Initialise the property 'processId'.
-                         */
-                        m_ProcessId = getPID();
+                            /*
+                             * Initialise the property 'clock'.
+                             */
+                            m_Clock = Clock.systemDefaultZone();
 
-                        /*
-                         * Initialise the property 'random'.
-                         */
-                        m_Random = new SecureRandom();
-
-                        /*
-                         * Initialise the property 'timezone'.
-                         */
-                        m_Timezone = ZoneId.systemDefault();
-
-                        /*
-                         * Initialise the properties from 'initData()'.
-                         */
-                        try
-                        {
-                            final var initData = initData();
-                            if( isNull( initData ) )
+                            /*
+                             * Initialise the property 'isDebug' from the system properties.
+                             */
                             {
-                                throw new ValidationException( "initData() returns null" );
-                            }
-                            if( initData.containsKey( "date1" ) )
-                            {
-                                m_Date1 = (Instant) initData.get( "date1" );
-                            }
-                            if( initData.containsKey( "int1" ) )
-                            {
-                                m_Int1 = (Integer) initData.get( "int1" );
-                            }
-                            if( initData.containsKey( "int2" ) )
-                            {
-                                m_Int2 = (Integer) initData.get( "int2" );
-                            }
-                            if( initData.containsKey( "resourceBundle" ) )
-                            {
-                                m_ResourceBundle = (ResourceBundle) initData.get( "resourceBundle" );
-                            }
-                            if( initData.containsKey( "string1" ) )
-                            {
-                                m_String1 = (String) initData.get( "string1" );
-                            }
-                        }
-                        catch( final Throwable t )
-                        {
-                            final var eiie = new ExceptionInInitializerError( "initData() failed" );
-                            eiie.addSuppressed( t );
-                            throw eiie;
-                        }
-
-                        /*
-                         * Load initialisation data from resource "MyConfigurationBeanSpecification.properties".
-                         */
-                        {
-                            final var resource = MyConfigurationBeanSpecification.class.getResource( "MyConfigurationBeanSpecification.properties" );
-                            if( isNull( resource ) )
-                            {
-                                final var fnfe = new FileNotFoundException( "Resource 'MyConfigurationBeanSpecification.properties'" );
-                                final var eiie = new ExceptionInInitializerError( "Cannot find resource 'MyConfigurationBeanSpecification.properties'" );
-                                eiie.addSuppressed( fnfe );
-                                throw eiie;
+                                final var stringConverter = BooleanStringConverter.INSTANCE;
+                                final var value = getProperty( "isDebug" );
+                                m_IsDebug = stringConverter.fromString( value );
                             }
 
-                            final var initData = new Properties();
-                            try( final var inputStream = resource.openStream() )
+                            /*
+                             * Initialise the property 'isTest' from the system properties.
+                             */
                             {
-                                initData.load( inputStream );
+                                final var stringConverter = BooleanStringConverter.INSTANCE;
+                                final var value = getProperty( "isTest" );
+                                m_IsTest = stringConverter.fromString( value );
                             }
-                            catch( final IOException e )
+
+                            /*
+                             * Initialise the property 'locale'.
+                             */
+                            m_Locale = Locale.getDefault();
+
+                            /*
+                             * Initialise the property 'processId'.
+                             */
+                            m_ProcessId = getPID();
+
+                            /*
+                             * Initialise the property 'random'.
+                             */
+                            m_Random = new SecureRandom();
+
+                            /*
+                             * Initialise the property 'timezone'.
+                             */
+                            m_Timezone = ZoneId.systemDefault();
+
+                            /*
+                             * Initialise the properties from 'initData()'.
+                             */
+                            try
                             {
-                                final var eiie = new ExceptionInInitializerError( format( "Cannot load resource '%s'", resource.toExternalForm() ) );
-                                eiie.addSuppressed( e );
+                                final var initData = initData();
+                                if( isNull( initData ) )
+                                {
+                                    throw new ValidationException( "initData() returns null" );
+                                }
+                                if( initData.containsKey( "date1" ) )
+                                {
+                                    m_Date1 = (Instant) initData.get( "date1" );
+                                }
+                                if( initData.containsKey( "int1" ) )
+                                {
+                                    m_Int1 = (Integer) initData.get( "int1" );
+                                }
+                                if( initData.containsKey( "int2" ) )
+                                {
+                                    m_Int2 = (Integer) initData.get( "int2" );
+                                }
+                                if( initData.containsKey( "resourceBundle" ) )
+                                {
+                                    m_ResourceBundle = (ResourceBundle) initData.get( "resourceBundle" );
+                                }
+                                if( initData.containsKey( "string1" ) )
+                                {
+                                    m_String1 = (String) initData.get( "string1" );
+                                }
+                            }
+                            catch( final Throwable t )
+                            {
+                                final var eiie = new ExceptionInInitializerError( "initData() failed" );
+                                eiie.addSuppressed( t );
                                 throw eiie;
                             }
 
                             /*
-                             * Initialise the properties.
+                             * Load initialisation data from resource "MyConfigurationBeanSpecification.properties".
                              */
-                            String value;
-
-                            value = initData.getProperty( "date1" );
-                            if( nonNull( value ) )
                             {
-                                final var stringConverter = InstantStringConverter.INSTANCE;
-                                m_Date1 = stringConverter.fromString( value );
-                            }
+                                final var resource = MyConfigurationBeanSpecification.class.getResource( "MyConfigurationBeanSpecification.properties" );
+                                if( isNull( resource ) )
+                                {
+                                    final var fnfe = new FileNotFoundException( "Resource 'MyConfigurationBeanSpecification.properties'" );
+                                    final var eiie = new ExceptionInInitializerError( "Cannot find resource 'MyConfigurationBeanSpecification.properties'" );
+                                    eiie.addSuppressed( fnfe );
+                                    throw eiie;
+                                }
 
-                            value = initData.getProperty( "int1" );
-                            if( nonNull( value ) )
-                            {
-                                final var stringConverter = IntegerStringConverter.INSTANCE;
-                                m_Int1 = stringConverter.fromString( value );
-                            }
+                                final var initData = new Properties();
+                                try( final var inputStream = resource.openStream() )
+                                {
+                                    initData.load( inputStream );
+                                }
+                                catch( final IOException e )
+                                {
+                                    final var eiie = new ExceptionInInitializerError( format( "Cannot load resource '%s'", resource.toExternalForm() ) );
+                                    eiie.addSuppressed( e );
+                                    throw eiie;
+                                }
 
-                            value = initData.getProperty( "int2" );
-                            if( nonNull( value ) )
-                            {
-                                final var stringConverter = IntegerStringConverter.INSTANCE;
-                                m_Int2 = stringConverter.fromString( value );
-                            }
+                                /*
+                                 * Initialise the properties.
+                                 */
+                                String value;
 
-                            value = initData.getProperty( "string1" );
-                            if( nonNull( value ) )
-                            {
-                                final var stringConverter = StringStringConverter.INSTANCE;
-                                m_String1 = stringConverter.fromString( value );
-                            }
-                        }
-                    }  //  MyConfigurationBean()
-
-                        /*---------*\\
-                    ====** Methods **==========================================================
-                        \\*---------*/
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void addListener( final ConfigurationChangeListener listener )
-                    {
-                        m_ListenerSupport.addListener( listener );
-                    }  //  addListener()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Charset getCharset()
-                    {
-                        try( final var ignored = m_ReadLock.lock() )
-                        {
-                            return m_Charset;
-                        }
-                    }  //  getCharset()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Clock getClock()
-                    {
-                        try( final var ignored = m_ReadLock.lock() )
-                        {
-                            return m_Clock;
-                        }
-                    }  //  getClock()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Optional<Instant> getDate1()
-                    {
-                        return Optional.ofNullable( m_Date1 );
-                    }  //  getDate1()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final int getInt1()
-                    {
-                        return m_Int1;
-                    }  //  getInt1()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Integer getInt2()
-                    {
-                        return m_Int2;
-                    }  //  getInt2()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Locale getLocale()
-                    {
-                        try( final var ignored = m_ReadLock.lock() )
-                        {
-                            return m_Locale;
-                        }
-                    }  //  getLocale()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final long getProcessId()
-                    {
-                        return m_ProcessId;
-                    }  //  getProcessId()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Random getRandom()
-                    {
-                        return m_Random;
-                    }  //  getRandom()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final Optional<ResourceBundle> getResourceBundle()
-                    {
-                        try( final var ignored = m_ReadLock.lock() )
-                        {
-                            return Optional.ofNullable( m_ResourceBundle );
-                        }
-                    }  //  getResourceBundle()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final String getString1()
-                    {
-                        return m_String1;
-                    }  //  getString1()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final ZoneId getTimezone()
-                    {
-                        try( final var ignored = m_ReadLock.lock() )
-                        {
-                            return m_Timezone;
-                        }
-                    }  //  getTimezone()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final boolean isDebug()
-                    {
-                        return m_IsDebug;
-                    }  //  isDebug()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final boolean isTest()
-                    {
-                        return m_IsTest;
-                    }  //  isTest()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void removeListener( final ConfigurationChangeListener listener )
-                    {
-                        m_ListenerSupport.removeListener( listener );
-                    }  //  removeListener()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void setCharset( final Charset charset )
-                    {
-                        try( final var ignored = m_WriteLock.lock() )
-                        {
-                            final var newValue = requireNonNullArgument( charset, "charset" );
-                            m_ListenerSupport.fireEvent( "charset", m_Charset, newValue );
-                            m_Charset = newValue;
-                        }
-                    }  //  setCharset()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void setClock( final Clock clock )
-                    {
-                        try( final var ignored = m_WriteLock.lock() )
-                        {
-                            final var newValue = requireNonNullArgument( clock, "clock" );
-                            m_ListenerSupport.fireEvent( "clock", m_Clock, newValue );
-                            m_Clock = newValue;
-                        }
-                    }  //  setClock()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void setLocale( final Locale locale )
-                    {
-                        try( final var ignored = m_WriteLock.lock() )
-                        {
-                            final var newValue = requireNonNullArgument( locale, "locale" );
-                            m_ListenerSupport.fireEvent( "locale", m_Locale, newValue );
-                            m_Locale = newValue;
-                        }
-                    }  //  setLocale()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public final void setTimezone( final ZoneId timezone )
-                    {
-                        try( final var ignored = m_WriteLock.lock() )
-                        {
-                            final var newValue = requireNonNullArgument( timezone, "timezone" );
-                            m_ListenerSupport.fireEvent( "timezone", m_Timezone, newValue );
-                            m_Timezone = newValue;
-                        }
-                    }  //  setTimezone()
-
-                    /**
-                     * {@inheritDoc}
-                     */
-                    @Override
-                    public String toString()
-                    {
-                        final var prefix = format ( "%s [", getClass().getName() );
-                        final var joiner = new StringJoiner( ", ", prefix, "]" );
-                        try( final var ignored = m_ReadLock.lock() )
-                        {
-                            // Property "charset"
-                            {
-                                final var stringConverter = CharsetStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_Charset );
+                                value = initData.getProperty( "date1" );
                                 if( nonNull( value ) )
                                 {
-                                    joiner.add( format( "charset = \\"%1S\\"", value ) );
+                                    final var stringConverter = InstantStringConverter.INSTANCE;
+                                    m_Date1 = stringConverter.fromString( value );
                                 }
-                                else
-                                {
-                                    joiner.add( format( "charset = \\"%1S\\"", NULL_STRING ) );
-                                }
-                            }
 
-                            // Property "date1"
-                            {
-                                final var stringConverter = InstantStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_Date1 );
+                                value = initData.getProperty( "int1" );
                                 if( nonNull( value ) )
                                 {
-                                    joiner.add( format( "date1 = \\"%1S\\"", value ) );
+                                    final var stringConverter = IntegerStringConverter.INSTANCE;
+                                    m_Int1 = stringConverter.fromString( value );
                                 }
-                                else
-                                {
-                                    joiner.add( format( "date1 = \\"%1S\\"", NULL_STRING ) );
-                                }
-                            }
 
-                            // Property "int1"
-                            {
-                                final var stringConverter = IntegerStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_Int1 );
+                                value = initData.getProperty( "int2" );
                                 if( nonNull( value ) )
                                 {
-                                    joiner.add( format( "int1 = \\"%1S\\"", value ) );
+                                    final var stringConverter = IntegerStringConverter.INSTANCE;
+                                    m_Int2 = stringConverter.fromString( value );
                                 }
-                                else
-                                {
-                                    joiner.add( format( "int1 = \\"%1S\\"", NULL_STRING ) );
-                                }
-                            }
 
-                            // Property "int2"
-                            {
-                                final var stringConverter = IntegerStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_Int2 );
+                                value = initData.getProperty( "string1" );
                                 if( nonNull( value ) )
                                 {
-                                    joiner.add( format( "int2 = \\"%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "int2 = \\"%1S\\"", NULL_STRING ) );
+                                    final var stringConverter = StringStringConverter.INSTANCE;
+                                    m_String1 = stringConverter.fromString( value );
                                 }
                             }
+                        }  //  MyConfigurationBean()
 
-                            // Property "isDebug"
+                            /*---------*\\
+                        ====** Methods **==========================================================
+                            \\*---------*/
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void addListener( final ConfigurationChangeListener listener )
+                        {
+                            m_ListenerSupport.addListener( listener );
+                        }  //  addListener()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Charset getCharset()
+                        {
+                            try( final var ignored = m_ReadLock.lock() )
                             {
-                                final var stringConverter = BooleanStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_IsDebug );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "isDebug = \\"%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "isDebug = \\"%1S\\"", NULL_STRING ) );
-                                }
+                                return m_Charset;
                             }
+                        }  //  getCharset()
 
-                            // Property "isTest"
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Clock getClock()
+                        {
+                            try( final var ignored = m_ReadLock.lock() )
                             {
-                                final var stringConverter = BooleanStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_IsTest );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "isTest = \\"%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "isTest = \\"%1S\\"", NULL_STRING ) );
-                                }
+                                return m_Clock;
                             }
+                        }  //  getClock()
 
-                            // Property "locale"
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Optional<Instant> getDate1()
+                        {
+                            return Optional.ofNullable( m_Date1 );
+                        }  //  getDate1()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final int getInt1()
+                        {
+                            return m_Int1;
+                        }  //  getInt1()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Integer getInt2()
+                        {
+                            return m_Int2;
+                        }  //  getInt2()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Locale getLocale()
+                        {
+                            try( final var ignored = m_ReadLock.lock() )
                             {
-                                final var stringConverter = LocaleStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_Locale );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "locale = \\"%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "locale = \\"%1S\\"", NULL_STRING ) );
-                                }
+                                return m_Locale;
                             }
+                        }  //  getLocale()
 
-                            // Property "object1"
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final long getProcessId()
+                        {
+                            return m_ProcessId;
+                        }  //  getProcessId()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Random getRandom()
+                        {
+                            return m_Random;
+                        }  //  getRandom()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final Optional<ResourceBundle> getResourceBundle()
+                        {
+                            try( final var ignored = m_ReadLock.lock() )
                             {
-                                joiner.add( format( "object1 = \\"%1S\\"", Objects.toString( getObject1() ) ) );
+                                return Optional.ofNullable( m_ResourceBundle );
                             }
+                        }  //  getResourceBundle()
 
-                            // Property "processId"
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final String getString1()
+                        {
+                            return m_String1;
+                        }  //  getString1()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final ZoneId getTimezone()
+                        {
+                            try( final var ignored = m_ReadLock.lock() )
                             {
-                                joiner.add( format( "processId = \\"%1S\\"", Objects.toString( m_ProcessId ) ) );
+                                return m_Timezone;
                             }
+                        }  //  getTimezone()
 
-                            // Property "string1"
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final boolean isDebug()
+                        {
+                            return m_IsDebug;
+                        }  //  isDebug()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final boolean isTest()
+                        {
+                            return m_IsTest;
+                        }  //  isTest()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void removeListener( final ConfigurationChangeListener listener )
+                        {
+                            m_ListenerSupport.removeListener( listener );
+                        }  //  removeListener()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void setCharset( final Charset charset )
+                        {
+                            try( final var ignored = m_WriteLock.lock() )
                             {
-                                final var stringConverter = StringStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_String1 );
-                                if( nonNull( value ) )
-                                {
-                                    joiner.add( format( "string1 = \\"%1S\\"", value ) );
-                                }
-                                else
-                                {
-                                    joiner.add( format( "string1 = \\"%1S\\"", NULL_STRING ) );
-                                }
+                                final var newValue = requireNonNullArgument( charset, "charset" );
+                                m_ListenerSupport.fireEvent( "charset", m_Charset, newValue );
+                                m_Charset = newValue;
                             }
+                        }  //  setCharset()
 
-                            // Property "timezone"
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void setClock( final Clock clock )
+                        {
+                            try( final var ignored = m_WriteLock.lock() )
                             {
-                                final var stringConverter = ZoneIdStringConverter.INSTANCE;
-                                final var value = stringConverter.toString( m_Timezone );
-                                if( nonNull( value ) )
+                                final var newValue = requireNonNullArgument( clock, "clock" );
+                                m_ListenerSupport.fireEvent( "clock", m_Clock, newValue );
+                                m_Clock = newValue;
+                            }
+                        }  //  setClock()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void setLocale( final Locale locale )
+                        {
+                            try( final var ignored = m_WriteLock.lock() )
+                            {
+                                final var newValue = requireNonNullArgument( locale, "locale" );
+                                m_ListenerSupport.fireEvent( "locale", m_Locale, newValue );
+                                m_Locale = newValue;
+                            }
+                        }  //  setLocale()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public final void setTimezone( final ZoneId timezone )
+                        {
+                            try( final var ignored = m_WriteLock.lock() )
+                            {
+                                final var newValue = requireNonNullArgument( timezone, "timezone" );
+                                m_ListenerSupport.fireEvent( "timezone", m_Timezone, newValue );
+                                m_Timezone = newValue;
+                            }
+                        }  //  setTimezone()
+
+                        /**
+                         * {@inheritDoc}
+                         */
+                        @Override
+                        public String toString()
+                        {
+                            final var prefix = format ( "%s [", getClass().getName() );
+                            final var joiner = new StringJoiner( ", ", prefix, "]" );
+                            
+                            try( final var ignored = m_ReadLock.lock() )
+                            {
+                                //---* Property "charset" *----------------------------------------
                                 {
-                                    joiner.add( format( "timezone = \\"%1S\\"", value ) );
+                                    final var stringConverter = CharsetStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_Charset );
+                                    joiner.add( format( "charset = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                                else
+        
+                                //---* Property "date1" *------------------------------------------
                                 {
-                                    joiner.add( format( "timezone = \\"%1S\\"", NULL_STRING ) );
+                                    final var stringConverter = InstantStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_Date1 );
+                                    joiner.add( format( "date1 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+        
+                                //---* Property "int1" *-------------------------------------------
+                                {
+                                    final var stringConverter = IntegerStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_Int1 );
+                                    joiner.add( format( "int1 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+        
+                                //---* Property "int2" *-------------------------------------------
+                                {
+                                    final var stringConverter = IntegerStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_Int2 );
+                                    joiner.add( format( "int2 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+        
+                                //---* Property "isDebug" *----------------------------------------
+                                {
+                                    final var stringConverter = BooleanStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_IsDebug );
+                                    joiner.add( format( "isDebug = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+        
+                                //---* Property "isTest" *-----------------------------------------
+                                {
+                                    final var stringConverter = BooleanStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_IsTest );
+                                    joiner.add( format( "isTest = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+        
+                                //---* Property "locale" *-----------------------------------------
+                                {
+                                    final var stringConverter = LocaleStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_Locale );
+                                    joiner.add( format( "locale = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+        
+                                //---* Property "object1" *----------------------------------------
+                                {
+                                    joiner.add( format( "object1 = \\"%1$s\\"", Objects.toString( getObject1() ) ) );
+                                }
+        
+                                //---* Property "processId" *--------------------------------------
+                                {
+                                    joiner.add( format( "processId = \\"%1$S\\"", Objects.toString( m_ProcessId ) ) );
+                                }
+        
+                                //---* Property "string1" *----------------------------------------
+                                {
+                                    final var stringConverter = StringStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_String1 );
+                                    joiner.add( format( "string1 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
+                                }
+        
+                                //---* Property "timezone" *---------------------------------------
+                                {
+                                    final var stringConverter = ZoneIdStringConverter.INSTANCE;
+                                    final var value = stringConverter.toString( m_Timezone );
+                                    joiner.add( format( "timezone = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
                             }
-                        }
 
-                        //---* Create the return value *---------------------------------------
-                        final var retValue = joiner.toString();
+                            //---* Create the return value *---------------------------------------
+                            final var retValue = joiner.toString();
 
-                        //---* Done *----------------------------------------------------------
-                        return retValue;
-                    }  //  toString()
-                }
-                //  class MyConfigurationBean
+                            //---* Done *----------------------------------------------------------
+                            return retValue;
+                        }  //  toString()
+                    }
+                    //  class MyConfigurationBean
 
-                /*
-                 * End of File
-                 */"""
+                    /*
+                     * End of File
+                     */"""
                 .replace( "[[[BUILD_DATETIME]]]", configuration.getBuildTime().toString() );
             assertNotNull( expected );
             if( isNotEmpty( expected ) )

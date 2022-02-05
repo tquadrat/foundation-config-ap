@@ -144,8 +144,8 @@
                           x2='910.000'
                           y2='34.000'
                           class='separator'/>
-                    <text x='5.000'
-                          y='30.000'/>
+                    <text y='30.000'
+                          class='final'>- m_HandlerClasses:java.util.Map&lt;org.tquadrat.foundation.javacomposer.TypeName,org.tquadrat.foundation.javacomposer.ClassName&gt;</text>
                     <text x='5.000'
                           y='47.000'>+ CLIBeanBuilder(context:org.tquadrat.foundation.config.ap.impl.codebuilders.CodeGeneratorContext)</text>
                     <text x='5.000'
