@@ -259,7 +259,7 @@
                           class='static'>+ composeSetter(codeBuilder:org.tquadrat.foundation.config.ap.impl.CodeBuilder,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):org.tquadrat.foundation.javacomposer.MethodSpec</text>
                     <text x='5.000'
                           y='322.000'
-                          class='static'># determineStringConverterInstantiation(stringConverterClass:org.tquadrat.foundation.javacomposer.TypeName):boolean</text>
+                          class='static'># determineStringConverterInstantiation(stringConverterClass:org.tquadrat.foundation.javacomposer.TypeName,isEnum:boolean):org.tquadrat.foundation.config.ap.impl.codebuilders.CodeBuilderBase.StringConverterInstantiation</text>
                     <text x='5.000'
                           y='333.000'>+ getComposer():org.tquadrat.foundation.javacomposer.JavaComposer</text>
                     <text x='5.000'

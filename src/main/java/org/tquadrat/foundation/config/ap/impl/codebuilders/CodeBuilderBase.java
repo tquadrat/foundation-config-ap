@@ -47,6 +47,9 @@ import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SYSTEM
 import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_ListenerSupport;
 import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_ReadLock;
 import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_WriteLock;
+import static org.tquadrat.foundation.config.ap.impl.codebuilders.CodeBuilderBase.StringConverterInstantiation.AS_ENUM;
+import static org.tquadrat.foundation.config.ap.impl.codebuilders.CodeBuilderBase.StringConverterInstantiation.BY_INSTANCE;
+import static org.tquadrat.foundation.config.ap.impl.codebuilders.CodeBuilderBase.StringConverterInstantiation.THROUGH_CONSTRUCTOR;
 import static org.tquadrat.foundation.javacomposer.Primitives.VOID;
 import static org.tquadrat.foundation.lang.CommonConstants.EMPTY_STRING;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
@@ -97,16 +100,62 @@ import org.tquadrat.foundation.util.stringconverter.DateLongStringConverter;
  *  The abstract base class for all the code builders.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CodeBuilderBase.java 946 2021-12-23 14:48:19Z tquadrat $
+ *  @version $Id: CodeBuilderBase.java 1010 2022-02-05 19:28:36Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: CodeBuilderBase.java 946 2021-12-23 14:48:19Z tquadrat $" )
+@SuppressWarnings( {"OverlyCoupledClass", "OverlyComplexClass"} )
+@ClassVersion( sourceVersion = "$Id: CodeBuilderBase.java 1010 2022-02-05 19:28:36Z tquadrat $" )
 @API( status = INTERNAL, since = "0.1.0" )
 abstract sealed class CodeBuilderBase implements CodeBuilder
     permits CLIBeanBuilder, ConfigBeanBuilder, I18nSupportBuilder, INIBeanBuilder, MapImplementor, PreferencesBeanBuilder, SessionBeanBuilder
 {
+        /*---------------*\
+    ====** Inner Classes **====================================================
+        \*---------------*/
+    /**
+     *  The various type to instantiate a
+     *  {@link StringConverter}
+     *  class.
+     *
+     *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
+     *  @version $Id: CodeBuilderBase.java 1010 2022-02-05 19:28:36Z tquadrat $
+     *  @UMLGraph.link
+     *  @since 0.1.0
+     */
+    @ClassVersion( sourceVersion = "$Id: CodeBuilderBase.java 1010 2022-02-05 19:28:36Z tquadrat $" )
+    @API( status = INTERNAL, since = "0.1.0" )
+    public static enum StringConverterInstantiation
+    {
+        /**
+         *  The
+         *  {@link StringConverter}
+         *  can be accessed through the {@code INSTANCE} field.
+         */
+        BY_INSTANCE,
+
+        /**
+         *  The
+         *  {@link StringConverter}
+         *  has to be instantiated by calling its default constructor.
+         */
+        THROUGH_CONSTRUCTOR,
+
+        /**
+         *  The property is an
+         *  {@link Enum enum},
+         *  and the class for the
+         *  {@link StringConverter}
+         *  is
+         *  {@link org.tquadrat.foundation.util.stringconverter.EnumStringConverter},
+         *  so the {@code StringConverter} has to be instantiated by a call to
+         *  {@link org.tquadrat.foundation.util.stringconverter.EnumStringConverter#EnumStringConverter(Class)}.
+         */
+        AS_ENUM
+    }
+    //  enum StringConverterInstantiation
+
+
         /*------------*\
     ====** Attributes **=======================================================
         \*------------*/
@@ -118,13 +167,13 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
     /**
      *  The composer.
      */
-    @SuppressWarnings( "InstanceVariableOfConcreteClass" )
+    @SuppressWarnings( "UseOfConcreteClass" )
     private final JavaComposer m_Composer;
 
     /**
      *  The configuration for the code generation.
      */
-    @SuppressWarnings( "InstanceVariableOfConcreteClass" )
+    @SuppressWarnings( "UseOfConcreteClass" )
     private final CodeGenerationConfiguration m_Configuration;
 
     /**
@@ -448,18 +497,32 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
         //---* Set the StringConverter *---------------------------------------
         final var stringConverter = property.getStringConverterClass()
             .orElseThrow( () -> new CodeGenerationError( format( MSG_MissingStringConverter, property.getPropertyName() ) ) );
-        if( determineStringConverterInstantiation( stringConverter ) )
+        switch( determineStringConverterInstantiation( stringConverter, property.isEnum() ) )
         {
-            builder.addStatement( "final var stringConverter = $T.INSTANCE", stringConverter );
-        }
-        else
-        {
-            builder.addStatement( "final var stringConverter = new $T()", stringConverter );
+            case BY_INSTANCE -> builder.addStatement( "final var stringConverter = $T.INSTANCE", stringConverter );
+            case THROUGH_CONSTRUCTOR -> builder.addStatement( "final var stringConverter = new $T()", stringConverter );
+            case AS_ENUM -> builder.addStatement( "final var stringConverter = new $1T( $2T.class )", stringConverter, property.getPropertyType() );
         }
 
         //---* Set the value *-------------------------------------------------
-        builder.addStatement( "final var value = getenv( $1S )", property.getEnvironmentVariableName().orElseThrow( () -> new CodeGenerationError( format( MSG_MissingEnvironmentVar, property.getPropertyName()) ) ) )
-            .addStaticImport( System.class, "getenv" )
+        final var defaultValue = property.getEnvironmentDefaultValue();
+        if( defaultValue.isPresent() )
+        {
+            builder.addStatement( "var value = getenv( $1S )", property.getEnvironmentVariableName().orElseThrow( () -> new CodeGenerationError( format( MSG_MissingEnvironmentVar, property.getPropertyName() ) ) ) )
+                .beginControlFlow(
+                    """
+                        if( isNull( value ) )
+                        """
+                )
+                .addStaticImport( Objects.class, "isNull" )
+                .addStatement( "value = $1S", defaultValue.get() )
+                .endControlFlow();
+        }
+        else
+        {
+            builder.addStatement( "final var value = getenv( $1S )", property.getEnvironmentVariableName().orElseThrow( () -> new CodeGenerationError( format( MSG_MissingEnvironmentVar, property.getPropertyName() ) ) ) );
+        }
+        builder.addStaticImport( System.class, "getenv" )
             .addStatement( "$1N = stringConverter.fromString( value )", property.getFieldName() )
             .endControlFlow();
 
@@ -480,7 +543,7 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
      *  @param  property    The property.
      *  @return The field specification.
      */
-    @SuppressWarnings( {"UseOfConcreteClass", "TypeMayBeWeakened", "StaticMethodOnlyUsedInOneClass"} )
+    @SuppressWarnings( {"UseOfConcreteClass", "StaticMethodOnlyUsedInOneClass"} )
     public static CodeBlock composeConstructorFragment4SystemPreference( final CodeBuilder codeBuilder, final PropertySpecImpl property )
     {
         final var composer = requireNonNullArgument( codeBuilder, "codeBuilder" ).getComposer();
@@ -546,13 +609,11 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
             final var argumentType = propertyType.typeArguments().get( 0 );
             final var stringConverterType = getStringConverter( argumentType )
                 .orElseThrow( () -> new CodeGenerationError( format( MSG_MissingStringConverterWithType, property.getPropertyName(), argumentType.toString() ) ) );
-            if( determineStringConverterInstantiation( stringConverterType ) )
+            switch( determineStringConverterInstantiation( stringConverterType, false ) )
             {
-                builder.addStatement( "final var accessor = new $2T<>( $1S, $3T.INSTANCE, $4L, $5L )", key, accessorClass, stringConverterType, getter, setter );
-            }
-            else
-            {
-                builder.addStatement( "final var accessor = new $2T<>( $1S, new $3T(), $4L, $5L )", key, accessorClass, stringConverterType, getter, setter );
+                case BY_INSTANCE -> builder.addStatement( "final var accessor = new $2T<>( $1S, $3T.INSTANCE, $4L, $5L )", key, accessorClass, stringConverterType, getter, setter );
+                case THROUGH_CONSTRUCTOR -> builder.addStatement( "final var accessor = new $2T<>( $1S, new $3T(), $4L, $5L )", key, accessorClass, stringConverterType, getter, setter );
+                case AS_ENUM -> builder.addStatement( "final var accessor = new $2T<>( $1S, new $3T( $6T.class ), $4L, $5L )", key, accessorClass, stringConverterType, getter, setter, propertyType );
             }
         }
         else if( accessorClass.equals( MAP_ACCESSOR_TYPE ) )
@@ -561,23 +622,33 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
             final var argumentTypes = propertyType.typeArguments();
             final var keyStringConverterType = getStringConverter( argumentTypes.get( 0 ) )
                 .orElseThrow( () -> new CodeGenerationError( format( MSG_MissingStringConverterWithType, property.getPropertyName(), argumentTypes.get( 0 ).toString() ) ) );
-            final var keySnippet = determineStringConverterInstantiation( keyStringConverterType ) ? "$3T.INSTANCE" : "new $3T()";
+            final var keySnippet =
+                switch( determineStringConverterInstantiation( keyStringConverterType, false ) )
+                {
+                    case BY_INSTANCE -> "$3T.INSTANCE";
+                    case THROUGH_CONSTRUCTOR -> "new $3T()";
+                    case AS_ENUM -> EMPTY_STRING;
+                };
             final var valueStringConverterType = getStringConverter( argumentTypes.get( 1 ) )
                 .orElseThrow( () -> new CodeGenerationError( format( MSG_MissingStringConverterWithType, property.getPropertyName(), argumentTypes.get( 1 ).toString() ) ) );
-            final var valueSnippet = determineStringConverterInstantiation( valueStringConverterType ) ? "$4T.INSTANCE" : "new $4T()";
+            final var valueSnippet =
+                switch( determineStringConverterInstantiation( valueStringConverterType, false ) )
+                {
+                    case BY_INSTANCE -> "$4T.INSTANCE";
+                    case THROUGH_CONSTRUCTOR -> "new $4T()";
+                    case AS_ENUM -> EMPTY_STRING;
+                };
             builder.addStatement( format( "final var accessor = new $2T<>( $1S, %1$s, %2$s, $5L, $6L )", keySnippet, valueSnippet ), key, accessorClass, keyStringConverterType, valueStringConverterType, getter, setter );
         }
         else if( accessorClass.equals( DEFAULT_ACCESSOR_TYPE ) )
         {
             final var stringConverterType = property.getStringConverterClass()
                 .orElseThrow( () -> new CodeGenerationError( format( MSG_MissingStringConverter, property.getPropertyName() ) ) );
-            if( determineStringConverterInstantiation( stringConverterType ) )
+            switch( determineStringConverterInstantiation( stringConverterType, property.isEnum() ) )
             {
-                builder.addStatement( "final var accessor = new $2T<>( $1S, $4L, $5L, $3T.INSTANCE )", key, accessorClass, stringConverterType, getter, setter );
-            }
-            else
-            {
-                builder.addStatement( "final var accessor = new $2T<>( $1S, $4L, $5L, new $3T() )", key, accessorClass, stringConverterType, getter, setter );
+                case BY_INSTANCE -> builder.addStatement( "final var accessor = new $2T<>( $1S, $4L, $5L, $3T.INSTANCE )", key, accessorClass, stringConverterType, getter, setter );
+                case THROUGH_CONSTRUCTOR -> builder.addStatement( "final var accessor = new $2T<>( $1S, $4L, $5L, new $3T() )", key, accessorClass, stringConverterType, getter, setter );
+                case AS_ENUM -> builder.addStatement( "final var accessor = new $2T<>( $1S, $4L, $5L, new $3T( $6T.class ) )", key, accessorClass, stringConverterType, getter, setter, property.getPropertyType() );
             }
         }
         else
@@ -631,18 +702,24 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
         //---* Set the StringConverter *---------------------------------------
         final var stringConverter = property.getStringConverterClass()
             .orElseThrow( () -> new CodeGenerationError( format( MSG_MissingStringConverter, property.getPropertyName() ) ) );
-        if( determineStringConverterInstantiation( stringConverter ) )
+        switch( determineStringConverterInstantiation( stringConverter, property.isEnum() ) )
         {
-            builder.addStatement( "final var stringConverter = $T.INSTANCE", stringConverter );
-        }
-        else
-        {
-            builder.addStatement( "final var stringConverter = new $T()", stringConverter );
+            case BY_INSTANCE -> builder.addStatement( "final var stringConverter = $T.INSTANCE", stringConverter );
+            case THROUGH_CONSTRUCTOR -> builder.addStatement( "final var stringConverter = new $T()", stringConverter );
+            case AS_ENUM -> builder.addStatement( "final var stringConverter = new $1T( $2T.class )", stringConverter, property.getPropertyType() );
         }
 
         //---* Set the value *-------------------------------------------------
-        builder.addStatement( "final var value = getProperty( $1S )", property.getSystemPropertyName().orElseThrow( () -> new CodeGenerationError( format( MSG_MissingSystemProp, property.getPropertyName()) ) ) )
-            .addStaticImport( System.class, "getProperty" )
+        final var defaultValue = property.getEnvironmentDefaultValue();
+        if( defaultValue.isPresent() )
+        {
+            builder.addStatement( "final var value = getProperty( $1S, $2S )", property.getSystemPropertyName().orElseThrow( () -> new CodeGenerationError( format( MSG_MissingSystemProp, property.getPropertyName() ) ) ), defaultValue.get() );
+        }
+        else
+        {
+            builder.addStatement( "final var value = getProperty( $1S )", property.getSystemPropertyName().orElseThrow( () -> new CodeGenerationError( format( MSG_MissingSystemProp, property.getPropertyName() ) ) ) );
+        }
+        builder.addStaticImport( System.class, "getProperty" )
             .addStatement( "$1N = stringConverter.fromString( value )", property.getFieldName() )
             .endControlFlow();
 
@@ -816,13 +893,14 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
      *  {@link org.tquadrat.foundation.lang.StringConverter}.
      *
      *  @param  stringConverterClass    The String converter class.
-     *  @return {@code true} if the class provides a static {@code INSTANCE}
-     *      field, {@code false} if the default constructor must be used.
+     *  @param  isEnum  {@code true} if the property is of an
+     *      {@link Enum enum} type, {@code false} otherwise.
+     *  @return The type of instantiation.
      */
     @SuppressWarnings( "TryWithIdenticalCatches" )
-    protected static final boolean determineStringConverterInstantiation( final TypeName stringConverterClass )
+    protected static final StringConverterInstantiation determineStringConverterInstantiation( final TypeName stringConverterClass, final boolean isEnum )
     {
-        var retValue = false;
+        var retValue = THROUGH_CONSTRUCTOR;
         if( requireNonNullArgument( stringConverterClass, "stringConverterClass" ) instanceof ClassName className )
         {
             try
@@ -830,7 +908,7 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
                 final var candidateClass = Class.forName( className.canonicalName(), false, CodeBuilderBase.class.getClassLoader() );
                 final var field = candidateClass.getField( "INSTANCE" );
                 final var modifiers = field.getModifiers();
-                retValue = field.canAccess( null ) && isPublic( modifiers ) && isStatic( modifiers );
+                retValue = field.canAccess( null ) && isPublic( modifiers ) && isStatic( modifiers ) ? BY_INSTANCE : THROUGH_CONSTRUCTOR;
             }
             catch( @SuppressWarnings( "unused" ) final NoSuchFieldException | SecurityException e )
             {
@@ -838,7 +916,7 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
                  * There is no INSTANCE field, or it is not static, or not public,
                  * or it is otherwise not accessible to this method.
                  */
-                retValue = false;
+                retValue = THROUGH_CONSTRUCTOR;
             }
             catch( @SuppressWarnings( "unused" ) final ClassNotFoundException e )
             {
@@ -846,8 +924,12 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
                  * The class for the StringConverter implementation does not
                  * exist.
                  */
-                retValue = false;
+                retValue = THROUGH_CONSTRUCTOR;
             }
+        }
+        if( (retValue == THROUGH_CONSTRUCTOR) && isEnum )
+        {
+            retValue = AS_ENUM;
         }
 
         //---* Done *----------------------------------------------------------

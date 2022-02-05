@@ -117,10 +117,10 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="CLIBeanBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">CLIBeanBuilder</a></code>, <code><a href="ConfigBeanBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">ConfigBeanBuilder</a></code>, <code><a href="I18nSupportBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">I18nSupportBuilder</a></code>, <code><a href="INIBeanBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">INIBeanBuilder</a></code>, <code><a href="MapImplementor.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">MapImplementor</a></code>, <code><a href="PreferencesBeanBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">PreferencesBeanBuilder</a></code>, <code><a href="SessionBeanBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">SessionBeanBuilder</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="annotations"><a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">@ClassVersion</a>(<a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html#sourceVersion()" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">sourceVersion</a>="$Id: CodeBuilderBase.java 946 2021-12-23 14:48:19Z tquadrat $")
+<div class="type-signature"><span class="annotations"><a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">@ClassVersion</a>(<a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html#sourceVersion()" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">sourceVersion</a>="$Id: CodeBuilderBase.java 1010 2022-02-05 19:28:36Z tquadrat $")
 <a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html" title="class or interface in org.apiguardian.api" class="external-link">@API</a>(<a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html#status()" title="class or interface in org.apiguardian.api" class="external-link">status</a>=<a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.Status.html#INTERNAL" title="class or interface in org.apiguardian.api" class="external-link">INTERNAL</a>,
      <a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html#since()" title="class or interface in org.apiguardian.api" class="external-link">since</a>="0.1.0")
-</span><span class="modifiers">abstract sealed class </span><span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-104">CodeBuilderBase</a></span>
+</span><span class="modifiers">abstract sealed class </span><span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-107">CodeBuilderBase</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a></span>
 <span class="permits">permits <a href="CLIBeanBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">CLIBeanBuilder</a>, <a href="ConfigBeanBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">ConfigBeanBuilder</a>, <a href="I18nSupportBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">I18nSupportBuilder</a>, <a href="INIBeanBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">INIBeanBuilder</a>, <a href="MapImplementor.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">MapImplementor</a>, <a href="PreferencesBeanBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">PreferencesBeanBuilder</a>, <a href="SessionBeanBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">SessionBeanBuilder</a></span></div>
@@ -129,7 +129,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <dt><span class="simpleTagLabel">Author:</span></dt>
   <dd>Thomas Thrien (<a href="mailto:thomas.thrien@tquadrat.org">thomas.thrien@tquadrat.org</a>)</dd>
 <dt>Version:</dt>
-<dd>$Id: CodeBuilderBase.java 946 2021-12-23 14:48:19Z tquadrat $</dd>
+<dd>$Id: CodeBuilderBase.java 1010 2022-02-05 19:28:36Z tquadrat $</dd>
 <dt>Since:</dt>
 <dd>0.1.0</dd>
 
@@ -158,6 +158,19 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="nested-class-summary" id="nested-class-summary">
 <h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="CodeBuilderBase.StringConverterInstantiation.html" class="type-name-link" title="enum class in org.tquadrat.foundation.config.ap.impl.codebuilders">CodeBuilderBase.StringConverterInstantiation</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">The various type to instantiate a
+  <a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/lang/StringConverter.html" title="class or interface in org.tquadrat.foundation.lang" class="external-link"><code>StringConverter</code></a>
+  class.</div>
+</div>
+</div>
 <div class="inherited-list">
 <h2 id="nested-classes-inherited-from-class-org.tquadrat.foundation.config.ap.impl.CodeBuilder">Nested classes/interfaces inherited from interface&nbsp;org.tquadrat.foundation.config.ap.impl.<a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a></h2>
 <code><a href="../CodeBuilder.StandardField.html" title="enum class in org.tquadrat.foundation.config.ap.impl">CodeBuilder.StandardField</a>, <a href="../CodeBuilder.StandardMethod.html" title="enum class in org.tquadrat.foundation.config.ap.impl">CodeBuilder.StandardMethod</a></code></div>
@@ -349,8 +362,9 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <div class="block">The default implementation of the method that composes a setter for the
   given property.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>protected static final boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#determineStringConverterInstantiation(org.tquadrat.foundation.javacomposer.TypeName)" class="member-name-link">determineStringConverterInstantiation</a><wbr>(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;stringConverterClass)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>protected static final <a href="CodeBuilderBase.StringConverterInstantiation.html" title="enum class in org.tquadrat.foundation.config.ap.impl.codebuilders">CodeBuilderBase.StringConverterInstantiation</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#determineStringConverterInstantiation(org.tquadrat.foundation.javacomposer.TypeName,boolean)" class="member-name-link">determineStringConverterInstantiation</a><wbr>(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;stringConverterClass,
+ boolean&nbsp;isEnum)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Determines how to instantiate the given implementation of
   <a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/lang/StringConverter.html" title="class or interface in org.tquadrat.foundation.lang" class="external-link"><code>StringConverter</code></a>.</div>
@@ -423,63 +437,63 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="m_ClassBuilder">
 <h3>m_ClassBuilder</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeSpec.Builder</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-116">m_ClassBuilder</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeSpec.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeSpec.Builder</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-165">m_ClassBuilder</a></span></div>
 <div class="block">The class builder.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_Composer">
 <h3>m_Composer</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/JavaComposer.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">JavaComposer</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-121">m_Composer</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/JavaComposer.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">JavaComposer</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-170">m_Composer</a></span></div>
 <div class="block">The composer.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_Configuration">
 <h3>m_Configuration</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../CodeGenerationConfiguration.html" title="class in org.tquadrat.foundation.config.ap">CodeGenerationConfiguration</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-127">m_Configuration</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="../../CodeGenerationConfiguration.html" title="class in org.tquadrat.foundation.config.ap">CodeGenerationConfiguration</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-176">m_Configuration</a></span></div>
 <div class="block">The configuration for the code generation.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_ConstructorCode">
 <h3>m_ConstructorCode</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/CodeBlock.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">CodeBlock.Builder</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-133">m_ConstructorCode</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/CodeBlock.Builder.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">CodeBlock.Builder</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-182">m_ConstructorCode</a></span></div>
 <div class="block">The builder for body of the constructor.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_Context">
 <h3>m_Context</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="CodeGeneratorContext.html" title="interface in org.tquadrat.foundation.config.ap.impl.codebuilders">CodeGeneratorContext</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-138">m_Context</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="CodeGeneratorContext.html" title="interface in org.tquadrat.foundation.config.ap.impl.codebuilders">CodeGeneratorContext</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-187">m_Context</a></span></div>
 <div class="block">The code generator context.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_IsSynchronized">
 <h3>m_IsSynchronized</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-143">m_IsSynchronized</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-192">m_IsSynchronized</a></span></div>
 <div class="block">The synchronised flag.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_StandardFields">
 <h3>m_StandardFields</h3>
-<div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../CodeBuilder.StandardField.html" title="enum class in org.tquadrat.foundation.config.ap.impl">CodeBuilder.StandardField</a>,<wbr><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/FieldSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">FieldSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-148">m_StandardFields</a></span></div>
+<div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../CodeBuilder.StandardField.html" title="enum class in org.tquadrat.foundation.config.ap.impl">CodeBuilder.StandardField</a>,<wbr><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/FieldSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">FieldSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-197">m_StandardFields</a></span></div>
 <div class="block">The standard fields.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_StandardMethods">
 <h3>m_StandardMethods</h3>
-<div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../CodeBuilder.StandardMethod.html" title="enum class in org.tquadrat.foundation.config.ap.impl">CodeBuilder.StandardMethod</a>,<wbr><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-153">m_StandardMethods</a></span></div>
+<div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../CodeBuilder.StandardMethod.html" title="enum class in org.tquadrat.foundation.config.ap.impl">CodeBuilder.StandardMethod</a>,<wbr><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-202">m_StandardMethods</a></span></div>
 <div class="block">The standard methods.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_ConverterRegistry">
 <h3>m_ConverterRegistry</h3>
-<div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-util/javadoc/org.tquadrat.foundation.util/org/tquadrat/foundation/util/LazyMap.html" title="class or interface in org.tquadrat.foundation.util" class="external-link">LazyMap</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>,<wbr><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-163">m_ConverterRegistry</a></span></div>
+<div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-util/javadoc/org.tquadrat.foundation.util/org/tquadrat/foundation/util/LazyMap.html" title="class or interface in org.tquadrat.foundation.util" class="external-link">LazyMap</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>,<wbr><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-212">m_ConverterRegistry</a></span></div>
 <div class="block">The registry for the known implementations of
   <a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/lang/StringConverter.html" title="class or interface in org.tquadrat.foundation.lang" class="external-link"><code>StringConverter</code></a>
   implementations.</div>
@@ -496,7 +510,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="&lt;init&gt;(org.tquadrat.foundation.config.ap.impl.codebuilders.CodeGeneratorContext)">
 <h3>CodeBuilderBase</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-178">CodeBuilderBase</a></span><wbr><span class="parameters">(<a href="CodeGeneratorContext.html" title="interface in org.tquadrat.foundation.config.ap.impl.codebuilders">CodeGeneratorContext</a>&nbsp;context)</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-227">CodeBuilderBase</a></span><wbr><span class="parameters">(<a href="CodeGeneratorContext.html" title="interface in org.tquadrat.foundation.config.ap.impl.codebuilders">CodeGeneratorContext</a>&nbsp;context)</span></div>
 <div class="block">Creates a new instance of <code>CodeBuilderBase</code>.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -515,7 +529,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="addConstructorArgument(org.tquadrat.foundation.javacomposer.ParameterSpec)">
 <h3>addConstructorArgument</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-200">addConstructorArgument</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/ParameterSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">ParameterSpec</a>&nbsp;argument)</span></div>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-249">addConstructorArgument</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/ParameterSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">ParameterSpec</a>&nbsp;argument)</span></div>
 <div class="block">Adds an argument to the constructor.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -526,7 +540,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="addConstructorCode(org.tquadrat.foundation.javacomposer.CodeBlock)">
 <h3>addConstructorCode</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-211">addConstructorCode</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/CodeBlock.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">CodeBlock</a>&nbsp;code)</span></div>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-260">addConstructorCode</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/CodeBlock.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">CodeBlock</a>&nbsp;code)</span></div>
 <div class="block">Adds code to the constructor body.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -537,7 +551,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="addConstructorSuppressedWarning(org.tquadrat.foundation.javacomposer.SuppressableWarnings)">
 <h3>addConstructorSuppressedWarning</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-223">addConstructorSuppressedWarning</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/SuppressableWarnings.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">SuppressableWarnings</a>&nbsp;warning)</span></div>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-272">addConstructorSuppressedWarning</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/SuppressableWarnings.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">SuppressableWarnings</a>&nbsp;warning)</span></div>
 <div class="block">Adds a warning to the
   <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/SuppressWarnings.html" title="class or interface in java.lang" class="external-link"><code>&#64;SuppressWarnings</code></a>
   annotation for the constructor of the new configuration bean.</div>
@@ -550,7 +564,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="addField(org.tquadrat.foundation.javacomposer.FieldSpec)">
 <h3>addField</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-233">addField</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/FieldSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">FieldSpec</a>&nbsp;field)</span></div>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-282">addField</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/FieldSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">FieldSpec</a>&nbsp;field)</span></div>
 <div class="block">Adds the given field to the new class.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -561,7 +575,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="addField(org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField,org.tquadrat.foundation.javacomposer.FieldSpec)">
 <h3>addField</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-244">addField</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.StandardField.html" title="enum class in org.tquadrat.foundation.config.ap.impl">CodeBuilder.StandardField</a>&nbsp;reference,
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-293">addField</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.StandardField.html" title="enum class in org.tquadrat.foundation.config.ap.impl">CodeBuilder.StandardField</a>&nbsp;reference,
  <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/FieldSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">FieldSpec</a>&nbsp;field)</span></div>
 <div class="block">Adds the given standard field to the new class.</div>
 <dl class="notes">
@@ -574,7 +588,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="addMethod(org.tquadrat.foundation.javacomposer.MethodSpec)">
 <h3>addMethod</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-255">addMethod</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&nbsp;method)</span></div>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-304">addMethod</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&nbsp;method)</span></div>
 <div class="block">Adds the given method to the new class.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -585,7 +599,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="addMethod(org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardMethod,org.tquadrat.foundation.javacomposer.MethodSpec)">
 <h3>addMethod</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-266">addMethod</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.StandardMethod.html" title="enum class in org.tquadrat.foundation.config.ap.impl">CodeBuilder.StandardMethod</a>&nbsp;reference,
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-315">addMethod</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.StandardMethod.html" title="enum class in org.tquadrat.foundation.config.ap.impl">CodeBuilder.StandardMethod</a>&nbsp;reference,
  <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&nbsp;method)</span></div>
 <div class="block">Adds the given method to the new class.</div>
 <dl class="notes">
@@ -598,7 +612,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="build()">
 <h3>build</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-275">build</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-324">build</a></span>()</div>
 <div class="block">Generates the relevant code.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -609,7 +623,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="composeAddMethod(org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl)">
 <h3>composeAddMethod</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-287">composeAddMethod</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-336">composeAddMethod</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder,
  <a href="../PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>&nbsp;property)</span></div>
 <div class="block">The default implementation of the method that composes an 'add' method
   for the given property.</div>
@@ -625,7 +639,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="composeConstructorFragment4Environment(org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl)">
 <h3>composeConstructorFragment4Environment</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/CodeBlock.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">CodeBlock</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-433">composeConstructorFragment4Environment</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/CodeBlock.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">CodeBlock</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-482">composeConstructorFragment4Environment</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder,
  <a href="../PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>&nbsp;property)</span></div>
 <div class="block">The default implementation of the method that composes a constructor
   fragment for the initialisation of the given property in cases it is
@@ -643,7 +657,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="composeConstructorFragment4SystemPreference(org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl)">
 <h3>composeConstructorFragment4SystemPreference</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/CodeBlock.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">CodeBlock</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-483">composeConstructorFragment4SystemPreference</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/CodeBlock.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">CodeBlock</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-546">composeConstructorFragment4SystemPreference</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder,
  <a href="../PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>&nbsp;property)</span></div>
 <div class="block">The default implementation of the method that composes a constructor
   fragment for the initialisation of the given property in cases it is
@@ -661,7 +675,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="composeConstructorFragment4SystemProp(org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl)">
 <h3>composeConstructorFragment4SystemProp</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/CodeBlock.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">CodeBlock</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-616">composeConstructorFragment4SystemProp</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/CodeBlock.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">CodeBlock</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-687">composeConstructorFragment4SystemProp</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder,
  <a href="../PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>&nbsp;property)</span></div>
 <div class="block">The default implementation of the method that composes a constructor
   fragment for the initialisation of the given property in cases it is
@@ -679,7 +693,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="composeField(org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl)">
 <h3>composeField</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/FieldSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">FieldSpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-664">composeField</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/FieldSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">FieldSpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-741">composeField</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder,
  <a href="../PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>&nbsp;property)</span></div>
 <div class="block">The default implementation of the method that composes a field for the
   given property.</div>
@@ -695,7 +709,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="composeGetter(org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl)">
 <h3>composeGetter</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-694">composeGetter</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-771">composeGetter</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder,
  <a href="../PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>&nbsp;property)</span></div>
 <div class="block">The default implementation of the method that composes a getter for the
   given property.</div>
@@ -711,7 +725,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="composeSetter(org.tquadrat.foundation.config.ap.impl.CodeBuilder,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl)">
 <h3>composeSetter</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-746">composeSetter</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-823">composeSetter</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a>&nbsp;codeBuilder,
  <a href="../PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>&nbsp;property)</span></div>
 <div class="block">The default implementation of the method that composes a setter for the
   given property.</div>
@@ -725,24 +739,26 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 </section>
 </li>
 <li>
-<section class="detail" id="determineStringConverterInstantiation(org.tquadrat.foundation.javacomposer.TypeName)">
+<section class="detail" id="determineStringConverterInstantiation(org.tquadrat.foundation.javacomposer.TypeName,boolean)">
 <h3>determineStringConverterInstantiation</h3>
-<div class="member-signature"><span class="modifiers">protected static final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-822">determineStringConverterInstantiation</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;stringConverterClass)</span></div>
+<div class="member-signature"><span class="modifiers">protected static final</span>&nbsp;<span class="return-type"><a href="CodeBuilderBase.StringConverterInstantiation.html" title="enum class in org.tquadrat.foundation.config.ap.impl.codebuilders">CodeBuilderBase.StringConverterInstantiation</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-900">determineStringConverterInstantiation</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;stringConverterClass,
+ boolean&nbsp;isEnum)</span></div>
 <div class="block">Determines how to instantiate the given implementation of
   <a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/lang/StringConverter.html" title="class or interface in org.tquadrat.foundation.lang" class="external-link"><code>StringConverter</code></a>.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>stringConverterClass</code> - The String converter class.</dd>
+<dd><code>isEnum</code> - <code>true</code> if the property is of an
+      <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link"><code>enum</code></a> type, <code>false</code> otherwise.</dd>
 <dt>Returns:</dt>
-<dd><code>true</code> if the class provides a static <code>INSTANCE</code>
-      field, <code>false</code> if the default constructor must be used.</dd>
+<dd>The type of instantiation.</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getComposer()">
 <h3>getComposer</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/JavaComposer.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">JavaComposer</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-860">getComposer</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/JavaComposer.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">JavaComposer</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-942">getComposer</a></span>()</div>
 <div class="block">Provides access to the composer.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -755,7 +771,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="getConfiguration()">
 <h3>getConfiguration</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="../../CodeGenerationConfiguration.html" title="class in org.tquadrat.foundation.config.ap">CodeGenerationConfiguration</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-867">getConfiguration</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="../../CodeGenerationConfiguration.html" title="class in org.tquadrat.foundation.config.ap">CodeGenerationConfiguration</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-949">getConfiguration</a></span>()</div>
 <div class="block">Provides access to the code builder configuration.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -768,7 +784,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="getField(org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField)">
 <h3>getField</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/FieldSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">FieldSpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-874">getField</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.StandardField.html" title="enum class in org.tquadrat.foundation.config.ap.impl">CodeBuilder.StandardField</a>&nbsp;reference)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/FieldSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">FieldSpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-956">getField</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.StandardField.html" title="enum class in org.tquadrat.foundation.config.ap.impl">CodeBuilder.StandardField</a>&nbsp;reference)</span></div>
 <div class="block">Returns the specification for a standard field.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -783,7 +799,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="getMethod(org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardMethod)">
 <h3>getMethod</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-886">getMethod</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.StandardMethod.html" title="enum class in org.tquadrat.foundation.config.ap.impl">CodeBuilder.StandardMethod</a>&nbsp;reference)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-968">getMethod</a></span><wbr><span class="parameters">(<a href="../CodeBuilder.StandardMethod.html" title="enum class in org.tquadrat.foundation.config.ap.impl">CodeBuilder.StandardMethod</a>&nbsp;reference)</span></div>
 <div class="block">Returns the specification for a standard method.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -798,7 +814,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="getProperties()">
 <h3>getProperties</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a>&lt;<a href="../../PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-900">getProperties</a></span>()</div>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a>&lt;<a href="../../PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-982">getProperties</a></span>()</div>
 <div class="block">Returns an iterator over the configured properties.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -809,7 +825,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="getStringConverter(org.tquadrat.foundation.javacomposer.TypeName)">
 <h3>getStringConverter</h3>
-<div class="member-signature"><span class="modifiers">protected static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-913">getStringConverter</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;type)</span></div>
+<div class="member-signature"><span class="modifiers">protected static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-995">getStringConverter</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;type)</span></div>
 <div class="block">Returns the
   <a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/lang/StringConverter.html" title="class or interface in org.tquadrat.foundation.lang" class="external-link"><code>StringConverter</code></a>
   type for the given type.</div>
@@ -827,7 +843,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="isSynchronized()">
 <h3>isSynchronized</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-928">isSynchronized</a></span>()</div>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-1010">isSynchronized</a></span>()</div>
 <div class="block">Returns the flag that controls whether the configuration bean has to be
   generated thread safe.</div>
 <dl class="notes">
@@ -840,7 +856,7 @@ implements <a href="../CodeBuilder.html" title="interface in org.tquadrat.founda
 <li>
 <section class="detail" id="loadStringConverters()">
 <h3>loadStringConverters</h3>
-<div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>,<wbr><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-942">loadStringConverters</a></span>()</div>
+<div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>,<wbr><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/CodeBuilderBase.html#line-1024">loadStringConverters</a></span>()</div>
 <div class="block">The implementation of
   <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link"><code>Supplier</code></a>
   that loads the known

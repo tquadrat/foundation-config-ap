@@ -42,10 +42,10 @@ import org.tquadrat.foundation.test.helper.CodeGeneratorTestBase;
  *  annotation.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: TestConfigBeanBuilder2.java 1008 2022-02-05 03:18:07Z tquadrat $
+ *  @version $Id: TestConfigBeanBuilder2.java 1010 2022-02-05 19:28:36Z tquadrat $
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: TestConfigBeanBuilder2.java 1008 2022-02-05 03:18:07Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: TestConfigBeanBuilder2.java 1010 2022-02-05 19:28:36Z tquadrat $" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.TestConfigBeanBuilder2" )
 public class TestConfigBeanBuilder2 extends CodeGeneratorTestBase
 {
@@ -242,7 +242,7 @@ public class TestConfigBeanBuilder2 extends CodeGeneratorTestBase
                              */
                             {
                                 final var stringConverter = BooleanStringConverter.INSTANCE;
-                                final var value = getProperty( "isDebug" );
+                                final var value = getProperty( "isDebug", "false" );
                                 m_IsDebug = stringConverter.fromString( value );
                             }
                                     
@@ -251,7 +251,7 @@ public class TestConfigBeanBuilder2 extends CodeGeneratorTestBase
                              */
                             {
                                 final var stringConverter = BooleanStringConverter.INSTANCE;
-                                final var value = getProperty( "isTest" );
+                                final var value = getProperty( "isTest", "false" );
                                 m_IsTest = stringConverter.fromString( value );
                             }
                                     

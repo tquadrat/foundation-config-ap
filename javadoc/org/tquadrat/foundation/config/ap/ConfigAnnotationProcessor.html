@@ -77,9 +77,11 @@
 <meta name="keywords" content="handleGetter()">
 <meta name="keywords" content="handleSetter()">
 <meta name="keywords" content="initStringConvertersForTypeNames()">
-<meta name="keywords" content="parseCLIAnnotation()">
 <meta name="keywords" content="parseArgumentAnnotation()">
+<meta name="keywords" content="parseCLIAnnotation()">
+<meta name="keywords" content="parseEnvironmentVariableAnnotation()">
 <meta name="keywords" content="parseOptionAnnotation()">
+<meta name="keywords" content="parseSystemPropertyAnnotation()">
 <meta name="keywords" content="process()">
 <meta name="keywords" content="processConfigurationBeanSpecification()">
 <meta name="keywords" content="retrieveAccessorClass()">
@@ -163,7 +165,7 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/annotation/processing/Messager.html" title="class or interface in javax.annotation.processing" class="external-link">Messager</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/annotation/processing/ProcessingEnvironment.html" title="class or interface in javax.annotation.processing" class="external-link">ProcessingEnvironment</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/annotation/processing/Processor.html" title="class or interface in javax.annotation.processing" class="external-link">Processor</a></code>, <code><a href="https://tquadrat.github.io/foundation-apbase/javadoc/org/tquadrat/foundation/ap/APHelper.html" title="class or interface in org.tquadrat.foundation.ap" class="external-link">APHelper</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="annotations"><a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">@ClassVersion</a>(<a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html#sourceVersion()" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">sourceVersion</a>="$Id: ConfigAnnotationProcessor.java 1006 2022-02-03 23:03:04Z tquadrat $")
+<div class="type-signature"><span class="annotations"><a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">@ClassVersion</a>(<a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html#sourceVersion()" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">sourceVersion</a>="$Id: ConfigAnnotationProcessor.java 1010 2022-02-05 19:28:36Z tquadrat $")
 <a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html" title="class or interface in org.apiguardian.api" class="external-link">@API</a>(<a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html#status()" title="class or interface in org.apiguardian.api" class="external-link">status</a>=<a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.Status.html#STABLE" title="class or interface in org.apiguardian.api" class="external-link">STABLE</a>,
      <a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html#since()" title="class or interface in org.apiguardian.api" class="external-link">since</a>="0.1.0")
 <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/annotation/processing/SupportedSourceVersion.html" title="class or interface in javax.annotation.processing" class="external-link">@SupportedSourceVersion</a>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/SourceVersion.html#RELEASE_17" title="class or interface in javax.lang.model" class="external-link">RELEASE_17</a>)
@@ -176,7 +178,7 @@ loadScripts(document, 'script');</script>
 <dt><span class="simpleTagLabel">Author:</span></dt>
   <dd>Thomas Thrien (<a href="mailto:thomas.thrien@tquadrat.org">thomas.thrien@tquadrat.org</a>)</dd>
 <dt>Version:</dt>
-<dd>$Id: ConfigAnnotationProcessor.java 1006 2022-02-03 23:03:04Z tquadrat $</dd>
+<dd>$Id: ConfigAnnotationProcessor.java 1010 2022-02-05 19:28:36Z tquadrat $</dd>
 <dt>Since:</dt>
 <dd>0.1.0</dd>
 
@@ -686,8 +688,20 @@ loadScripts(document, 'script');</script>
   property accordingly.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parseOptionAnnotation(org.tquadrat.foundation.config.Option,javax.lang.model.element.ExecutableElement,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl)" class="member-name-link">parseOptionAnnotation</a><wbr>(<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/Option.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">Option</a>&nbsp;annotation,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parseEnvironmentVariableAnnotation(org.tquadrat.foundation.config.EnvironmentVariable,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl)" class="member-name-link">parseEnvironmentVariableAnnotation</a><wbr>(<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/EnvironmentVariable.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">EnvironmentVariable</a>&nbsp;annotation,
+ <a href="impl/PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>&nbsp;property)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Parses the given annotation and updates the given property accordingly.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parseOptionAnnotation(org.tquadrat.foundation.config.Option,javax.lang.model.element.ExecutableElement,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl)" class="member-name-link">parseOptionAnnotation</a><wbr>(<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/Option.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">Option</a>&nbsp;annotation,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html" title="class or interface in javax.lang.model.element" class="external-link">ExecutableElement</a>&nbsp;method,
+ <a href="impl/PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>&nbsp;property)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Parses the given annotation and updates the given property accordingly.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>private final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parseSystemPropertyAnnotation(org.tquadrat.foundation.config.SystemProperty,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl)" class="member-name-link">parseSystemPropertyAnnotation</a><wbr>(<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/SystemProperty.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">SystemProperty</a>&nbsp;annotation,
  <a href="impl/PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>&nbsp;property)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Parses the given annotation and updates the given property accordingly.</div>
@@ -1847,7 +1861,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="handleSetter(org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,javax.lang.model.element.ExecutableElement)">
 <h3>handleSetter</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-1378">handleSetter</a></span><wbr><span class="parameters">(<a href="CodeGenerationConfiguration.html" title="class in org.tquadrat.foundation.config.ap">CodeGenerationConfiguration</a>&nbsp;configuration,
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-1370">handleSetter</a></span><wbr><span class="parameters">(<a href="CodeGenerationConfiguration.html" title="class in org.tquadrat.foundation.config.ap">CodeGenerationConfiguration</a>&nbsp;configuration,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html" title="class or interface in javax.lang.model.element" class="external-link">ExecutableElement</a>&nbsp;setter)</span></div>
 <div class="block">Processes the given
   <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html" title="class or interface in javax.lang.model.element" class="external-link"><code>ExecutableElement</code></a>
@@ -1864,7 +1878,7 @@ loadScripts(document, 'script');</script>
 <h3>initStringConvertersForTypeNames</h3>
 <div class="member-signature"><span class="annotations"><a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html" title="class or interface in org.apiguardian.api" class="external-link">@API</a>(<a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html#status()" title="class or interface in org.apiguardian.api" class="external-link">status</a>=<a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.Status.html#INTERNAL" title="class or interface in org.apiguardian.api" class="external-link">INTERNAL</a>,
      <a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html#since()" title="class or interface in org.apiguardian.api" class="external-link">since</a>="0.1.0")
-</span><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>,<wbr><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/ClassName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">ClassName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-1651">initStringConvertersForTypeNames</a></span>()</div>
+</span><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>,<wbr><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/ClassName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">ClassName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-1643">initStringConvertersForTypeNames</a></span>()</div>
 <div class="block">Initialises the internal attribute
   <a href="#m_StringConvertersForTypeNames"><code>m_StringConvertersForTypeNames</code></a>.</div>
 <dl class="notes">
@@ -1876,9 +1890,24 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="parseArgumentAnnotation(org.tquadrat.foundation.config.Argument,javax.lang.model.element.ExecutableElement,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl)">
+<h3>parseArgumentAnnotation</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-1668">parseArgumentAnnotation</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/Argument.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">Argument</a>&nbsp;annotation,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html" title="class or interface in javax.lang.model.element" class="external-link">ExecutableElement</a>&nbsp;method,
+ <a href="impl/PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>&nbsp;property)</span></div>
+<div class="block">Parses the given annotation and updates the given property accordingly.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>annotation</code> - The annotation.</dd>
+<dd><code>method</code> - The annotated method.</dd>
+<dd><code>property</code> - The property.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="parseCLIAnnotation(java.lang.annotation.Annotation,javax.lang.model.element.ExecutableElement,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl)">
 <h3>parseCLIAnnotation</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-1687">parseCLIAnnotation</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>&nbsp;annotation,
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-1698">parseCLIAnnotation</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/annotation/Annotation.html" title="class or interface in java.lang.annotation" class="external-link">Annotation</a>&nbsp;annotation,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html" title="class or interface in javax.lang.model.element" class="external-link">ExecutableElement</a>&nbsp;method,
  <a href="impl/PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>&nbsp;property)</span></div>
 <div class="block"><p>Parses the given CLI annotation and updates the given
@@ -1902,16 +1931,14 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="parseArgumentAnnotation(org.tquadrat.foundation.config.Argument,javax.lang.model.element.ExecutableElement,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl)">
-<h3>parseArgumentAnnotation</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-1766">parseArgumentAnnotation</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/Argument.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">Argument</a>&nbsp;annotation,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html" title="class or interface in javax.lang.model.element" class="external-link">ExecutableElement</a>&nbsp;method,
+<section class="detail" id="parseEnvironmentVariableAnnotation(org.tquadrat.foundation.config.EnvironmentVariable,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl)">
+<h3>parseEnvironmentVariableAnnotation</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-1776">parseEnvironmentVariableAnnotation</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/EnvironmentVariable.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">EnvironmentVariable</a>&nbsp;annotation,
  <a href="impl/PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>&nbsp;property)</span></div>
 <div class="block">Parses the given annotation and updates the given property accordingly.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>annotation</code> - The annotation.</dd>
-<dd><code>method</code> - The annotated method.</dd>
 <dd><code>property</code> - The property.</dd>
 </dl>
 </section>
@@ -1919,7 +1946,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parseOptionAnnotation(org.tquadrat.foundation.config.Option,javax.lang.model.element.ExecutableElement,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl)">
 <h3>parseOptionAnnotation</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-1785">parseOptionAnnotation</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/Option.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">Option</a>&nbsp;annotation,
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-1796">parseOptionAnnotation</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/Option.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">Option</a>&nbsp;annotation,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html" title="class or interface in javax.lang.model.element" class="external-link">ExecutableElement</a>&nbsp;method,
  <a href="impl/PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>&nbsp;property)</span></div>
 <div class="block">Parses the given annotation and updates the given property accordingly.</div>
@@ -1932,9 +1959,22 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="parseSystemPropertyAnnotation(org.tquadrat.foundation.config.SystemProperty,org.tquadrat.foundation.config.ap.impl.PropertySpecImpl)">
+<h3>parseSystemPropertyAnnotation</h3>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-1817">parseSystemPropertyAnnotation</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/SystemProperty.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">SystemProperty</a>&nbsp;annotation,
+ <a href="impl/PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>&nbsp;property)</span></div>
+<div class="block">Parses the given annotation and updates the given property accordingly.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>annotation</code> - The annotation.</dd>
+<dd><code>property</code> - The property.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="process(java.util.Set,javax.annotation.processing.RoundEnvironment)">
 <h3>process</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-1803">process</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/TypeElement.html" title="class or interface in javax.lang.model.element" class="external-link">TypeElement</a>&gt;&nbsp;annotations,
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-1833">process</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/TypeElement.html" title="class or interface in javax.lang.model.element" class="external-link">TypeElement</a>&gt;&nbsp;annotations,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/annotation/processing/RoundEnvironment.html" title="class or interface in javax.annotation.processing" class="external-link">RoundEnvironment</a>&nbsp;roundEnvironment)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1947,7 +1987,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="processConfigurationBeanSpecification(javax.lang.model.element.TypeElement)">
 <h3>processConfigurationBeanSpecification</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-1881">processConfigurationBeanSpecification</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/TypeElement.html" title="class or interface in javax.lang.model.element" class="external-link">TypeElement</a>&nbsp;specification)</span>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-1911">processConfigurationBeanSpecification</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/TypeElement.html" title="class or interface in javax.lang.model.element" class="external-link">TypeElement</a>&nbsp;specification)</span>
                                                   throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Processes the given configuration bean specification and generates the
   source for the so specified configuration bean.</div>
@@ -1964,7 +2004,7 @@ loadScripts(document, 'script');</script>
 <h3>retrieveAccessorClass</h3>
 <div class="member-signature"><span class="annotations"><a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html" title="class or interface in org.apiguardian.api" class="external-link">@API</a>(<a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html#status()" title="class or interface in org.apiguardian.api" class="external-link">status</a>=<a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.Status.html#INTERNAL" title="class or interface in org.apiguardian.api" class="external-link">INTERNAL</a>,
      <a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html#since()" title="class or interface in org.apiguardian.api" class="external-link">since</a>="0.0.1")
-</span><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-2045">retrieveAccessorClass</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;accessorType,
+</span><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-2075">retrieveAccessorClass</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;accessorType,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/type/TypeMirror.html" title="class or interface in javax.lang.model.type" class="external-link">TypeMirror</a>&nbsp;propertyType,
  <a href="CollectionKind.html" title="enum class in org.tquadrat.foundation.config.ap">CollectionKind</a>&nbsp;collectionKind)</span>
                                       throws <span class="exceptions"><a href="https://tquadrat.github.io/foundation-apbase/javadoc/org/tquadrat/foundation/ap/IllegalAnnotationError.html" title="class or interface in org.tquadrat.foundation.ap" class="external-link">IllegalAnnotationError</a></span></div>
@@ -1991,7 +2031,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="retrieveInitDataMethod(org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,javax.lang.model.element.TypeElement)">
 <h3>retrieveInitDataMethod</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-2096">retrieveInitDataMethod</a></span><wbr><span class="parameters">(<a href="CodeGenerationConfiguration.html" title="class in org.tquadrat.foundation.config.ap">CodeGenerationConfiguration</a>&nbsp;configuration,
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-2126">retrieveInitDataMethod</a></span><wbr><span class="parameters">(<a href="CodeGenerationConfiguration.html" title="class in org.tquadrat.foundation.config.ap">CodeGenerationConfiguration</a>&nbsp;configuration,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/TypeElement.html" title="class or interface in javax.lang.model.element" class="external-link">TypeElement</a>&nbsp;specification)</span></div>
 <div class="block"><p>This methods checks whether the configuration bean
   specification specifies an <code>initData()</code> method. This method has
@@ -2026,7 +2066,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="retrieveProperties(org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,java.util.Collection)">
 <h3>retrieveProperties</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-2140">retrieveProperties</a></span><wbr><span class="parameters">(<a href="CodeGenerationConfiguration.html" title="class in org.tquadrat.foundation.config.ap">CodeGenerationConfiguration</a>&nbsp;configuration,
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-2170">retrieveProperties</a></span><wbr><span class="parameters">(<a href="CodeGenerationConfiguration.html" title="class in org.tquadrat.foundation.config.ap">CodeGenerationConfiguration</a>&nbsp;configuration,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/TypeElement.html" title="class or interface in javax.lang.model.element" class="external-link">TypeElement</a>&gt;&nbsp;interfaces)</span></div>
 <div class="block"><p>Scans the configuration bean specification for the
   properties and stores the result to the configuration.</p>
@@ -2048,7 +2088,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="retrieveSetterArgumentName(javax.lang.model.element.ExecutableElement)">
 <h3>retrieveSetterArgumentName</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-2216">retrieveSetterArgumentName</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html" title="class or interface in javax.lang.model.element" class="external-link">ExecutableElement</a>&nbsp;setter)</span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-2246">retrieveSetterArgumentName</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/ExecutableElement.html" title="class or interface in javax.lang.model.element" class="external-link">ExecutableElement</a>&nbsp;setter)</span></div>
 <div class="block"><p>Retrieves the name of the single argument of a setter
   method.</p>
   <p>This method will return the name of the argument as defined in the
@@ -2067,7 +2107,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="retrieveSubjectClasses(org.tquadrat.foundation.lang.StringConverter)">
 <h3>retrieveSubjectClasses</h3>
-<div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;?&gt;&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-2236">retrieveSubjectClasses</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/lang/StringConverter.html" title="class or interface in org.tquadrat.foundation.lang" class="external-link">StringConverter</a>&lt;?&gt;&nbsp;converter)</span></div>
+<div class="member-signature"><span class="modifiers">private static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;?&gt;&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/ConfigAnnotationProcessor.html#line-2266">retrieveSubjectClasses</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/lang/StringConverter.html" title="class or interface in org.tquadrat.foundation.lang" class="external-link">StringConverter</a>&lt;?&gt;&nbsp;converter)</span></div>
 <div class="block"><p>Determines the key class for the given instance of
   <a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/lang/StringConverter.html" title="class or interface in org.tquadrat.foundation.lang" class="external-link"><code>StringConverter</code></a>.</p></div>
 <dl class="notes">

@@ -43,9 +43,9 @@ import org.tquadrat.foundation.test.helper.CodeGeneratorTestBase;
  *  interface.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: TestPrefBeanBuilder.java 1008 2022-02-05 03:18:07Z tquadrat $
+ *  @version $Id: TestPrefBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $
  */
-@ClassVersion( sourceVersion = "$Id: TestPrefBeanBuilder.java 1008 2022-02-05 03:18:07Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: TestPrefBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.TestPrefBeanBuilder" )
 public class TestPrefBeanBuilder extends CodeGeneratorTestBase
 {
@@ -357,7 +357,7 @@ public class TestPrefBeanBuilder extends CodeGeneratorTestBase
                              */
                             {
                                 final var stringConverter = BooleanStringConverter.INSTANCE;
-                                final var value = getProperty( "isDebug" );
+                                final var value = getProperty( "isDebug", "false" );
                                 m_IsDebug = stringConverter.fromString( value );
                             }
                                     
@@ -366,7 +366,7 @@ public class TestPrefBeanBuilder extends CodeGeneratorTestBase
                              */
                             {
                                 final var stringConverter = BooleanStringConverter.INSTANCE;
-                                final var value = getProperty( "isTest" );
+                                final var value = getProperty( "isTest", "false" );
                                 m_IsTest = stringConverter.fromString( value );
                             }
                                     
@@ -495,7 +495,7 @@ public class TestPrefBeanBuilder extends CodeGeneratorTestBase
                                 value = initData.getProperty( "enum1" );
                                 if( nonNull( value ) )
                                 {
-                                    final var stringConverter = new EnumStringConverter( MyEnum);
+                                    final var stringConverter = new EnumStringConverter( MyEnum.class );
                                     m_Enum1 = stringConverter.fromString( value );
                                 }
                                     

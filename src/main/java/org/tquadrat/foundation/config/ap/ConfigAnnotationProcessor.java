@@ -156,14 +156,14 @@ import org.tquadrat.foundation.util.stringconverter.PathStringConverter;
  *  The annotation processor for the {@code org.tquadrat.foundation.config}
  *  module.
  *
- *  @version $Id: ConfigAnnotationProcessor.java 1006 2022-02-03 23:03:04Z tquadrat $
+ *  @version $Id: ConfigAnnotationProcessor.java 1010 2022-02-05 19:28:36Z tquadrat $
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"OverlyCoupledClass", "OverlyComplexClass", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1006 2022-02-03 23:03:04Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1010 2022-02-05 19:28:36Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @SupportedSourceVersion( SourceVersion.RELEASE_17 )
 @SupportedOptions( { APBase.ADD_DEBUG_OUTPUT, APBase.MAVEN_GOAL } )
@@ -1215,11 +1215,7 @@ public class ConfigAnnotationProcessor extends APBase
                     throw new IllegalAnnotationError( format( MSG_IllegalAnnotationOnGetter, INIValue.class.getName(), getter.getSimpleName() ) );
                 }
 
-                /*
-                 * The property will be initialised from a system property with
-                 * the name given in the annotation.
-                 */
-                property.setSystemPropertyName( systemPropertyAnnotation.value() );
+                parseSystemPropertyAnnotation( systemPropertyAnnotation, property );
 
                 /*
                  * System properties may not be stored to/retrieved from
@@ -1245,11 +1241,7 @@ public class ConfigAnnotationProcessor extends APBase
                     throw new IllegalAnnotationError( format( MSG_IllegalAnnotationOnGetter, EnvironmentVariable.class.getName(), getter.getSimpleName() ) );
                 }
 
-                /*
-                 * The property will be initialised from an environment
-                 * variable with the name given in the annotation.
-                 */
-                property.setEnvironmentVariableName( environmentVariableAnnotation.value() );
+                parseEnvironmentVariableAnnotation( environmentVariableAnnotation, property );
 
                 /*
                  * Environment variable values may not be stored
@@ -1667,6 +1659,25 @@ public class ConfigAnnotationProcessor extends APBase
     }   //  initStringConvertersForTypeNames()
 
     /**
+     *  Parses the given annotation and updates the given property accordingly.
+     *
+     *  @param  annotation  The annotation.
+     *  @param  method  The annotated method.
+     *  @param  property    The property.
+     */
+    @SuppressWarnings( "UseOfConcreteClass" )
+    private final void parseArgumentAnnotation( final Argument annotation, final ExecutableElement method, final PropertySpecImpl property )
+    {
+        property.setFlag( PROPERTY_IS_ARGUMENT );
+
+        //---* The index *-----------------------------------------------------
+        property.setCLIArgumentIndex( annotation.index() );
+
+        //---* The other fields *----------------------------------------------
+        parseCLIAnnotation( annotation, method, property );
+    }   //  parseArgumentAnnotation()
+
+    /**
      *  <p>{@summary Parses the given CLI annotation and updates the given
      *  property accordingly.}</p>
      *  <p>{@code annotation} may be only of type
@@ -1760,20 +1771,20 @@ public class ConfigAnnotationProcessor extends APBase
      *  Parses the given annotation and updates the given property accordingly.
      *
      *  @param  annotation  The annotation.
-     *  @param  method  The annotated method.
      *  @param  property    The property.
      */
     @SuppressWarnings( "UseOfConcreteClass" )
-    private final void parseArgumentAnnotation( final Argument annotation, final ExecutableElement method, final PropertySpecImpl property )
+    private final void parseEnvironmentVariableAnnotation( final EnvironmentVariable annotation, final PropertySpecImpl property )
     {
-        property.setFlag( PROPERTY_IS_ARGUMENT );
+        /*
+         * The property will be initialised from an environment
+         * variable with the name given in the annotation.
+         */
+        property.setEnvironmentVariableName( annotation.value() );
 
-        //---* The index *-----------------------------------------------------
-        property.setCLIArgumentIndex( annotation.index() );
-
-        //---* The other fields *----------------------------------------------
-        parseCLIAnnotation( annotation, method, property );
-    }   //  parseOptionAnnotation()
+        //---* Set the default value *-----------------------------------------
+        property.setEnvironmentDefaultValue( annotation.defaultValue() );
+    }   //  parseEnvironmentVariableAnnotation()
 
     /**
      *  Parses the given annotation and updates the given property accordingly.
@@ -1796,6 +1807,25 @@ public class ConfigAnnotationProcessor extends APBase
         //---* The other fields *----------------------------------------------
         parseCLIAnnotation( annotation, method, property );
     }   //  parseOptionAnnotation()
+
+    /**
+     *  Parses the given annotation and updates the given property accordingly.
+     *
+     *  @param  annotation  The annotation.
+     *  @param  property    The property.
+     */
+    @SuppressWarnings( "UseOfConcreteClass" )
+    private final void parseSystemPropertyAnnotation( final SystemProperty annotation, final PropertySpecImpl property )
+    {
+        /*
+         * The property will be initialised from a system property with
+         * the name given in the annotation.
+         */
+        property.setSystemPropertyName( annotation.value() );
+
+        //---* Set the default value *-----------------------------------------
+        property.setEnvironmentDefaultValue( annotation.defaultValue() );
+    }   //  parseSystemPropertyAnnotation()
 
     /**
      *  {@inheritDoc}

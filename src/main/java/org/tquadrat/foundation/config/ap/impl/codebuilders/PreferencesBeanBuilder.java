@@ -39,6 +39,7 @@ import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.S
 import static org.tquadrat.foundation.javacomposer.Primitives.VOID;
 import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.USE_OF_CONCRETE_CLASS;
 import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.createSuppressWarningsAnnotation;
+import static org.tquadrat.foundation.lang.CommonConstants.EMPTY_STRING;
 import static org.tquadrat.foundation.util.StringUtils.format;
 
 import java.util.HashMap;
@@ -67,11 +68,11 @@ import org.tquadrat.foundation.lang.Objects;
  *  {@link org.tquadrat.foundation.config.PreferencesBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: PreferencesBeanBuilder.java 946 2021-12-23 14:48:19Z tquadrat $
+ *  @version $Id: PreferencesBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@ClassVersion( sourceVersion = "$Id: PreferencesBeanBuilder.java 946 2021-12-23 14:48:19Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: PreferencesBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class PreferencesBeanBuilder extends CodeBuilderBase
 {
@@ -264,13 +265,11 @@ public final class PreferencesBeanBuilder extends CodeBuilderBase
                 final var argumentType = propertyType.typeArguments().get( 0 );
                 final var stringConverterType = getStringConverter( argumentType )
                     .orElseThrow( () -> new CodeGenerationError( format( MSG_MissingStringConverterWithType, name, argumentType.toString() ) ) );
-                if( determineStringConverterInstantiation( stringConverterType ) )
+                switch( determineStringConverterInstantiation( stringConverterType, false ) )
                 {
-                    codeBlockBuilder.addStatement( "$1N.put( $2S, new $3T<>( $2S, $4T.INSTANCE, $5L, $6L ) )", accessorRegistry, key, accessorClass, stringConverterType, getter, setter );
-                }
-                else
-                {
-                    codeBlockBuilder.addStatement( "$1N.put( $2S, new $3T<>( $2S, new $4T(), $5L, $6L ) )", accessorRegistry, key, accessorClass, stringConverterType, getter, setter );
+                    case BY_INSTANCE -> codeBlockBuilder.addStatement( "$1N.put( $2S, new $3T<>( $2S, $4T.INSTANCE, $5L, $6L ) )", accessorRegistry, key, accessorClass, stringConverterType, getter, setter );
+                    case THROUGH_CONSTRUCTOR -> codeBlockBuilder.addStatement( "$1N.put( $2S, new $3T<>( $2S, new $4T(), $5L, $6L ) )", accessorRegistry, key, accessorClass, stringConverterType, getter, setter );
+                    case AS_ENUM -> codeBlockBuilder.addStatement( "$1N.put( $2S, new $3T<>( $2S, new $4T( $7T), $5L, $6L ) )", accessorRegistry, key, accessorClass, stringConverterType, getter, setter, propertyType );
                 }
             }
             else if( accessorClass.equals( MAP_ACCESSOR_TYPE ) )
@@ -279,23 +278,33 @@ public final class PreferencesBeanBuilder extends CodeBuilderBase
                 final var argumentTypes = propertyType.typeArguments();
                 final var keyStringConverterType = getStringConverter( argumentTypes.get( 0 ) )
                     .orElseThrow( () -> new CodeGenerationError( format( MSG_MissingStringConverterWithType, name, argumentTypes.get( 0 ).toString() ) ) );
-                final var keySnippet = determineStringConverterInstantiation( keyStringConverterType ) ? "$4T.INSTANCE" : "new $4T()";
+                final var keySnippet =
+                    switch( determineStringConverterInstantiation( keyStringConverterType, false ) )
+                    {
+                        case BY_INSTANCE -> "$4T.INSTANCE";
+                        case THROUGH_CONSTRUCTOR -> "new $4T()";
+                        case AS_ENUM -> EMPTY_STRING;
+                    };
                 final var valueStringConverterType = getStringConverter( argumentTypes.get( 1 ) )
                     .orElseThrow( () -> new CodeGenerationError( format( MSG_MissingStringConverterWithType, name, argumentTypes.get( 1 ).toString() ) ) );
-                final var valueSnippet = determineStringConverterInstantiation( valueStringConverterType ) ? "$5T.INSTANCE" : "new $5T()";
+                final var valueSnippet =
+                    switch( determineStringConverterInstantiation( valueStringConverterType, false ) )
+                    {
+                        case BY_INSTANCE -> "$5T.INSTANCE";
+                        case THROUGH_CONSTRUCTOR -> "new $5T()";
+                        case AS_ENUM -> EMPTY_STRING;
+                    };
                 codeBlockBuilder.addStatement( format( "$1N.put( $2S, new $3T<>( $2S, %1$s, %2$s, $6L, $7L ) )", keySnippet, valueSnippet ), accessorRegistry, key, accessorClass, keyStringConverterType, valueStringConverterType, getter, setter );
             }
             else if( accessorClass.equals( DEFAULT_ACCESSOR_TYPE ) )
             {
                 final var stringConverterType = propertySpec.getStringConverterClass()
                     .orElseThrow( () -> new CodeGenerationError( format( MSG_MissingStringConverter, name ) ) );
-                if( determineStringConverterInstantiation( stringConverterType ) )
+                switch( determineStringConverterInstantiation( stringConverterType, propertySpec.isEnum() ) )
                 {
-                    codeBlockBuilder.addStatement( "$1N.put( $2S, new $3T<>( $2S, $5L, $6L, $4T.INSTANCE ) )", accessorRegistry, key, accessorClass, stringConverterType, getter, setter );
-                }
-                else
-                {
-                    codeBlockBuilder.addStatement( "$1N.put( $2S, new $3T<>( $2S, $5L, $6L, new $4T() ) )", accessorRegistry, key, accessorClass, stringConverterType, getter, setter );
+                    case BY_INSTANCE -> codeBlockBuilder.addStatement( "$1N.put( $2S, new $3T<>( $2S, $5L, $6L, $4T.INSTANCE ) )", accessorRegistry, key, accessorClass, stringConverterType, getter, setter );
+                    case THROUGH_CONSTRUCTOR -> codeBlockBuilder.addStatement( "$1N.put( $2S, new $3T<>( $2S, $5L, $6L, new $4T() ) )", accessorRegistry, key, accessorClass, stringConverterType, getter, setter );
+                    case AS_ENUM -> codeBlockBuilder.addStatement( "$1N.put( $2S, new $3T<>( $2S, $5L, $6L, new $4T( $7T ) ) )", accessorRegistry, key, accessorClass, stringConverterType, getter, setter, propertySpec.getPropertyType() );
                 }
             }
             else

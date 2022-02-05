@@ -62,12 +62,12 @@ import org.tquadrat.foundation.util.stringconverter.PathStringConverter;
  *  {@link org.tquadrat.foundation.config.INIBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: INIBeanBuilder.java 998 2022-01-26 15:50:18Z tquadrat $
+ *  @version $Id: INIBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: INIBeanBuilder.java 998 2022-01-26 15:50:18Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: INIBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class INIBeanBuilder extends CodeBuilderBase
 {
@@ -324,9 +324,13 @@ public final class INIBeanBuilder extends CodeBuilderBase
             final var field = propertySpec.getFieldName();
             final var stringConverterType = propertySpec.getStringConverterClass()
                 .orElseThrow( () -> new CodeGenerationError( format( MSG_MissingStringConverter, name ) ) );
-            final var stringConverterCode = determineStringConverterInstantiation( stringConverterType )
-                ? getComposer().statementOf( "final var stringConverter = $T.INSTANCE", stringConverterType )
-                : getComposer().statementOf( "final var stringConverter = new $T()", stringConverterType );
+            final var stringConverterCode =
+                switch( determineStringConverterInstantiation( stringConverterType, propertySpec.isEnum() ) )
+                {
+                    case BY_INSTANCE -> getComposer().statementOf( "final var stringConverter = $T.INSTANCE", stringConverterType );
+                    case THROUGH_CONSTRUCTOR -> getComposer().statementOf( "final var stringConverter = new $T()", stringConverterType );
+                    case AS_ENUM -> getComposer().statementOf( "final var stringConverter = new $1T( $2T.class )", stringConverterType, propertySpec.getPropertyType() );
+                };
 
             //---* Load the value *--------------------------------------------
             loadCodeBuilder.beginControlFlow( EMPTY_STRING )

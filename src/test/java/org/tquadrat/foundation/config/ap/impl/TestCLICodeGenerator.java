@@ -43,9 +43,9 @@ import org.tquadrat.foundation.test.helper.CodeGeneratorTestBase;
  *  interface.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: TestCLICodeGenerator.java 1008 2022-02-05 03:18:07Z tquadrat $
+ *  @version $Id: TestCLICodeGenerator.java 1010 2022-02-05 19:28:36Z tquadrat $
  */
-@ClassVersion( sourceVersion = "$Id: TestCLICodeGenerator.java 1008 2022-02-05 03:18:07Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: TestCLICodeGenerator.java 1010 2022-02-05 19:28:36Z tquadrat $" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.TestCLICodeGenerator" )
 public class TestCLICodeGenerator extends CodeGeneratorTestBase
 {
@@ -338,19 +338,19 @@ public class TestCLICodeGenerator extends CodeGeneratorTestBase
                              */
                             {
                                 final var stringConverter = BooleanStringConverter.INSTANCE;
-                                final var value = getProperty( "isDebug" );
+                                final var value = getProperty( "isDebug", "false" );
                                 m_IsDebug = stringConverter.fromString( value );
                             }
-
+                                    
                             /*
                              * Initialise the property 'isTest' from the system properties.
                              */
                             {
                                 final var stringConverter = BooleanStringConverter.INSTANCE;
-                                final var value = getProperty( "isTest" );
+                                final var value = getProperty( "isTest", "false" );
                                 m_IsTest = stringConverter.fromString( value );
                             }
-
+                                    
                             /*
                              * Initialise the property 'locale'.
                              */

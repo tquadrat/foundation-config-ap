@@ -17,6 +17,7 @@
 
 package org.tquadrat.foundation.test.helper;
 
+import static java.lang.Boolean.FALSE;
 import static javax.lang.model.element.Modifier.DEFAULT;
 import static javax.lang.model.element.Modifier.PUBLIC;
 import static org.apiguardian.api.API.Status.STABLE;
@@ -89,11 +90,11 @@ import org.tquadrat.foundation.util.stringconverter.StringStringConverter;
 /**
  *  The base class for the code generation tests.
  *
- *  @version $Id: CodeGeneratorTestBase.java 1008 2022-02-05 03:18:07Z tquadrat $
+ *  @version $Id: CodeGeneratorTestBase.java 1010 2022-02-05 19:28:36Z tquadrat $
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  */
 @SuppressWarnings( {"AbstractClassWithoutAbstractMethods", "OverlyCoupledClass", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: CodeGeneratorTestBase.java 1008 2022-02-05 03:18:07Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeGeneratorTestBase.java 1010 2022-02-05 19:28:36Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public abstract class CodeGeneratorTestBase extends TestBaseClass
 {
@@ -627,6 +628,7 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
         property.setFieldName( makeFieldName( propertyName ) );
         property.setGetterReturnType( BOOLEAN );
         property.setSystemPropertyName( PROPERTY_IS_DEBUG );
+        property.setEnvironmentDefaultValue( FALSE.toString() );
         property.setStringConverterClass( ClassName.from( BooleanStringConverter.class ) );
         if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
     }   //  createProperty_isDebug()
@@ -650,6 +652,7 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
         property.setFieldName( makeFieldName( propertyName ) );
         property.setGetterReturnType( BOOLEAN );
         property.setSystemPropertyName( PROPERTY_IS_TEST );
+        property.setEnvironmentDefaultValue( FALSE.toString() );
         property.setStringConverterClass( ClassName.from( BooleanStringConverter.class ) );
         if( configuration.getSynchronizationRequired() ) property.setFlag( PROPERTY_REQUIRES_SYNCHRONIZATION );
     }   //  createProperty_isDebug()

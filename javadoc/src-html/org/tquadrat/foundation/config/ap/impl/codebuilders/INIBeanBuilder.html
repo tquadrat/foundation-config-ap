@@ -75,12 +75,12 @@
 <span class="source-line-no">062</span><span id="line-62"> *  {@link org.tquadrat.foundation.config.INIBeanSpec}.</span>
 <span class="source-line-no">063</span><span id="line-63"> *</span>
 <span class="source-line-no">064</span><span id="line-64"> *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org</span>
-<span class="source-line-no">065</span><span id="line-65"> *  @version $Id: INIBeanBuilder.java 998 2022-01-26 15:50:18Z tquadrat $</span>
+<span class="source-line-no">065</span><span id="line-65"> *  @version $Id: INIBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $</span>
 <span class="source-line-no">066</span><span id="line-66"> *  @UMLGraph.link</span>
 <span class="source-line-no">067</span><span id="line-67"> *  @since 0.1.0</span>
 <span class="source-line-no">068</span><span id="line-68"> */</span>
 <span class="source-line-no">069</span><span id="line-69">@SuppressWarnings( "OverlyCoupledClass" )</span>
-<span class="source-line-no">070</span><span id="line-70">@ClassVersion( sourceVersion = "$Id: INIBeanBuilder.java 998 2022-01-26 15:50:18Z tquadrat $" )</span>
+<span class="source-line-no">070</span><span id="line-70">@ClassVersion( sourceVersion = "$Id: INIBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $" )</span>
 <span class="source-line-no">071</span><span id="line-71">@API( status = MAINTAINED, since = "0.1.0" )</span>
 <span class="source-line-no">072</span><span id="line-72">public final class INIBeanBuilder extends CodeBuilderBase</span>
 <span class="source-line-no">073</span><span id="line-73">{</span>
@@ -337,65 +337,69 @@
 <span class="source-line-no">324</span><span id="line-324">            final var field = propertySpec.getFieldName();</span>
 <span class="source-line-no">325</span><span id="line-325">            final var stringConverterType = propertySpec.getStringConverterClass()</span>
 <span class="source-line-no">326</span><span id="line-326">                .orElseThrow( () -&gt; new CodeGenerationError( format( MSG_MissingStringConverter, name ) ) );</span>
-<span class="source-line-no">327</span><span id="line-327">            final var stringConverterCode = determineStringConverterInstantiation( stringConverterType )</span>
-<span class="source-line-no">328</span><span id="line-328">                ? getComposer().statementOf( "final var stringConverter = $T.INSTANCE", stringConverterType )</span>
-<span class="source-line-no">329</span><span id="line-329">                : getComposer().statementOf( "final var stringConverter = new $T()", stringConverterType );</span>
-<span class="source-line-no">330</span><span id="line-330"></span>
-<span class="source-line-no">331</span><span id="line-331">            //---* Load the value *--------------------------------------------</span>
-<span class="source-line-no">332</span><span id="line-332">            loadCodeBuilder.beginControlFlow( EMPTY_STRING )</span>
-<span class="source-line-no">333</span><span id="line-333">                .add( stringConverterCode )</span>
-<span class="source-line-no">334</span><span id="line-334">                .addStatement( "$1N = $2N.getValue( $3S, $4S, stringConverter ).orElse( $1N )", field, iniFile, group, key )</span>
-<span class="source-line-no">335</span><span id="line-335">                .endControlFlow();</span>
-<span class="source-line-no">336</span><span id="line-336"></span>
-<span class="source-line-no">337</span><span id="line-337">            //---* Write the value *-------------------------------------------</span>
-<span class="source-line-no">338</span><span id="line-338">            updateCodeBuilder.beginControlFlow( EMPTY_STRING )</span>
-<span class="source-line-no">339</span><span id="line-339">                .add( stringConverterCode )</span>
-<span class="source-line-no">340</span><span id="line-340">                .addStatement( "$2N.setValue( $3S, $4S, $1N, stringConverter )", field, iniFile, group, key )</span>
-<span class="source-line-no">341</span><span id="line-341">                .endControlFlow();</span>
-<span class="source-line-no">342</span><span id="line-342">        }   //  PropertiesLoop:</span>
-<span class="source-line-no">343</span><span id="line-343"></span>
-<span class="source-line-no">344</span><span id="line-344">        //---* Create the loadINIFile() method *-------------------------------</span>
-<span class="source-line-no">345</span><span id="line-345">        loadCodeBuilder.nextControlFlow(</span>
-<span class="source-line-no">346</span><span id="line-346">            """</span>
+<span class="source-line-no">327</span><span id="line-327">            final var stringConverterCode =</span>
+<span class="source-line-no">328</span><span id="line-328">                switch( determineStringConverterInstantiation( stringConverterType, propertySpec.isEnum() ) )</span>
+<span class="source-line-no">329</span><span id="line-329">                {</span>
+<span class="source-line-no">330</span><span id="line-330">                    case BY_INSTANCE -&gt; getComposer().statementOf( "final var stringConverter = $T.INSTANCE", stringConverterType );</span>
+<span class="source-line-no">331</span><span id="line-331">                    case THROUGH_CONSTRUCTOR -&gt; getComposer().statementOf( "final var stringConverter = new $T()", stringConverterType );</span>
+<span class="source-line-no">332</span><span id="line-332">                    case AS_ENUM -&gt; getComposer().statementOf( "final var stringConverter = new $1T( $2T.class )", stringConverterType, propertySpec.getPropertyType() );</span>
+<span class="source-line-no">333</span><span id="line-333">                };</span>
+<span class="source-line-no">334</span><span id="line-334"></span>
+<span class="source-line-no">335</span><span id="line-335">            //---* Load the value *--------------------------------------------</span>
+<span class="source-line-no">336</span><span id="line-336">            loadCodeBuilder.beginControlFlow( EMPTY_STRING )</span>
+<span class="source-line-no">337</span><span id="line-337">                .add( stringConverterCode )</span>
+<span class="source-line-no">338</span><span id="line-338">                .addStatement( "$1N = $2N.getValue( $3S, $4S, stringConverter ).orElse( $1N )", field, iniFile, group, key )</span>
+<span class="source-line-no">339</span><span id="line-339">                .endControlFlow();</span>
+<span class="source-line-no">340</span><span id="line-340"></span>
+<span class="source-line-no">341</span><span id="line-341">            //---* Write the value *-------------------------------------------</span>
+<span class="source-line-no">342</span><span id="line-342">            updateCodeBuilder.beginControlFlow( EMPTY_STRING )</span>
+<span class="source-line-no">343</span><span id="line-343">                .add( stringConverterCode )</span>
+<span class="source-line-no">344</span><span id="line-344">                .addStatement( "$2N.setValue( $3S, $4S, $1N, stringConverter )", field, iniFile, group, key )</span>
+<span class="source-line-no">345</span><span id="line-345">                .endControlFlow();</span>
+<span class="source-line-no">346</span><span id="line-346">        }   //  PropertiesLoop:</span>
 <span class="source-line-no">347</span><span id="line-347"></span>
-<span class="source-line-no">348</span><span id="line-348">            catch( final $T e )</span>
-<span class="source-line-no">349</span><span id="line-349">            """, IOException.class )</span>
-<span class="source-line-no">350</span><span id="line-350">            .addStatement( "throw new $T( e )", PreferencesException.class )</span>
-<span class="source-line-no">351</span><span id="line-351">            .endControlFlow();</span>
-<span class="source-line-no">352</span><span id="line-352">        final var loadMethod = getComposer().methodBuilder( "loadINIFile" )</span>
-<span class="source-line-no">353</span><span id="line-353">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">354</span><span id="line-354">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">355</span><span id="line-355">            .returns( VOID )</span>
-<span class="source-line-no">356</span><span id="line-356">            .addJavadoc( getComposer().createInheritDocComment() )</span>
-<span class="source-line-no">357</span><span id="line-357">            .addCode( loadCodeBuilder.build() )</span>
-<span class="source-line-no">358</span><span id="line-358">            .build();</span>
-<span class="source-line-no">359</span><span id="line-359">        addMethod( loadMethod );</span>
-<span class="source-line-no">360</span><span id="line-360"></span>
-<span class="source-line-no">361</span><span id="line-361">        //---* Create the updateINIFile() method *-----------------------------</span>
-<span class="source-line-no">362</span><span id="line-362">        updateCodeBuilder.add( "\n" )</span>
-<span class="source-line-no">363</span><span id="line-363">            .addStatement( "$N.save()", iniFile )</span>
-<span class="source-line-no">364</span><span id="line-364">            .nextControlFlow(</span>
-<span class="source-line-no">365</span><span id="line-365">                """</span>
-<span class="source-line-no">366</span><span id="line-366"></span>
-<span class="source-line-no">367</span><span id="line-367">                catch( final $T e )</span>
-<span class="source-line-no">368</span><span id="line-368">                """, IOException.class )</span>
-<span class="source-line-no">369</span><span id="line-369">            .addStatement( "throw new $T( e )", PreferencesException.class )</span>
-<span class="source-line-no">370</span><span id="line-370">            .endControlFlow();</span>
-<span class="source-line-no">371</span><span id="line-371">        final var updateMethod = getComposer().methodBuilder( "updateINIFile" )</span>
-<span class="source-line-no">372</span><span id="line-372">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">373</span><span id="line-373">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">374</span><span id="line-374">            .returns( VOID )</span>
-<span class="source-line-no">375</span><span id="line-375">            .addJavadoc( getComposer().createInheritDocComment() )</span>
-<span class="source-line-no">376</span><span id="line-376">            .addCode( updateCodeBuilder.build() )</span>
-<span class="source-line-no">377</span><span id="line-377">            .build();</span>
-<span class="source-line-no">378</span><span id="line-378">        addMethod( updateMethod );</span>
-<span class="source-line-no">379</span><span id="line-379">    }   //  build()</span>
-<span class="source-line-no">380</span><span id="line-380">}</span>
-<span class="source-line-no">381</span><span id="line-381">//  class INIBeanBuilder</span>
-<span class="source-line-no">382</span><span id="line-382"></span>
-<span class="source-line-no">383</span><span id="line-383">/*</span>
-<span class="source-line-no">384</span><span id="line-384"> *  End of File</span>
-<span class="source-line-no">385</span><span id="line-385"> */</span>
+<span class="source-line-no">348</span><span id="line-348">        //---* Create the loadINIFile() method *-------------------------------</span>
+<span class="source-line-no">349</span><span id="line-349">        loadCodeBuilder.nextControlFlow(</span>
+<span class="source-line-no">350</span><span id="line-350">            """</span>
+<span class="source-line-no">351</span><span id="line-351"></span>
+<span class="source-line-no">352</span><span id="line-352">            catch( final $T e )</span>
+<span class="source-line-no">353</span><span id="line-353">            """, IOException.class )</span>
+<span class="source-line-no">354</span><span id="line-354">            .addStatement( "throw new $T( e )", PreferencesException.class )</span>
+<span class="source-line-no">355</span><span id="line-355">            .endControlFlow();</span>
+<span class="source-line-no">356</span><span id="line-356">        final var loadMethod = getComposer().methodBuilder( "loadINIFile" )</span>
+<span class="source-line-no">357</span><span id="line-357">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">358</span><span id="line-358">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">359</span><span id="line-359">            .returns( VOID )</span>
+<span class="source-line-no">360</span><span id="line-360">            .addJavadoc( getComposer().createInheritDocComment() )</span>
+<span class="source-line-no">361</span><span id="line-361">            .addCode( loadCodeBuilder.build() )</span>
+<span class="source-line-no">362</span><span id="line-362">            .build();</span>
+<span class="source-line-no">363</span><span id="line-363">        addMethod( loadMethod );</span>
+<span class="source-line-no">364</span><span id="line-364"></span>
+<span class="source-line-no">365</span><span id="line-365">        //---* Create the updateINIFile() method *-----------------------------</span>
+<span class="source-line-no">366</span><span id="line-366">        updateCodeBuilder.add( "\n" )</span>
+<span class="source-line-no">367</span><span id="line-367">            .addStatement( "$N.save()", iniFile )</span>
+<span class="source-line-no">368</span><span id="line-368">            .nextControlFlow(</span>
+<span class="source-line-no">369</span><span id="line-369">                """</span>
+<span class="source-line-no">370</span><span id="line-370"></span>
+<span class="source-line-no">371</span><span id="line-371">                catch( final $T e )</span>
+<span class="source-line-no">372</span><span id="line-372">                """, IOException.class )</span>
+<span class="source-line-no">373</span><span id="line-373">            .addStatement( "throw new $T( e )", PreferencesException.class )</span>
+<span class="source-line-no">374</span><span id="line-374">            .endControlFlow();</span>
+<span class="source-line-no">375</span><span id="line-375">        final var updateMethod = getComposer().methodBuilder( "updateINIFile" )</span>
+<span class="source-line-no">376</span><span id="line-376">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">377</span><span id="line-377">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">378</span><span id="line-378">            .returns( VOID )</span>
+<span class="source-line-no">379</span><span id="line-379">            .addJavadoc( getComposer().createInheritDocComment() )</span>
+<span class="source-line-no">380</span><span id="line-380">            .addCode( updateCodeBuilder.build() )</span>
+<span class="source-line-no">381</span><span id="line-381">            .build();</span>
+<span class="source-line-no">382</span><span id="line-382">        addMethod( updateMethod );</span>
+<span class="source-line-no">383</span><span id="line-383">    }   //  build()</span>
+<span class="source-line-no">384</span><span id="line-384">}</span>
+<span class="source-line-no">385</span><span id="line-385">//  class INIBeanBuilder</span>
+<span class="source-line-no">386</span><span id="line-386"></span>
+<span class="source-line-no">387</span><span id="line-387">/*</span>
+<span class="source-line-no">388</span><span id="line-388"> *  End of File</span>
+<span class="source-line-no">389</span><span id="line-389"> */</span>
 
 
 

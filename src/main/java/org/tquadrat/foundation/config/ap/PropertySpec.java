@@ -40,13 +40,13 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  The specification for a property of a configuration bean.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: PropertySpec.java 1006 2022-02-03 23:03:04Z tquadrat $
+ *  @version $Id: PropertySpec.java 1010 2022-02-05 19:28:36Z tquadrat $
  *  @since 0.1.0
  *
  *  @UMLGraph.link
  */
 @SuppressWarnings( "ClassWithTooManyMethods" )
-@ClassVersion( sourceVersion = "$Id: PropertySpec.java 1006 2022-02-03 23:03:04Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: PropertySpec.java 1010 2022-02-05 19:28:36Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public interface PropertySpec
 {
@@ -57,12 +57,12 @@ public interface PropertySpec
      *  The flags for a property.
      *
      *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
-     *  @version $Id: PropertySpec.java 1006 2022-02-03 23:03:04Z tquadrat $
+     *  @version $Id: PropertySpec.java 1010 2022-02-05 19:28:36Z tquadrat $
      *  @since 0.1.0
      *
      *  @UMLGraph.link
      */
-    @ClassVersion( sourceVersion = "$Id: PropertySpec.java 1006 2022-02-03 23:03:04Z tquadrat $" )
+    @ClassVersion( sourceVersion = "$Id: PropertySpec.java 1010 2022-02-05 19:28:36Z tquadrat $" )
     @API( status = MAINTAINED, since = "0.1.0" )
     public static enum PropertyFlag
     {
@@ -426,6 +426,23 @@ public interface PropertySpec
      *  @return The collection kind.
      */
     public CollectionKind getCollectionKind();
+
+    /**
+     *  <p>{@summary Returns the default value for an environment variable or a
+     *  system property.} This is used to initialise this property when it has
+     *  the annotation
+     *  {@link org.tquadrat.foundation.config.EnvironmentVariable &#64;EnvironmentVariable}
+     *  or
+     *  {@link org.tquadrat.foundation.config.SystemProperty &#64;EnvironmentVariable},
+     *  but no value is provided.</p>
+     *  <p>A default value is mandatory when the annotated property has a
+     *  primitive type.</p>
+     *
+     *  @return An instance of
+     *      {@link Optional}
+     *      that holds the default value.
+     */
+    public Optional<String> getEnvironmentDefaultValue();
 
     /**
      *  Returns the name of the environment variable that is used to initialise

@@ -32,6 +32,7 @@ import static org.tquadrat.foundation.config.ap.impl.codebuilders.CodeGeneratorC
 import static org.tquadrat.foundation.config.ap.impl.codebuilders.CodeGeneratorContext.getFieldComposer;
 import static org.tquadrat.foundation.config.ap.impl.codebuilders.CodeGeneratorContext.getGetterComposer;
 import static org.tquadrat.foundation.config.ap.impl.codebuilders.CodeGeneratorContext.getSetterComposer;
+import static org.tquadrat.foundation.lang.CommonConstants.NUL;
 import static org.tquadrat.foundation.lang.Objects.isNull;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
 import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
@@ -64,12 +65,12 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  {@link PropertySpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: PropertySpecImpl.java 1006 2022-02-03 23:03:04Z tquadrat $
+ *  @version $Id: PropertySpecImpl.java 1011 2022-02-05 19:31:34Z tquadrat $
  *  @since 0.1.0
  *  @UMLGraph.link
  */
 @SuppressWarnings( {"ClassWithTooManyFields", "OverlyComplexClass"} )
-@ClassVersion( sourceVersion = "$Id: PropertySpecImpl.java 1006 2022-02-03 23:03:04Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: PropertySpecImpl.java 1011 2022-02-05 19:31:34Z tquadrat $" )
 @API( status = INTERNAL, since = "0.1.0" )
 public final class PropertySpecImpl implements PropertySpec
 {
@@ -161,6 +162,11 @@ public final class PropertySpecImpl implements PropertySpec
      *  of this property.
      */
     private BiFunction<CodeBuilder,PropertySpecImpl, CodeBlock> m_ConstructorFragmentComposer;
+
+    /**
+     *  The default value for environment variables or system properties.
+     */
+    private String m_EnvironmentDefaultValue = null;
 
     /**
      *  The name of the environment variable that is used to initialise this
@@ -468,6 +474,12 @@ public final class PropertySpecImpl implements PropertySpec
      *  {@inheritDoc}
      */
     @Override
+    public final Optional<String> getEnvironmentDefaultValue() { return Optional.ofNullable( m_EnvironmentDefaultValue ); }
+
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
     public final Optional<String> getEnvironmentVariableName() { return Optional.ofNullable( m_EnvironmentVariableName ); }
 
     /**
@@ -628,6 +640,7 @@ public final class PropertySpecImpl implements PropertySpec
             getCLIValueHandlerClass().ifPresent( retValue::setCLIValueHandlerClass );
             retValue.setCollectionKind( otherSpec.getCollectionKind() );
             retValue.m_ConstructorFragmentComposer = otherSpec.getConstructorFragmentComposer().orElse( m_ConstructorFragmentComposer );
+            otherSpec.getEnvironmentDefaultValue().ifPresent( retValue::setEnvironmentDefaultValue );
             otherSpec.getEnvironmentVariableName().ifPresentOrElse( retValue::setEnvironmentVariableName, () -> retValue.m_EnvironmentVariableName = null );
             retValue.setFieldName( otherSpec.getFieldName() ); // Has a side effect in setting retValue.m_FieldComposer …
             retValue.m_FieldComposer = otherSpec.getFieldComposer().orElse( m_FieldComposer );
@@ -799,6 +812,26 @@ public final class PropertySpecImpl implements PropertySpec
     {
         m_CollectionKind = requireNonNullArgument( collectionKind, "collectionKind" );
     }   //  setCollectionKind()
+
+    /**
+     *  <p>{@summary Sets the default value for an environment variable or a
+     *  system property.} This is used to initialise this property when it has
+     *  the annotation
+     *  {@link org.tquadrat.foundation.config.EnvironmentVariable &#64;EnvironmentVariable}
+     *  or
+     *  {@link org.tquadrat.foundation.config.SystemProperty &#64;EnvironmentVariable},
+     *  but no value is provided.</p>
+     *  <p>A default value is mandatory when the annotated property has a
+     *  primitive type.</p>
+     *  <p>A String with the only the {@code NUL} character is treated as
+     *  {@code null}.</p>
+     *
+     *  @param  value   The default value.
+     */
+    public final void setEnvironmentDefaultValue( final String value )
+    {
+        m_EnvironmentDefaultValue = NUL.equals( value ) ? null : value;
+    }   //  setEnvironmentDefaultValue()
 
     /**
      *  Sets the name of the environment variable that provides the (initial)

@@ -60,10 +60,10 @@ import org.tquadrat.foundation.testutil.TestBaseClass;
 /**
  *  Enum properties are causing issues.
  *
- *  @version $Id: BugHunt_20220205_001.java 1008 2022-02-05 03:18:07Z tquadrat $
+ *  @version $Id: BugHunt_20220205_001.java 1010 2022-02-05 19:28:36Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
-@ClassVersion( sourceVersion = "$Id: BugHunt_20220205_001.java 1008 2022-02-05 03:18:07Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: BugHunt_20220205_001.java 1010 2022-02-05 19:28:36Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.BugHunt_20220205_001" )
 public class BugHunt_20220205_001 extends TestBaseClass
@@ -375,19 +375,19 @@ public class BugHunt_20220205_001 extends TestBaseClass
                              */
                             {
                                 final var stringConverter = BooleanStringConverter.INSTANCE;
-                                final var value = getProperty( "isDebug" );
+                                final var value = getProperty( "isDebug", "false" );
                                 m_IsDebug = stringConverter.fromString( value );
                             }
-
+                                    
                             /*
                              * Initialise the property 'isTest' from the system properties.
                              */
                             {
                                 final var stringConverter = BooleanStringConverter.INSTANCE;
-                                final var value = getProperty( "isTest" );
+                                final var value = getProperty( "isTest", "false" );
                                 m_IsTest = stringConverter.fromString( value );
                             }
-
+                                    
                             /*
                              * Initialise the property 'locale'.
                              */

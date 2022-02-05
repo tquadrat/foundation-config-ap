@@ -92,7 +92,7 @@ loadScripts(document, 'script');</script>
 </li>
 <li>
 <div id="class-summary">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="class-summary-tab1" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab1', 2)" class="table-tab">Interfaces</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Classes</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="class-summary-tab1" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab1', 2)" class="table-tab">Interfaces</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Classes</button><button id="class-summary-tab3" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab3', 2)" class="table-tab">Enum Classes</button></div>
 <div id="class-summary.tabpanel" role="tabpanel">
 <div class="summary-table two-column-summary" aria-labelledby="class-summary-tab0">
 <div class="table-header col-first">Class</div>
@@ -108,28 +108,34 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">The abstract base class for all the code builders.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="CodeGeneratorContext.html" title="interface in org.tquadrat.foundation.config.ap.impl.codebuilders">CodeGeneratorContext</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="col-first even-row-color class-summary class-summary-tab3"><a href="CodeBuilderBase.StringConverterInstantiation.html" title="enum class in org.tquadrat.foundation.config.ap.impl.codebuilders">CodeBuilderBase.StringConverterInstantiation</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab3">
+<div class="block">The various type to instantiate a
+  <a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/lang/StringConverter.html" title="class or interface in org.tquadrat.foundation.lang" class="external-link"><code>StringConverter</code></a>
+  class.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CodeGeneratorContext.html" title="interface in org.tquadrat.foundation.config.ap.impl.codebuilders">CodeGeneratorContext</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">The API that provides access to the code generator context, including the
   already generated code.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ConfigBeanBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">ConfigBeanBuilder</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ConfigBeanBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">ConfigBeanBuilder</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">The
   <a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">code builder implementation</a>
   for the basic stuff, as defined in
   <a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/ConfigBeanSpec.html" title="class or interface in org.tquadrat.foundation.config" class="external-link"><code>ConfigBeanSpec</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="I18nSupportBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">I18nSupportBuilder</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="I18nSupportBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">I18nSupportBuilder</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">The
   <a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">code builder implementation</a>
   for the generation of the code that let the configuration bean
   implement the interface
   <a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/I18nSupport.html" title="class or interface in org.tquadrat.foundation.config" class="external-link"><code>I18nSupport</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="INIBeanBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">INIBeanBuilder</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="INIBeanBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">INIBeanBuilder</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">The
   <a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">code builder implementation</a>
   that connects the configuration bean to
@@ -137,16 +143,16 @@ loadScripts(document, 'script');</script>
   as defined in
   <a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/INIBeanSpec.html" title="class or interface in org.tquadrat.foundation.config" class="external-link"><code>INIBeanSpec</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="MapImplementor.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">MapImplementor</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="MapImplementor.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">MapImplementor</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">The
   <a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">code builder implementation</a>
   for the generation of the code that let the configuration bean
   implement the interface
   <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link"><code>Map</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="PreferencesBeanBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">PreferencesBeanBuilder</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="PreferencesBeanBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">PreferencesBeanBuilder</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">The
   <a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">code builder implementation</a>
   that connects the configuration bean to
@@ -154,8 +160,8 @@ loadScripts(document, 'script');</script>
   as defined in
   <a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/PreferencesBeanSpec.html" title="class or interface in org.tquadrat.foundation.config" class="external-link"><code>PreferencesBeanSpec</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="SessionBeanBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">SessionBeanBuilder</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="SessionBeanBuilder.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">SessionBeanBuilder</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">The
   <a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">code builder implementation</a>
   for the generation of the code that let the configuration bean

@@ -52,11 +52,11 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  The base class for the special property specifications.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: SpecialPropertySpecBase.java 1006 2022-02-03 23:03:04Z tquadrat $
+ *  @version $Id: SpecialPropertySpecBase.java 1010 2022-02-05 19:28:36Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@ClassVersion( sourceVersion = "$Id: SpecialPropertySpecBase.java 1006 2022-02-03 23:03:04Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: SpecialPropertySpecBase.java 1010 2022-02-05 19:28:36Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 abstract sealed class SpecialPropertySpecBase implements SpecialPropertySpec
     permits CharsetProperty, ClockProperty, LocaleProperty, MessagePrefixProperty, ProcessIdProperty, RandomProperty, ResourceBundleProperty, SessionKeyProperty, TimeZoneProperty
@@ -191,6 +191,13 @@ abstract sealed class SpecialPropertySpecBase implements SpecialPropertySpec
     @Override
     @MountPoint
     public CollectionKind getCollectionKind() { return NO_COLLECTION; }
+
+    /**
+     *  {@inheritDoc}
+     */
+    @Override
+    @MountPoint
+    public Optional<String> getEnvironmentDefaultValue() { return Optional.empty(); }
 
     /**
      *  {@inheritDoc}

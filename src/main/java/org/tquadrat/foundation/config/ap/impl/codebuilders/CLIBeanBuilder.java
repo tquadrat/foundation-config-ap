@@ -82,12 +82,12 @@ import org.tquadrat.foundation.lang.Objects;
  *  {@link org.tquadrat.foundation.config.CLIBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CLIBeanBuilder.java 1008 2022-02-05 03:18:07Z tquadrat $
+ *  @version $Id: CLIBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: CLIBeanBuilder.java 1008 2022-02-05 03:18:07Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CLIBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class CLIBeanBuilder extends CodeBuilderBase
 {
@@ -176,20 +176,11 @@ public final class CLIBeanBuilder extends CodeBuilderBase
             {
                 final var stringConverter = property.getStringConverterClass()
                     .orElseThrow( () -> new IllegalAnnotationError( format( "No String converter for property '%s'", property.getPropertyName() ) ) );
-                if( determineStringConverterInstantiation( stringConverter ) )
+                switch( determineStringConverterInstantiation( stringConverter, property.isEnum() ) )
                 {
-                    builder.addStatement( "final $1T retValue = new $2T<>( lambda, $3T.INSTANCE )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
-                }
-                else
-                {
-                    if( property.isEnum() )
-                    {
-                        builder.addStatement( "final $1T retValue = new $2T<>( lambda, new $3T( $4T.class ) )", handlerType, SimpleCmdLineValueHandler.class, stringConverter, property.getPropertyType() );
-                    }
-                    else
-                    {
-                        builder.addStatement( "final $1T retValue = new $2T<>( lambda, new $3T() )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
-                    }
+                    case BY_INSTANCE -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, $3T.INSTANCE )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
+                    case THROUGH_CONSTRUCTOR -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, new $3T() )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
+                    case AS_ENUM -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, new $3T( $4T.class ) )", handlerType, SimpleCmdLineValueHandler.class, stringConverter, property.getPropertyType() );
                 }
             });
 

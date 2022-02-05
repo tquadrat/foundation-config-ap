@@ -73,12 +73,12 @@ import org.tquadrat.foundation.util.StringUtils;
  *  {@link org.tquadrat.foundation.config.ConfigBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: ConfigBeanBuilder.java 1008 2022-02-05 03:18:07Z tquadrat $
+ *  @version $Id: ConfigBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: ConfigBeanBuilder.java 1008 2022-02-05 03:18:07Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ConfigBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class ConfigBeanBuilder extends CodeBuilderBase
 {
@@ -408,23 +408,12 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
                     if( nonNull( value ) )
                     """ )
                 .addStaticImport( Objects.class, "nonNull" );
-
-            if( determineStringConverterInstantiation( stringConverter ) )
+            switch( determineStringConverterInstantiation( stringConverter, propertySpec.isEnum() ) )
             {
-                builder.addStatement( "final var stringConverter = $1T.INSTANCE", stringConverter );
+                case BY_INSTANCE -> builder.addStatement( "final var stringConverter = $1T.INSTANCE", stringConverter );
+                case THROUGH_CONSTRUCTOR -> builder.addStatement( "final var stringConverter = new $1T()", stringConverter );
+                case AS_ENUM -> builder.addStatement( "final var stringConverter = new $1T( $2T.class )", stringConverter, propertySpec.getPropertyType() );
             }
-            else
-            {
-                if( propertySpec.isEnum() )
-                {
-                    builder.addStatement( "final var stringConverter = new $1T( $2T)", stringConverter, propertySpec.getPropertyType() );
-                }
-                else
-                {
-                    builder.addStatement( "final var stringConverter = new $1T()", stringConverter );
-                }
-            }
-
             builder.addStatement( "$N = stringConverter.fromString( value )", field )
                 .endControlFlow();
         }   //  PropertyLoop:
@@ -489,20 +478,11 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
                 if( propertySpec.getStringConverterClass().isPresent() )
                 {
                     final var stringConverter = propertySpec.getStringConverterClass().get();
-                    if( determineStringConverterInstantiation( stringConverter ) )
+                    switch( determineStringConverterInstantiation( stringConverter, propertySpec.isEnum() ) )
                     {
-                        builder.addStatement( "final var stringConverter = $1T.INSTANCE", stringConverter );
-                    }
-                    else
-                    {
-                        if( propertySpec.isEnum() )
-                        {
-                            builder.addStatement( "final var stringConverter = new $1T( $2T.class )", stringConverter, propertySpec.getPropertyType() );
-                        }
-                        else
-                        {
-                            builder.addStatement( "final var stringConverter = new $1T()", stringConverter );
-                        }
+                        case BY_INSTANCE -> builder.addStatement( "final var stringConverter = $1T.INSTANCE", stringConverter );
+                        case THROUGH_CONSTRUCTOR -> builder.addStatement( "final var stringConverter = new $1T()", stringConverter );
+                        case AS_ENUM -> builder.addStatement( "final var stringConverter = new $1T( $2T.class )", stringConverter, propertySpec.getPropertyType() );
                     }
                     builder.addStatement( "final var value = stringConverter.toString( $1L )", field )
                         .addStatement(
@@ -527,13 +507,11 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
                 if( propertySpec.getStringConverterClass().isPresent() )
                 {
                     final var stringConverter = propertySpec.getStringConverterClass().get();
-                    if( determineStringConverterInstantiation( stringConverter ) )
+                    switch( determineStringConverterInstantiation( stringConverter, propertySpec.isEnum() ) )
                     {
-                        builder.addStatement( "final var stringConverter = $1T.INSTANCE", stringConverter );
-                    }
-                    else
-                    {
-                        builder.addStatement( "final var stringConverter = new $1T()", stringConverter );
+                        case BY_INSTANCE -> builder.addStatement( "final var stringConverter = $1T.INSTANCE", stringConverter );
+                        case THROUGH_CONSTRUCTOR -> builder.addStatement( "final var stringConverter = new $1T()", stringConverter );
+                        case AS_ENUM -> builder.addStatement( "final var stringConverter = new $1T( $2T.class )", stringConverter, propertySpec.getPropertyType() );
                     }
                     builder.addStatement( "final var value = stringConverter.toString( $1L() )", getterMethod )
                         .addStatement(
