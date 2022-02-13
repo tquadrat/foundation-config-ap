@@ -157,7 +157,7 @@
                           class='final'>- m_Environment:org.tquadrat.foundation.ap.APHelper</text>
                     <text y='96.000'>- m_INIFileComment:java.lang.String</text>
                     <text y='107.000'>- m_INIFileMustExist:boolean</text>
-                    <text y='118.000'>- m_INIFilePath:java.nio.file.Path</text>
+                    <text y='118.000'>- m_INIFilePath:java.lang.String</text>
                     <text y='129.000'
                           class='final'>- m_INIGroups:java.util.Map&lt;java.lang.String,java.lang.String&gt;</text>
                     <text y='140.000'>- m_InitDataMethod:org.tquadrat.foundation.javacomposer.MethodSpec</text>
@@ -204,7 +204,7 @@
                     <text x='5.000'
                           y='399.000'>+ getINIFileMustExist():boolean</text>
                     <text x='5.000'
-                          y='410.000'>+ getINIFilePath():java.util.Optional&lt;java.nio.file.Path&gt;</text>
+                          y='410.000'>+ getINIFilePath():java.util.Optional&lt;java.lang.String&gt;</text>
                     <text x='5.000'
                           y='421.000'>+ getINIGroups():java.util.Map&lt;java.lang.String,java.lang.String&gt;</text>
                     <text x='5.000'
@@ -238,7 +238,7 @@
                     <text x='5.000'
                           y='586.000'>+ setI18NParameters(messagePrefix:java.lang.String,baseBundleName:java.lang.String):void</text>
                     <text x='5.000'
-                          y='597.000'>+ setINIFileConfig(path:java.nio.file.Path,flag:boolean,comment:java.lang.String):void</text>
+                          y='597.000'>+ setINIFileConfig(filename:java.lang.String,flag:boolean,comment:java.lang.String):void</text>
                     <text x='5.000'
                           y='608.000'>+ setInitDataMethod(method:org.tquadrat.foundation.javacomposer.MethodSpec):void</text>
                     <text x='5.000'

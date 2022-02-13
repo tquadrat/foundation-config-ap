@@ -131,10 +131,10 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="annotations"><a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">@ClassVersion</a>(<a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html#sourceVersion()" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">sourceVersion</a>="$Id: CodeGenerationConfiguration.java 1006 2022-02-03 23:03:04Z tquadrat $")
+<div class="type-signature"><span class="annotations"><a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">@ClassVersion</a>(<a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html#sourceVersion()" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">sourceVersion</a>="$Id: CodeGenerationConfiguration.java 1015 2022-02-09 08:25:36Z tquadrat $")
 <a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html" title="class or interface in org.apiguardian.api" class="external-link">@API</a>(<a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html#status()" title="class or interface in org.apiguardian.api" class="external-link">status</a>=<a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.Status.html#MAINTAINED" title="class or interface in org.apiguardian.api" class="external-link">MAINTAINED</a>,
      <a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html#since()" title="class or interface in org.apiguardian.api" class="external-link">since</a>="0.1.0")
-</span><span class="modifiers">public final class </span><span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-67">CodeGenerationConfiguration</a></span>
+</span><span class="modifiers">public final class </span><span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-66">CodeGenerationConfiguration</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">An instance of this class provides the configuration for the code
   generation, and it collects the results from the different code generators.</div>
@@ -142,7 +142,7 @@ loadScripts(document, 'script');</script>
 <dt><span class="simpleTagLabel">Author:</span></dt>
   <dd>Thomas Thrien (<a href="mailto:thomas.thrien@tquadrat.org">thomas.thrien@tquadrat.org</a>)</dd>
 <dt>Version:</dt>
-<dd>$Id: CodeGenerationConfiguration.java 1006 2022-02-03 23:03:04Z tquadrat $</dd>
+<dd>$Id: CodeGenerationConfiguration.java 1015 2022-02-09 08:25:36Z tquadrat $</dd>
 <dt>Since:</dt>
 <dd>0.1.0</dd>
 
@@ -221,10 +221,10 @@ loadScripts(document, 'script');</script>
 <div class="block">The flag that indicates whether the configuration must exist prior to
   the first open attempt.</div>
 </div>
-<div class="col-first even-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a></code></div>
+<div class="col-first even-row-color"><code>private <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#m_INIFilePath" class="member-name-link">m_INIFilePath</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">The path for the configuration file.</div>
+<div class="block">The name for the configuration file.</div>
 </div>
 <div class="col-first odd-row-color"><code>private final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
 <div class="col-second odd-row-color"><code><a href="#m_INIGroups" class="member-name-link">m_INIGroups</a></code></div>
@@ -392,10 +392,12 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the flag that indicates whether the configuration file must
   exist before the program starts.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getINIFilePath()" class="member-name-link">getINIFilePath</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the <code>INI</code> file path.</div>
+<div class="block">Returns the name for the file that backs the
+  <code>INIFile</code>
+  instance used by the generated configuration bean.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getINIGroups()" class="member-name-link">getINIGroups</a>()</code></div>
@@ -489,7 +491,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets the i18n parameters.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setINIFileConfig(java.nio.file.Path,boolean,java.lang.String)" class="member-name-link">setINIFileConfig</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;path,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setINIFileConfig(java.lang.String,boolean,java.lang.String)" class="member-name-link">setINIFileConfig</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;filename,
  boolean&nbsp;flag,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;comment)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -537,7 +539,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="m_BaseBundleName">
 <h3>m_BaseBundleName</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-82">m_BaseBundleName</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-81">m_BaseBundleName</a></span></div>
 <div class="block">The base bundle name for the resource bundle if i18n support is
   required.</div>
 <dl class="notes">
@@ -554,14 +556,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="m_BaseClass">
 <h3>m_BaseClass</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-87">m_BaseClass</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-86">m_BaseClass</a></span></div>
 <div class="block">The optional base class for the new configuration bean.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_BuildTime">
 <h3>m_BuildTime</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-93">m_BuildTime</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-92">m_BuildTime</a></span></div>
 <div class="block">The build time; this is provided by the configuration as this allows
   easier testing.</div>
 </section>
@@ -569,14 +571,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="m_ClassName">
 <h3>m_ClassName</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-98">m_ClassName</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-97">m_ClassName</a></span></div>
 <div class="block">The class name for the configuration bean class, without the package.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_Composer">
 <h3>m_Composer</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/JavaComposer.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">JavaComposer</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-105">m_Composer</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/JavaComposer.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">JavaComposer</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-104">m_Composer</a></span></div>
 <div class="block">The
  <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/JavaComposer.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link"><code>JavaComposer</code></a>
  instance that is used for the code generation.</div>
@@ -585,21 +587,21 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="m_Environment">
 <h3>m_Environment</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-apbase/javadoc/org/tquadrat/foundation/ap/APHelper.html" title="class or interface in org.tquadrat.foundation.ap" class="external-link">APHelper</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-111">m_Environment</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-apbase/javadoc/org/tquadrat/foundation/ap/APHelper.html" title="class or interface in org.tquadrat.foundation.ap" class="external-link">APHelper</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-110">m_Environment</a></span></div>
 <div class="block">The processing environment.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_INIFileComment">
 <h3>m_INIFileComment</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-116">m_INIFileComment</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-115">m_INIFileComment</a></span></div>
 <div class="block">The comment for the configuration file.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_INIFileMustExist">
 <h3>m_INIFileMustExist</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-122">m_INIFileMustExist</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-121">m_INIFileMustExist</a></span></div>
 <div class="block">The flag that indicates whether the configuration must exist prior to
   the first open attempt.</div>
 </section>
@@ -607,14 +609,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="m_INIFilePath">
 <h3>m_INIFilePath</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-127">m_INIFilePath</a></span></div>
-<div class="block">The path for the configuration file.</div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-126">m_INIFilePath</a></span></div>
+<div class="block">The name for the configuration file.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_INIGroups">
 <h3>m_INIGroups</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-133">m_INIGroups</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-132">m_INIGroups</a></span></div>
 <div class="block">The <code>INI</code> file groups. The key is the name of the group, the
   value is the respective comment for the group.</div>
 </section>
@@ -622,7 +624,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="m_InitDataMethod">
 <h3>m_InitDataMethod</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-139">m_InitDataMethod</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-138">m_InitDataMethod</a></span></div>
 <div class="block">The method that is provided as a source for the initialisation of the
   properties of the configuration bean.</div>
 </section>
@@ -630,7 +632,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="m_InitDataResource">
 <h3>m_InitDataResource</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-145">m_InitDataResource</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-144">m_InitDataResource</a></span></div>
 <div class="block">The name of the resource that is used to initialise the properties of
  the configuration bean.</div>
 </section>
@@ -638,7 +640,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="m_InterfacesToImplement">
 <h3>m_InterfacesToImplement</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-151">m_InterfacesToImplement</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-150">m_InterfacesToImplement</a></span></div>
 <div class="block">The interfaces that are extended by the configuration bean
   specification.</div>
 </section>
@@ -646,7 +648,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="m_MessagePrefix">
 <h3>m_MessagePrefix</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-159">m_MessagePrefix</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-158">m_MessagePrefix</a></span></div>
 <div class="block">The message prefix for the i18n support.</div>
 <dl class="notes">
 <dt><span class="simpleTagLabel">Note:</span></dt>
@@ -662,21 +664,21 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="m_PackageName">
 <h3>m_PackageName</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-164">m_PackageName</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-163">m_PackageName</a></span></div>
 <div class="block">The name of the package for the configuration bean.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_PreferenceChangeListenerClass">
 <h3>m_PreferenceChangeListenerClass</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-169">m_PreferenceChangeListenerClass</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-168">m_PreferenceChangeListenerClass</a></span></div>
 <div class="block">The change listener class for the <code>Preferences</code>.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_Properties">
 <h3>m_Properties</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedMap.html" title="class or interface in java.util" class="external-link">SortedMap</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="impl/PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-175">m_Properties</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedMap.html" title="class or interface in java.util" class="external-link">SortedMap</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="impl/PropertySpecImpl.html" title="class in org.tquadrat.foundation.config.ap.impl">PropertySpecImpl</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-174">m_Properties</a></span></div>
 <div class="block"><p>The properties for the configuration bean. The name of
   the property is the key.</p></div>
 </section>
@@ -684,21 +686,21 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="m_Specification">
 <h3>m_Specification</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/ClassName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">ClassName</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-180">m_Specification</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/ClassName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">ClassName</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-179">m_Specification</a></span></div>
 <div class="block">The configuration bean specification.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_PreferencesRoot">
 <h3>m_PreferencesRoot</h3>
-<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-185">m_PreferencesRoot</a></span></div>
+<div class="member-signature"><span class="modifiers">private</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-184">m_PreferencesRoot</a></span></div>
 <div class="block">The name of the preferences root node.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_SynchronizeAccess">
 <h3>m_SynchronizeAccess</h3>
-<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-191">m_SynchronizeAccess</a></span></div>
+<div class="member-signature"><span class="modifiers">private final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-190">m_SynchronizeAccess</a></span></div>
 <div class="block">This flag indicates whether the access to the configuration bean
   properties must be thread-safe.</div>
 </section>
@@ -714,7 +716,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(org.tquadrat.foundation.ap.APHelper,org.tquadrat.foundation.javacomposer.JavaComposer,org.tquadrat.foundation.javacomposer.ClassName,javax.lang.model.element.Name,javax.lang.model.element.Name,org.tquadrat.foundation.javacomposer.TypeName,boolean)">
 <h3>CodeGenerationConfiguration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-215">CodeGenerationConfiguration</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-apbase/javadoc/org/tquadrat/foundation/ap/APHelper.html" title="class or interface in org.tquadrat.foundation.ap" class="external-link">APHelper</a>&nbsp;environment,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-214">CodeGenerationConfiguration</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-apbase/javadoc/org/tquadrat/foundation/ap/APHelper.html" title="class or interface in org.tquadrat.foundation.ap" class="external-link">APHelper</a>&nbsp;environment,
  <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/JavaComposer.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">JavaComposer</a>&nbsp;composer,
  <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/ClassName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">ClassName</a>&nbsp;specification,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a>&nbsp;className,
@@ -753,7 +755,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="addINIGroup(java.lang.String,java.lang.String)">
 <h3>addINIGroup</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-236">addINIGroup</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-235">addINIGroup</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;comment)</span></div>
 <div class="block">Adds an <code>INI</code> file group.</div>
 <dl class="notes">
@@ -766,7 +768,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="addINIGroup(org.tquadrat.foundation.config.INIGroup)">
 <h3>addINIGroup</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-256">addINIGroup</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/INIGroup.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">INIGroup</a>&nbsp;group)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-255">addINIGroup</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-config/javadoc/org.tquadrat.foundation.config/org/tquadrat/foundation/config/INIGroup.html" title="class or interface in org.tquadrat.foundation.config" class="external-link">INIGroup</a>&nbsp;group)</span></div>
 <div class="block">Adds an <code>INI</code> file group.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -777,7 +779,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="addInterfacesToImplement(java.util.Collection)">
 <h3>addInterfacesToImplement</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-268">addInterfacesToImplement</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;&nbsp;interfacesToImplement)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-267">addInterfacesToImplement</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;&nbsp;interfacesToImplement)</span></div>
 <div class="block">Adds some interfaces that have to be implemented by the new
   configuration beam.</div>
 <dl class="notes">
@@ -790,7 +792,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="addProperty(org.tquadrat.foundation.config.ap.PropertySpec)">
 <h3>addProperty</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-282">addProperty</a></span><wbr><span class="parameters">(<a href="PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a>&nbsp;property)</span>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-281">addProperty</a></span><wbr><span class="parameters">(<a href="PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a>&nbsp;property)</span>
                        throws <span class="exceptions"><a href="https://tquadrat.github.io/foundation-apbase/javadoc/org/tquadrat/foundation/ap/CodeGenerationError.html" title="class or interface in org.tquadrat.foundation.ap" class="external-link">CodeGenerationError</a></span></div>
 <div class="block"><p>Adds a property to the new configuration bean.</p>
   <p>If a property with the same name as the new one already exists, a
@@ -807,7 +809,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBaseBundleName()">
 <h3>getBaseBundleName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-306">getBaseBundleName</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-305">getBaseBundleName</a></span>()</div>
 <div class="block">Returns the name of the field that holds the base bundle name for the
   resource bundle, in case i18n support is configured.</div>
 <dl class="notes">
@@ -821,7 +823,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBaseClass()">
 <h3>getBaseClass</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-315">getBaseClass</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-314">getBaseClass</a></span>()</div>
 <div class="block">Returns the base class for the new configuration bean.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -834,7 +836,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBuildTime()">
 <h3>getBuildTime</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-322">getBuildTime</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-321">getBuildTime</a></span>()</div>
 <div class="block">Returns the build time for the new configuration bean.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -845,7 +847,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getClassName()">
 <h3>getClassName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-329">getClassName</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-328">getClassName</a></span>()</div>
 <div class="block">Returns the name of the class for the new configuration bean.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -856,7 +858,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getComposer()">
 <h3>getComposer</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/JavaComposer.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">JavaComposer</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-338">getComposer</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/JavaComposer.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">JavaComposer</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-337">getComposer</a></span>()</div>
 <div class="block">Returns the
   <a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/JavaComposer.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link"><code>JavaComposer</code></a>
   instance that is used for the code generation.</div>
@@ -869,7 +871,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getElementUtils()">
 <h3>getElementUtils</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/util/Elements.html" title="class or interface in javax.lang.model.util" class="external-link">Elements</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-347">getElementUtils</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/util/Elements.html" title="class or interface in javax.lang.model.util" class="external-link">Elements</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-346">getElementUtils</a></span>()</div>
 <div class="block">Returns an implementation of some utility methods for operating on
   elements.</div>
 <dl class="notes">
@@ -881,7 +883,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getEnvironment()">
 <h3>getEnvironment</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-apbase/javadoc/org/tquadrat/foundation/ap/APHelper.html" title="class or interface in org.tquadrat.foundation.ap" class="external-link">APHelper</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-354">getEnvironment</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-apbase/javadoc/org/tquadrat/foundation/ap/APHelper.html" title="class or interface in org.tquadrat.foundation.ap" class="external-link">APHelper</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-353">getEnvironment</a></span>()</div>
 <div class="block">Returns the processing environment.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -892,7 +894,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getINIFileComment()">
 <h3>getINIFileComment</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-361">getINIFileComment</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-360">getINIFileComment</a></span>()</div>
 <div class="block">Returns the comment for the <code>INI</code> file.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -903,7 +905,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getINIFileMustExist()">
 <h3>getINIFileMustExist</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-372">getINIFileMustExist</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-371">getINIFileMustExist</a></span>()</div>
 <div class="block">Returns the flag that indicates whether the configuration file must
   exist before the program starts.</div>
 <dl class="notes">
@@ -922,20 +924,22 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getINIFilePath()">
 <h3>getINIFilePath</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-382">getINIFilePath</a></span>()</div>
-<div class="block">Returns the <code>INI</code> file path.</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-383">getINIFilePath</a></span>()</div>
+<div class="block">Returns the name for the file that backs the
+  <code>INIFile</code>
+  instance used by the generated configuration bean.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>An instance of
       <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link"><code>Optional</code></a>
-      that holds the path.</dd>
+      that holds the filename.</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getINIGroups()">
 <h3>getINIGroups</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-389">getINIGroups</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-390">getINIGroups</a></span>()</div>
 <div class="block">Returns the <code>INI</code> file groups.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -946,7 +950,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getInitDataMethod()">
 <h3>getInitDataMethod</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-413">getInitDataMethod</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-414">getInitDataMethod</a></span>()</div>
 <div class="block"><p>Returns the method that is provided as a source for the
   initialisation of the properties of the configuration bean.</p>
   <p>It it is <code>default</code> or <code>static</code>, the implementation of
@@ -978,7 +982,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getInitDataResource()">
 <h3>getInitDataResource</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-423">getInitDataResource</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-424">getInitDataResource</a></span>()</div>
 <div class="block">Returns the name of the resource that is used to initialise the
   properties of the configuration bean.</div>
 <dl class="notes">
@@ -992,7 +996,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getInterfacesToImplement()">
 <h3>getInterfacesToImplement</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-431">getInterfacesToImplement</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-432">getInterfacesToImplement</a></span>()</div>
 <div class="block">Returns the interfaces that have to be implemented by the new
   configuration bean.</div>
 <dl class="notes">
@@ -1004,7 +1008,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getMessagePrefix()">
 <h3>getMessagePrefix</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-441">getMessagePrefix</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-442">getMessagePrefix</a></span>()</div>
 <div class="block">Returns the name of the field that holds the message prefix, in case
   i18n support is configured.</div>
 <dl class="notes">
@@ -1018,7 +1022,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getPackageName()">
 <h3>getPackageName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-448">getPackageName</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.compiler/javax/lang/model/element/Name.html" title="class or interface in javax.lang.model.element" class="external-link">Name</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-449">getPackageName</a></span>()</div>
 <div class="block">Returns the name of the package for the new configuration bean.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -1029,7 +1033,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getPreferenceChangeListenerClass()">
 <h3>getPreferenceChangeListenerClass</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-461">getPreferenceChangeListenerClass</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-462">getPreferenceChangeListenerClass</a></span>()</div>
 <div class="block"><p>Returns the class for the <code>Preferences</code> change
   listener. If no listener class is defined, the change listener support
   for the <code>Preferences</code> will be omitted.</div>
@@ -1050,7 +1054,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getPreferencesRoot()">
 <h3>getPreferencesRoot</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-476">getPreferencesRoot</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-477">getPreferencesRoot</a></span>()</div>
 <div class="block">Returns the name for the <code>Preferences</code> root node.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -1067,7 +1071,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getProperty(java.lang.String)">
 <h3>getProperty</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-491">getProperty</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;propertyName)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-492">getProperty</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;propertyName)</span></div>
 <div class="block">Returns the property with the given name.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -1082,7 +1086,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSpecification()">
 <h3>getSpecification</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/ClassName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">ClassName</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-504">getSpecification</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/ClassName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">ClassName</a></span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-505">getSpecification</a></span>()</div>
 <div class="block">Returns the configuration bean specification.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -1093,7 +1097,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSynchronizationRequired()">
 <h3>getSynchronizationRequired</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-513">getSynchronizationRequired</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-514">getSynchronizationRequired</a></span>()</div>
 <div class="block">Returns the flag that controls whether the generated code for the
   access to the configuration bean properties has to be thread-safe.</div>
 <dl class="notes">
@@ -1106,7 +1110,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="hasProperty(java.lang.String)">
 <h3>hasProperty</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-523">hasProperty</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;propertyName)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-524">hasProperty</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;propertyName)</span></div>
 <div class="block">Checks whether a property with the given name does already exist.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -1120,7 +1124,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="implementInterface(org.tquadrat.foundation.javacomposer.TypeName)">
 <h3>implementInterface</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-534">implementInterface</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;interfaceToImplement)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-535">implementInterface</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;interfaceToImplement)</span></div>
 <div class="block">Checks whether the given interface must be implemented by the new
   configuration bean.</div>
 <dl class="notes">
@@ -1136,7 +1140,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="implementInterface(java.lang.reflect.Type)">
 <h3>implementInterface</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-552">implementInterface</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/reflect/Type.html" title="class or interface in java.lang.reflect" class="external-link">Type</a>&nbsp;interfaceToImplement)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-553">implementInterface</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/reflect/Type.html" title="class or interface in java.lang.reflect" class="external-link">Type</a>&nbsp;interfaceToImplement)</span></div>
 <div class="block">Checks whether the given interface must be implemented by the new
   configuration bean.</div>
 <dl class="notes">
@@ -1152,7 +1156,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="propertyIterator()">
 <h3>propertyIterator</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a>&lt;<a href="PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-569">propertyIterator</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a>&lt;<a href="PropertySpec.html" title="interface in org.tquadrat.foundation.config.ap">PropertySpec</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-570">propertyIterator</a></span>()</div>
 <div class="block">Returns an
   <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link"><code>Iterator</code></a>
   over the defined properties.</div>
@@ -1165,7 +1169,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setI18NParameters(java.lang.String,java.lang.String)">
 <h3>setI18NParameters</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-597">setI18NParameters</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;messagePrefix,
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-598">setI18NParameters</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;messagePrefix,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;baseBundleName)</span></div>
 <div class="block">Sets the i18n parameters.</div>
 <dl class="notes">
@@ -1176,15 +1180,15 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="setINIFileConfig(java.nio.file.Path,boolean,java.lang.String)">
+<section class="detail" id="setINIFileConfig(java.lang.String,boolean,java.lang.String)">
 <h3>setINIFileConfig</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-612">setINIFileConfig</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;path,
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-613">setINIFileConfig</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;filename,
  boolean&nbsp;flag,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;comment)</span></div>
 <div class="block">Sets the configuration for the <code>INI</code> file.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>path</code> - The path; can be <code>null</code>.</dd>
+<dd><code>filename</code> - The path; can be <code>null</code>.</dd>
 <dd><code>flag</code> - The flag that indicates whether the configuration file
       must exist before the program starts.<code>true</code> if the file must
       exist, <code>false</code> if it will be created on startup.</dd>
@@ -1195,7 +1199,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setInitDataMethod(org.tquadrat.foundation.javacomposer.MethodSpec)">
 <h3>setInitDataMethod</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-625">setInitDataMethod</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&nbsp;method)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-626">setInitDataMethod</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/MethodSpec.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">MethodSpec</a>&nbsp;method)</span></div>
 <div class="block">Set the method that is provided as a source for the initialisation of
   the properties of the configuration bean.</div>
 <dl class="notes">
@@ -1207,7 +1211,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setInitDataResource(java.lang.String)">
 <h3>setInitDataResource</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-633">setInitDataResource</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;initDataResource)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-634">setInitDataResource</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;initDataResource)</span></div>
 <div class="block">Set the name of the resource that is used to initialise the
   properties of the configuration bean.</div>
 <dl class="notes">
@@ -1219,7 +1223,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setPreferenceChangeListenerClass(org.tquadrat.foundation.javacomposer.TypeName)">
 <h3>setPreferenceChangeListenerClass</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-642">setPreferenceChangeListenerClass</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;listenerClass)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-643">setPreferenceChangeListenerClass</a></span><wbr><span class="parameters">(<a href="https://tquadrat.github.io/foundation-javacomposer/javadoc/org.tquadrat.foundation.javacomposer/org/tquadrat/foundation/javacomposer/TypeName.html" title="class or interface in org.tquadrat.foundation.javacomposer" class="external-link">TypeName</a>&nbsp;listenerClass)</span></div>
 <div class="block">Sets the class for the <code>Preferences</code> change listener.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -1236,7 +1240,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setPreferencesRoot(java.lang.String)">
 <h3>setPreferencesRoot</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-652">setPreferencesRoot</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/org/tquadrat/foundation/config/ap/CodeGenerationConfiguration.html#line-653">setPreferencesRoot</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
 <div class="block">Sets the name for the preferences root node.</div>
 <dl class="notes">
 <dt>Parameters:</dt>

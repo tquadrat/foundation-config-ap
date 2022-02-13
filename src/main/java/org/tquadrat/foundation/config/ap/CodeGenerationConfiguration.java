@@ -33,7 +33,6 @@ import static org.tquadrat.foundation.util.StringUtils.isNotEmptyOrBlank;
 import javax.lang.model.element.Name;
 import javax.lang.model.util.Elements;
 import java.lang.reflect.Type;
-import java.nio.file.Path;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.HashSet;
@@ -60,12 +59,12 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  generation, and it collects the results from the different code generators.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CodeGenerationConfiguration.java 1006 2022-02-03 23:03:04Z tquadrat $
+ *  @version $Id: CodeGenerationConfiguration.java 1015 2022-02-09 08:25:36Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 1006 2022-02-03 23:03:04Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 1015 2022-02-09 08:25:36Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class CodeGenerationConfiguration
 {
@@ -122,9 +121,9 @@ public final class CodeGenerationConfiguration
     private boolean m_INIFileMustExist;
 
     /**
-     *  The path for the configuration file.
+     *  The name for the configuration file.
      */
-    private Path m_INIFilePath = null;
+    private String m_INIFilePath = null;
 
     /**
      *  The {@code INI} file groups. The key is the name of the group, the
@@ -373,13 +372,15 @@ public final class CodeGenerationConfiguration
     public final boolean getINIFileMustExist() { return m_INIFileMustExist; }
 
     /**
-     *  Returns the {@code INI} file path.
+     *  Returns the name for the file that backs the
+     *  {@link org.tquadrat.foundation.inifile.INIFile}
+     *  instance used by the generated configuration bean.
      *
      *  @return An instance of
      *      {@link Optional}
-     *      that holds the path.
+     *      that holds the filename.
      */
-    public final Optional<Path> getINIFilePath() { return Optional.ofNullable( m_INIFilePath ); }
+    public final Optional<String> getINIFilePath() { return Optional.ofNullable( m_INIFilePath ); }
 
     /**
      *  Returns the {@code INI} file groups.
@@ -603,15 +604,15 @@ public final class CodeGenerationConfiguration
     /**
      *  Sets the configuration for the {@code INI} file.
      *
-     *  @param  path    The path; can be {@code null}.
+     *  @param  filename    The path; can be {@code null}.
      *  @param  flag    The flag that indicates whether the configuration file
      *      must exist before the program starts.{@code true} if the file must
      *      exist, {@code false} if it will be created on startup.
      *  @param  comment The comment; can be {@code null}.
      */
-    public final void setINIFileConfig( final Path path, final boolean flag,  final String comment )
+    public final void setINIFileConfig( final String filename, final boolean flag,  final String comment )
     {
-        m_INIFilePath = path;
+        m_INIFilePath = filename;
         m_INIFileComment = isNull( m_INIFilePath ) ? null : comment;
         m_INIFileMustExist = flag;
     }   //  setINIFileConfig()

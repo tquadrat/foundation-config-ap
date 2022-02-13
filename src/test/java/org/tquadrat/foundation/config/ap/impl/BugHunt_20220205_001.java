@@ -39,7 +39,6 @@ import static org.tquadrat.foundation.util.StringUtils.format;
 import static org.tquadrat.foundation.util.StringUtils.isNotEmpty;
 import static org.tquadrat.foundation.util.StringUtils.isNotEmptyOrBlank;
 
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.apiguardian.api.API;
@@ -60,10 +59,10 @@ import org.tquadrat.foundation.testutil.TestBaseClass;
 /**
  *  Enum properties are causing issues.
  *
- *  @version $Id: BugHunt_20220205_001.java 1010 2022-02-05 19:28:36Z tquadrat $
+ *  @version $Id: BugHunt_20220205_001.java 1015 2022-02-09 08:25:36Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
-@ClassVersion( sourceVersion = "$Id: BugHunt_20220205_001.java 1010 2022-02-05 19:28:36Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: BugHunt_20220205_001.java 1015 2022-02-09 08:25:36Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.BugHunt_20220205_001" )
 public class BugHunt_20220205_001 extends TestBaseClass
@@ -105,22 +104,22 @@ public class BugHunt_20220205_001 extends TestBaseClass
 
         retValue.setPreferencesRoot( format( "%s.%s", packageName, className).replace( '.', '/' ) );
         retValue.setPreferenceChangeListenerClass( ClassName.from( PreferenceChangeListenerImpl.class ) );
-        retValue.setINIFileConfig( Paths.get( "/", "home", "tquadrat", "config", "dummy.ini" ), true,
+        retValue.setINIFileConfig( "/home/tquadrat/config/dummy.ini", true,
             """
             This is a dummy INI file used for the tests of the code generation stuff.\
-            """);
+            """ );
         retValue.addINIGroup( "Group1",
             """
              The comment for group 1.
-             """);
+             """ );
         retValue.addINIGroup( "Group2",
             """
              The comment for group 2.
-             """);
+             """ );
         retValue.addINIGroup( "Group3",
             """
              The comment for group 3.
-             """);
+             """ );
 
         //---* Done *----------------------------------------------------------
         return retValue;

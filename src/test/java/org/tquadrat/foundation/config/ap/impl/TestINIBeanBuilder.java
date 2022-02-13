@@ -44,9 +44,9 @@ import org.tquadrat.foundation.test.helper.CodeGeneratorTestBase;
  *  interface.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: TestINIBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $
+ *  @version $Id: TestINIBeanBuilder.java 1015 2022-02-09 08:25:36Z tquadrat $
  */
-@ClassVersion( sourceVersion = "$Id: TestINIBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: TestINIBeanBuilder.java 1015 2022-02-09 08:25:36Z tquadrat $" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.TestINIBeanBuilder" )
 public class TestINIBeanBuilder extends CodeGeneratorTestBase
 {
@@ -163,6 +163,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                     import org.tquadrat.foundation.exception.ValidationException;
                     import org.tquadrat.foundation.inifile.INIFile;
                     import org.tquadrat.foundation.lang.AutoLock;
+                    import org.tquadrat.foundation.lang.Lazy;
                     import org.tquadrat.foundation.lang.Objects;
                     import org.tquadrat.foundation.test.INISpec;
                     import org.tquadrat.foundation.test.config.BaseClass;
@@ -171,7 +172,6 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                     import org.tquadrat.foundation.util.stringconverter.InstantStringConverter;
                     import org.tquadrat.foundation.util.stringconverter.IntegerStringConverter;
                     import org.tquadrat.foundation.util.stringconverter.LocaleStringConverter;
-                    import org.tquadrat.foundation.util.stringconverter.PathStringConverter;
                     import org.tquadrat.foundation.util.stringconverter.StringStringConverter;
                     import org.tquadrat.foundation.util.stringconverter.ZoneIdStringConverter;
                                     
@@ -215,13 +215,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                          * The INIFile instance that is used by this configuration bean to
                          * persist (some of) its properties.
                          */
-                        private final INIFile m_INIFile;
-                                    
-                        /**
-                         * The file that backs the INIFile used by this configuration bean.
-                         */
-                        @SuppressWarnings( "FieldCanBeLocal" )
-                        private final Path m_INIFilePath = PathStringConverter.INSTANCE.fromString( "/home/tquadrat/config/dummy.ini" );
+                        private final Lazy<INIFile> m_INIFile;
                                     
                         /**
                          * Property: &quot;int1&quot;.
@@ -570,7 +564,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                             }
                                     
                             //---* Initialise the INI file *----------------------------------------
-                            m_INIFile = createINIFile( m_INIFilePath );
+                            m_INIFile = Lazy.use( this::createINIFile );
                         }  //  INIBean()
                                     
                             /*---------*\\
@@ -591,16 +585,16 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                          * instance that is connected with this configuration bean.
                          *
                          * @throws ExceptionInInitializerError Something went wrong on creating/opening the INI file.
-                         * @param path The path for the file that backs the {@code INIFile}.
                          * @return The {@code INIFile} instance.
                          */
                         @SuppressWarnings( "ThrowCaughtLocally" )
-                        private static final INIFile createINIFile( final Path path ) throws ExceptionInInitializerError
+                        private final INIFile createINIFile() throws ExceptionInInitializerError
                         {
                             final INIFile retValue;
+                            final var path = retrieveINIFilePath();
                             try
                             {
-                                if( !exists( requireNonNullArgument( path, "path" ) ) )
+                                if( !exists( path ) )
                                 {
                                     throw new FileNotFoundException( path.toString() );
                                 }
@@ -821,26 +815,27 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         {
                             try( final var ignore = m_WriteLock.lock() )
                             {
-                                m_INIFile.refresh();
+                                final var iniFile = m_INIFile.get();
+                                iniFile.refresh();
                                     
                                 /*
                                  * Load the data.
                                  */
                                 {
                                     final var stringConverter = InstantStringConverter.INSTANCE;
-                                    m_Date1Ini = m_INIFile.getValue( "Group1", "date1Ini", stringConverter ).orElse( m_Date1Ini );
+                                    m_Date1Ini = iniFile.getValue( "Group1", "date1Ini", stringConverter ).orElse( m_Date1Ini );
                                 }
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
-                                    m_Int1Ini = m_INIFile.getValue( "Group1", "int1Ini", stringConverter ).orElse( m_Int1Ini );
+                                    m_Int1Ini = iniFile.getValue( "Group1", "int1Ini", stringConverter ).orElse( m_Int1Ini );
                                 }
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
-                                    m_Int2Ini = m_INIFile.getValue( "Group1", "int2Ini", stringConverter ).orElse( m_Int2Ini );
+                                    m_Int2Ini = iniFile.getValue( "Group1", "int2Ini", stringConverter ).orElse( m_Int2Ini );
                                 }
                                 {
                                     final var stringConverter = StringStringConverter.INSTANCE;
-                                    m_String1Ini = m_INIFile.getValue( "Group1", "string1Ini", stringConverter ).orElse( m_String1Ini );
+                                    m_String1Ini = iniFile.getValue( "Group1", "string1Ini", stringConverter ).orElse( m_String1Ini );
                                 }
                             }
                             catch( final IOException e )
@@ -855,7 +850,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         @Override
                         public final Optional<INIFile> obtainINIFile()
                         {
-                            return Optional.of( m_INIFile );
+                            return Optional.of( m_INIFile.get() );
                         }  //  obtainINIFile()
                                     
                         /**
@@ -867,6 +862,19 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                             m_ListenerSupport.removeListener( listener );
                         }  //  removeListener()
                                     
+                        /**
+                         * Returns the path for the INIFile backing file.
+                         *
+                         * @return The path for the file that backs the {@code INIFile} instance.
+                         */
+                        private final Path retrieveINIFilePath()
+                        {
+                            final var retValue = Path.of( "/home/tquadrat/config/dummy.ini" );
+                    
+                            //---* Done *----------------------------------------------------------
+                            return retValue;
+                        }  //  retrieveINIFilePath()
+
                         /**
                          * {@inheritDoc}
                          */
@@ -1135,27 +1143,29 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         {
                             try( final var ignore = m_ReadLock.lock() )
                             {
+                                final var iniFile = m_INIFile.get();
+                                
                                 /*
                                  * Write the data.
                                  */
                                 {
                                     final var stringConverter = InstantStringConverter.INSTANCE;
-                                    m_INIFile.setValue( "Group1", "date1Ini", m_Date1Ini, stringConverter );
+                                    iniFile.setValue( "Group1", "date1Ini", m_Date1Ini, stringConverter );
                                 }
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
-                                    m_INIFile.setValue( "Group1", "int1Ini", m_Int1Ini, stringConverter );
+                                    iniFile.setValue( "Group1", "int1Ini", m_Int1Ini, stringConverter );
                                 }
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
-                                    m_INIFile.setValue( "Group1", "int2Ini", m_Int2Ini, stringConverter );
+                                    iniFile.setValue( "Group1", "int2Ini", m_Int2Ini, stringConverter );
                                 }
                                 {
                                     final var stringConverter = StringStringConverter.INSTANCE;
-                                    m_INIFile.setValue( "Group1", "string1Ini", m_String1Ini, stringConverter );
+                                    iniFile.setValue( "Group1", "string1Ini", m_String1Ini, stringConverter );
                                 }
-                                    
-                                m_INIFile.save();
+                    
+                                iniFile.save();
                             }
                             catch( final IOException e )
                             {

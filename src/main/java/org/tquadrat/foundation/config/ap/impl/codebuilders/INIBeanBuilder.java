@@ -20,7 +20,7 @@ package org.tquadrat.foundation.config.ap.impl.codebuilders;
 import static javax.lang.model.element.Modifier.FINAL;
 import static javax.lang.model.element.Modifier.PRIVATE;
 import static javax.lang.model.element.Modifier.PUBLIC;
-import static javax.lang.model.element.Modifier.STATIC;
+import static org.apiguardian.api.API.Status.INTERNAL;
 import static org.apiguardian.api.API.Status.MAINTAINED;
 import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_INIGroupMissing;
 import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_INIKeyMissing;
@@ -28,20 +28,22 @@ import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_IN
 import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_MissingStringConverter;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ALLOWS_INIFILE;
 import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_INIFile;
-import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_INIFileName;
 import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_ReadLock;
 import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_WriteLock;
 import static org.tquadrat.foundation.javacomposer.Primitives.VOID;
-import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.FIELD_CAN_BE_LOCAL;
 import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.THROW_CAUGHT_LOCALLY;
 import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.createSuppressWarningsAnnotation;
 import static org.tquadrat.foundation.lang.CommonConstants.EMPTY_STRING;
+import static org.tquadrat.foundation.util.JavaUtils.composeGetterName;
 import static org.tquadrat.foundation.util.StringUtils.format;
+import static org.tquadrat.foundation.util.Template.hasVariables;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.Optional;
 
 import org.apiguardian.api.API;
@@ -50,7 +52,8 @@ import org.tquadrat.foundation.ap.CodeGenerationError;
 import org.tquadrat.foundation.config.spi.prefs.PreferencesException;
 import org.tquadrat.foundation.inifile.INIFile;
 import org.tquadrat.foundation.javacomposer.ParameterizedTypeName;
-import org.tquadrat.foundation.lang.Objects;
+import org.tquadrat.foundation.lang.Lazy;
+import org.tquadrat.foundation.util.Template;
 import org.tquadrat.foundation.util.stringconverter.PathStringConverter;
 
 /**
@@ -62,15 +65,60 @@ import org.tquadrat.foundation.util.stringconverter.PathStringConverter;
  *  {@link org.tquadrat.foundation.config.INIBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: INIBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $
+ *  @version $Id: INIBeanBuilder.java 1015 2022-02-09 08:25:36Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: INIBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: INIBeanBuilder.java 1015 2022-02-09 08:25:36Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class INIBeanBuilder extends CodeBuilderBase
 {
+        /*---------------*\
+    ====** Inner Classes **====================================================
+        \*---------------*/
+    /**
+     *  The various types for the initialisation of the field holding the
+     *  backing
+     *  {@link Path}
+     *  for the
+     *  {@link INIFile}
+     *  instance.
+     *
+     *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
+     *  @version $Id: INIBeanBuilder.java 1015 2022-02-09 08:25:36Z tquadrat $
+     *  @UMLGraph.link
+     *  @since 0.1.0
+     */
+    @ClassVersion( sourceVersion = "$Id: INIBeanBuilder.java 1015 2022-02-09 08:25:36Z tquadrat $" )
+    @API( status = INTERNAL, since = "0.1.0" )
+    private static enum InitType
+    {
+        /**
+         *  The given filename denotes an absolute path.
+         */
+        INIT_ABSOLUTE,
+
+        /**
+         *  The given filename starts  with {@code $USER} and stands for a path
+         *  that is to be resolved against the user's home folder.
+         */
+        INIT_HOME,
+
+        /**
+         *  The given filename starts with <code>${…}</code> and stands for a
+         *  path that will be resolved against a property.
+         */
+        INIT_PROPERTY,
+
+        /**
+         *  The given filename will be resolved against the current working
+         *  directory.
+         */
+        INIT_CWD
+    }
+    //  enum InitType
+
         /*--------------*\
     ====** Constructors **=====================================================
         \*--------------*/
@@ -93,16 +141,78 @@ public final class INIBeanBuilder extends CodeBuilderBase
     @Override
     public final void build()
     {
-        //---* Add the method that creates the INIFile instance *--------------
-        final var pathParameter = getComposer().parameterBuilder( Path.class, "path", FINAL )
+        //---* Parse the filename for the INIFile *----------------------------
+        final InitType initType;
+        final Path iniFilePath;
+        String propertyName = null;
+        final var rawINIFilePath = getConfiguration().getINIFilePath()
+            .orElseThrow( () -> new CodeGenerationError( MSG_INIPathMissing ) );
+
+        if( rawINIFilePath.startsWith( "$USER" ) )
+        {
+            initType = InitType.INIT_HOME;
+            iniFilePath = PathStringConverter.INSTANCE.fromString( rawINIFilePath.substring( 5 ) );
+        }
+        else if( rawINIFilePath.startsWith( "${" ) && hasVariables( rawINIFilePath ) )
+        {
+            initType = InitType.INIT_PROPERTY;
+            final var template = new Template( rawINIFilePath );
+            final var variables = new LinkedList<>( template.findVariables() );
+            propertyName = variables.get( 0 );
+            iniFilePath = PathStringConverter.INSTANCE.fromString( template.replaceVariable( Map.of( propertyName, EMPTY_STRING ) ) );
+        }
+        else
+        {
+            iniFilePath = PathStringConverter.INSTANCE.fromString( rawINIFilePath );
+            if( iniFilePath.isAbsolute() )
+            {
+                initType = InitType.INIT_ABSOLUTE;
+            }
+            else
+            {
+                initType = InitType.INIT_CWD;
+            }
+        }
+
+        /*
+         * Add the method that retrieves the path for the file that backs the
+         * INIFile.
+         */
+        final var retrievePathBuilder = getComposer().methodBuilder( "retrieveINIFilePath" )
+            .addModifiers( PRIVATE, FINAL )
             .addJavadoc(
                 """
-                The path for the file that backs the {@code INIFile}.\
-                """
+                Returns the path for the INIFile backing file.
+                """, ExceptionInInitializerError.class
             )
-            .build();
+            .returns( Path.class,
+                """
+                The path for the file that backs the {@code INIFile} instance.\
+                """ )
+            .addCode( switch( initType )
+                {
+                    case INIT_CWD -> getComposer().codeBlockBuilder()
+                        .addStatement( "final var retValue = $1T.of( $2S, $3S )", Path.class, ".", PathStringConverter.INSTANCE.toString( iniFilePath ) )
+                        .build();
+                    case INIT_HOME -> getComposer().codeBlockBuilder()
+                        .addStatement( "final var retValue = $1T.of( getProperty( PROPERTY_USER_HOME ), $2S )", Path.class, PathStringConverter.INSTANCE.toString( iniFilePath ) )
+                        .addStaticImport( System.class, "getProperty" )
+                        .build();
+                    case INIT_ABSOLUTE -> getComposer().codeBlockBuilder()
+                        .addStatement( "final var retValue = $1T.of( $2S )", Path.class, PathStringConverter.INSTANCE.toString( iniFilePath ) )
+                        .build();
+                    case INIT_PROPERTY -> getComposer().codeBlockBuilder()
+                        .addStatement( "final var basePath = $1L()", composeGetterName( propertyName ) )
+                        .addStatement( "final var retValue = basePath.resolve( $1S )", PathStringConverter.INSTANCE.toString( iniFilePath ) )
+                        .build();
+                } )
+            .addCode( getComposer().createReturnStatement() );
+        final var retrievePathMethod = retrievePathBuilder.build();
+        addMethod( retrievePathMethod );
+
+        //---* Add the method that creates the INIFile instance *--------------
         final var createINIFileBuilder = getComposer().methodBuilder( "createINIFile" )
-            .addModifiers( PRIVATE, FINAL, STATIC )
+            .addModifiers( PRIVATE, FINAL )
             .addAnnotation( createSuppressWarningsAnnotation( getComposer(), THROW_CAUGHT_LOCALLY ) )
             .addJavadoc(
                 """
@@ -113,13 +223,13 @@ public final class INIBeanBuilder extends CodeBuilderBase
                 @throws $T Something went wrong on creating/opening the INI file.\
                 """, ExceptionInInitializerError.class
             )
-            .addParameter( pathParameter )
             .returns( INIFile.class,
                 """
                 The {@code INIFile} instance.\
                 """ )
             .addException( ExceptionInInitializerError.class )
             .addStatement( "final $T retValue", INIFile.class )
+            .addStatement( "final var path = $N()", retrievePathMethod )
             .beginControlFlow(
                 """
                     try
@@ -129,14 +239,13 @@ public final class INIBeanBuilder extends CodeBuilderBase
         {
             createINIFileBuilder.beginControlFlow(
                     """
-                    if( !exists( requireNonNullArgument( $1N, "$1N" ) ) )
-                    """, pathParameter
+                    if( !exists( path ) )
+                    """
                 )
                 .addStaticImport( Files.class, "exists" )
-                .addStaticImport( Objects.class, "requireNonNullArgument" )
-                .addStatement( "throw new $T( $N.toString() )", FileNotFoundException.class, pathParameter )
+                .addStatement( "throw new $1T( path.toString() )", FileNotFoundException.class )
                 .endControlFlow()
-                .addStatement( "retValue = $T.open( $N )", INIFile.class, pathParameter );
+                .addStatement( "retValue = $1T.open( path )", INIFile.class );
         }
         else
         {
@@ -145,11 +254,10 @@ public final class INIBeanBuilder extends CodeBuilderBase
             {
                 createINIFileBuilder.addStatement(
                     """
-                    final var isNew = !exists( requireNonNullArgument( $1N, "$1N" ) )\
-                    """, pathParameter )
+                    final var isNew = !exists( path )\
+                    """ )
                     .addStaticImport( Files.class, "exists" )
-                    .addStaticImport( Objects.class, "requireNonNullArgument" )
-                    .addStatement( "retValue = $T.open( $N )", INIFile.class, pathParameter )
+                    .addStatement( "retValue = $T.open( path )", INIFile.class )
                     .beginControlFlow(
                         """
                         if( isNew )
@@ -161,9 +269,8 @@ public final class INIBeanBuilder extends CodeBuilderBase
             {
                 createINIFileBuilder.addStatement(
                     """
-                    retValue = $1T.open( requireNonNullArgument( $2N, "$2N" ) )\
-                    """, INIFile.class, pathParameter )
-                    .addStaticImport( Objects.class, "requireNonNullArgument" );
+                    retValue = $1T.open( path )\
+                    """, INIFile.class );
             }
         }
         createINIFileBuilder.nextControlFlow(
@@ -209,22 +316,9 @@ public final class INIBeanBuilder extends CodeBuilderBase
             .build();
         addMethod( createINIFile );
 
-        //---* Add the field for the name of the INI configuration file *------
-        final var iniFileName = getComposer().fieldBuilder( Path.class, STD_FIELD_INIFileName.toString(), PRIVATE, FINAL )
-            .addJavadoc(
-                """
-                The file that backs the INIFile used by this configuration bean.
-                """
-            )
-            .addAnnotation( createSuppressWarningsAnnotation( getComposer(), FIELD_CAN_BE_LOCAL ) )
-            .initializer( "$T.INSTANCE.fromString( $S )", PathStringConverter.class, getConfiguration().getINIFilePath()
-                .map( PathStringConverter.INSTANCE::toString )
-                .orElseThrow( () -> new CodeGenerationError( MSG_INIPathMissing ) ) )
-            .build();
-        addField( STD_FIELD_INIFileName, iniFileName );
-
         //---* Add the field for the INI file *--------------------------------
-        final var iniFile = getComposer().fieldBuilder( INIFile.class, STD_FIELD_INIFile.toString(), PRIVATE, FINAL )
+        final var iniFileClass = ParameterizedTypeName.from( Lazy.class, INIFile.class );
+        final var iniFile = getComposer().fieldBuilder( iniFileClass, STD_FIELD_INIFile.toString(), PRIVATE, FINAL )
             .addJavadoc(
                 """
                 The INIFile instance that is used by this configuration bean to
@@ -242,7 +336,7 @@ public final class INIBeanBuilder extends CodeBuilderBase
                 //---* Initialise the INI file *----------------------------------------
                 """
             )
-            .addStatement( "$1N = $3N( $2N )", iniFile, iniFileName, createINIFile )
+            .addStatement( "$1N = $2T.use( this::$3N )", iniFile, Lazy.class, createINIFile )
             .build();
         addConstructorCode( constructorCode );
 
@@ -253,7 +347,7 @@ public final class INIBeanBuilder extends CodeBuilderBase
             .addAnnotation( Override.class )
             .returns( returnType )
             .addJavadoc( getComposer().createInheritDocComment() )
-            .addStatement( "return $T.of( $N )", Optional.class, iniFile )
+            .addStatement( "return $T.of( $N.get() )", Optional.class, iniFile )
             .build();
         addMethod( method );
 
@@ -273,7 +367,8 @@ public final class INIBeanBuilder extends CodeBuilderBase
                 try
                 """ );
         }
-        loadCodeBuilder.addStatement( "$N.refresh()", iniFile )
+        loadCodeBuilder.addStatement( "final var iniFile = $1N.get()", iniFile )
+            .addStatement( "iniFile.refresh()" )
             .add(
                 """
                 
@@ -299,8 +394,10 @@ public final class INIBeanBuilder extends CodeBuilderBase
                 try
                 """ );
         }
-        updateCodeBuilder.add(
+        updateCodeBuilder.addStatement( "final var iniFile = $1N.get()", iniFile )
+            .add(
             """
+            
             /*
              * Write the data.
              */
@@ -335,13 +432,13 @@ public final class INIBeanBuilder extends CodeBuilderBase
             //---* Load the value *--------------------------------------------
             loadCodeBuilder.beginControlFlow( EMPTY_STRING )
                 .add( stringConverterCode )
-                .addStatement( "$1N = $2N.getValue( $3S, $4S, stringConverter ).orElse( $1N )", field, iniFile, group, key )
+                .addStatement( "$1N = iniFile.getValue( $2S, $3S, stringConverter ).orElse( $1N )", field, group, key )
                 .endControlFlow();
 
             //---* Write the value *-------------------------------------------
             updateCodeBuilder.beginControlFlow( EMPTY_STRING )
                 .add( stringConverterCode )
-                .addStatement( "$2N.setValue( $3S, $4S, $1N, stringConverter )", field, iniFile, group, key )
+                .addStatement( "iniFile.setValue( $2S, $3S, $1N, stringConverter )", field, group, key )
                 .endControlFlow();
         }   //  PropertiesLoop:
 
@@ -364,7 +461,7 @@ public final class INIBeanBuilder extends CodeBuilderBase
 
         //---* Create the updateINIFile() method *-----------------------------
         updateCodeBuilder.add( "\n" )
-            .addStatement( "$N.save()", iniFile )
+            .addStatement( "iniFile.save()" )
             .nextControlFlow(
                 """
 

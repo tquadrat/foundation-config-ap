@@ -38,7 +38,6 @@ import static org.tquadrat.foundation.util.StringUtils.format;
 import static org.tquadrat.foundation.util.StringUtils.isNotEmpty;
 import static org.tquadrat.foundation.util.StringUtils.isNotEmptyOrBlank;
 
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.apiguardian.api.API;
@@ -61,10 +60,10 @@ import org.tquadrat.foundation.testutil.TestBaseClass;
 /**
  *  Generation caused &quot;cannot unindent 1 from 0&quot;.
  *
- *  @version $Id: BugHunt_20220126_002.java 1010 2022-02-05 19:28:36Z tquadrat $
+ *  @version $Id: BugHunt_20220126_002.java 1015 2022-02-09 08:25:36Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
-@ClassVersion( sourceVersion = "$Id: BugHunt_20220126_002.java 1010 2022-02-05 19:28:36Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: BugHunt_20220126_002.java 1015 2022-02-09 08:25:36Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.BugHunt_20220126_002" )
 public class BugHunt_20220126_002 extends TestBaseClass
@@ -106,22 +105,22 @@ public class BugHunt_20220126_002 extends TestBaseClass
 
         retValue.setPreferencesRoot( format( "%s.%s", packageName, className).replace( '.', '/' ) );
         retValue.setPreferenceChangeListenerClass( ClassName.from( PreferenceChangeListenerImpl.class ) );
-        retValue.setINIFileConfig( Paths.get( "/", "home", "tquadrat", "config", "dummy.ini" ), true,
+        retValue.setINIFileConfig( "/home/tquadrat/config/dummy.ini", true,
             """
             This is a dummy INI file used for the tests of the code generation stuff.\
-            """);
+            """ );
         retValue.addINIGroup( "Group1",
             """
              The comment for group 1.
-             """);
+             """ );
         retValue.addINIGroup( "Group2",
             """
              The comment for group 2.
-             """);
+             """ );
         retValue.addINIGroup( "Group3",
             """
              The comment for group 3.
-             """);
+             """ );
 
         //---* Done *----------------------------------------------------------
         return retValue;
@@ -257,13 +256,13 @@ public class BugHunt_20220126_002 extends TestBaseClass
                     import org.tquadrat.foundation.config.spi.ConfigChangeListenerSupport;
                     import org.tquadrat.foundation.config.spi.prefs.PreferencesException;
                     import org.tquadrat.foundation.inifile.INIFile;
+                    import org.tquadrat.foundation.lang.Lazy;
                     import org.tquadrat.foundation.lang.Objects;
                     import org.tquadrat.foundation.test.BugHuntSpec;
                     import org.tquadrat.foundation.test.config.BaseClass;
                     import org.tquadrat.foundation.util.stringconverter.BooleanStringConverter;
                     import org.tquadrat.foundation.util.stringconverter.CharsetStringConverter;
                     import org.tquadrat.foundation.util.stringconverter.LocaleStringConverter;
-                    import org.tquadrat.foundation.util.stringconverter.PathStringConverter;
                     import org.tquadrat.foundation.util.stringconverter.ZoneIdStringConverter;
                                     
                     /**
@@ -301,13 +300,7 @@ public class BugHunt_20220126_002 extends TestBaseClass
                          * The INIFile instance that is used by this configuration bean to
                          * persist (some of) its properties.
                          */
-                        private final INIFile m_INIFile;
-                                    
-                        /**
-                         * The file that backs the INIFile used by this configuration bean.
-                         */
-                        @SuppressWarnings( "FieldCanBeLocal" )
-                        private final Path m_INIFilePath = PathStringConverter.INSTANCE.fromString( "/home/tquadrat/config/dummy.ini" );
+                        private final Lazy<INIFile> m_INIFile;
                                     
                         /**
                          * Property: &quot;isDebug&quot;.
@@ -410,7 +403,7 @@ public class BugHunt_20220126_002 extends TestBaseClass
                             m_Timezone = ZoneId.systemDefault();
                                     
                             //---* Initialise the INI file *----------------------------------------
-                            m_INIFile = createINIFile( m_INIFilePath );
+                            m_INIFile = Lazy.use( this::createINIFile );
                         }  //  BugHuntImpl()
                                     
                             /*---------*\\
@@ -431,16 +424,16 @@ public class BugHunt_20220126_002 extends TestBaseClass
                          * instance that is connected with this configuration bean.
                          *
                          * @throws ExceptionInInitializerError Something went wrong on creating/opening the INI file.
-                         * @param path The path for the file that backs the {@code INIFile}.
                          * @return The {@code INIFile} instance.
                          */
                         @SuppressWarnings( "ThrowCaughtLocally" )
-                        private static final INIFile createINIFile( final Path path ) throws ExceptionInInitializerError
+                        private final INIFile createINIFile() throws ExceptionInInitializerError
                         {
                             final INIFile retValue;
+                            final var path = retrieveINIFilePath();
                             try
                             {
-                                if( !exists( requireNonNullArgument( path, "path" ) ) )
+                                if( !exists( path ) )
                                 {
                                     throw new FileNotFoundException( path.toString() );
                                 }
@@ -597,7 +590,8 @@ public class BugHunt_20220126_002 extends TestBaseClass
                         {
                             try
                             {
-                                m_INIFile.refresh();
+                                final var iniFile = m_INIFile.get();
+                                iniFile.refresh();
                                     
                                 /*
                                  * Load the data.
@@ -615,7 +609,7 @@ public class BugHunt_20220126_002 extends TestBaseClass
                         @Override
                         public final Optional<INIFile> obtainINIFile()
                         {
-                            return Optional.of( m_INIFile );
+                            return Optional.of( m_INIFile.get() );
                         }  //  obtainINIFile()
                                     
                         /**
@@ -627,6 +621,19 @@ public class BugHunt_20220126_002 extends TestBaseClass
                             m_ListenerSupport.removeListener( listener );
                         }  //  removeListener()
                                     
+                        /**
+                         * Returns the path for the INIFile backing file.
+                         *
+                         * @return The path for the file that backs the {@code INIFile} instance.
+                         */
+                        private final Path retrieveINIFilePath()
+                        {
+                            final var retValue = Path.of( "/home/tquadrat/config/dummy.ini" );
+                    
+                            //---* Done *----------------------------------------------------------
+                            return retValue;
+                        }  //  retrieveINIFilePath()
+
                         /**
                          * {@inheritDoc}
                          */
@@ -735,11 +742,13 @@ public class BugHunt_20220126_002 extends TestBaseClass
                         {
                             try
                             {
+                                final var iniFile = m_INIFile.get();
+                                
                                 /*
                                  * Write the data.
                                  */
                                     
-                                m_INIFile.save();
+                                iniFile.save();
                             }
                             catch( final IOException e )
                             {

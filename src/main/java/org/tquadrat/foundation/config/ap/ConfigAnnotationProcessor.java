@@ -50,6 +50,7 @@ import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER_CHECK_NULL;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER_IS_DEFAULT;
 import static org.tquadrat.foundation.javacomposer.Layout.LAYOUT_FOUNDATION;
+import static org.tquadrat.foundation.lang.CommonConstants.EMPTY_STRING;
 import static org.tquadrat.foundation.lang.DebugOutput.ifDebug;
 import static org.tquadrat.foundation.lang.Objects.isNull;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
@@ -65,6 +66,7 @@ import static org.tquadrat.foundation.util.StringUtils.capitalize;
 import static org.tquadrat.foundation.util.StringUtils.decapitalize;
 import static org.tquadrat.foundation.util.StringUtils.format;
 import static org.tquadrat.foundation.util.StringUtils.isEmpty;
+import static org.tquadrat.foundation.util.StringUtils.isEmptyOrBlank;
 import static org.tquadrat.foundation.util.StringUtils.isNotEmptyOrBlank;
 
 import javax.annotation.processing.RoundEnvironment;
@@ -87,7 +89,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -146,24 +147,24 @@ import org.tquadrat.foundation.javacomposer.ClassName;
 import org.tquadrat.foundation.javacomposer.JavaComposer;
 import org.tquadrat.foundation.javacomposer.ParameterizedTypeName;
 import org.tquadrat.foundation.javacomposer.TypeName;
+import org.tquadrat.foundation.lang.Objects;
 import org.tquadrat.foundation.lang.StringConverter;
 import org.tquadrat.foundation.util.JavaUtils;
 import org.tquadrat.foundation.util.LazyMap;
 import org.tquadrat.foundation.util.stringconverter.EnumStringConverter;
-import org.tquadrat.foundation.util.stringconverter.PathStringConverter;
 
 /**
  *  The annotation processor for the {@code org.tquadrat.foundation.config}
  *  module.
  *
- *  @version $Id: ConfigAnnotationProcessor.java 1010 2022-02-05 19:28:36Z tquadrat $
+ *  @version $Id: ConfigAnnotationProcessor.java 1018 2022-02-13 19:26:19Z tquadrat $
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"OverlyCoupledClass", "OverlyComplexClass", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1010 2022-02-05 19:28:36Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1018 2022-02-13 19:26:19Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @SupportedSourceVersion( SourceVersion.RELEASE_17 )
 @SupportedOptions( { APBase.ADD_DEBUG_OUTPUT, APBase.MAVEN_GOAL } )
@@ -1850,12 +1851,12 @@ public class ConfigAnnotationProcessor extends APBase
                 //---* Get the message prefix *--------------------------------
                 m_MessagePrefix = retrieveAnnotatedField( roundEnvironment, MessagePrefix.class )
                     .filter( variableElement -> variableElement.getModifiers().containsAll( Set.of( PUBLIC, STATIC ) ) )
-                    .map( variableElement -> format( "%s.%s", variableElement.getEnclosingElement(), variableElement.getSimpleName() ) );
+                    .map( variableElement -> Objects.toString( variableElement.getConstantValue(), EMPTY_STRING ) );
 
                 //---* Get the base bundle name *------------------------------
                 m_BaseBundleName = retrieveAnnotatedField( roundEnvironment, BaseBundleName.class )
                     .filter( variableElement -> variableElement.getModifiers().containsAll( Set.of( PUBLIC, STATIC ) ) )
-                    .map( variableElement -> format( "%s.%s", variableElement.getEnclosingElement(), variableElement.getSimpleName() ) );
+                    .map( variableElement -> Objects.toString( variableElement.getConstantValue(), EMPTY_STRING ) );
 
                 /*
                  * Process the elements that are annotated as configuration
@@ -2019,20 +2020,12 @@ public class ConfigAnnotationProcessor extends APBase
         final var iniFileConfig = specification.getAnnotation( INIFileConfig.class );
         if( nonNull( iniFileConfig ) )
         {
-            final Path path;
-            try
-            {
-                path = PathStringConverter.INSTANCE.fromString( iniFileConfig.path() );
-            }
-            catch( final IllegalArgumentException e )
-            {
-                throw new CodeGenerationError( MSG_INIPathMissing, e );
-            }
-            if( isNull( path ) )
+            final var filename = iniFileConfig.path();
+            if( isEmptyOrBlank( filename ) )
             {
                 throw new CodeGenerationError( MSG_INIPathMissing );
             }
-            configuration.setINIFileConfig( path, iniFileConfig.mustExist(), iniFileConfig.comment() );
+            configuration.setINIFileConfig( filename, iniFileConfig.mustExist(), iniFileConfig.comment() );
             for( final var group : specification.getAnnotationsByType( INIGroup.class ) ) configuration.addINIGroup( group );
         }
 

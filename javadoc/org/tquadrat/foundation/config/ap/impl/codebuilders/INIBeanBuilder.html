@@ -85,10 +85,10 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">CodeBuilder</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="annotations"><a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">@ClassVersion</a>(<a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html#sourceVersion()" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">sourceVersion</a>="$Id: INIBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $")
+<div class="type-signature"><span class="annotations"><a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">@ClassVersion</a>(<a href="https://tquadrat.github.io/foundation-base/javadoc/org.tquadrat.foundation.base/org/tquadrat/foundation/annotation/ClassVersion.html#sourceVersion()" title="class or interface in org.tquadrat.foundation.annotation" class="external-link">sourceVersion</a>="$Id: INIBeanBuilder.java 1015 2022-02-09 08:25:36Z tquadrat $")
 <a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html" title="class or interface in org.apiguardian.api" class="external-link">@API</a>(<a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html#status()" title="class or interface in org.apiguardian.api" class="external-link">status</a>=<a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.Status.html#MAINTAINED" title="class or interface in org.apiguardian.api" class="external-link">MAINTAINED</a>,
      <a href="https://apiguardian-team.github.io/apiguardian/docs/current/api/org/apiguardian/api/API.html#since()" title="class or interface in org.apiguardian.api" class="external-link">since</a>="0.1.0")
-</span><span class="modifiers">public final class </span><span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/INIBeanBuilder.html#line-69">INIBeanBuilder</a></span>
+</span><span class="modifiers">public final class </span><span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/INIBeanBuilder.html#line-72">INIBeanBuilder</a></span>
 <span class="extends-implements">extends <a href="CodeBuilderBase.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">CodeBuilderBase</a></span></div>
 <div class="block">The
   <a href="../CodeBuilder.html" title="interface in org.tquadrat.foundation.config.ap.impl">code builder implementation</a>
@@ -100,7 +100,7 @@ loadScripts(document, 'script');</script>
 <dt><span class="simpleTagLabel">Author:</span></dt>
   <dd>Thomas Thrien (<a href="mailto:thomas.thrien@tquadrat.org">thomas.thrien@tquadrat.org</a>)</dd>
 <dt>Version:</dt>
-<dd>$Id: INIBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $</dd>
+<dd>$Id: INIBeanBuilder.java 1015 2022-02-09 08:25:36Z tquadrat $</dd>
 <dt>Since:</dt>
 <dd>0.1.0</dd>
 
@@ -129,6 +129,22 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="nested-class-summary" id="nested-class-summary">
 <h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>private static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="INIBeanBuilder.InitType.html" class="type-name-link" title="enum class in org.tquadrat.foundation.config.ap.impl.codebuilders">INIBeanBuilder.InitType</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">The various types for the initialisation of the field holding the
+  backing
+  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link"><code>Path</code></a>
+  for the
+  <code>INIFile</code>
+  instance.</div>
+</div>
+</div>
 <div class="inherited-list">
 <h2 id="nested-classes-inherited-from-class-org.tquadrat.foundation.config.ap.impl.codebuilders.CodeBuilderBase">Nested classes/interfaces inherited from class&nbsp;org.tquadrat.foundation.config.ap.impl.codebuilders.<a href="CodeBuilderBase.html" title="class in org.tquadrat.foundation.config.ap.impl.codebuilders">CodeBuilderBase</a></h2>
 <code><a href="CodeBuilderBase.StringConverterInstantiation.html" title="enum class in org.tquadrat.foundation.config.ap.impl.codebuilders">CodeBuilderBase.StringConverterInstantiation</a></code></div>
@@ -191,7 +207,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(org.tquadrat.foundation.config.ap.impl.codebuilders.CodeGeneratorContext)">
 <h3>INIBeanBuilder</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/INIBeanBuilder.html#line-82">INIBeanBuilder</a></span><wbr><span class="parameters">(<a href="CodeGeneratorContext.html" title="interface in org.tquadrat.foundation.config.ap.impl.codebuilders">CodeGeneratorContext</a>&nbsp;context)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/INIBeanBuilder.html#line-130">INIBeanBuilder</a></span><wbr><span class="parameters">(<a href="CodeGeneratorContext.html" title="interface in org.tquadrat.foundation.config.ap.impl.codebuilders">CodeGeneratorContext</a>&nbsp;context)</span></div>
 <div class="block">Creates a new instance of <code>INIBeanBuilder</code>.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -210,7 +226,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="build()">
 <h3>build</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/INIBeanBuilder.html#line-93">build</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/org/tquadrat/foundation/config/ap/impl/codebuilders/INIBeanBuilder.html#line-141">build</a></span>()</div>
 <div class="block">Generates the relevant code.</div>
 <dl class="notes">
 <dt>Specified by:</dt>

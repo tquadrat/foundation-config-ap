@@ -54,7 +54,6 @@ import static org.tquadrat.foundation.util.StringUtils.format;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -90,11 +89,11 @@ import org.tquadrat.foundation.util.stringconverter.StringStringConverter;
 /**
  *  The base class for the code generation tests.
  *
- *  @version $Id: CodeGeneratorTestBase.java 1010 2022-02-05 19:28:36Z tquadrat $
+ *  @version $Id: CodeGeneratorTestBase.java 1015 2022-02-09 08:25:36Z tquadrat $
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  */
 @SuppressWarnings( {"AbstractClassWithoutAbstractMethods", "OverlyCoupledClass", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: CodeGeneratorTestBase.java 1010 2022-02-05 19:28:36Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeGeneratorTestBase.java 1015 2022-02-09 08:25:36Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public abstract class CodeGeneratorTestBase extends TestBaseClass
 {
@@ -165,22 +164,22 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
          */
         retValue.setPreferencesRoot( format( "%s.%s", packageName, className).replace( '.', '/' ) );
         retValue.setPreferenceChangeListenerClass( ClassName.from( PreferenceChangeListenerImpl.class ) );
-        retValue.setINIFileConfig( Paths.get( "/", "home", "tquadrat", "config", "dummy.ini" ), true,
+        retValue.setINIFileConfig( "/home/tquadrat/config/dummy.ini", true,
             """
             This is a dummy INI file used for the tests of the code generation stuff.\
-            """);
+            """ );
         retValue.addINIGroup( "Group1",
             """
              The comment for group 1.
-             """);
+             """ );
         retValue.addINIGroup( "Group2",
             """
              The comment for group 2.
-             """);
+             """ );
         retValue.addINIGroup( "Group3",
             """
              The comment for group 3.
-             """);
+             """ );
 
         //---* Done *----------------------------------------------------------
         return retValue;
