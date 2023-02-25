@@ -409,7 +409,7 @@ public final class CLIBeanBuilder extends CodeBuilderBase
             final var format = property.getCLIFormat().orElse( null );
             if( property.hasFlag( PROPERTY_IS_ARGUMENT ) )
             {
-                builder.addStatement( "$1L = new $2T( $3S, $4L, $5S, $6S, $7S, $8L, $9L, $10L, $1S )",
+                builder.addStatement( "$1L = new $2T( $3S, $4L, $5S, $6S, $7S, $8L, $9L, $10L, $11S )",
                     definitionName,
                     CLIArgumentDefinition.class,
                     property.getPropertyName(),
