@@ -34,7 +34,7 @@ import static org.tquadrat.foundation.config.ap.impl.codebuilders.CodeGeneratorC
 import static org.tquadrat.foundation.config.ap.impl.codebuilders.CodeGeneratorContext.getSetterComposer;
 import static org.tquadrat.foundation.lang.CommonConstants.NUL;
 import static org.tquadrat.foundation.lang.Objects.isNull;
-import static org.tquadrat.foundation.lang.Objects.mapFromNull;
+import static org.tquadrat.foundation.lang.Objects.mapNonNull;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
 import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
 import static org.tquadrat.foundation.lang.Objects.requireNotEmptyArgument;
@@ -944,7 +944,7 @@ public final class PropertySpecImpl implements PropertySpec
     public void setINIConfiguration( final INIValue configuration )
     {
         final var group = requireNonNullArgument( configuration, "configuration" ).group();
-        final var key = mapFromNull( configuration.key(), this::getPropertyName );
+        final var key = mapNonNull( configuration.key(), k -> isEmptyOrBlank( k ) ? getPropertyName() : k );
         final var comment = configuration.comment();
         setINIConfiguration( group, key, comment );
     }   //  setINIConfiguration()
