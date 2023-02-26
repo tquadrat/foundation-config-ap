@@ -65,438 +65,440 @@
 <span class="source-line-no">052</span><span id="line-52">import org.tquadrat.foundation.config.spi.prefs.PreferencesException;</span>
 <span class="source-line-no">053</span><span id="line-53">import org.tquadrat.foundation.inifile.INIFile;</span>
 <span class="source-line-no">054</span><span id="line-54">import org.tquadrat.foundation.javacomposer.ParameterizedTypeName;</span>
-<span class="source-line-no">055</span><span id="line-55">import org.tquadrat.foundation.lang.Lazy;</span>
-<span class="source-line-no">056</span><span id="line-56">import org.tquadrat.foundation.util.Template;</span>
-<span class="source-line-no">057</span><span id="line-57">import org.tquadrat.foundation.util.stringconverter.PathStringConverter;</span>
-<span class="source-line-no">058</span><span id="line-58"></span>
-<span class="source-line-no">059</span><span id="line-59">/**</span>
-<span class="source-line-no">060</span><span id="line-60"> *  The</span>
-<span class="source-line-no">061</span><span id="line-61"> *  {@linkplain org.tquadrat.foundation.config.ap.impl.CodeBuilder code builder implementation}</span>
-<span class="source-line-no">062</span><span id="line-62"> *  that connects the configuration bean to</span>
-<span class="source-line-no">063</span><span id="line-63"> *  {@link INIFile},</span>
-<span class="source-line-no">064</span><span id="line-64"> *  as defined in</span>
-<span class="source-line-no">065</span><span id="line-65"> *  {@link org.tquadrat.foundation.config.INIBeanSpec}.</span>
-<span class="source-line-no">066</span><span id="line-66"> *</span>
-<span class="source-line-no">067</span><span id="line-67"> *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org</span>
-<span class="source-line-no">068</span><span id="line-68"> *  @version $Id: INIBeanBuilder.java 1015 2022-02-09 08:25:36Z tquadrat $</span>
-<span class="source-line-no">069</span><span id="line-69"> *  @UMLGraph.link</span>
-<span class="source-line-no">070</span><span id="line-70"> *  @since 0.1.0</span>
-<span class="source-line-no">071</span><span id="line-71"> */</span>
-<span class="source-line-no">072</span><span id="line-72">@SuppressWarnings( "OverlyCoupledClass" )</span>
-<span class="source-line-no">073</span><span id="line-73">@ClassVersion( sourceVersion = "$Id: INIBeanBuilder.java 1015 2022-02-09 08:25:36Z tquadrat $" )</span>
-<span class="source-line-no">074</span><span id="line-74">@API( status = MAINTAINED, since = "0.1.0" )</span>
-<span class="source-line-no">075</span><span id="line-75">public final class INIBeanBuilder extends CodeBuilderBase</span>
-<span class="source-line-no">076</span><span id="line-76">{</span>
-<span class="source-line-no">077</span><span id="line-77">        /*---------------*\</span>
-<span class="source-line-no">078</span><span id="line-78">    ====** Inner Classes **====================================================</span>
-<span class="source-line-no">079</span><span id="line-79">        \*---------------*/</span>
-<span class="source-line-no">080</span><span id="line-80">    /**</span>
-<span class="source-line-no">081</span><span id="line-81">     *  The various types for the initialisation of the field holding the</span>
-<span class="source-line-no">082</span><span id="line-82">     *  backing</span>
-<span class="source-line-no">083</span><span id="line-83">     *  {@link Path}</span>
-<span class="source-line-no">084</span><span id="line-84">     *  for the</span>
-<span class="source-line-no">085</span><span id="line-85">     *  {@link INIFile}</span>
-<span class="source-line-no">086</span><span id="line-86">     *  instance.</span>
-<span class="source-line-no">087</span><span id="line-87">     *</span>
-<span class="source-line-no">088</span><span id="line-88">     *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org</span>
-<span class="source-line-no">089</span><span id="line-89">     *  @version $Id: INIBeanBuilder.java 1015 2022-02-09 08:25:36Z tquadrat $</span>
-<span class="source-line-no">090</span><span id="line-90">     *  @UMLGraph.link</span>
-<span class="source-line-no">091</span><span id="line-91">     *  @since 0.1.0</span>
-<span class="source-line-no">092</span><span id="line-92">     */</span>
-<span class="source-line-no">093</span><span id="line-93">    @ClassVersion( sourceVersion = "$Id: INIBeanBuilder.java 1015 2022-02-09 08:25:36Z tquadrat $" )</span>
-<span class="source-line-no">094</span><span id="line-94">    @API( status = INTERNAL, since = "0.1.0" )</span>
-<span class="source-line-no">095</span><span id="line-95">    private static enum InitType</span>
-<span class="source-line-no">096</span><span id="line-96">    {</span>
-<span class="source-line-no">097</span><span id="line-97">        /**</span>
-<span class="source-line-no">098</span><span id="line-98">         *  The given filename denotes an absolute path.</span>
-<span class="source-line-no">099</span><span id="line-99">         */</span>
-<span class="source-line-no">100</span><span id="line-100">        INIT_ABSOLUTE,</span>
-<span class="source-line-no">101</span><span id="line-101"></span>
-<span class="source-line-no">102</span><span id="line-102">        /**</span>
-<span class="source-line-no">103</span><span id="line-103">         *  The given filename starts  with {@code $USER} and stands for a path</span>
-<span class="source-line-no">104</span><span id="line-104">         *  that is to be resolved against the user's home folder.</span>
-<span class="source-line-no">105</span><span id="line-105">         */</span>
-<span class="source-line-no">106</span><span id="line-106">        INIT_HOME,</span>
-<span class="source-line-no">107</span><span id="line-107"></span>
-<span class="source-line-no">108</span><span id="line-108">        /**</span>
-<span class="source-line-no">109</span><span id="line-109">         *  The given filename starts with &lt;code&gt;${…}&lt;/code&gt; and stands for a</span>
-<span class="source-line-no">110</span><span id="line-110">         *  path that will be resolved against a property.</span>
-<span class="source-line-no">111</span><span id="line-111">         */</span>
-<span class="source-line-no">112</span><span id="line-112">        INIT_PROPERTY,</span>
-<span class="source-line-no">113</span><span id="line-113"></span>
-<span class="source-line-no">114</span><span id="line-114">        /**</span>
-<span class="source-line-no">115</span><span id="line-115">         *  The given filename will be resolved against the current working</span>
-<span class="source-line-no">116</span><span id="line-116">         *  directory.</span>
-<span class="source-line-no">117</span><span id="line-117">         */</span>
-<span class="source-line-no">118</span><span id="line-118">        INIT_CWD</span>
-<span class="source-line-no">119</span><span id="line-119">    }</span>
-<span class="source-line-no">120</span><span id="line-120">    //  enum InitType</span>
-<span class="source-line-no">121</span><span id="line-121"></span>
-<span class="source-line-no">122</span><span id="line-122">        /*--------------*\</span>
-<span class="source-line-no">123</span><span id="line-123">    ====** Constructors **=====================================================</span>
-<span class="source-line-no">124</span><span id="line-124">        \*--------------*/</span>
-<span class="source-line-no">125</span><span id="line-125">    /**</span>
-<span class="source-line-no">126</span><span id="line-126">     *  Creates a new instance of {@code INIBeanBuilder}.</span>
-<span class="source-line-no">127</span><span id="line-127">     *</span>
-<span class="source-line-no">128</span><span id="line-128">     *  @param  context The code generator context.</span>
-<span class="source-line-no">129</span><span id="line-129">     */</span>
-<span class="source-line-no">130</span><span id="line-130">    public INIBeanBuilder( final CodeGeneratorContext context )</span>
-<span class="source-line-no">131</span><span id="line-131">    {</span>
-<span class="source-line-no">132</span><span id="line-132">        super( context );</span>
-<span class="source-line-no">133</span><span id="line-133">    }   //  INIBeanBuilder()</span>
-<span class="source-line-no">134</span><span id="line-134"></span>
-<span class="source-line-no">135</span><span id="line-135">        /*---------*\</span>
-<span class="source-line-no">136</span><span id="line-136">    ====** Methods **==========================================================</span>
-<span class="source-line-no">137</span><span id="line-137">        \*---------*/</span>
-<span class="source-line-no">138</span><span id="line-138">    /**</span>
-<span class="source-line-no">139</span><span id="line-139">     *  {@inheritDoc}</span>
-<span class="source-line-no">140</span><span id="line-140">     */</span>
-<span class="source-line-no">141</span><span id="line-141">    @Override</span>
-<span class="source-line-no">142</span><span id="line-142">    public final void build()</span>
-<span class="source-line-no">143</span><span id="line-143">    {</span>
-<span class="source-line-no">144</span><span id="line-144">        //---* Parse the filename for the INIFile *----------------------------</span>
-<span class="source-line-no">145</span><span id="line-145">        final InitType initType;</span>
-<span class="source-line-no">146</span><span id="line-146">        final Path iniFilePath;</span>
-<span class="source-line-no">147</span><span id="line-147">        String propertyName = null;</span>
-<span class="source-line-no">148</span><span id="line-148">        final var rawINIFilePath = getConfiguration().getINIFilePath()</span>
-<span class="source-line-no">149</span><span id="line-149">            .orElseThrow( () -&gt; new CodeGenerationError( MSG_INIPathMissing ) );</span>
-<span class="source-line-no">150</span><span id="line-150"></span>
-<span class="source-line-no">151</span><span id="line-151">        if( rawINIFilePath.startsWith( "$USER" ) )</span>
-<span class="source-line-no">152</span><span id="line-152">        {</span>
-<span class="source-line-no">153</span><span id="line-153">            initType = InitType.INIT_HOME;</span>
-<span class="source-line-no">154</span><span id="line-154">            iniFilePath = PathStringConverter.INSTANCE.fromString( rawINIFilePath.substring( 5 ) );</span>
-<span class="source-line-no">155</span><span id="line-155">        }</span>
-<span class="source-line-no">156</span><span id="line-156">        else if( rawINIFilePath.startsWith( "${" ) &amp;&amp; hasVariables( rawINIFilePath ) )</span>
-<span class="source-line-no">157</span><span id="line-157">        {</span>
-<span class="source-line-no">158</span><span id="line-158">            initType = InitType.INIT_PROPERTY;</span>
-<span class="source-line-no">159</span><span id="line-159">            final var template = new Template( rawINIFilePath );</span>
-<span class="source-line-no">160</span><span id="line-160">            final var variables = new LinkedList&lt;&gt;( template.findVariables() );</span>
-<span class="source-line-no">161</span><span id="line-161">            propertyName = variables.get( 0 );</span>
-<span class="source-line-no">162</span><span id="line-162">            iniFilePath = PathStringConverter.INSTANCE.fromString( template.replaceVariable( Map.of( propertyName, EMPTY_STRING ) ) );</span>
-<span class="source-line-no">163</span><span id="line-163">        }</span>
-<span class="source-line-no">164</span><span id="line-164">        else</span>
-<span class="source-line-no">165</span><span id="line-165">        {</span>
-<span class="source-line-no">166</span><span id="line-166">            iniFilePath = PathStringConverter.INSTANCE.fromString( rawINIFilePath );</span>
-<span class="source-line-no">167</span><span id="line-167">            if( iniFilePath.isAbsolute() )</span>
-<span class="source-line-no">168</span><span id="line-168">            {</span>
-<span class="source-line-no">169</span><span id="line-169">                initType = InitType.INIT_ABSOLUTE;</span>
-<span class="source-line-no">170</span><span id="line-170">            }</span>
-<span class="source-line-no">171</span><span id="line-171">            else</span>
-<span class="source-line-no">172</span><span id="line-172">            {</span>
-<span class="source-line-no">173</span><span id="line-173">                initType = InitType.INIT_CWD;</span>
-<span class="source-line-no">174</span><span id="line-174">            }</span>
-<span class="source-line-no">175</span><span id="line-175">        }</span>
-<span class="source-line-no">176</span><span id="line-176"></span>
-<span class="source-line-no">177</span><span id="line-177">        /*</span>
-<span class="source-line-no">178</span><span id="line-178">         * Add the method that retrieves the path for the file that backs the</span>
-<span class="source-line-no">179</span><span id="line-179">         * INIFile.</span>
-<span class="source-line-no">180</span><span id="line-180">         */</span>
-<span class="source-line-no">181</span><span id="line-181">        final var retrievePathBuilder = getComposer().methodBuilder( "retrieveINIFilePath" )</span>
-<span class="source-line-no">182</span><span id="line-182">            .addModifiers( PRIVATE, FINAL )</span>
-<span class="source-line-no">183</span><span id="line-183">            .addJavadoc(</span>
-<span class="source-line-no">184</span><span id="line-184">                """</span>
-<span class="source-line-no">185</span><span id="line-185">                Returns the path for the INIFile backing file.</span>
-<span class="source-line-no">186</span><span id="line-186">                """, ExceptionInInitializerError.class</span>
-<span class="source-line-no">187</span><span id="line-187">            )</span>
-<span class="source-line-no">188</span><span id="line-188">            .returns( Path.class,</span>
-<span class="source-line-no">189</span><span id="line-189">                """</span>
-<span class="source-line-no">190</span><span id="line-190">                The path for the file that backs the {@code INIFile} instance.\</span>
-<span class="source-line-no">191</span><span id="line-191">                """ )</span>
-<span class="source-line-no">192</span><span id="line-192">            .addCode( switch( initType )</span>
-<span class="source-line-no">193</span><span id="line-193">                {</span>
-<span class="source-line-no">194</span><span id="line-194">                    case INIT_CWD -&gt; getComposer().codeBlockBuilder()</span>
-<span class="source-line-no">195</span><span id="line-195">                        .addStatement( "final var retValue = $1T.of( $2S, $3S )", Path.class, ".", PathStringConverter.INSTANCE.toString( iniFilePath ) )</span>
-<span class="source-line-no">196</span><span id="line-196">                        .build();</span>
-<span class="source-line-no">197</span><span id="line-197">                    case INIT_HOME -&gt; getComposer().codeBlockBuilder()</span>
-<span class="source-line-no">198</span><span id="line-198">                        .addStatement( "final var retValue = $1T.of( getProperty( PROPERTY_USER_HOME ), $2S )", Path.class, PathStringConverter.INSTANCE.toString( iniFilePath ) )</span>
-<span class="source-line-no">199</span><span id="line-199">                        .addStaticImport( System.class, "getProperty" )</span>
-<span class="source-line-no">200</span><span id="line-200">                        .build();</span>
-<span class="source-line-no">201</span><span id="line-201">                    case INIT_ABSOLUTE -&gt; getComposer().codeBlockBuilder()</span>
-<span class="source-line-no">202</span><span id="line-202">                        .addStatement( "final var retValue = $1T.of( $2S )", Path.class, PathStringConverter.INSTANCE.toString( iniFilePath ) )</span>
-<span class="source-line-no">203</span><span id="line-203">                        .build();</span>
-<span class="source-line-no">204</span><span id="line-204">                    case INIT_PROPERTY -&gt; getComposer().codeBlockBuilder()</span>
-<span class="source-line-no">205</span><span id="line-205">                        .addStatement( "final var basePath = $1L()", composeGetterName( propertyName ) )</span>
-<span class="source-line-no">206</span><span id="line-206">                        .addStatement( "final var retValue = basePath.resolve( $1S )", PathStringConverter.INSTANCE.toString( iniFilePath ) )</span>
-<span class="source-line-no">207</span><span id="line-207">                        .build();</span>
-<span class="source-line-no">208</span><span id="line-208">                } )</span>
-<span class="source-line-no">209</span><span id="line-209">            .addCode( getComposer().createReturnStatement() );</span>
-<span class="source-line-no">210</span><span id="line-210">        final var retrievePathMethod = retrievePathBuilder.build();</span>
-<span class="source-line-no">211</span><span id="line-211">        addMethod( retrievePathMethod );</span>
-<span class="source-line-no">212</span><span id="line-212"></span>
-<span class="source-line-no">213</span><span id="line-213">        //---* Add the method that creates the INIFile instance *--------------</span>
-<span class="source-line-no">214</span><span id="line-214">        final var createINIFileBuilder = getComposer().methodBuilder( "createINIFile" )</span>
-<span class="source-line-no">215</span><span id="line-215">            .addModifiers( PRIVATE, FINAL )</span>
-<span class="source-line-no">216</span><span id="line-216">            .addAnnotation( createSuppressWarningsAnnotation( getComposer(), THROW_CAUGHT_LOCALLY ) )</span>
-<span class="source-line-no">217</span><span id="line-217">            .addJavadoc(</span>
-<span class="source-line-no">218</span><span id="line-218">                """</span>
-<span class="source-line-no">219</span><span id="line-219">                Creates the</span>
-<span class="source-line-no">220</span><span id="line-220">                {@link INIFile}</span>
-<span class="source-line-no">221</span><span id="line-221">                instance that is connected with this configuration bean.</span>
-<span class="source-line-no">222</span><span id="line-222">                </span>
-<span class="source-line-no">223</span><span id="line-223">                @throws $T Something went wrong on creating/opening the INI file.\</span>
-<span class="source-line-no">224</span><span id="line-224">                """, ExceptionInInitializerError.class</span>
-<span class="source-line-no">225</span><span id="line-225">            )</span>
-<span class="source-line-no">226</span><span id="line-226">            .returns( INIFile.class,</span>
-<span class="source-line-no">227</span><span id="line-227">                """</span>
-<span class="source-line-no">228</span><span id="line-228">                The {@code INIFile} instance.\</span>
-<span class="source-line-no">229</span><span id="line-229">                """ )</span>
-<span class="source-line-no">230</span><span id="line-230">            .addException( ExceptionInInitializerError.class )</span>
-<span class="source-line-no">231</span><span id="line-231">            .addStatement( "final $T retValue", INIFile.class )</span>
-<span class="source-line-no">232</span><span id="line-232">            .addStatement( "final var path = $N()", retrievePathMethod )</span>
-<span class="source-line-no">233</span><span id="line-233">            .beginControlFlow(</span>
-<span class="source-line-no">234</span><span id="line-234">                """</span>
-<span class="source-line-no">235</span><span id="line-235">                    try</span>
-<span class="source-line-no">236</span><span id="line-236">                    """</span>
-<span class="source-line-no">237</span><span id="line-237">            );</span>
-<span class="source-line-no">238</span><span id="line-238">        if( getConfiguration().getINIFileMustExist() )</span>
-<span class="source-line-no">239</span><span id="line-239">        {</span>
-<span class="source-line-no">240</span><span id="line-240">            createINIFileBuilder.beginControlFlow(</span>
-<span class="source-line-no">241</span><span id="line-241">                    """</span>
-<span class="source-line-no">242</span><span id="line-242">                    if( !exists( path ) )</span>
+<span class="source-line-no">055</span><span id="line-55">import org.tquadrat.foundation.lang.CommonConstants;</span>
+<span class="source-line-no">056</span><span id="line-56">import org.tquadrat.foundation.lang.Lazy;</span>
+<span class="source-line-no">057</span><span id="line-57">import org.tquadrat.foundation.util.Template;</span>
+<span class="source-line-no">058</span><span id="line-58">import org.tquadrat.foundation.util.stringconverter.PathStringConverter;</span>
+<span class="source-line-no">059</span><span id="line-59"></span>
+<span class="source-line-no">060</span><span id="line-60">/**</span>
+<span class="source-line-no">061</span><span id="line-61"> *  The</span>
+<span class="source-line-no">062</span><span id="line-62"> *  {@linkplain org.tquadrat.foundation.config.ap.impl.CodeBuilder code builder implementation}</span>
+<span class="source-line-no">063</span><span id="line-63"> *  that connects the configuration bean to</span>
+<span class="source-line-no">064</span><span id="line-64"> *  {@link INIFile},</span>
+<span class="source-line-no">065</span><span id="line-65"> *  as defined in</span>
+<span class="source-line-no">066</span><span id="line-66"> *  {@link org.tquadrat.foundation.config.INIBeanSpec}.</span>
+<span class="source-line-no">067</span><span id="line-67"> *</span>
+<span class="source-line-no">068</span><span id="line-68"> *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org</span>
+<span class="source-line-no">069</span><span id="line-69"> *  @version $Id: INIBeanBuilder.java 1015 2022-02-09 08:25:36Z tquadrat $</span>
+<span class="source-line-no">070</span><span id="line-70"> *  @UMLGraph.link</span>
+<span class="source-line-no">071</span><span id="line-71"> *  @since 0.1.0</span>
+<span class="source-line-no">072</span><span id="line-72"> */</span>
+<span class="source-line-no">073</span><span id="line-73">@SuppressWarnings( "OverlyCoupledClass" )</span>
+<span class="source-line-no">074</span><span id="line-74">@ClassVersion( sourceVersion = "$Id: INIBeanBuilder.java 1015 2022-02-09 08:25:36Z tquadrat $" )</span>
+<span class="source-line-no">075</span><span id="line-75">@API( status = MAINTAINED, since = "0.1.0" )</span>
+<span class="source-line-no">076</span><span id="line-76">public final class INIBeanBuilder extends CodeBuilderBase</span>
+<span class="source-line-no">077</span><span id="line-77">{</span>
+<span class="source-line-no">078</span><span id="line-78">        /*---------------*\</span>
+<span class="source-line-no">079</span><span id="line-79">    ====** Inner Classes **====================================================</span>
+<span class="source-line-no">080</span><span id="line-80">        \*---------------*/</span>
+<span class="source-line-no">081</span><span id="line-81">    /**</span>
+<span class="source-line-no">082</span><span id="line-82">     *  The various types for the initialisation of the field holding the</span>
+<span class="source-line-no">083</span><span id="line-83">     *  backing</span>
+<span class="source-line-no">084</span><span id="line-84">     *  {@link Path}</span>
+<span class="source-line-no">085</span><span id="line-85">     *  for the</span>
+<span class="source-line-no">086</span><span id="line-86">     *  {@link INIFile}</span>
+<span class="source-line-no">087</span><span id="line-87">     *  instance.</span>
+<span class="source-line-no">088</span><span id="line-88">     *</span>
+<span class="source-line-no">089</span><span id="line-89">     *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org</span>
+<span class="source-line-no">090</span><span id="line-90">     *  @version $Id: INIBeanBuilder.java 1015 2022-02-09 08:25:36Z tquadrat $</span>
+<span class="source-line-no">091</span><span id="line-91">     *  @UMLGraph.link</span>
+<span class="source-line-no">092</span><span id="line-92">     *  @since 0.1.0</span>
+<span class="source-line-no">093</span><span id="line-93">     */</span>
+<span class="source-line-no">094</span><span id="line-94">    @ClassVersion( sourceVersion = "$Id: INIBeanBuilder.java 1015 2022-02-09 08:25:36Z tquadrat $" )</span>
+<span class="source-line-no">095</span><span id="line-95">    @API( status = INTERNAL, since = "0.1.0" )</span>
+<span class="source-line-no">096</span><span id="line-96">    private static enum InitType</span>
+<span class="source-line-no">097</span><span id="line-97">    {</span>
+<span class="source-line-no">098</span><span id="line-98">        /**</span>
+<span class="source-line-no">099</span><span id="line-99">         *  The given filename denotes an absolute path.</span>
+<span class="source-line-no">100</span><span id="line-100">         */</span>
+<span class="source-line-no">101</span><span id="line-101">        INIT_ABSOLUTE,</span>
+<span class="source-line-no">102</span><span id="line-102"></span>
+<span class="source-line-no">103</span><span id="line-103">        /**</span>
+<span class="source-line-no">104</span><span id="line-104">         *  The given filename starts  with {@code $USER} and stands for a path</span>
+<span class="source-line-no">105</span><span id="line-105">         *  that is to be resolved against the user's home folder.</span>
+<span class="source-line-no">106</span><span id="line-106">         */</span>
+<span class="source-line-no">107</span><span id="line-107">        INIT_HOME,</span>
+<span class="source-line-no">108</span><span id="line-108"></span>
+<span class="source-line-no">109</span><span id="line-109">        /**</span>
+<span class="source-line-no">110</span><span id="line-110">         *  The given filename starts with &lt;code&gt;${…}&lt;/code&gt; and stands for a</span>
+<span class="source-line-no">111</span><span id="line-111">         *  path that will be resolved against a property.</span>
+<span class="source-line-no">112</span><span id="line-112">         */</span>
+<span class="source-line-no">113</span><span id="line-113">        INIT_PROPERTY,</span>
+<span class="source-line-no">114</span><span id="line-114"></span>
+<span class="source-line-no">115</span><span id="line-115">        /**</span>
+<span class="source-line-no">116</span><span id="line-116">         *  The given filename will be resolved against the current working</span>
+<span class="source-line-no">117</span><span id="line-117">         *  directory.</span>
+<span class="source-line-no">118</span><span id="line-118">         */</span>
+<span class="source-line-no">119</span><span id="line-119">        INIT_CWD</span>
+<span class="source-line-no">120</span><span id="line-120">    }</span>
+<span class="source-line-no">121</span><span id="line-121">    //  enum InitType</span>
+<span class="source-line-no">122</span><span id="line-122"></span>
+<span class="source-line-no">123</span><span id="line-123">        /*--------------*\</span>
+<span class="source-line-no">124</span><span id="line-124">    ====** Constructors **=====================================================</span>
+<span class="source-line-no">125</span><span id="line-125">        \*--------------*/</span>
+<span class="source-line-no">126</span><span id="line-126">    /**</span>
+<span class="source-line-no">127</span><span id="line-127">     *  Creates a new instance of {@code INIBeanBuilder}.</span>
+<span class="source-line-no">128</span><span id="line-128">     *</span>
+<span class="source-line-no">129</span><span id="line-129">     *  @param  context The code generator context.</span>
+<span class="source-line-no">130</span><span id="line-130">     */</span>
+<span class="source-line-no">131</span><span id="line-131">    public INIBeanBuilder( final CodeGeneratorContext context )</span>
+<span class="source-line-no">132</span><span id="line-132">    {</span>
+<span class="source-line-no">133</span><span id="line-133">        super( context );</span>
+<span class="source-line-no">134</span><span id="line-134">    }   //  INIBeanBuilder()</span>
+<span class="source-line-no">135</span><span id="line-135"></span>
+<span class="source-line-no">136</span><span id="line-136">        /*---------*\</span>
+<span class="source-line-no">137</span><span id="line-137">    ====** Methods **==========================================================</span>
+<span class="source-line-no">138</span><span id="line-138">        \*---------*/</span>
+<span class="source-line-no">139</span><span id="line-139">    /**</span>
+<span class="source-line-no">140</span><span id="line-140">     *  {@inheritDoc}</span>
+<span class="source-line-no">141</span><span id="line-141">     */</span>
+<span class="source-line-no">142</span><span id="line-142">    @Override</span>
+<span class="source-line-no">143</span><span id="line-143">    public final void build()</span>
+<span class="source-line-no">144</span><span id="line-144">    {</span>
+<span class="source-line-no">145</span><span id="line-145">        //---* Parse the filename for the INIFile *----------------------------</span>
+<span class="source-line-no">146</span><span id="line-146">        final InitType initType;</span>
+<span class="source-line-no">147</span><span id="line-147">        final Path iniFilePath;</span>
+<span class="source-line-no">148</span><span id="line-148">        String propertyName = null;</span>
+<span class="source-line-no">149</span><span id="line-149">        final var rawINIFilePath = getConfiguration().getINIFilePath()</span>
+<span class="source-line-no">150</span><span id="line-150">            .orElseThrow( () -&gt; new CodeGenerationError( MSG_INIPathMissing ) );</span>
+<span class="source-line-no">151</span><span id="line-151"></span>
+<span class="source-line-no">152</span><span id="line-152">        if( rawINIFilePath.startsWith( "$USER" ) )</span>
+<span class="source-line-no">153</span><span id="line-153">        {</span>
+<span class="source-line-no">154</span><span id="line-154">            initType = InitType.INIT_HOME;</span>
+<span class="source-line-no">155</span><span id="line-155">            iniFilePath = PathStringConverter.INSTANCE.fromString( rawINIFilePath.substring( 5 ) );</span>
+<span class="source-line-no">156</span><span id="line-156">        }</span>
+<span class="source-line-no">157</span><span id="line-157">        else if( rawINIFilePath.startsWith( "${" ) &amp;&amp; hasVariables( rawINIFilePath ) )</span>
+<span class="source-line-no">158</span><span id="line-158">        {</span>
+<span class="source-line-no">159</span><span id="line-159">            initType = InitType.INIT_PROPERTY;</span>
+<span class="source-line-no">160</span><span id="line-160">            final var template = new Template( rawINIFilePath );</span>
+<span class="source-line-no">161</span><span id="line-161">            final var variables = new LinkedList&lt;&gt;( template.findVariables() );</span>
+<span class="source-line-no">162</span><span id="line-162">            propertyName = variables.get( 0 );</span>
+<span class="source-line-no">163</span><span id="line-163">            iniFilePath = PathStringConverter.INSTANCE.fromString( template.replaceVariable( Map.of( propertyName, EMPTY_STRING ) ) );</span>
+<span class="source-line-no">164</span><span id="line-164">        }</span>
+<span class="source-line-no">165</span><span id="line-165">        else</span>
+<span class="source-line-no">166</span><span id="line-166">        {</span>
+<span class="source-line-no">167</span><span id="line-167">            iniFilePath = PathStringConverter.INSTANCE.fromString( rawINIFilePath );</span>
+<span class="source-line-no">168</span><span id="line-168">            if( iniFilePath.isAbsolute() )</span>
+<span class="source-line-no">169</span><span id="line-169">            {</span>
+<span class="source-line-no">170</span><span id="line-170">                initType = InitType.INIT_ABSOLUTE;</span>
+<span class="source-line-no">171</span><span id="line-171">            }</span>
+<span class="source-line-no">172</span><span id="line-172">            else</span>
+<span class="source-line-no">173</span><span id="line-173">            {</span>
+<span class="source-line-no">174</span><span id="line-174">                initType = InitType.INIT_CWD;</span>
+<span class="source-line-no">175</span><span id="line-175">            }</span>
+<span class="source-line-no">176</span><span id="line-176">        }</span>
+<span class="source-line-no">177</span><span id="line-177"></span>
+<span class="source-line-no">178</span><span id="line-178">        /*</span>
+<span class="source-line-no">179</span><span id="line-179">         * Add the method that retrieves the path for the file that backs the</span>
+<span class="source-line-no">180</span><span id="line-180">         * INIFile.</span>
+<span class="source-line-no">181</span><span id="line-181">         */</span>
+<span class="source-line-no">182</span><span id="line-182">        final var retrievePathBuilder = getComposer().methodBuilder( "retrieveINIFilePath" )</span>
+<span class="source-line-no">183</span><span id="line-183">            .addModifiers( PRIVATE, FINAL )</span>
+<span class="source-line-no">184</span><span id="line-184">            .addJavadoc(</span>
+<span class="source-line-no">185</span><span id="line-185">                """</span>
+<span class="source-line-no">186</span><span id="line-186">                Returns the path for the INIFile backing file.</span>
+<span class="source-line-no">187</span><span id="line-187">                """, ExceptionInInitializerError.class</span>
+<span class="source-line-no">188</span><span id="line-188">            )</span>
+<span class="source-line-no">189</span><span id="line-189">            .returns( Path.class,</span>
+<span class="source-line-no">190</span><span id="line-190">                """</span>
+<span class="source-line-no">191</span><span id="line-191">                The path for the file that backs the {@code INIFile} instance.\</span>
+<span class="source-line-no">192</span><span id="line-192">                """ )</span>
+<span class="source-line-no">193</span><span id="line-193">            .addCode( switch( initType )</span>
+<span class="source-line-no">194</span><span id="line-194">                {</span>
+<span class="source-line-no">195</span><span id="line-195">                    case INIT_CWD -&gt; getComposer().codeBlockBuilder()</span>
+<span class="source-line-no">196</span><span id="line-196">                        .addStatement( "final var retValue = $1T.of( $2S, $3S ).toAbsolutePath()", Path.class, ".", PathStringConverter.INSTANCE.toString( iniFilePath ) )</span>
+<span class="source-line-no">197</span><span id="line-197">                        .build();</span>
+<span class="source-line-no">198</span><span id="line-198">                    case INIT_HOME -&gt; getComposer().codeBlockBuilder()</span>
+<span class="source-line-no">199</span><span id="line-199">                        .addStatement( "final var retValue = $1T.of( getProperty( PROPERTY_USER_HOME ), $2S ).toAbsolutePath()", Path.class, PathStringConverter.INSTANCE.toString( iniFilePath ) )</span>
+<span class="source-line-no">200</span><span id="line-200">                        .addStaticImport( System.class, "getProperty" )</span>
+<span class="source-line-no">201</span><span id="line-201">                        .addStaticImport( CommonConstants.class, "PROPERTY_USER_HOME" )</span>
+<span class="source-line-no">202</span><span id="line-202">                        .build();</span>
+<span class="source-line-no">203</span><span id="line-203">                    case INIT_ABSOLUTE -&gt; getComposer().codeBlockBuilder()</span>
+<span class="source-line-no">204</span><span id="line-204">                        .addStatement( "final var retValue = $1T.of( $2S ).toAbsolutePath()", Path.class, PathStringConverter.INSTANCE.toString( iniFilePath ) )</span>
+<span class="source-line-no">205</span><span id="line-205">                        .build();</span>
+<span class="source-line-no">206</span><span id="line-206">                    case INIT_PROPERTY -&gt; getComposer().codeBlockBuilder()</span>
+<span class="source-line-no">207</span><span id="line-207">                        .addStatement( "final var basePath = $1L().toAbsolutePath()", composeGetterName( propertyName ) )</span>
+<span class="source-line-no">208</span><span id="line-208">                        .addStatement( "final var retValue = basePath.resolve( $1S ).toAbsolutePath()", PathStringConverter.INSTANCE.toString( iniFilePath ) )</span>
+<span class="source-line-no">209</span><span id="line-209">                        .build();</span>
+<span class="source-line-no">210</span><span id="line-210">                } )</span>
+<span class="source-line-no">211</span><span id="line-211">            .addCode( getComposer().createReturnStatement() );</span>
+<span class="source-line-no">212</span><span id="line-212">        final var retrievePathMethod = retrievePathBuilder.build();</span>
+<span class="source-line-no">213</span><span id="line-213">        addMethod( retrievePathMethod );</span>
+<span class="source-line-no">214</span><span id="line-214"></span>
+<span class="source-line-no">215</span><span id="line-215">        //---* Add the method that creates the INIFile instance *--------------</span>
+<span class="source-line-no">216</span><span id="line-216">        final var createINIFileBuilder = getComposer().methodBuilder( "createINIFile" )</span>
+<span class="source-line-no">217</span><span id="line-217">            .addModifiers( PRIVATE, FINAL )</span>
+<span class="source-line-no">218</span><span id="line-218">            .addAnnotation( createSuppressWarningsAnnotation( getComposer(), THROW_CAUGHT_LOCALLY ) )</span>
+<span class="source-line-no">219</span><span id="line-219">            .addJavadoc(</span>
+<span class="source-line-no">220</span><span id="line-220">                """</span>
+<span class="source-line-no">221</span><span id="line-221">                Creates the</span>
+<span class="source-line-no">222</span><span id="line-222">                {@link INIFile}</span>
+<span class="source-line-no">223</span><span id="line-223">                instance that is connected with this configuration bean.</span>
+<span class="source-line-no">224</span><span id="line-224">                </span>
+<span class="source-line-no">225</span><span id="line-225">                @throws $T Something went wrong on creating/opening the INI file.\</span>
+<span class="source-line-no">226</span><span id="line-226">                """, ExceptionInInitializerError.class</span>
+<span class="source-line-no">227</span><span id="line-227">            )</span>
+<span class="source-line-no">228</span><span id="line-228">            .returns( INIFile.class,</span>
+<span class="source-line-no">229</span><span id="line-229">                """</span>
+<span class="source-line-no">230</span><span id="line-230">                The {@code INIFile} instance.\</span>
+<span class="source-line-no">231</span><span id="line-231">                """ )</span>
+<span class="source-line-no">232</span><span id="line-232">            .addException( ExceptionInInitializerError.class )</span>
+<span class="source-line-no">233</span><span id="line-233">            .addStatement( "final $T retValue", INIFile.class )</span>
+<span class="source-line-no">234</span><span id="line-234">            .addStatement( "final var path = $N()", retrievePathMethod )</span>
+<span class="source-line-no">235</span><span id="line-235">            .beginControlFlow(</span>
+<span class="source-line-no">236</span><span id="line-236">                """</span>
+<span class="source-line-no">237</span><span id="line-237">                    try</span>
+<span class="source-line-no">238</span><span id="line-238">                    """</span>
+<span class="source-line-no">239</span><span id="line-239">            );</span>
+<span class="source-line-no">240</span><span id="line-240">        if( getConfiguration().getINIFileMustExist() )</span>
+<span class="source-line-no">241</span><span id="line-241">        {</span>
+<span class="source-line-no">242</span><span id="line-242">            createINIFileBuilder.beginControlFlow(</span>
 <span class="source-line-no">243</span><span id="line-243">                    """</span>
-<span class="source-line-no">244</span><span id="line-244">                )</span>
-<span class="source-line-no">245</span><span id="line-245">                .addStaticImport( Files.class, "exists" )</span>
-<span class="source-line-no">246</span><span id="line-246">                .addStatement( "throw new $1T( path.toString() )", FileNotFoundException.class )</span>
-<span class="source-line-no">247</span><span id="line-247">                .endControlFlow()</span>
-<span class="source-line-no">248</span><span id="line-248">                .addStatement( "retValue = $1T.open( path )", INIFile.class );</span>
-<span class="source-line-no">249</span><span id="line-249">        }</span>
-<span class="source-line-no">250</span><span id="line-250">        else</span>
-<span class="source-line-no">251</span><span id="line-251">        {</span>
-<span class="source-line-no">252</span><span id="line-252">            final var fileComment = getConfiguration().getINIFileComment();</span>
-<span class="source-line-no">253</span><span id="line-253">            if( fileComment.isPresent() )</span>
-<span class="source-line-no">254</span><span id="line-254">            {</span>
-<span class="source-line-no">255</span><span id="line-255">                createINIFileBuilder.addStatement(</span>
-<span class="source-line-no">256</span><span id="line-256">                    """</span>
-<span class="source-line-no">257</span><span id="line-257">                    final var isNew = !exists( path )\</span>
-<span class="source-line-no">258</span><span id="line-258">                    """ )</span>
-<span class="source-line-no">259</span><span id="line-259">                    .addStaticImport( Files.class, "exists" )</span>
-<span class="source-line-no">260</span><span id="line-260">                    .addStatement( "retValue = $T.open( path )", INIFile.class )</span>
-<span class="source-line-no">261</span><span id="line-261">                    .beginControlFlow(</span>
-<span class="source-line-no">262</span><span id="line-262">                        """</span>
-<span class="source-line-no">263</span><span id="line-263">                        if( isNew )</span>
-<span class="source-line-no">264</span><span id="line-264">                        """ )</span>
-<span class="source-line-no">265</span><span id="line-265">                    .addStatement( "retValue.addComment( $S )", fileComment.get() )</span>
-<span class="source-line-no">266</span><span id="line-266">                    .endControlFlow();</span>
-<span class="source-line-no">267</span><span id="line-267">            }</span>
-<span class="source-line-no">268</span><span id="line-268">            else</span>
-<span class="source-line-no">269</span><span id="line-269">            {</span>
-<span class="source-line-no">270</span><span id="line-270">                createINIFileBuilder.addStatement(</span>
-<span class="source-line-no">271</span><span id="line-271">                    """</span>
-<span class="source-line-no">272</span><span id="line-272">                    retValue = $1T.open( path )\</span>
-<span class="source-line-no">273</span><span id="line-273">                    """, INIFile.class );</span>
-<span class="source-line-no">274</span><span id="line-274">            }</span>
-<span class="source-line-no">275</span><span id="line-275">        }</span>
-<span class="source-line-no">276</span><span id="line-276">        createINIFileBuilder.nextControlFlow(</span>
-<span class="source-line-no">277</span><span id="line-277">            """</span>
-<span class="source-line-no">278</span><span id="line-278">            </span>
-<span class="source-line-no">279</span><span id="line-279">            catch( final $T e )</span>
-<span class="source-line-no">280</span><span id="line-280">            """, IOException.class )</span>
-<span class="source-line-no">281</span><span id="line-281">            .addStatement( "throw new $T( e )", ExceptionInInitializerError.class )</span>
-<span class="source-line-no">282</span><span id="line-282">            .endControlFlow()</span>
-<span class="source-line-no">283</span><span id="line-283">            .addCode( "\n" )</span>
-<span class="source-line-no">284</span><span id="line-284">            .addComment( "Sets the structure of the INIFile" );</span>
-<span class="source-line-no">285</span><span id="line-285">        for( final var group : getConfiguration().getINIGroups().entrySet() )</span>
-<span class="source-line-no">286</span><span id="line-286">        {</span>
-<span class="source-line-no">287</span><span id="line-287">            createINIFileBuilder.beginControlFlow(</span>
-<span class="source-line-no">288</span><span id="line-288">                    """</span>
-<span class="source-line-no">289</span><span id="line-289">                    if( !retValue.hasGroup( $S ) )</span>
-<span class="source-line-no">290</span><span id="line-290">                    """, group.getKey()</span>
-<span class="source-line-no">291</span><span id="line-291">                )</span>
-<span class="source-line-no">292</span><span id="line-292">                .addStatement( "retValue.addComment( $S, $S )", group.getKey(), group.getValue() )</span>
-<span class="source-line-no">293</span><span id="line-293">                .endControlFlow();</span>
-<span class="source-line-no">294</span><span id="line-294">        }</span>
-<span class="source-line-no">295</span><span id="line-295">        PropertiesLoop:</span>
-<span class="source-line-no">296</span><span id="line-296">        //noinspection ForLoopWithMissingComponent</span>
-<span class="source-line-no">297</span><span id="line-297">        for( var i = getConfiguration().propertyIterator(); i.hasNext(); )</span>
-<span class="source-line-no">298</span><span id="line-298">        {</span>
-<span class="source-line-no">299</span><span id="line-299">            final var property = i.next();</span>
-<span class="source-line-no">300</span><span id="line-300"></span>
-<span class="source-line-no">301</span><span id="line-301">            if( !property.hasFlag( ALLOWS_INIFILE ) ) continue PropertiesLoop;</span>
-<span class="source-line-no">302</span><span id="line-302">            if( property.getINIComment().isEmpty() ) continue PropertiesLoop;</span>
-<span class="source-line-no">303</span><span id="line-303">            final var group = property.getINIGroup().orElseThrow( () -&gt; new CodeGenerationError( format( MSG_INIGroupMissing, property.getPropertyName() ) ) );</span>
-<span class="source-line-no">304</span><span id="line-304">            final var key = property.getINIKey().orElseThrow( () -&gt; new CodeGenerationError( format( MSG_INIKeyMissing, property.getPropertyName() ) ) );</span>
-<span class="source-line-no">305</span><span id="line-305">            final var comment = property.getINIComment().orElseThrow();</span>
-<span class="source-line-no">306</span><span id="line-306">            createINIFileBuilder.beginControlFlow(</span>
-<span class="source-line-no">307</span><span id="line-307">                    """</span>
-<span class="source-line-no">308</span><span id="line-308">                     if( !retValue.hasValue( $S, $S ) )</span>
-<span class="source-line-no">309</span><span id="line-309">                     """, group, key</span>
-<span class="source-line-no">310</span><span id="line-310">                )</span>
-<span class="source-line-no">311</span><span id="line-311">                .addStatement( "retValue.addComment( $S, $S, $S )", group, key, comment )</span>
-<span class="source-line-no">312</span><span id="line-312">                .endControlFlow();</span>
-<span class="source-line-no">313</span><span id="line-313">        }   //  PropertiesLoop:</span>
-<span class="source-line-no">314</span><span id="line-314"></span>
-<span class="source-line-no">315</span><span id="line-315">        final var createINIFile = createINIFileBuilder.addCode( getComposer().createReturnStatement() )</span>
-<span class="source-line-no">316</span><span id="line-316">            .build();</span>
-<span class="source-line-no">317</span><span id="line-317">        addMethod( createINIFile );</span>
-<span class="source-line-no">318</span><span id="line-318"></span>
-<span class="source-line-no">319</span><span id="line-319">        //---* Add the field for the INI file *--------------------------------</span>
-<span class="source-line-no">320</span><span id="line-320">        final var iniFileClass = ParameterizedTypeName.from( Lazy.class, INIFile.class );</span>
-<span class="source-line-no">321</span><span id="line-321">        final var iniFile = getComposer().fieldBuilder( iniFileClass, STD_FIELD_INIFile.toString(), PRIVATE, FINAL )</span>
-<span class="source-line-no">322</span><span id="line-322">            .addJavadoc(</span>
-<span class="source-line-no">323</span><span id="line-323">                """</span>
-<span class="source-line-no">324</span><span id="line-324">                The INIFile instance that is used by this configuration bean to</span>
-<span class="source-line-no">325</span><span id="line-325">                persist (some of) its properties.</span>
-<span class="source-line-no">326</span><span id="line-326">                """</span>
-<span class="source-line-no">327</span><span id="line-327">            )</span>
-<span class="source-line-no">328</span><span id="line-328">            .build();</span>
-<span class="source-line-no">329</span><span id="line-329">        addField( STD_FIELD_INIFile, iniFile );</span>
-<span class="source-line-no">330</span><span id="line-330"></span>
-<span class="source-line-no">331</span><span id="line-331">        //---* Initialise the INI file *---------------------------------------</span>
-<span class="source-line-no">332</span><span id="line-332">        final var constructorCode = getComposer().codeBlockBuilder()</span>
-<span class="source-line-no">333</span><span id="line-333">            .add(</span>
-<span class="source-line-no">334</span><span id="line-334">                """</span>
-<span class="source-line-no">335</span><span id="line-335">                    </span>
-<span class="source-line-no">336</span><span id="line-336">                //---* Initialise the INI file *----------------------------------------</span>
-<span class="source-line-no">337</span><span id="line-337">                """</span>
-<span class="source-line-no">338</span><span id="line-338">            )</span>
-<span class="source-line-no">339</span><span id="line-339">            .addStatement( "$1N = $2T.use( this::$3N )", iniFile, Lazy.class, createINIFile )</span>
-<span class="source-line-no">340</span><span id="line-340">            .build();</span>
-<span class="source-line-no">341</span><span id="line-341">        addConstructorCode( constructorCode );</span>
-<span class="source-line-no">342</span><span id="line-342"></span>
-<span class="source-line-no">343</span><span id="line-343">        //---* Create the method that returns the INIFile *--------------------</span>
-<span class="source-line-no">344</span><span id="line-344">        final var returnType = ParameterizedTypeName.from( Optional.class, INIFile.class );</span>
-<span class="source-line-no">345</span><span id="line-345">        final var method = getComposer().methodBuilder( "obtainINIFile" )</span>
-<span class="source-line-no">346</span><span id="line-346">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">347</span><span id="line-347">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">348</span><span id="line-348">            .returns( returnType )</span>
-<span class="source-line-no">349</span><span id="line-349">            .addJavadoc( getComposer().createInheritDocComment() )</span>
-<span class="source-line-no">350</span><span id="line-350">            .addStatement( "return $T.of( $N.get() )", Optional.class, iniFile )</span>
-<span class="source-line-no">351</span><span id="line-351">            .build();</span>
-<span class="source-line-no">352</span><span id="line-352">        addMethod( method );</span>
-<span class="source-line-no">353</span><span id="line-353"></span>
-<span class="source-line-no">354</span><span id="line-354">        //---* The builder for the code of the loadINIFile() method *----------</span>
-<span class="source-line-no">355</span><span id="line-355">        final var loadCodeBuilder = getComposer().codeBlockBuilder();</span>
-<span class="source-line-no">356</span><span id="line-356">        if( isSynchronized() )</span>
-<span class="source-line-no">357</span><span id="line-357">        {</span>
-<span class="source-line-no">358</span><span id="line-358">            loadCodeBuilder.beginControlFlow(</span>
-<span class="source-line-no">359</span><span id="line-359">                """</span>
-<span class="source-line-no">360</span><span id="line-360">                try( final var ignore = $N.lock() )</span>
-<span class="source-line-no">361</span><span id="line-361">                """, getField( STD_FIELD_WriteLock ) );</span>
-<span class="source-line-no">362</span><span id="line-362">        }</span>
-<span class="source-line-no">363</span><span id="line-363">        else</span>
-<span class="source-line-no">364</span><span id="line-364">        {</span>
-<span class="source-line-no">365</span><span id="line-365">            loadCodeBuilder.beginControlFlow(</span>
-<span class="source-line-no">366</span><span id="line-366">                """</span>
-<span class="source-line-no">367</span><span id="line-367">                try</span>
-<span class="source-line-no">368</span><span id="line-368">                """ );</span>
-<span class="source-line-no">369</span><span id="line-369">        }</span>
-<span class="source-line-no">370</span><span id="line-370">        loadCodeBuilder.addStatement( "final var iniFile = $1N.get()", iniFile )</span>
-<span class="source-line-no">371</span><span id="line-371">            .addStatement( "iniFile.refresh()" )</span>
-<span class="source-line-no">372</span><span id="line-372">            .add(</span>
-<span class="source-line-no">373</span><span id="line-373">                """</span>
-<span class="source-line-no">374</span><span id="line-374">                </span>
-<span class="source-line-no">375</span><span id="line-375">                /*</span>
-<span class="source-line-no">376</span><span id="line-376">                 * Load the data.</span>
-<span class="source-line-no">377</span><span id="line-377">                 */</span>
-<span class="source-line-no">378</span><span id="line-378">                """</span>
-<span class="source-line-no">379</span><span id="line-379">            );</span>
-<span class="source-line-no">380</span><span id="line-380"></span>
-<span class="source-line-no">381</span><span id="line-381">        //---* The builder for the code of the updateINIFile() method *--------</span>
-<span class="source-line-no">382</span><span id="line-382">        final var updateCodeBuilder = getComposer().codeBlockBuilder();</span>
-<span class="source-line-no">383</span><span id="line-383">        if( isSynchronized() )</span>
-<span class="source-line-no">384</span><span id="line-384">        {</span>
-<span class="source-line-no">385</span><span id="line-385">            updateCodeBuilder.beginControlFlow(</span>
-<span class="source-line-no">386</span><span id="line-386">                """</span>
-<span class="source-line-no">387</span><span id="line-387">                try( final var ignore = $N.lock() )</span>
-<span class="source-line-no">388</span><span id="line-388">                """, getField( STD_FIELD_ReadLock ) );</span>
-<span class="source-line-no">389</span><span id="line-389">        }</span>
-<span class="source-line-no">390</span><span id="line-390">        else</span>
-<span class="source-line-no">391</span><span id="line-391">        {</span>
-<span class="source-line-no">392</span><span id="line-392">            updateCodeBuilder.beginControlFlow(</span>
-<span class="source-line-no">393</span><span id="line-393">                """</span>
-<span class="source-line-no">394</span><span id="line-394">                try</span>
-<span class="source-line-no">395</span><span id="line-395">                """ );</span>
-<span class="source-line-no">396</span><span id="line-396">        }</span>
-<span class="source-line-no">397</span><span id="line-397">        updateCodeBuilder.addStatement( "final var iniFile = $1N.get()", iniFile )</span>
-<span class="source-line-no">398</span><span id="line-398">            .add(</span>
-<span class="source-line-no">399</span><span id="line-399">            """</span>
-<span class="source-line-no">400</span><span id="line-400">            </span>
-<span class="source-line-no">401</span><span id="line-401">            /*</span>
-<span class="source-line-no">402</span><span id="line-402">             * Write the data.</span>
-<span class="source-line-no">403</span><span id="line-403">             */</span>
-<span class="source-line-no">404</span><span id="line-404">            """</span>
-<span class="source-line-no">405</span><span id="line-405">        );</span>
-<span class="source-line-no">406</span><span id="line-406"></span>
-<span class="source-line-no">407</span><span id="line-407">        //---* Process the properties *----------------------------------------</span>
-<span class="source-line-no">408</span><span id="line-408">        PropertiesLoop:</span>
-<span class="source-line-no">409</span><span id="line-409">        //noinspection ForLoopWithMissingComponent</span>
-<span class="source-line-no">410</span><span id="line-410">        for( final var i = getProperties(); i.hasNext(); )</span>
-<span class="source-line-no">411</span><span id="line-411">        {</span>
-<span class="source-line-no">412</span><span id="line-412">            final var propertySpec = i.next();</span>
-<span class="source-line-no">413</span><span id="line-413">            /*</span>
-<span class="source-line-no">414</span><span id="line-414">             * Skip the properties that do not have a tie to the INI file.</span>
-<span class="source-line-no">415</span><span id="line-415">             */</span>
-<span class="source-line-no">416</span><span id="line-416">            if( !propertySpec.hasFlag( ALLOWS_INIFILE ) ) continue PropertiesLoop;</span>
-<span class="source-line-no">417</span><span id="line-417"></span>
-<span class="source-line-no">418</span><span id="line-418">            final var name = propertySpec.getPropertyName();</span>
-<span class="source-line-no">419</span><span id="line-419">            final var group = propertySpec.getINIGroup().orElseThrow( () -&gt; new CodeGenerationError( format( MSG_INIGroupMissing, name ) ) );</span>
-<span class="source-line-no">420</span><span id="line-420">            final var key = propertySpec.getINIKey().orElseThrow( () -&gt; new CodeGenerationError( format( MSG_INIKeyMissing, name ) ) );</span>
-<span class="source-line-no">421</span><span id="line-421">            final var field = propertySpec.getFieldName();</span>
-<span class="source-line-no">422</span><span id="line-422">            final var stringConverterType = propertySpec.getStringConverterClass()</span>
-<span class="source-line-no">423</span><span id="line-423">                .orElseThrow( () -&gt; new CodeGenerationError( format( MSG_MissingStringConverter, name ) ) );</span>
-<span class="source-line-no">424</span><span id="line-424">            final var stringConverterCode =</span>
-<span class="source-line-no">425</span><span id="line-425">                switch( determineStringConverterInstantiation( stringConverterType, propertySpec.isEnum() ) )</span>
-<span class="source-line-no">426</span><span id="line-426">                {</span>
-<span class="source-line-no">427</span><span id="line-427">                    case BY_INSTANCE -&gt; getComposer().statementOf( "final var stringConverter = $T.INSTANCE", stringConverterType );</span>
-<span class="source-line-no">428</span><span id="line-428">                    case THROUGH_CONSTRUCTOR -&gt; getComposer().statementOf( "final var stringConverter = new $T()", stringConverterType );</span>
-<span class="source-line-no">429</span><span id="line-429">                    case AS_ENUM -&gt; getComposer().statementOf( "final var stringConverter = new $1T( $2T.class )", stringConverterType, propertySpec.getPropertyType() );</span>
-<span class="source-line-no">430</span><span id="line-430">                };</span>
-<span class="source-line-no">431</span><span id="line-431"></span>
-<span class="source-line-no">432</span><span id="line-432">            //---* Load the value *--------------------------------------------</span>
-<span class="source-line-no">433</span><span id="line-433">            loadCodeBuilder.beginControlFlow( EMPTY_STRING )</span>
-<span class="source-line-no">434</span><span id="line-434">                .add( stringConverterCode )</span>
-<span class="source-line-no">435</span><span id="line-435">                .addStatement( "$1N = iniFile.getValue( $2S, $3S, stringConverter ).orElse( $1N )", field, group, key )</span>
-<span class="source-line-no">436</span><span id="line-436">                .endControlFlow();</span>
-<span class="source-line-no">437</span><span id="line-437"></span>
-<span class="source-line-no">438</span><span id="line-438">            //---* Write the value *-------------------------------------------</span>
-<span class="source-line-no">439</span><span id="line-439">            updateCodeBuilder.beginControlFlow( EMPTY_STRING )</span>
-<span class="source-line-no">440</span><span id="line-440">                .add( stringConverterCode )</span>
-<span class="source-line-no">441</span><span id="line-441">                .addStatement( "iniFile.setValue( $2S, $3S, $1N, stringConverter )", field, group, key )</span>
-<span class="source-line-no">442</span><span id="line-442">                .endControlFlow();</span>
-<span class="source-line-no">443</span><span id="line-443">        }   //  PropertiesLoop:</span>
-<span class="source-line-no">444</span><span id="line-444"></span>
-<span class="source-line-no">445</span><span id="line-445">        //---* Create the loadINIFile() method *-------------------------------</span>
-<span class="source-line-no">446</span><span id="line-446">        loadCodeBuilder.nextControlFlow(</span>
-<span class="source-line-no">447</span><span id="line-447">            """</span>
-<span class="source-line-no">448</span><span id="line-448"></span>
-<span class="source-line-no">449</span><span id="line-449">            catch( final $T e )</span>
-<span class="source-line-no">450</span><span id="line-450">            """, IOException.class )</span>
-<span class="source-line-no">451</span><span id="line-451">            .addStatement( "throw new $T( e )", PreferencesException.class )</span>
-<span class="source-line-no">452</span><span id="line-452">            .endControlFlow();</span>
-<span class="source-line-no">453</span><span id="line-453">        final var loadMethod = getComposer().methodBuilder( "loadINIFile" )</span>
-<span class="source-line-no">454</span><span id="line-454">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">455</span><span id="line-455">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">456</span><span id="line-456">            .returns( VOID )</span>
-<span class="source-line-no">457</span><span id="line-457">            .addJavadoc( getComposer().createInheritDocComment() )</span>
-<span class="source-line-no">458</span><span id="line-458">            .addCode( loadCodeBuilder.build() )</span>
-<span class="source-line-no">459</span><span id="line-459">            .build();</span>
-<span class="source-line-no">460</span><span id="line-460">        addMethod( loadMethod );</span>
-<span class="source-line-no">461</span><span id="line-461"></span>
-<span class="source-line-no">462</span><span id="line-462">        //---* Create the updateINIFile() method *-----------------------------</span>
-<span class="source-line-no">463</span><span id="line-463">        updateCodeBuilder.add( "\n" )</span>
-<span class="source-line-no">464</span><span id="line-464">            .addStatement( "iniFile.save()" )</span>
-<span class="source-line-no">465</span><span id="line-465">            .nextControlFlow(</span>
-<span class="source-line-no">466</span><span id="line-466">                """</span>
-<span class="source-line-no">467</span><span id="line-467"></span>
-<span class="source-line-no">468</span><span id="line-468">                catch( final $T e )</span>
-<span class="source-line-no">469</span><span id="line-469">                """, IOException.class )</span>
-<span class="source-line-no">470</span><span id="line-470">            .addStatement( "throw new $T( e )", PreferencesException.class )</span>
-<span class="source-line-no">471</span><span id="line-471">            .endControlFlow();</span>
-<span class="source-line-no">472</span><span id="line-472">        final var updateMethod = getComposer().methodBuilder( "updateINIFile" )</span>
-<span class="source-line-no">473</span><span id="line-473">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">474</span><span id="line-474">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">475</span><span id="line-475">            .returns( VOID )</span>
-<span class="source-line-no">476</span><span id="line-476">            .addJavadoc( getComposer().createInheritDocComment() )</span>
-<span class="source-line-no">477</span><span id="line-477">            .addCode( updateCodeBuilder.build() )</span>
-<span class="source-line-no">478</span><span id="line-478">            .build();</span>
-<span class="source-line-no">479</span><span id="line-479">        addMethod( updateMethod );</span>
-<span class="source-line-no">480</span><span id="line-480">    }   //  build()</span>
-<span class="source-line-no">481</span><span id="line-481">}</span>
-<span class="source-line-no">482</span><span id="line-482">//  class INIBeanBuilder</span>
-<span class="source-line-no">483</span><span id="line-483"></span>
-<span class="source-line-no">484</span><span id="line-484">/*</span>
-<span class="source-line-no">485</span><span id="line-485"> *  End of File</span>
-<span class="source-line-no">486</span><span id="line-486"> */</span>
+<span class="source-line-no">244</span><span id="line-244">                    if( !exists( path ) )</span>
+<span class="source-line-no">245</span><span id="line-245">                    """</span>
+<span class="source-line-no">246</span><span id="line-246">                )</span>
+<span class="source-line-no">247</span><span id="line-247">                .addStaticImport( Files.class, "exists" )</span>
+<span class="source-line-no">248</span><span id="line-248">                .addStatement( "throw new $1T( path.toString() )", FileNotFoundException.class )</span>
+<span class="source-line-no">249</span><span id="line-249">                .endControlFlow()</span>
+<span class="source-line-no">250</span><span id="line-250">                .addStatement( "retValue = $1T.open( path )", INIFile.class );</span>
+<span class="source-line-no">251</span><span id="line-251">        }</span>
+<span class="source-line-no">252</span><span id="line-252">        else</span>
+<span class="source-line-no">253</span><span id="line-253">        {</span>
+<span class="source-line-no">254</span><span id="line-254">            final var fileComment = getConfiguration().getINIFileComment();</span>
+<span class="source-line-no">255</span><span id="line-255">            if( fileComment.isPresent() )</span>
+<span class="source-line-no">256</span><span id="line-256">            {</span>
+<span class="source-line-no">257</span><span id="line-257">                createINIFileBuilder.addStatement(</span>
+<span class="source-line-no">258</span><span id="line-258">                    """</span>
+<span class="source-line-no">259</span><span id="line-259">                    final var isNew = !exists( path )\</span>
+<span class="source-line-no">260</span><span id="line-260">                    """ )</span>
+<span class="source-line-no">261</span><span id="line-261">                    .addStaticImport( Files.class, "exists" )</span>
+<span class="source-line-no">262</span><span id="line-262">                    .addStatement( "retValue = $T.open( path )", INIFile.class )</span>
+<span class="source-line-no">263</span><span id="line-263">                    .beginControlFlow(</span>
+<span class="source-line-no">264</span><span id="line-264">                        """</span>
+<span class="source-line-no">265</span><span id="line-265">                        if( isNew )</span>
+<span class="source-line-no">266</span><span id="line-266">                        """ )</span>
+<span class="source-line-no">267</span><span id="line-267">                    .addStatement( "retValue.addComment( $S )", fileComment.get() )</span>
+<span class="source-line-no">268</span><span id="line-268">                    .endControlFlow();</span>
+<span class="source-line-no">269</span><span id="line-269">            }</span>
+<span class="source-line-no">270</span><span id="line-270">            else</span>
+<span class="source-line-no">271</span><span id="line-271">            {</span>
+<span class="source-line-no">272</span><span id="line-272">                createINIFileBuilder.addStatement(</span>
+<span class="source-line-no">273</span><span id="line-273">                    """</span>
+<span class="source-line-no">274</span><span id="line-274">                    retValue = $1T.open( path )\</span>
+<span class="source-line-no">275</span><span id="line-275">                    """, INIFile.class );</span>
+<span class="source-line-no">276</span><span id="line-276">            }</span>
+<span class="source-line-no">277</span><span id="line-277">        }</span>
+<span class="source-line-no">278</span><span id="line-278">        createINIFileBuilder.nextControlFlow(</span>
+<span class="source-line-no">279</span><span id="line-279">            """</span>
+<span class="source-line-no">280</span><span id="line-280">            </span>
+<span class="source-line-no">281</span><span id="line-281">            catch( final $T e )</span>
+<span class="source-line-no">282</span><span id="line-282">            """, IOException.class )</span>
+<span class="source-line-no">283</span><span id="line-283">            .addStatement( "throw new $T( e )", ExceptionInInitializerError.class )</span>
+<span class="source-line-no">284</span><span id="line-284">            .endControlFlow()</span>
+<span class="source-line-no">285</span><span id="line-285">            .addCode( "\n" )</span>
+<span class="source-line-no">286</span><span id="line-286">            .addComment( "Sets the structure of the INIFile" );</span>
+<span class="source-line-no">287</span><span id="line-287">        for( final var group : getConfiguration().getINIGroups().entrySet() )</span>
+<span class="source-line-no">288</span><span id="line-288">        {</span>
+<span class="source-line-no">289</span><span id="line-289">            createINIFileBuilder.beginControlFlow(</span>
+<span class="source-line-no">290</span><span id="line-290">                    """</span>
+<span class="source-line-no">291</span><span id="line-291">                    if( !retValue.hasGroup( $S ) )</span>
+<span class="source-line-no">292</span><span id="line-292">                    """, group.getKey()</span>
+<span class="source-line-no">293</span><span id="line-293">                )</span>
+<span class="source-line-no">294</span><span id="line-294">                .addStatement( "retValue.addComment( $S, $S )", group.getKey(), group.getValue() )</span>
+<span class="source-line-no">295</span><span id="line-295">                .endControlFlow();</span>
+<span class="source-line-no">296</span><span id="line-296">        }</span>
+<span class="source-line-no">297</span><span id="line-297">        PropertiesLoop:</span>
+<span class="source-line-no">298</span><span id="line-298">        //noinspection ForLoopWithMissingComponent</span>
+<span class="source-line-no">299</span><span id="line-299">        for( var i = getConfiguration().propertyIterator(); i.hasNext(); )</span>
+<span class="source-line-no">300</span><span id="line-300">        {</span>
+<span class="source-line-no">301</span><span id="line-301">            final var property = i.next();</span>
+<span class="source-line-no">302</span><span id="line-302"></span>
+<span class="source-line-no">303</span><span id="line-303">            if( !property.hasFlag( ALLOWS_INIFILE ) ) continue PropertiesLoop;</span>
+<span class="source-line-no">304</span><span id="line-304">            if( property.getINIComment().isEmpty() ) continue PropertiesLoop;</span>
+<span class="source-line-no">305</span><span id="line-305">            final var group = property.getINIGroup().orElseThrow( () -&gt; new CodeGenerationError( format( MSG_INIGroupMissing, property.getPropertyName() ) ) );</span>
+<span class="source-line-no">306</span><span id="line-306">            final var key = property.getINIKey().orElseThrow( () -&gt; new CodeGenerationError( format( MSG_INIKeyMissing, property.getPropertyName() ) ) );</span>
+<span class="source-line-no">307</span><span id="line-307">            final var comment = property.getINIComment().orElseThrow();</span>
+<span class="source-line-no">308</span><span id="line-308">            createINIFileBuilder.beginControlFlow(</span>
+<span class="source-line-no">309</span><span id="line-309">                    """</span>
+<span class="source-line-no">310</span><span id="line-310">                     if( !retValue.hasValue( $S, $S ) )</span>
+<span class="source-line-no">311</span><span id="line-311">                     """, group, key</span>
+<span class="source-line-no">312</span><span id="line-312">                )</span>
+<span class="source-line-no">313</span><span id="line-313">                .addStatement( "retValue.addComment( $S, $S, $S )", group, key, comment )</span>
+<span class="source-line-no">314</span><span id="line-314">                .endControlFlow();</span>
+<span class="source-line-no">315</span><span id="line-315">        }   //  PropertiesLoop:</span>
+<span class="source-line-no">316</span><span id="line-316"></span>
+<span class="source-line-no">317</span><span id="line-317">        final var createINIFile = createINIFileBuilder.addCode( getComposer().createReturnStatement() )</span>
+<span class="source-line-no">318</span><span id="line-318">            .build();</span>
+<span class="source-line-no">319</span><span id="line-319">        addMethod( createINIFile );</span>
+<span class="source-line-no">320</span><span id="line-320"></span>
+<span class="source-line-no">321</span><span id="line-321">        //---* Add the field for the INI file *--------------------------------</span>
+<span class="source-line-no">322</span><span id="line-322">        final var iniFileClass = ParameterizedTypeName.from( Lazy.class, INIFile.class );</span>
+<span class="source-line-no">323</span><span id="line-323">        final var iniFile = getComposer().fieldBuilder( iniFileClass, STD_FIELD_INIFile.toString(), PRIVATE, FINAL )</span>
+<span class="source-line-no">324</span><span id="line-324">            .addJavadoc(</span>
+<span class="source-line-no">325</span><span id="line-325">                """</span>
+<span class="source-line-no">326</span><span id="line-326">                The INIFile instance that is used by this configuration bean to</span>
+<span class="source-line-no">327</span><span id="line-327">                persist (some of) its properties.</span>
+<span class="source-line-no">328</span><span id="line-328">                """</span>
+<span class="source-line-no">329</span><span id="line-329">            )</span>
+<span class="source-line-no">330</span><span id="line-330">            .build();</span>
+<span class="source-line-no">331</span><span id="line-331">        addField( STD_FIELD_INIFile, iniFile );</span>
+<span class="source-line-no">332</span><span id="line-332"></span>
+<span class="source-line-no">333</span><span id="line-333">        //---* Initialise the INI file *---------------------------------------</span>
+<span class="source-line-no">334</span><span id="line-334">        final var constructorCode = getComposer().codeBlockBuilder()</span>
+<span class="source-line-no">335</span><span id="line-335">            .add(</span>
+<span class="source-line-no">336</span><span id="line-336">                """</span>
+<span class="source-line-no">337</span><span id="line-337">                    </span>
+<span class="source-line-no">338</span><span id="line-338">                //---* Initialise the INI file *----------------------------------------</span>
+<span class="source-line-no">339</span><span id="line-339">                """</span>
+<span class="source-line-no">340</span><span id="line-340">            )</span>
+<span class="source-line-no">341</span><span id="line-341">            .addStatement( "$1N = $2T.use( this::$3N )", iniFile, Lazy.class, createINIFile )</span>
+<span class="source-line-no">342</span><span id="line-342">            .build();</span>
+<span class="source-line-no">343</span><span id="line-343">        addConstructorCode( constructorCode );</span>
+<span class="source-line-no">344</span><span id="line-344"></span>
+<span class="source-line-no">345</span><span id="line-345">        //---* Create the method that returns the INIFile *--------------------</span>
+<span class="source-line-no">346</span><span id="line-346">        final var returnType = ParameterizedTypeName.from( Optional.class, INIFile.class );</span>
+<span class="source-line-no">347</span><span id="line-347">        final var method = getComposer().methodBuilder( "obtainINIFile" )</span>
+<span class="source-line-no">348</span><span id="line-348">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">349</span><span id="line-349">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">350</span><span id="line-350">            .returns( returnType )</span>
+<span class="source-line-no">351</span><span id="line-351">            .addJavadoc( getComposer().createInheritDocComment() )</span>
+<span class="source-line-no">352</span><span id="line-352">            .addStatement( "return $T.of( $N.get() )", Optional.class, iniFile )</span>
+<span class="source-line-no">353</span><span id="line-353">            .build();</span>
+<span class="source-line-no">354</span><span id="line-354">        addMethod( method );</span>
+<span class="source-line-no">355</span><span id="line-355"></span>
+<span class="source-line-no">356</span><span id="line-356">        //---* The builder for the code of the loadINIFile() method *----------</span>
+<span class="source-line-no">357</span><span id="line-357">        final var loadCodeBuilder = getComposer().codeBlockBuilder();</span>
+<span class="source-line-no">358</span><span id="line-358">        if( isSynchronized() )</span>
+<span class="source-line-no">359</span><span id="line-359">        {</span>
+<span class="source-line-no">360</span><span id="line-360">            loadCodeBuilder.beginControlFlow(</span>
+<span class="source-line-no">361</span><span id="line-361">                """</span>
+<span class="source-line-no">362</span><span id="line-362">                try( final var ignore = $N.lock() )</span>
+<span class="source-line-no">363</span><span id="line-363">                """, getField( STD_FIELD_WriteLock ) );</span>
+<span class="source-line-no">364</span><span id="line-364">        }</span>
+<span class="source-line-no">365</span><span id="line-365">        else</span>
+<span class="source-line-no">366</span><span id="line-366">        {</span>
+<span class="source-line-no">367</span><span id="line-367">            loadCodeBuilder.beginControlFlow(</span>
+<span class="source-line-no">368</span><span id="line-368">                """</span>
+<span class="source-line-no">369</span><span id="line-369">                try</span>
+<span class="source-line-no">370</span><span id="line-370">                """ );</span>
+<span class="source-line-no">371</span><span id="line-371">        }</span>
+<span class="source-line-no">372</span><span id="line-372">        loadCodeBuilder.addStatement( "final var iniFile = $1N.get()", iniFile )</span>
+<span class="source-line-no">373</span><span id="line-373">            .addStatement( "iniFile.refresh()" )</span>
+<span class="source-line-no">374</span><span id="line-374">            .add(</span>
+<span class="source-line-no">375</span><span id="line-375">                """</span>
+<span class="source-line-no">376</span><span id="line-376">                </span>
+<span class="source-line-no">377</span><span id="line-377">                /*</span>
+<span class="source-line-no">378</span><span id="line-378">                 * Load the data.</span>
+<span class="source-line-no">379</span><span id="line-379">                 */</span>
+<span class="source-line-no">380</span><span id="line-380">                """</span>
+<span class="source-line-no">381</span><span id="line-381">            );</span>
+<span class="source-line-no">382</span><span id="line-382"></span>
+<span class="source-line-no">383</span><span id="line-383">        //---* The builder for the code of the updateINIFile() method *--------</span>
+<span class="source-line-no">384</span><span id="line-384">        final var updateCodeBuilder = getComposer().codeBlockBuilder();</span>
+<span class="source-line-no">385</span><span id="line-385">        if( isSynchronized() )</span>
+<span class="source-line-no">386</span><span id="line-386">        {</span>
+<span class="source-line-no">387</span><span id="line-387">            updateCodeBuilder.beginControlFlow(</span>
+<span class="source-line-no">388</span><span id="line-388">                """</span>
+<span class="source-line-no">389</span><span id="line-389">                try( final var ignore = $N.lock() )</span>
+<span class="source-line-no">390</span><span id="line-390">                """, getField( STD_FIELD_ReadLock ) );</span>
+<span class="source-line-no">391</span><span id="line-391">        }</span>
+<span class="source-line-no">392</span><span id="line-392">        else</span>
+<span class="source-line-no">393</span><span id="line-393">        {</span>
+<span class="source-line-no">394</span><span id="line-394">            updateCodeBuilder.beginControlFlow(</span>
+<span class="source-line-no">395</span><span id="line-395">                """</span>
+<span class="source-line-no">396</span><span id="line-396">                try</span>
+<span class="source-line-no">397</span><span id="line-397">                """ );</span>
+<span class="source-line-no">398</span><span id="line-398">        }</span>
+<span class="source-line-no">399</span><span id="line-399">        updateCodeBuilder.addStatement( "final var iniFile = $1N.get()", iniFile )</span>
+<span class="source-line-no">400</span><span id="line-400">            .add(</span>
+<span class="source-line-no">401</span><span id="line-401">            """</span>
+<span class="source-line-no">402</span><span id="line-402">            </span>
+<span class="source-line-no">403</span><span id="line-403">            /*</span>
+<span class="source-line-no">404</span><span id="line-404">             * Write the data.</span>
+<span class="source-line-no">405</span><span id="line-405">             */</span>
+<span class="source-line-no">406</span><span id="line-406">            """</span>
+<span class="source-line-no">407</span><span id="line-407">        );</span>
+<span class="source-line-no">408</span><span id="line-408"></span>
+<span class="source-line-no">409</span><span id="line-409">        //---* Process the properties *----------------------------------------</span>
+<span class="source-line-no">410</span><span id="line-410">        PropertiesLoop:</span>
+<span class="source-line-no">411</span><span id="line-411">        //noinspection ForLoopWithMissingComponent</span>
+<span class="source-line-no">412</span><span id="line-412">        for( final var i = getProperties(); i.hasNext(); )</span>
+<span class="source-line-no">413</span><span id="line-413">        {</span>
+<span class="source-line-no">414</span><span id="line-414">            final var propertySpec = i.next();</span>
+<span class="source-line-no">415</span><span id="line-415">            /*</span>
+<span class="source-line-no">416</span><span id="line-416">             * Skip the properties that do not have a tie to the INI file.</span>
+<span class="source-line-no">417</span><span id="line-417">             */</span>
+<span class="source-line-no">418</span><span id="line-418">            if( !propertySpec.hasFlag( ALLOWS_INIFILE ) ) continue PropertiesLoop;</span>
+<span class="source-line-no">419</span><span id="line-419"></span>
+<span class="source-line-no">420</span><span id="line-420">            final var name = propertySpec.getPropertyName();</span>
+<span class="source-line-no">421</span><span id="line-421">            final var group = propertySpec.getINIGroup().orElseThrow( () -&gt; new CodeGenerationError( format( MSG_INIGroupMissing, name ) ) );</span>
+<span class="source-line-no">422</span><span id="line-422">            final var key = propertySpec.getINIKey().orElseThrow( () -&gt; new CodeGenerationError( format( MSG_INIKeyMissing, name ) ) );</span>
+<span class="source-line-no">423</span><span id="line-423">            final var field = propertySpec.getFieldName();</span>
+<span class="source-line-no">424</span><span id="line-424">            final var stringConverterType = propertySpec.getStringConverterClass()</span>
+<span class="source-line-no">425</span><span id="line-425">                .orElseThrow( () -&gt; new CodeGenerationError( format( MSG_MissingStringConverter, name ) ) );</span>
+<span class="source-line-no">426</span><span id="line-426">            final var stringConverterCode =</span>
+<span class="source-line-no">427</span><span id="line-427">                switch( determineStringConverterInstantiation( stringConverterType, propertySpec.isEnum() ) )</span>
+<span class="source-line-no">428</span><span id="line-428">                {</span>
+<span class="source-line-no">429</span><span id="line-429">                    case BY_INSTANCE -&gt; getComposer().statementOf( "final var stringConverter = $T.INSTANCE", stringConverterType );</span>
+<span class="source-line-no">430</span><span id="line-430">                    case THROUGH_CONSTRUCTOR -&gt; getComposer().statementOf( "final var stringConverter = new $T()", stringConverterType );</span>
+<span class="source-line-no">431</span><span id="line-431">                    case AS_ENUM -&gt; getComposer().statementOf( "final var stringConverter = new $1T( $2T.class )", stringConverterType, propertySpec.getPropertyType() );</span>
+<span class="source-line-no">432</span><span id="line-432">                };</span>
+<span class="source-line-no">433</span><span id="line-433"></span>
+<span class="source-line-no">434</span><span id="line-434">            //---* Load the value *--------------------------------------------</span>
+<span class="source-line-no">435</span><span id="line-435">            loadCodeBuilder.beginControlFlow( EMPTY_STRING )</span>
+<span class="source-line-no">436</span><span id="line-436">                .add( stringConverterCode )</span>
+<span class="source-line-no">437</span><span id="line-437">                .addStatement( "$1N = iniFile.getValue( $2S, $3S, stringConverter ).orElse( $1N )", field, group, key )</span>
+<span class="source-line-no">438</span><span id="line-438">                .endControlFlow();</span>
+<span class="source-line-no">439</span><span id="line-439"></span>
+<span class="source-line-no">440</span><span id="line-440">            //---* Write the value *-------------------------------------------</span>
+<span class="source-line-no">441</span><span id="line-441">            updateCodeBuilder.beginControlFlow( EMPTY_STRING )</span>
+<span class="source-line-no">442</span><span id="line-442">                .add( stringConverterCode )</span>
+<span class="source-line-no">443</span><span id="line-443">                .addStatement( "iniFile.setValue( $2S, $3S, $1N, stringConverter )", field, group, key )</span>
+<span class="source-line-no">444</span><span id="line-444">                .endControlFlow();</span>
+<span class="source-line-no">445</span><span id="line-445">        }   //  PropertiesLoop:</span>
+<span class="source-line-no">446</span><span id="line-446"></span>
+<span class="source-line-no">447</span><span id="line-447">        //---* Create the loadINIFile() method *-------------------------------</span>
+<span class="source-line-no">448</span><span id="line-448">        loadCodeBuilder.nextControlFlow(</span>
+<span class="source-line-no">449</span><span id="line-449">            """</span>
+<span class="source-line-no">450</span><span id="line-450"></span>
+<span class="source-line-no">451</span><span id="line-451">            catch( final $T e )</span>
+<span class="source-line-no">452</span><span id="line-452">            """, IOException.class )</span>
+<span class="source-line-no">453</span><span id="line-453">            .addStatement( "throw new $T( e )", PreferencesException.class )</span>
+<span class="source-line-no">454</span><span id="line-454">            .endControlFlow();</span>
+<span class="source-line-no">455</span><span id="line-455">        final var loadMethod = getComposer().methodBuilder( "loadINIFile" )</span>
+<span class="source-line-no">456</span><span id="line-456">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">457</span><span id="line-457">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">458</span><span id="line-458">            .returns( VOID )</span>
+<span class="source-line-no">459</span><span id="line-459">            .addJavadoc( getComposer().createInheritDocComment() )</span>
+<span class="source-line-no">460</span><span id="line-460">            .addCode( loadCodeBuilder.build() )</span>
+<span class="source-line-no">461</span><span id="line-461">            .build();</span>
+<span class="source-line-no">462</span><span id="line-462">        addMethod( loadMethod );</span>
+<span class="source-line-no">463</span><span id="line-463"></span>
+<span class="source-line-no">464</span><span id="line-464">        //---* Create the updateINIFile() method *-----------------------------</span>
+<span class="source-line-no">465</span><span id="line-465">        updateCodeBuilder.add( "\n" )</span>
+<span class="source-line-no">466</span><span id="line-466">            .addStatement( "iniFile.save()" )</span>
+<span class="source-line-no">467</span><span id="line-467">            .nextControlFlow(</span>
+<span class="source-line-no">468</span><span id="line-468">                """</span>
+<span class="source-line-no">469</span><span id="line-469"></span>
+<span class="source-line-no">470</span><span id="line-470">                catch( final $T e )</span>
+<span class="source-line-no">471</span><span id="line-471">                """, IOException.class )</span>
+<span class="source-line-no">472</span><span id="line-472">            .addStatement( "throw new $T( e )", PreferencesException.class )</span>
+<span class="source-line-no">473</span><span id="line-473">            .endControlFlow();</span>
+<span class="source-line-no">474</span><span id="line-474">        final var updateMethod = getComposer().methodBuilder( "updateINIFile" )</span>
+<span class="source-line-no">475</span><span id="line-475">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">476</span><span id="line-476">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">477</span><span id="line-477">            .returns( VOID )</span>
+<span class="source-line-no">478</span><span id="line-478">            .addJavadoc( getComposer().createInheritDocComment() )</span>
+<span class="source-line-no">479</span><span id="line-479">            .addCode( updateCodeBuilder.build() )</span>
+<span class="source-line-no">480</span><span id="line-480">            .build();</span>
+<span class="source-line-no">481</span><span id="line-481">        addMethod( updateMethod );</span>
+<span class="source-line-no">482</span><span id="line-482">    }   //  build()</span>
+<span class="source-line-no">483</span><span id="line-483">}</span>
+<span class="source-line-no">484</span><span id="line-484">//  class INIBeanBuilder</span>
+<span class="source-line-no">485</span><span id="line-485"></span>
+<span class="source-line-no">486</span><span id="line-486">/*</span>
+<span class="source-line-no">487</span><span id="line-487"> *  End of File</span>
+<span class="source-line-no">488</span><span id="line-488"> */</span>
 
 
 

@@ -52,6 +52,7 @@ import org.tquadrat.foundation.ap.CodeGenerationError;
 import org.tquadrat.foundation.config.spi.prefs.PreferencesException;
 import org.tquadrat.foundation.inifile.INIFile;
 import org.tquadrat.foundation.javacomposer.ParameterizedTypeName;
+import org.tquadrat.foundation.lang.CommonConstants;
 import org.tquadrat.foundation.lang.Lazy;
 import org.tquadrat.foundation.util.Template;
 import org.tquadrat.foundation.util.stringconverter.PathStringConverter;
@@ -192,18 +193,19 @@ public final class INIBeanBuilder extends CodeBuilderBase
             .addCode( switch( initType )
                 {
                     case INIT_CWD -> getComposer().codeBlockBuilder()
-                        .addStatement( "final var retValue = $1T.of( $2S, $3S )", Path.class, ".", PathStringConverter.INSTANCE.toString( iniFilePath ) )
+                        .addStatement( "final var retValue = $1T.of( $2S, $3S ).toAbsolutePath()", Path.class, ".", PathStringConverter.INSTANCE.toString( iniFilePath ) )
                         .build();
                     case INIT_HOME -> getComposer().codeBlockBuilder()
-                        .addStatement( "final var retValue = $1T.of( getProperty( PROPERTY_USER_HOME ), $2S )", Path.class, PathStringConverter.INSTANCE.toString( iniFilePath ) )
+                        .addStatement( "final var retValue = $1T.of( getProperty( PROPERTY_USER_HOME ), $2S ).toAbsolutePath()", Path.class, PathStringConverter.INSTANCE.toString( iniFilePath ) )
                         .addStaticImport( System.class, "getProperty" )
+                        .addStaticImport( CommonConstants.class, "PROPERTY_USER_HOME" )
                         .build();
                     case INIT_ABSOLUTE -> getComposer().codeBlockBuilder()
-                        .addStatement( "final var retValue = $1T.of( $2S )", Path.class, PathStringConverter.INSTANCE.toString( iniFilePath ) )
+                        .addStatement( "final var retValue = $1T.of( $2S ).toAbsolutePath()", Path.class, PathStringConverter.INSTANCE.toString( iniFilePath ) )
                         .build();
                     case INIT_PROPERTY -> getComposer().codeBlockBuilder()
-                        .addStatement( "final var basePath = $1L()", composeGetterName( propertyName ) )
-                        .addStatement( "final var retValue = basePath.resolve( $1S )", PathStringConverter.INSTANCE.toString( iniFilePath ) )
+                        .addStatement( "final var basePath = $1L().toAbsolutePath()", composeGetterName( propertyName ) )
+                        .addStatement( "final var retValue = basePath.resolve( $1S ).toAbsolutePath()", PathStringConverter.INSTANCE.toString( iniFilePath ) )
                         .build();
                 } )
             .addCode( getComposer().createReturnStatement() );

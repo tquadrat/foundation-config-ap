@@ -869,7 +869,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                          */
                         private final Path retrieveINIFilePath()
                         {
-                            final var retValue = Path.of( "/home/tquadrat/config/dummy.ini" );
+                            final var retValue = Path.of( "/home/tquadrat/config/dummy.ini" ).toAbsolutePath();
                     
                             //---* Done *----------------------------------------------------------
                             return retValue;

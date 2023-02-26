@@ -628,7 +628,7 @@ public class BugHunt_20220126_002 extends TestBaseClass
                          */
                         private final Path retrieveINIFilePath()
                         {
-                            final var retValue = Path.of( "/home/tquadrat/config/dummy.ini" );
+                            final var retValue = Path.of( "/home/tquadrat/config/dummy.ini" ).toAbsolutePath();
                     
                             //---* Done *----------------------------------------------------------
                             return retValue;
