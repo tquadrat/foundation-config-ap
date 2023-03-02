@@ -60,10 +60,10 @@ import org.tquadrat.foundation.testutil.TestBaseClass;
 /**
  *  Generation caused &quot;cannot unindent 1 from 0&quot;.
  *
- *  @version $Id: BugHunt_20220126_002.java 1015 2022-02-09 08:25:36Z tquadrat $
+ *  @version $Id: BugHunt_20220126_002.java 1051 2023-02-26 19:14:46Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
-@ClassVersion( sourceVersion = "$Id: BugHunt_20220126_002.java 1015 2022-02-09 08:25:36Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: BugHunt_20220126_002.java 1051 2023-02-26 19:14:46Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.BugHunt_20220126_002" )
 public class BugHunt_20220126_002 extends TestBaseClass

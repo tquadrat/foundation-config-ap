@@ -82,12 +82,12 @@ import org.tquadrat.foundation.lang.Objects;
  *  {@link org.tquadrat.foundation.config.CLIBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CLIBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $
+ *  @version $Id: CLIBeanBuilder.java 1051 2023-02-26 19:14:46Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: CLIBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CLIBeanBuilder.java 1051 2023-02-26 19:14:46Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class CLIBeanBuilder extends CodeBuilderBase
 {

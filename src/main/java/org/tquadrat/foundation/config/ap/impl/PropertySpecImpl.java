@@ -66,12 +66,12 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  {@link PropertySpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: PropertySpecImpl.java 1011 2022-02-05 19:31:34Z tquadrat $
+ *  @version $Id: PropertySpecImpl.java 1051 2023-02-26 19:14:46Z tquadrat $
  *  @since 0.1.0
  *  @UMLGraph.link
  */
 @SuppressWarnings( {"ClassWithTooManyFields", "OverlyComplexClass"} )
-@ClassVersion( sourceVersion = "$Id: PropertySpecImpl.java 1011 2022-02-05 19:31:34Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: PropertySpecImpl.java 1051 2023-02-26 19:14:46Z tquadrat $" )
 @API( status = INTERNAL, since = "0.1.0" )
 public final class PropertySpecImpl implements PropertySpec
 {
