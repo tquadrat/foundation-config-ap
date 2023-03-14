@@ -77,6 +77,7 @@ import org.tquadrat.foundation.javacomposer.ParameterizedTypeName;
 import org.tquadrat.foundation.javacomposer.TypeName;
 import org.tquadrat.foundation.javacomposer.WildcardTypeName;
 import org.tquadrat.foundation.lang.Objects;
+import org.tquadrat.foundation.util.stringconverter.EnumStringConverter;
 
 /**
  *  The
@@ -154,6 +155,7 @@ public final class CLIBeanBuilder extends CodeBuilderBase
      *  @return The name of the method that creates the CLI value handler for
      *      this property.
      */
+    @SuppressWarnings( "OverlyCoupledMethod" )
     private final String composeValueHandlerCreation( final PropertySpec property )
     {
         //---* The method name *-----------------------------------------------
@@ -188,7 +190,7 @@ public final class CLIBeanBuilder extends CodeBuilderBase
             //---* Get the StringConverter for the element type *--------------
             final var stringConverter = property.getStringConverterClass()
                 .or( () -> getStringConverter( elementType ) )
-//                .or( () -> )
+                .or( () -> Optional.ofNullable( property.hasFlag( ELEMENTTYPE_IS_ENUM ) ? ClassName.from( EnumStringConverter.class ) : null ) )
                 .orElseThrow( () -> new IllegalAnnotationError( format( "Property '%1$s': cannot find StringConverter for '%2$s'", property.getPropertyName(), elementType.toString() ) ) );
 
             switch( determineStringConverterInstantiation( stringConverter, property.hasFlag( ELEMENTTYPE_IS_ENUM ) ) )
