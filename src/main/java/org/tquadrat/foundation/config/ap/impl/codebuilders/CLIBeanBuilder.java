@@ -197,7 +197,7 @@ public final class CLIBeanBuilder extends CodeBuilderBase
             {
                 case BY_INSTANCE -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, $3T.INSTANCE )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
                 case THROUGH_CONSTRUCTOR -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, new $3T() )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
-                case AS_ENUM -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, new $3T( $4T.class ) )", handlerType, SimpleCmdLineValueHandler.class, stringConverter, property.getPropertyType() );
+                case AS_ENUM -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, new $3T( $4T.class ) )", handlerType, SimpleCmdLineValueHandler.class, stringConverter, elementType );
             }
         }
         else

@@ -210,7 +210,7 @@
 <span class="source-line-no">197</span><span id="line-197">            {</span>
 <span class="source-line-no">198</span><span id="line-198">                case BY_INSTANCE -&gt; builder.addStatement( "final $1T retValue = new $2T&lt;&gt;( lambda, $3T.INSTANCE )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );</span>
 <span class="source-line-no">199</span><span id="line-199">                case THROUGH_CONSTRUCTOR -&gt; builder.addStatement( "final $1T retValue = new $2T&lt;&gt;( lambda, new $3T() )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );</span>
-<span class="source-line-no">200</span><span id="line-200">                case AS_ENUM -&gt; builder.addStatement( "final $1T retValue = new $2T&lt;&gt;( lambda, new $3T( $4T.class ) )", handlerType, SimpleCmdLineValueHandler.class, stringConverter, property.getPropertyType() );</span>
+<span class="source-line-no">200</span><span id="line-200">                case AS_ENUM -&gt; builder.addStatement( "final $1T retValue = new $2T&lt;&gt;( lambda, new $3T( $4T.class ) )", handlerType, SimpleCmdLineValueHandler.class, stringConverter, elementType );</span>
 <span class="source-line-no">201</span><span id="line-201">            }</span>
 <span class="source-line-no">202</span><span id="line-202">        }</span>
 <span class="source-line-no">203</span><span id="line-203">        else</span>
