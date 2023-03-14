@@ -73,12 +73,12 @@ import org.tquadrat.foundation.util.StringUtils;
  *  {@link org.tquadrat.foundation.config.ConfigBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: ConfigBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $
+ *  @version $Id: ConfigBeanBuilder.java 1053 2023-03-11 00:10:49Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: ConfigBeanBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ConfigBeanBuilder.java 1053 2023-03-11 00:10:49Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class ConfigBeanBuilder extends CodeBuilderBase
 {
@@ -218,10 +218,9 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
         if( isSynchronized() ) addLockSupport();
 
         //---* Generate the properties *---------------------------------------
-        //noinspection ForLoopWithMissingComponent
-        for( final var i = getProperties(); i.hasNext(); )
+        for( final var iterator = getProperties(); iterator.hasNext(); )
         {
-            generateProperty( i.next() );
+            generateProperty( iterator.next() );
         }
 
         //---* Create the initialisation code in the constructor *-------------
@@ -277,10 +276,9 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
             .endControlFlow();
 
         PropertyLoop:
-        //noinspection ForLoopWithMissingComponent
-        for( final var i = getProperties(); i.hasNext(); )
+        for( final var iterator = getProperties(); iterator.hasNext(); )
         {
-            final var propertySpec = i.next().merge();
+            final var propertySpec = iterator.next().merge();
             if( propertySpec.hasFlag( GETTER_IS_DEFAULT ) ) continue PropertyLoop;
             if( propertySpec.hasFlag( PROPERTY_IS_SPECIAL )
                 && propertySpec.getSpecialPropertyType().filter( spt -> spt == CONFIG_PROPERTY_RESOURCEBUNDLE ).isEmpty() )
@@ -326,6 +324,7 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
      *
      *  @param  resourceName    The name of the resource.
      */
+    @SuppressWarnings( "OverlyComplexMethod" )
     private final void composeInitializationCodeFromResource( final String resourceName )
     {
         //---* The code that loads the properties from the resource *----------
@@ -381,10 +380,9 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
             .addStatement( "$1T value", String.class );
 
         PropertyLoop:
-        //noinspection ForLoopWithMissingComponent
-        for( final var i = getProperties(); i.hasNext(); )
+        for( final var iterator = getProperties(); iterator.hasNext(); )
         {
-            final var propertySpec = i.next().merge();
+            final var propertySpec = iterator.next().merge();
             if( propertySpec.hasFlag( GETTER_IS_DEFAULT ) ) continue PropertyLoop;
             if( propertySpec.hasFlag( PROPERTY_IS_SPECIAL ) ) continue PropertyLoop;
             if( propertySpec.hasFlag( SYSTEM_PROPERTY ) ) continue PropertyLoop;
@@ -432,6 +430,7 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
      *  this:</p>
      *  <pre><code>&lt;<i>ClassName</i>&gt; <b>[</b>&lt;<i>PropertyName</i>&gt; <b>= &quot;</b>&lt;<i>PropertyValue</i>&gt;<b>&quot;</b>[<b>,</b> …]<b>]</b></code></pre>
      */
+    @SuppressWarnings( "OverlyComplexMethod" )
     private final void createToString()
     {
         //---* Create the 'toString()' method *--------------------------------
@@ -454,10 +453,9 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
         //---* Add the code *--------------------------------------------------
         var addEmptyLine = false;
         PropertyLoop:
-        //noinspection ForLoopWithMissingComponent
-        for( final var i = getProperties(); i.hasNext(); )
+        for( final var iterator = getProperties(); iterator.hasNext(); )
         {
-            final var propertySpec = i.next().merge();
+            final var propertySpec = iterator.next().merge();
             if( propertySpec.hasFlag( EXEMPT_FROM_TOSTRING ) ) continue PropertyLoop;
 
             if( addEmptyLine ) builder.addCode( "\n" );
@@ -487,7 +485,8 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
                     builder.addStatement( "final var value = stringConverter.toString( $1L )", field )
                         .addStatement(
                             """
-                            joiner.add( format( "$1N = \\\"%1$$s\\\"", nonNull( value ) ? value : NULL_STRING ) )""", propertyName )
+                            joiner.add( format( "$1N = \\"%1$$s\\"", nonNull( value ) ? value : NULL_STRING ) )\
+                            """, propertyName )
                         .addStaticImport( Objects.class, "nonNull" )
                         .addStaticImport( CommonConstants.class, "NULL_STRING" )
                         .addStaticImport( StringUtils.class, "format" );
@@ -496,7 +495,8 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
                 {
                     builder.addStatement(
                         """
-                        joiner.add( format( "$1N = \\\"%1$$S\\\"", $2T.toString( $3L ) ) )""", propertyName, Objects.class, field )
+                        joiner.add( format( "$1N = \\"%1$$S\\"", $2T.toString( $3L ) ) )\
+                        """, propertyName, Objects.class, field )
                         .addStaticImport( StringUtils.class, "format" );
                 }
             }
@@ -516,7 +516,8 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
                     builder.addStatement( "final var value = stringConverter.toString( $1L() )", getterMethod )
                         .addStatement(
                             """
-                            joiner.add( format( "$1N = \\\"%1$$s\\\"", nonNull( value ) ? value : NULL_STRING ) )""", propertyName )
+                            joiner.add( format( "$1N = \\"%1$$s\\"", nonNull( value ) ? value : NULL_STRING ) )\
+                            """, propertyName )
                         .addStaticImport( Objects.class, "nonNull" )
                         .addStaticImport( CommonConstants.class, "NULL_STRING" )
                         .addStaticImport( StringUtils.class, "format" );
@@ -525,7 +526,8 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
                 {
                     builder.addStatement(
                         """
-                        joiner.add( format( "$1N = \\\"%1$$s\\\"", $2T.toString( $3L() ) ) )""", propertyName, Objects.class, getterMethod )
+                        joiner.add( format( "$1N = \\"%1$$s\\"", $2T.toString( $3L() ) ) )\
+                        """, propertyName, Objects.class, getterMethod )
                         .addStaticImport( StringUtils.class, "format" );
                 }
             }

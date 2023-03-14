@@ -7,7 +7,7 @@
      version='1.1'
      baseProfile='full'
      width='4962.000'
-     height='1075.000'>
+     height='1064.000'>
     <defs>
         <style><![CDATA[
             line
@@ -118,7 +118,7 @@
         </marker>
         <clipPath id='ID000001'>
             <rect class='focusClass'
-                  height='414.000'
+                  height='403.000'
                   width='1336.000'
                   x='0.000'
                   y='0.000'/>
@@ -130,7 +130,7 @@
                     <rect x='0.000'
                           y='0.000'
                           width='1336.000'
-                          height='414.000'
+                          height='403.000'
                           class='focusClass'/>
                     <line x1='0.000'
                           y1='28.000'
@@ -165,7 +165,7 @@
                     <text y='118.000'
                           class='static final'>- m_StandardMethods:java.util.Map&lt;org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardMethod,org.tquadrat.foundation.javacomposer.MethodSpec&gt;</text>
                     <text y='129.000'
-                          class='static final'>- m_ConverterRegistry:org.tquadrat.foundation.util.LazyMap&lt;org.tquadrat.foundation.javacomposer.TypeName,org.tquadrat.foundation.javacomposer.TypeName&gt;</text>
+                          class='static final'>- m_ConverterRegistry:java.util.Map&lt;org.tquadrat.foundation.javacomposer.TypeName,org.tquadrat.foundation.javacomposer.ClassName&gt;</text>
                     <text x='5.000'
                           y='146.000'># CodeBuilderBase(context:org.tquadrat.foundation.config.ap.impl.codebuilders.CodeGeneratorContext)</text>
                     <text x='5.000'
@@ -224,9 +224,6 @@
                           class='static'># getStringConverter(type:org.tquadrat.foundation.javacomposer.TypeName):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.TypeName&gt;</text>
                     <text x='5.000'
                           y='399.000'># isSynchronized():boolean</text>
-                    <text x='5.000'
-                          y='410.000'
-                          class='static'>- loadStringConverters():java.util.Map&lt;org.tquadrat.foundation.javacomposer.TypeName,org.tquadrat.foundation.javacomposer.TypeName&gt;</text>
                 </g>
             </g>
         </symbol>
@@ -619,25 +616,25 @@
         </symbol>
     </defs>
     <path class='inheritance'
-          d='M324.000,811.000 c0.000,-85.000,2067.000,0.000,2067.000,-85.000 v-15'
+          d='M324.000,800.000 c0.000,-85.000,2067.000,0.000,2067.000,-85.000 v-15'
           marker-end='url(#inheritance)'/>
     <path class='inheritance'
-          d='M984.000,811.000 c0.000,-85.000,1437.000,0.000,1437.000,-85.000 v-15'
+          d='M984.000,800.000 c0.000,-85.000,1437.000,0.000,1437.000,-85.000 v-15'
           marker-end='url(#inheritance)'/>
     <path class='inheritance'
-          d='M1644.000,811.000 c0.000,-85.000,807.000,0.000,807.000,-85.000 v-15'
+          d='M1644.000,800.000 c0.000,-85.000,807.000,0.000,807.000,-85.000 v-15'
           marker-end='url(#inheritance)'/>
     <path class='inheritance'
-          d='M2448.000,811.000 c0.000,-85.000,33.000,0.000,33.000,-85.000 v-15'
+          d='M2448.000,800.000 c0.000,-85.000,33.000,0.000,33.000,-85.000 v-15'
           marker-end='url(#inheritance)'/>
     <path class='inheritance'
-          d='M3276.000,811.000 c0.000,-85.000,-765.000,0.000,-765.000,-85.000 v-15'
+          d='M3276.000,800.000 c0.000,-85.000,-765.000,0.000,-765.000,-85.000 v-15'
           marker-end='url(#inheritance)'/>
     <path class='inheritance'
-          d='M3960.000,811.000 c0.000,-85.000,-1419.000,0.000,-1419.000,-85.000 v-15'
+          d='M3960.000,800.000 c0.000,-85.000,-1419.000,0.000,-1419.000,-85.000 v-15'
           marker-end='url(#inheritance)'/>
     <path class='inheritance'
-          d='M4629.000,811.000 c0.000,-85.000,-2058.000,0.000,-2058.000,-85.000 v-15'
+          d='M4629.000,800.000 c0.000,-85.000,-2058.000,0.000,-2058.000,-85.000 v-15'
           marker-end='url(#inheritance)'/>
     <path class='inheritance'
           d='M2456.000,297.000 c0.000,-85.000,-1215.500,0.000,-1215.500,-85.000 v-15'
@@ -655,24 +652,24 @@
          y='297.000'
          xlink:href='#org.tquadrat.foundation.config.ap.impl.codebuilders.CodeBuilderBase'/>
     <use x='25.000'
-         y='811.000'
+         y='800.000'
          xlink:href='#org.tquadrat.foundation.config.ap.impl.codebuilders.INIBeanBuilder'/>
     <use x='673.000'
-         y='811.000'
+         y='800.000'
          xlink:href='#org.tquadrat.foundation.config.ap.impl.codebuilders.SessionBeanBuilder'/>
     <use x='1345.000'
-         y='811.000'
+         y='800.000'
          xlink:href='#org.tquadrat.foundation.config.ap.impl.codebuilders.MapImplementor'/>
     <use x='1993.000'
-         y='811.000'
+         y='800.000'
          xlink:href='#org.tquadrat.foundation.config.ap.impl.codebuilders.CLIBeanBuilder'/>
     <use x='2953.000'
-         y='811.000'
+         y='800.000'
          xlink:href='#org.tquadrat.foundation.config.ap.impl.codebuilders.PreferencesBeanBuilder'/>
     <use x='3649.000'
-         y='811.000'
+         y='800.000'
          xlink:href='#org.tquadrat.foundation.config.ap.impl.codebuilders.I18nSupportBuilder'/>
     <use x='4321.000'
-         y='811.000'
+         y='800.000'
          xlink:href='#org.tquadrat.foundation.config.ap.impl.codebuilders.ConfigBeanBuilder'/>
 </svg>

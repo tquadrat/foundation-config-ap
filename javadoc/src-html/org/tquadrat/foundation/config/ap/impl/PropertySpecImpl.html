@@ -79,12 +79,12 @@
 <span class="source-line-no">066</span><span id="line-66"> *  {@link PropertySpec}.</span>
 <span class="source-line-no">067</span><span id="line-67"> *</span>
 <span class="source-line-no">068</span><span id="line-68"> *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org</span>
-<span class="source-line-no">069</span><span id="line-69"> *  @version $Id: PropertySpecImpl.java 1051 2023-02-26 19:14:46Z tquadrat $</span>
+<span class="source-line-no">069</span><span id="line-69"> *  @version $Id: PropertySpecImpl.java 1053 2023-03-11 00:10:49Z tquadrat $</span>
 <span class="source-line-no">070</span><span id="line-70"> *  @since 0.1.0</span>
 <span class="source-line-no">071</span><span id="line-71"> *  @UMLGraph.link</span>
 <span class="source-line-no">072</span><span id="line-72"> */</span>
 <span class="source-line-no">073</span><span id="line-73">@SuppressWarnings( {"ClassWithTooManyFields", "OverlyComplexClass"} )</span>
-<span class="source-line-no">074</span><span id="line-74">@ClassVersion( sourceVersion = "$Id: PropertySpecImpl.java 1051 2023-02-26 19:14:46Z tquadrat $" )</span>
+<span class="source-line-no">074</span><span id="line-74">@ClassVersion( sourceVersion = "$Id: PropertySpecImpl.java 1053 2023-03-11 00:10:49Z tquadrat $" )</span>
 <span class="source-line-no">075</span><span id="line-75">@API( status = INTERNAL, since = "0.1.0" )</span>
 <span class="source-line-no">076</span><span id="line-76">public final class PropertySpecImpl implements PropertySpec</span>
 <span class="source-line-no">077</span><span id="line-77">{</span>
@@ -662,9 +662,9 @@
 <span class="source-line-no">649</span><span id="line-649">            getGetterMethodName().ifPresent( retValue::setGetterMethodName );</span>
 <span class="source-line-no">650</span><span id="line-650">            retValue.m_GetterComposer = otherSpec.getGetterComposer().orElse( m_GetterComposer );</span>
 <span class="source-line-no">651</span><span id="line-651">            retValue.setGetterReturnType( otherSpec.getGetterReturnType() );</span>
-<span class="source-line-no">652</span><span id="line-652">            otherSpec.getINIComment().ifPresent( c -&gt; retValue.m_INIComment = c );</span>
+<span class="source-line-no">652</span><span id="line-652">            otherSpec.getINIComment().ifPresent( s -&gt; retValue.m_INIComment = s );</span>
 <span class="source-line-no">653</span><span id="line-653">            otherSpec.getINIGroup().ifPresent( g -&gt; retValue.m_INIGroup = g );</span>
-<span class="source-line-no">654</span><span id="line-654">            otherSpec.getINIKey().ifPresent( k -&gt; retValue.m_INIKey = k );</span>
+<span class="source-line-no">654</span><span id="line-654">            otherSpec.getINIKey().ifPresent( s -&gt; retValue.m_INIKey = s );</span>
 <span class="source-line-no">655</span><span id="line-655">            retValue.setIsEnum( otherSpec.isEnum() );</span>
 <span class="source-line-no">656</span><span id="line-656">            otherSpec.getPrefsAccessorClass().ifPresent( retValue::setPrefsAccessorClass );</span>
 <span class="source-line-no">657</span><span id="line-657">            otherSpec.getPrefsKey().ifPresent( retValue::setPrefsKey );</span>
@@ -842,284 +842,286 @@
 <span class="source-line-no">829</span><span id="line-829">     *</span>
 <span class="source-line-no">830</span><span id="line-830">     *  @param  value   The default value.</span>
 <span class="source-line-no">831</span><span id="line-831">     */</span>
-<span class="source-line-no">832</span><span id="line-832">    public final void setEnvironmentDefaultValue( final String value )</span>
-<span class="source-line-no">833</span><span id="line-833">    {</span>
-<span class="source-line-no">834</span><span id="line-834">        m_EnvironmentDefaultValue = NUL.equals( value ) ? null : value;</span>
-<span class="source-line-no">835</span><span id="line-835">    }   //  setEnvironmentDefaultValue()</span>
-<span class="source-line-no">836</span><span id="line-836"></span>
-<span class="source-line-no">837</span><span id="line-837">    /**</span>
-<span class="source-line-no">838</span><span id="line-838">     *  Sets the name of the environment variable that provides the (initial)</span>
-<span class="source-line-no">839</span><span id="line-839">     *  value for this property.</span>
-<span class="source-line-no">840</span><span id="line-840">     *</span>
-<span class="source-line-no">841</span><span id="line-841">     *  @param  name    The name of the environment variable.</span>
-<span class="source-line-no">842</span><span id="line-842">     */</span>
-<span class="source-line-no">843</span><span id="line-843">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">844</span><span id="line-844">    public final void setEnvironmentVariableName( final String name )</span>
-<span class="source-line-no">845</span><span id="line-845">    {</span>
-<span class="source-line-no">846</span><span id="line-846">        m_EnvironmentVariableName = name;</span>
-<span class="source-line-no">847</span><span id="line-847">        if( isNotEmptyOrBlank( name ) )</span>
-<span class="source-line-no">848</span><span id="line-848">        {</span>
-<span class="source-line-no">849</span><span id="line-849">            m_PropertyFlags.add( ENVIRONMENT_VARIABLE );</span>
-<span class="source-line-no">850</span><span id="line-850">            m_ConstructorFragmentComposer = getConstructorFragment4EnvironmentComposer();</span>
-<span class="source-line-no">851</span><span id="line-851">        }</span>
-<span class="source-line-no">852</span><span id="line-852">        else</span>
-<span class="source-line-no">853</span><span id="line-853">        {</span>
-<span class="source-line-no">854</span><span id="line-854">            m_PropertyFlags.remove( ENVIRONMENT_VARIABLE );</span>
-<span class="source-line-no">855</span><span id="line-855">            m_ConstructorFragmentComposer = null;</span>
-<span class="source-line-no">856</span><span id="line-856">        }</span>
-<span class="source-line-no">857</span><span id="line-857">    }   //  setEnvironmentVariableName()</span>
-<span class="source-line-no">858</span><span id="line-858"></span>
-<span class="source-line-no">859</span><span id="line-859">    /**</span>
-<span class="source-line-no">860</span><span id="line-860">     *  Sets the name of the field for the property.</span>
-<span class="source-line-no">861</span><span id="line-861">     *</span>
-<span class="source-line-no">862</span><span id="line-862">     *  @param  name    The field name.</span>
-<span class="source-line-no">863</span><span id="line-863">     */</span>
-<span class="source-line-no">864</span><span id="line-864">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">865</span><span id="line-865">    public final void setFieldName( final String name )</span>
-<span class="source-line-no">866</span><span id="line-866">    {</span>
-<span class="source-line-no">867</span><span id="line-867">        m_FieldName = requireNotEmptyArgument( name, "name" );</span>
-<span class="source-line-no">868</span><span id="line-868">        m_FieldComposer = getFieldComposer();</span>
-<span class="source-line-no">869</span><span id="line-869">    }   //  setFieldName()</span>
-<span class="source-line-no">870</span><span id="line-870"></span>
-<span class="source-line-no">871</span><span id="line-871">    /**</span>
-<span class="source-line-no">872</span><span id="line-872">     *  Sets the given flags to the property.</span>
-<span class="source-line-no">873</span><span id="line-873">     *</span>
-<span class="source-line-no">874</span><span id="line-874">     *  @param  flag    The flags to set.</span>
-<span class="source-line-no">875</span><span id="line-875">     */</span>
-<span class="source-line-no">876</span><span id="line-876">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">877</span><span id="line-877">    public final void setFlag( final PropertyFlag... flag )</span>
-<span class="source-line-no">878</span><span id="line-878">    {</span>
-<span class="source-line-no">879</span><span id="line-879">        final var length = requireNonNullArgument( flag, "flag" ).length;</span>
-<span class="source-line-no">880</span><span id="line-880">        switch( length )</span>
-<span class="source-line-no">881</span><span id="line-881">        {</span>
-<span class="source-line-no">882</span><span id="line-882">            case 0: break /* Do nothing */;</span>
-<span class="source-line-no">883</span><span id="line-883">            case 1: m_PropertyFlags.add( flag [0] ); break;</span>
-<span class="source-line-no">884</span><span id="line-884">            case 2: m_PropertyFlags.addAll( EnumSet.of( flag [0], flag [1] ) ); break;</span>
-<span class="source-line-no">885</span><span id="line-885">            default: m_PropertyFlags.addAll( EnumSet.of( flag [0], copyOfRange( flag, 1, length ) ) ); break;</span>
-<span class="source-line-no">886</span><span id="line-886">        }</span>
-<span class="source-line-no">887</span><span id="line-887">    }   //  setFlag()</span>
-<span class="source-line-no">888</span><span id="line-888"></span>
-<span class="source-line-no">889</span><span id="line-889">    /**</span>
-<span class="source-line-no">890</span><span id="line-890">     *  Sets the builder for the getter of this property.</span>
-<span class="source-line-no">891</span><span id="line-891">     *</span>
-<span class="source-line-no">892</span><span id="line-892">     *  @param  builder The builder; can be {@code null}.</span>
-<span class="source-line-no">893</span><span id="line-893">     */</span>
-<span class="source-line-no">894</span><span id="line-894">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">895</span><span id="line-895">    public final void setGetterBuilder( final MethodSpec.Builder builder )</span>
-<span class="source-line-no">896</span><span id="line-896">    {</span>
-<span class="source-line-no">897</span><span id="line-897">        m_GetterBuilder = builder;</span>
-<span class="source-line-no">898</span><span id="line-898">    }   //  setGetterBuilder()</span>
-<span class="source-line-no">899</span><span id="line-899"></span>
-<span class="source-line-no">900</span><span id="line-900">    /**</span>
-<span class="source-line-no">901</span><span id="line-901">     *  Sets the method name for the getter.</span>
-<span class="source-line-no">902</span><span id="line-902">     *</span>
-<span class="source-line-no">903</span><span id="line-903">     *  @param  name    The method name.</span>
-<span class="source-line-no">904</span><span id="line-904">     */</span>
-<span class="source-line-no">905</span><span id="line-905">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">906</span><span id="line-906">    public final void setGetterMethodName( final Name name )</span>
-<span class="source-line-no">907</span><span id="line-907">    {</span>
-<span class="source-line-no">908</span><span id="line-908">        m_GetterMethodName = requireNotEmptyArgument( name, "name" );</span>
-<span class="source-line-no">909</span><span id="line-909">        m_GetterComposer = getGetterComposer();</span>
-<span class="source-line-no">910</span><span id="line-910">    }   //  setGetterMethodName()</span>
-<span class="source-line-no">911</span><span id="line-911"></span>
-<span class="source-line-no">912</span><span id="line-912">    /**</span>
-<span class="source-line-no">913</span><span id="line-913">     *  Sets the return type for the getter.</span>
-<span class="source-line-no">914</span><span id="line-914">     *</span>
-<span class="source-line-no">915</span><span id="line-915">     *  @param  type    The getter's return type.</span>
-<span class="source-line-no">916</span><span id="line-916">     */</span>
-<span class="source-line-no">917</span><span id="line-917">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">918</span><span id="line-918">    public final void setGetterReturnType( final TypeName type )</span>
-<span class="source-line-no">919</span><span id="line-919">    {</span>
-<span class="source-line-no">920</span><span id="line-920">        m_GetterReturnType = requireNonNullArgument( type, "type" );</span>
-<span class="source-line-no">921</span><span id="line-921">    }   //  setGetterReturnType()</span>
-<span class="source-line-no">922</span><span id="line-922"></span>
-<span class="source-line-no">923</span><span id="line-923">    /**</span>
-<span class="source-line-no">924</span><span id="line-924">     *  Sets the {@code INI} file configuration for this property.</span>
-<span class="source-line-no">925</span><span id="line-925">     *</span>
-<span class="source-line-no">926</span><span id="line-926">     *  @param  group   The group.</span>
-<span class="source-line-no">927</span><span id="line-927">     *  @param  key The key.</span>
-<span class="source-line-no">928</span><span id="line-928">     *  @param  comment The comment; can be {@code null}.</span>
-<span class="source-line-no">929</span><span id="line-929">     */</span>
-<span class="source-line-no">930</span><span id="line-930">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">931</span><span id="line-931">    public final void setINIConfiguration( final String group, final String key, final String comment )</span>
-<span class="source-line-no">932</span><span id="line-932">    {</span>
-<span class="source-line-no">933</span><span id="line-933">        m_INIComment = comment;</span>
-<span class="source-line-no">934</span><span id="line-934">        m_INIGroup = requireNotEmptyArgument( group, "group" );</span>
-<span class="source-line-no">935</span><span id="line-935">        m_INIKey = requireNotEmptyArgument( key, "key" );</span>
-<span class="source-line-no">936</span><span id="line-936">    }   //  setINIConfiguration()</span>
-<span class="source-line-no">937</span><span id="line-937"></span>
-<span class="source-line-no">938</span><span id="line-938">    /**</span>
-<span class="source-line-no">939</span><span id="line-939">     *  Sets the {@code INI} file configuration for this property.</span>
-<span class="source-line-no">940</span><span id="line-940">     *</span>
-<span class="source-line-no">941</span><span id="line-941">     *  @param  configuration   The configuration annotation.</span>
-<span class="source-line-no">942</span><span id="line-942">     */</span>
-<span class="source-line-no">943</span><span id="line-943">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">944</span><span id="line-944">    public void setINIConfiguration( final INIValue configuration )</span>
-<span class="source-line-no">945</span><span id="line-945">    {</span>
-<span class="source-line-no">946</span><span id="line-946">        final var group = requireNonNullArgument( configuration, "configuration" ).group();</span>
-<span class="source-line-no">947</span><span id="line-947">        final var key = mapNonNull( configuration.key(), k -&gt; isEmptyOrBlank( k ) ? getPropertyName() : k );</span>
-<span class="source-line-no">948</span><span id="line-948">        final var comment = configuration.comment();</span>
-<span class="source-line-no">949</span><span id="line-949">        setINIConfiguration( group, key, comment );</span>
-<span class="source-line-no">950</span><span id="line-950">    }   //  setINIConfiguration()</span>
-<span class="source-line-no">951</span><span id="line-951"></span>
-<span class="source-line-no">952</span><span id="line-952">    /**</span>
-<span class="source-line-no">953</span><span id="line-953">     *  Sets the flag that indicates whether the property is an</span>
-<span class="source-line-no">954</span><span id="line-954">     *  {@link Enum enum}</span>
-<span class="source-line-no">955</span><span id="line-955">     *  type.</span>
-<span class="source-line-no">956</span><span id="line-956">     *</span>
-<span class="source-line-no">957</span><span id="line-957">     *  @param  flag    {@code true} if the property type is an {@code enum}</span>
-<span class="source-line-no">958</span><span id="line-958">     *      type, {@code false} otherwise.</span>
-<span class="source-line-no">959</span><span id="line-959">     */</span>
-<span class="source-line-no">960</span><span id="line-960">    public final void setIsEnum( final boolean flag ) { m_IsEnum = flag; }</span>
-<span class="source-line-no">961</span><span id="line-961"></span>
-<span class="source-line-no">962</span><span id="line-962">    /**</span>
-<span class="source-line-no">963</span><span id="line-963">     *  Sets the preferences accessor class for this property.</span>
-<span class="source-line-no">964</span><span id="line-964">     *</span>
-<span class="source-line-no">965</span><span id="line-965">     *  @param  accessorClass   The accessor class; can be {@code null}.</span>
-<span class="source-line-no">966</span><span id="line-966">     */</span>
-<span class="source-line-no">967</span><span id="line-967">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">968</span><span id="line-968">    public final void setPrefsAccessorClass( final TypeName accessorClass )</span>
-<span class="source-line-no">969</span><span id="line-969">    {</span>
-<span class="source-line-no">970</span><span id="line-970">        m_PrefsAccessorClass = accessorClass;</span>
-<span class="source-line-no">971</span><span id="line-971">    }   //  setPrefsAccessorClass()</span>
-<span class="source-line-no">972</span><span id="line-972"></span>
-<span class="source-line-no">973</span><span id="line-973">    /**</span>
-<span class="source-line-no">974</span><span id="line-974">     *  Sets the preferences key for this property.</span>
-<span class="source-line-no">975</span><span id="line-975">     *</span>
-<span class="source-line-no">976</span><span id="line-976">     *  @param  preferenceKey   The key.</span>
-<span class="source-line-no">977</span><span id="line-977">     */</span>
-<span class="source-line-no">978</span><span id="line-978">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">979</span><span id="line-979">    public final void setPrefsKey( final String preferenceKey )</span>
-<span class="source-line-no">980</span><span id="line-980">    {</span>
-<span class="source-line-no">981</span><span id="line-981">        m_PrefsKey = preferenceKey;</span>
-<span class="source-line-no">982</span><span id="line-982">    }   //  setPrefsKey</span>
-<span class="source-line-no">983</span><span id="line-983"></span>
-<span class="source-line-no">984</span><span id="line-984">    /**</span>
-<span class="source-line-no">985</span><span id="line-985">     *  Sets the property type.</span>
-<span class="source-line-no">986</span><span id="line-986">     *</span>
-<span class="source-line-no">987</span><span id="line-987">     *  @param  type    The type of the property.</span>
-<span class="source-line-no">988</span><span id="line-988">     */</span>
-<span class="source-line-no">989</span><span id="line-989">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">990</span><span id="line-990">    public final void setPropertyType( final TypeName type )</span>
-<span class="source-line-no">991</span><span id="line-991">    {</span>
-<span class="source-line-no">992</span><span id="line-992">        m_PropertyType = requireNonNullArgument( type, "type" );</span>
-<span class="source-line-no">993</span><span id="line-993">    }   //  setPropertyType()</span>
-<span class="source-line-no">994</span><span id="line-994"></span>
-<span class="source-line-no">995</span><span id="line-995">    /**</span>
-<span class="source-line-no">996</span><span id="line-996">     *  Sets the name for the setter's argument.</span>
-<span class="source-line-no">997</span><span id="line-997">     *</span>
-<span class="source-line-no">998</span><span id="line-998">     *  @param  name    The name of the argument.</span>
-<span class="source-line-no">999</span><span id="line-999">     */</span>
-<span class="source-line-no">1000</span><span id="line-1000">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">1001</span><span id="line-1001">    public final void setSetterArgumentName( final Name name )</span>
-<span class="source-line-no">1002</span><span id="line-1002">    {</span>
-<span class="source-line-no">1003</span><span id="line-1003">        m_SetterArgumentName = requireNonNullArgument( name, "name" );</span>
-<span class="source-line-no">1004</span><span id="line-1004">    }   //  setSetterArgumentName()</span>
-<span class="source-line-no">1005</span><span id="line-1005"></span>
-<span class="source-line-no">1006</span><span id="line-1006">    /**</span>
-<span class="source-line-no">1007</span><span id="line-1007">     *  Sets the builder for the setter of this property.</span>
-<span class="source-line-no">1008</span><span id="line-1008">     *</span>
-<span class="source-line-no">1009</span><span id="line-1009">     *  @param  builder The builder; can be {@code null}.</span>
-<span class="source-line-no">1010</span><span id="line-1010">     */</span>
-<span class="source-line-no">1011</span><span id="line-1011">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">1012</span><span id="line-1012">    public final void setSetterBuilder( final MethodSpec.Builder builder )</span>
-<span class="source-line-no">1013</span><span id="line-1013">    {</span>
-<span class="source-line-no">1014</span><span id="line-1014">        m_SetterBuilder = builder;</span>
-<span class="source-line-no">1015</span><span id="line-1015">    }   //  setGetterBuilder()</span>
-<span class="source-line-no">1016</span><span id="line-1016"></span>
-<span class="source-line-no">1017</span><span id="line-1017">    /**</span>
-<span class="source-line-no">1018</span><span id="line-1018">     *  Sets the name of the setter method for this property.</span>
-<span class="source-line-no">1019</span><span id="line-1019">     *</span>
-<span class="source-line-no">1020</span><span id="line-1020">     *  @param  name    The name of the setter method.</span>
-<span class="source-line-no">1021</span><span id="line-1021">     */</span>
-<span class="source-line-no">1022</span><span id="line-1022">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">1023</span><span id="line-1023">    public void setSetterMethodName( final Name name )</span>
-<span class="source-line-no">1024</span><span id="line-1024">    {</span>
-<span class="source-line-no">1025</span><span id="line-1025">        m_SetterMethodName = requireNotEmptyArgument( name, "name" );</span>
-<span class="source-line-no">1026</span><span id="line-1026">        m_SetterComposer = getSetterComposer();</span>
-<span class="source-line-no">1027</span><span id="line-1027">    }   //  setSetterMethodName()</span>
-<span class="source-line-no">1028</span><span id="line-1028"></span>
-<span class="source-line-no">1029</span><span id="line-1029">    /**</span>
-<span class="source-line-no">1030</span><span id="line-1030">     *  Sets the speciality type for this property.</span>
-<span class="source-line-no">1031</span><span id="line-1031">     *</span>
-<span class="source-line-no">1032</span><span id="line-1032">     *  @param  type    The speciality type.</span>
-<span class="source-line-no">1033</span><span id="line-1033">     */</span>
-<span class="source-line-no">1034</span><span id="line-1034">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">1035</span><span id="line-1035">    public final void setSpecialPropertyType( final SpecialPropertyType type )</span>
-<span class="source-line-no">1036</span><span id="line-1036">    {</span>
-<span class="source-line-no">1037</span><span id="line-1037">        m_SpecialPropertyType = type;</span>
-<span class="source-line-no">1038</span><span id="line-1038">        if( nonNull( m_SpecialPropertyType ) )</span>
-<span class="source-line-no">1039</span><span id="line-1039">        {</span>
-<span class="source-line-no">1040</span><span id="line-1040">            m_PropertyFlags.add( PROPERTY_IS_SPECIAL );</span>
-<span class="source-line-no">1041</span><span id="line-1041">        }</span>
-<span class="source-line-no">1042</span><span id="line-1042">        else</span>
-<span class="source-line-no">1043</span><span id="line-1043">        {</span>
-<span class="source-line-no">1044</span><span id="line-1044">            m_PropertyFlags.remove( PROPERTY_IS_SPECIAL );</span>
-<span class="source-line-no">1045</span><span id="line-1045">        }</span>
-<span class="source-line-no">1046</span><span id="line-1046">    }   //  setSpecialPropertyType()</span>
-<span class="source-line-no">1047</span><span id="line-1047"></span>
-<span class="source-line-no">1048</span><span id="line-1048">    /**</span>
-<span class="source-line-no">1049</span><span id="line-1049">     *  Sets the name for the class that implements</span>
-<span class="source-line-no">1050</span><span id="line-1050">     *  {@link org.tquadrat.foundation.lang.StringConverter}</span>
-<span class="source-line-no">1051</span><span id="line-1051">     *  for the type of this property.</span>
-<span class="source-line-no">1052</span><span id="line-1052">     *</span>
-<span class="source-line-no">1053</span><span id="line-1053">     *  @param  typeName    The String converter class; can be {@code null}.</span>
-<span class="source-line-no">1054</span><span id="line-1054">     */</span>
-<span class="source-line-no">1055</span><span id="line-1055">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">1056</span><span id="line-1056">    public final void setStringConverterClass( final TypeName typeName )</span>
-<span class="source-line-no">1057</span><span id="line-1057">    {</span>
-<span class="source-line-no">1058</span><span id="line-1058">        m_StringConverterClass = typeName;</span>
-<span class="source-line-no">1059</span><span id="line-1059">    }   //  setStringConverterClass()</span>
-<span class="source-line-no">1060</span><span id="line-1060"></span>
-<span class="source-line-no">1061</span><span id="line-1061">    /**</span>
-<span class="source-line-no">1062</span><span id="line-1062">     *  Sets the path for the SYSTEM {@code Preferences} node that holds the</span>
-<span class="source-line-no">1063</span><span id="line-1063">     *  initialisation data for this property.</span>
-<span class="source-line-no">1064</span><span id="line-1064">     *</span>
-<span class="source-line-no">1065</span><span id="line-1065">     *  @param  path    The path.</span>
-<span class="source-line-no">1066</span><span id="line-1066">     */</span>
-<span class="source-line-no">1067</span><span id="line-1067">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">1068</span><span id="line-1068">    public final void setSystemPrefsPath( final String path )</span>
-<span class="source-line-no">1069</span><span id="line-1069">    {</span>
-<span class="source-line-no">1070</span><span id="line-1070">        m_SystemPrefsPath = path;</span>
-<span class="source-line-no">1071</span><span id="line-1071">        if( isNotEmptyOrBlank( path ) )</span>
-<span class="source-line-no">1072</span><span id="line-1072">        {</span>
-<span class="source-line-no">1073</span><span id="line-1073">            m_PropertyFlags.add( SYSTEM_PREFERENCE );</span>
-<span class="source-line-no">1074</span><span id="line-1074">            m_ConstructorFragmentComposer = getConstructorFragment4SystemPreferenceComposer();</span>
-<span class="source-line-no">1075</span><span id="line-1075">        }</span>
-<span class="source-line-no">1076</span><span id="line-1076">        else</span>
-<span class="source-line-no">1077</span><span id="line-1077">        {</span>
-<span class="source-line-no">1078</span><span id="line-1078">            m_PropertyFlags.remove( SYSTEM_PREFERENCE );</span>
-<span class="source-line-no">1079</span><span id="line-1079">            m_ConstructorFragmentComposer = null;</span>
-<span class="source-line-no">1080</span><span id="line-1080">        }</span>
-<span class="source-line-no">1081</span><span id="line-1081">    }   //  setSystemPrefsPath()</span>
-<span class="source-line-no">1082</span><span id="line-1082"></span>
-<span class="source-line-no">1083</span><span id="line-1083">    /**</span>
-<span class="source-line-no">1084</span><span id="line-1084">     *  Sets the name of the system property that provides the (initial) value</span>
-<span class="source-line-no">1085</span><span id="line-1085">     *  for this property.</span>
-<span class="source-line-no">1086</span><span id="line-1086">     *</span>
-<span class="source-line-no">1087</span><span id="line-1087">     *  @param  name    The name of the system property.</span>
-<span class="source-line-no">1088</span><span id="line-1088">     */</span>
-<span class="source-line-no">1089</span><span id="line-1089">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
-<span class="source-line-no">1090</span><span id="line-1090">    public final void setSystemPropertyName( final String name )</span>
-<span class="source-line-no">1091</span><span id="line-1091">    {</span>
-<span class="source-line-no">1092</span><span id="line-1092">        m_SystemPropertyName = name;</span>
-<span class="source-line-no">1093</span><span id="line-1093">        if( isNotEmptyOrBlank( name ) )</span>
-<span class="source-line-no">1094</span><span id="line-1094">        {</span>
-<span class="source-line-no">1095</span><span id="line-1095">            m_PropertyFlags.add( SYSTEM_PROPERTY );</span>
-<span class="source-line-no">1096</span><span id="line-1096">            m_ConstructorFragmentComposer = getConstructorFragment4SystemPropComposer();</span>
-<span class="source-line-no">1097</span><span id="line-1097">        }</span>
-<span class="source-line-no">1098</span><span id="line-1098">        else</span>
-<span class="source-line-no">1099</span><span id="line-1099">        {</span>
-<span class="source-line-no">1100</span><span id="line-1100">            m_PropertyFlags.remove( SYSTEM_PROPERTY );</span>
-<span class="source-line-no">1101</span><span id="line-1101">            m_ConstructorFragmentComposer = null;</span>
-<span class="source-line-no">1102</span><span id="line-1102">        }</span>
-<span class="source-line-no">1103</span><span id="line-1103">    }   //  setSystemPropertyName()</span>
-<span class="source-line-no">1104</span><span id="line-1104">}</span>
-<span class="source-line-no">1105</span><span id="line-1105">//  class PropertySpecImpl</span>
-<span class="source-line-no">1106</span><span id="line-1106"></span>
-<span class="source-line-no">1107</span><span id="line-1107">/*</span>
-<span class="source-line-no">1108</span><span id="line-1108"> *  End of File</span>
-<span class="source-line-no">1109</span><span id="line-1109"> */</span>
+<span class="source-line-no">832</span><span id="line-832">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">833</span><span id="line-833">    public final void setEnvironmentDefaultValue( final String value )</span>
+<span class="source-line-no">834</span><span id="line-834">    {</span>
+<span class="source-line-no">835</span><span id="line-835">        m_EnvironmentDefaultValue = NUL.equals( value ) ? null : value;</span>
+<span class="source-line-no">836</span><span id="line-836">    }   //  setEnvironmentDefaultValue()</span>
+<span class="source-line-no">837</span><span id="line-837"></span>
+<span class="source-line-no">838</span><span id="line-838">    /**</span>
+<span class="source-line-no">839</span><span id="line-839">     *  Sets the name of the environment variable that provides the (initial)</span>
+<span class="source-line-no">840</span><span id="line-840">     *  value for this property.</span>
+<span class="source-line-no">841</span><span id="line-841">     *</span>
+<span class="source-line-no">842</span><span id="line-842">     *  @param  name    The name of the environment variable.</span>
+<span class="source-line-no">843</span><span id="line-843">     */</span>
+<span class="source-line-no">844</span><span id="line-844">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">845</span><span id="line-845">    public final void setEnvironmentVariableName( final String name )</span>
+<span class="source-line-no">846</span><span id="line-846">    {</span>
+<span class="source-line-no">847</span><span id="line-847">        m_EnvironmentVariableName = name;</span>
+<span class="source-line-no">848</span><span id="line-848">        if( isNotEmptyOrBlank( name ) )</span>
+<span class="source-line-no">849</span><span id="line-849">        {</span>
+<span class="source-line-no">850</span><span id="line-850">            m_PropertyFlags.add( ENVIRONMENT_VARIABLE );</span>
+<span class="source-line-no">851</span><span id="line-851">            m_ConstructorFragmentComposer = getConstructorFragment4EnvironmentComposer();</span>
+<span class="source-line-no">852</span><span id="line-852">        }</span>
+<span class="source-line-no">853</span><span id="line-853">        else</span>
+<span class="source-line-no">854</span><span id="line-854">        {</span>
+<span class="source-line-no">855</span><span id="line-855">            m_PropertyFlags.remove( ENVIRONMENT_VARIABLE );</span>
+<span class="source-line-no">856</span><span id="line-856">            m_ConstructorFragmentComposer = null;</span>
+<span class="source-line-no">857</span><span id="line-857">        }</span>
+<span class="source-line-no">858</span><span id="line-858">    }   //  setEnvironmentVariableName()</span>
+<span class="source-line-no">859</span><span id="line-859"></span>
+<span class="source-line-no">860</span><span id="line-860">    /**</span>
+<span class="source-line-no">861</span><span id="line-861">     *  Sets the name of the field for the property.</span>
+<span class="source-line-no">862</span><span id="line-862">     *</span>
+<span class="source-line-no">863</span><span id="line-863">     *  @param  name    The field name.</span>
+<span class="source-line-no">864</span><span id="line-864">     */</span>
+<span class="source-line-no">865</span><span id="line-865">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">866</span><span id="line-866">    public final void setFieldName( final String name )</span>
+<span class="source-line-no">867</span><span id="line-867">    {</span>
+<span class="source-line-no">868</span><span id="line-868">        m_FieldName = requireNotEmptyArgument( name, "name" );</span>
+<span class="source-line-no">869</span><span id="line-869">        m_FieldComposer = getFieldComposer();</span>
+<span class="source-line-no">870</span><span id="line-870">    }   //  setFieldName()</span>
+<span class="source-line-no">871</span><span id="line-871"></span>
+<span class="source-line-no">872</span><span id="line-872">    /**</span>
+<span class="source-line-no">873</span><span id="line-873">     *  Sets the given flags to the property.</span>
+<span class="source-line-no">874</span><span id="line-874">     *</span>
+<span class="source-line-no">875</span><span id="line-875">     *  @param  flag    The flags to set.</span>
+<span class="source-line-no">876</span><span id="line-876">     */</span>
+<span class="source-line-no">877</span><span id="line-877">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">878</span><span id="line-878">    public final void setFlag( final PropertyFlag... flag )</span>
+<span class="source-line-no">879</span><span id="line-879">    {</span>
+<span class="source-line-no">880</span><span id="line-880">        final var length = requireNonNullArgument( flag, "flag" ).length;</span>
+<span class="source-line-no">881</span><span id="line-881">        switch( length )</span>
+<span class="source-line-no">882</span><span id="line-882">        {</span>
+<span class="source-line-no">883</span><span id="line-883">            case 0: break /* Do nothing */;</span>
+<span class="source-line-no">884</span><span id="line-884">            case 1: m_PropertyFlags.add( flag [0] ); break;</span>
+<span class="source-line-no">885</span><span id="line-885">            case 2: m_PropertyFlags.addAll( EnumSet.of( flag [0], flag [1] ) ); break;</span>
+<span class="source-line-no">886</span><span id="line-886">            default: m_PropertyFlags.addAll( EnumSet.of( flag [0], copyOfRange( flag, 1, length ) ) ); break;</span>
+<span class="source-line-no">887</span><span id="line-887">        }</span>
+<span class="source-line-no">888</span><span id="line-888">    }   //  setFlag()</span>
+<span class="source-line-no">889</span><span id="line-889"></span>
+<span class="source-line-no">890</span><span id="line-890">    /**</span>
+<span class="source-line-no">891</span><span id="line-891">     *  Sets the builder for the getter of this property.</span>
+<span class="source-line-no">892</span><span id="line-892">     *</span>
+<span class="source-line-no">893</span><span id="line-893">     *  @param  builder The builder; can be {@code null}.</span>
+<span class="source-line-no">894</span><span id="line-894">     */</span>
+<span class="source-line-no">895</span><span id="line-895">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">896</span><span id="line-896">    public final void setGetterBuilder( final MethodSpec.Builder builder )</span>
+<span class="source-line-no">897</span><span id="line-897">    {</span>
+<span class="source-line-no">898</span><span id="line-898">        m_GetterBuilder = builder;</span>
+<span class="source-line-no">899</span><span id="line-899">    }   //  setGetterBuilder()</span>
+<span class="source-line-no">900</span><span id="line-900"></span>
+<span class="source-line-no">901</span><span id="line-901">    /**</span>
+<span class="source-line-no">902</span><span id="line-902">     *  Sets the method name for the getter.</span>
+<span class="source-line-no">903</span><span id="line-903">     *</span>
+<span class="source-line-no">904</span><span id="line-904">     *  @param  name    The method name.</span>
+<span class="source-line-no">905</span><span id="line-905">     */</span>
+<span class="source-line-no">906</span><span id="line-906">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">907</span><span id="line-907">    public final void setGetterMethodName( final Name name )</span>
+<span class="source-line-no">908</span><span id="line-908">    {</span>
+<span class="source-line-no">909</span><span id="line-909">        m_GetterMethodName = requireNotEmptyArgument( name, "name" );</span>
+<span class="source-line-no">910</span><span id="line-910">        m_GetterComposer = getGetterComposer();</span>
+<span class="source-line-no">911</span><span id="line-911">    }   //  setGetterMethodName()</span>
+<span class="source-line-no">912</span><span id="line-912"></span>
+<span class="source-line-no">913</span><span id="line-913">    /**</span>
+<span class="source-line-no">914</span><span id="line-914">     *  Sets the return type for the getter.</span>
+<span class="source-line-no">915</span><span id="line-915">     *</span>
+<span class="source-line-no">916</span><span id="line-916">     *  @param  type    The getter's return type.</span>
+<span class="source-line-no">917</span><span id="line-917">     */</span>
+<span class="source-line-no">918</span><span id="line-918">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">919</span><span id="line-919">    public final void setGetterReturnType( final TypeName type )</span>
+<span class="source-line-no">920</span><span id="line-920">    {</span>
+<span class="source-line-no">921</span><span id="line-921">        m_GetterReturnType = requireNonNullArgument( type, "type" );</span>
+<span class="source-line-no">922</span><span id="line-922">    }   //  setGetterReturnType()</span>
+<span class="source-line-no">923</span><span id="line-923"></span>
+<span class="source-line-no">924</span><span id="line-924">    /**</span>
+<span class="source-line-no">925</span><span id="line-925">     *  Sets the {@code INI} file configuration for this property.</span>
+<span class="source-line-no">926</span><span id="line-926">     *</span>
+<span class="source-line-no">927</span><span id="line-927">     *  @param  group   The group.</span>
+<span class="source-line-no">928</span><span id="line-928">     *  @param  key The key.</span>
+<span class="source-line-no">929</span><span id="line-929">     *  @param  comment The comment; can be {@code null}.</span>
+<span class="source-line-no">930</span><span id="line-930">     */</span>
+<span class="source-line-no">931</span><span id="line-931">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">932</span><span id="line-932">    public final void setINIConfiguration( final String group, final String key, final String comment )</span>
+<span class="source-line-no">933</span><span id="line-933">    {</span>
+<span class="source-line-no">934</span><span id="line-934">        m_INIComment = comment;</span>
+<span class="source-line-no">935</span><span id="line-935">        m_INIGroup = requireNotEmptyArgument( group, "group" );</span>
+<span class="source-line-no">936</span><span id="line-936">        m_INIKey = requireNotEmptyArgument( key, "key" );</span>
+<span class="source-line-no">937</span><span id="line-937">    }   //  setINIConfiguration()</span>
+<span class="source-line-no">938</span><span id="line-938"></span>
+<span class="source-line-no">939</span><span id="line-939">    /**</span>
+<span class="source-line-no">940</span><span id="line-940">     *  Sets the {@code INI} file configuration for this property.</span>
+<span class="source-line-no">941</span><span id="line-941">     *</span>
+<span class="source-line-no">942</span><span id="line-942">     *  @param  configuration   The configuration annotation.</span>
+<span class="source-line-no">943</span><span id="line-943">     */</span>
+<span class="source-line-no">944</span><span id="line-944">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">945</span><span id="line-945">    public void setINIConfiguration( final INIValue configuration )</span>
+<span class="source-line-no">946</span><span id="line-946">    {</span>
+<span class="source-line-no">947</span><span id="line-947">        final var group = requireNonNullArgument( configuration, "configuration" ).group();</span>
+<span class="source-line-no">948</span><span id="line-948">        final var key = mapNonNull( configuration.key(), s -&gt; isEmptyOrBlank( s ) ? getPropertyName() : s );</span>
+<span class="source-line-no">949</span><span id="line-949">        final var comment = configuration.comment();</span>
+<span class="source-line-no">950</span><span id="line-950">        setINIConfiguration( group, key, comment );</span>
+<span class="source-line-no">951</span><span id="line-951">    }   //  setINIConfiguration()</span>
+<span class="source-line-no">952</span><span id="line-952"></span>
+<span class="source-line-no">953</span><span id="line-953">    /**</span>
+<span class="source-line-no">954</span><span id="line-954">     *  Sets the flag that indicates whether the property is an</span>
+<span class="source-line-no">955</span><span id="line-955">     *  {@link Enum enum}</span>
+<span class="source-line-no">956</span><span id="line-956">     *  type.</span>
+<span class="source-line-no">957</span><span id="line-957">     *</span>
+<span class="source-line-no">958</span><span id="line-958">     *  @param  flag    {@code true} if the property type is an {@code enum}</span>
+<span class="source-line-no">959</span><span id="line-959">     *      type, {@code false} otherwise.</span>
+<span class="source-line-no">960</span><span id="line-960">     */</span>
+<span class="source-line-no">961</span><span id="line-961">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">962</span><span id="line-962">    public final void setIsEnum( final boolean flag ) { m_IsEnum = flag; }</span>
+<span class="source-line-no">963</span><span id="line-963"></span>
+<span class="source-line-no">964</span><span id="line-964">    /**</span>
+<span class="source-line-no">965</span><span id="line-965">     *  Sets the preferences accessor class for this property.</span>
+<span class="source-line-no">966</span><span id="line-966">     *</span>
+<span class="source-line-no">967</span><span id="line-967">     *  @param  accessorClass   The accessor class; can be {@code null}.</span>
+<span class="source-line-no">968</span><span id="line-968">     */</span>
+<span class="source-line-no">969</span><span id="line-969">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">970</span><span id="line-970">    public final void setPrefsAccessorClass( final TypeName accessorClass )</span>
+<span class="source-line-no">971</span><span id="line-971">    {</span>
+<span class="source-line-no">972</span><span id="line-972">        m_PrefsAccessorClass = accessorClass;</span>
+<span class="source-line-no">973</span><span id="line-973">    }   //  setPrefsAccessorClass()</span>
+<span class="source-line-no">974</span><span id="line-974"></span>
+<span class="source-line-no">975</span><span id="line-975">    /**</span>
+<span class="source-line-no">976</span><span id="line-976">     *  Sets the preferences key for this property.</span>
+<span class="source-line-no">977</span><span id="line-977">     *</span>
+<span class="source-line-no">978</span><span id="line-978">     *  @param  preferenceKey   The key.</span>
+<span class="source-line-no">979</span><span id="line-979">     */</span>
+<span class="source-line-no">980</span><span id="line-980">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">981</span><span id="line-981">    public final void setPrefsKey( final String preferenceKey )</span>
+<span class="source-line-no">982</span><span id="line-982">    {</span>
+<span class="source-line-no">983</span><span id="line-983">        m_PrefsKey = preferenceKey;</span>
+<span class="source-line-no">984</span><span id="line-984">    }   //  setPrefsKey</span>
+<span class="source-line-no">985</span><span id="line-985"></span>
+<span class="source-line-no">986</span><span id="line-986">    /**</span>
+<span class="source-line-no">987</span><span id="line-987">     *  Sets the property type.</span>
+<span class="source-line-no">988</span><span id="line-988">     *</span>
+<span class="source-line-no">989</span><span id="line-989">     *  @param  type    The type of the property.</span>
+<span class="source-line-no">990</span><span id="line-990">     */</span>
+<span class="source-line-no">991</span><span id="line-991">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">992</span><span id="line-992">    public final void setPropertyType( final TypeName type )</span>
+<span class="source-line-no">993</span><span id="line-993">    {</span>
+<span class="source-line-no">994</span><span id="line-994">        m_PropertyType = requireNonNullArgument( type, "type" );</span>
+<span class="source-line-no">995</span><span id="line-995">    }   //  setPropertyType()</span>
+<span class="source-line-no">996</span><span id="line-996"></span>
+<span class="source-line-no">997</span><span id="line-997">    /**</span>
+<span class="source-line-no">998</span><span id="line-998">     *  Sets the name for the setter's argument.</span>
+<span class="source-line-no">999</span><span id="line-999">     *</span>
+<span class="source-line-no">1000</span><span id="line-1000">     *  @param  name    The name of the argument.</span>
+<span class="source-line-no">1001</span><span id="line-1001">     */</span>
+<span class="source-line-no">1002</span><span id="line-1002">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">1003</span><span id="line-1003">    public final void setSetterArgumentName( final Name name )</span>
+<span class="source-line-no">1004</span><span id="line-1004">    {</span>
+<span class="source-line-no">1005</span><span id="line-1005">        m_SetterArgumentName = requireNonNullArgument( name, "name" );</span>
+<span class="source-line-no">1006</span><span id="line-1006">    }   //  setSetterArgumentName()</span>
+<span class="source-line-no">1007</span><span id="line-1007"></span>
+<span class="source-line-no">1008</span><span id="line-1008">    /**</span>
+<span class="source-line-no">1009</span><span id="line-1009">     *  Sets the builder for the setter of this property.</span>
+<span class="source-line-no">1010</span><span id="line-1010">     *</span>
+<span class="source-line-no">1011</span><span id="line-1011">     *  @param  builder The builder; can be {@code null}.</span>
+<span class="source-line-no">1012</span><span id="line-1012">     */</span>
+<span class="source-line-no">1013</span><span id="line-1013">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">1014</span><span id="line-1014">    public final void setSetterBuilder( final MethodSpec.Builder builder )</span>
+<span class="source-line-no">1015</span><span id="line-1015">    {</span>
+<span class="source-line-no">1016</span><span id="line-1016">        m_SetterBuilder = builder;</span>
+<span class="source-line-no">1017</span><span id="line-1017">    }   //  setGetterBuilder()</span>
+<span class="source-line-no">1018</span><span id="line-1018"></span>
+<span class="source-line-no">1019</span><span id="line-1019">    /**</span>
+<span class="source-line-no">1020</span><span id="line-1020">     *  Sets the name of the setter method for this property.</span>
+<span class="source-line-no">1021</span><span id="line-1021">     *</span>
+<span class="source-line-no">1022</span><span id="line-1022">     *  @param  name    The name of the setter method.</span>
+<span class="source-line-no">1023</span><span id="line-1023">     */</span>
+<span class="source-line-no">1024</span><span id="line-1024">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">1025</span><span id="line-1025">    public void setSetterMethodName( final Name name )</span>
+<span class="source-line-no">1026</span><span id="line-1026">    {</span>
+<span class="source-line-no">1027</span><span id="line-1027">        m_SetterMethodName = requireNotEmptyArgument( name, "name" );</span>
+<span class="source-line-no">1028</span><span id="line-1028">        m_SetterComposer = getSetterComposer();</span>
+<span class="source-line-no">1029</span><span id="line-1029">    }   //  setSetterMethodName()</span>
+<span class="source-line-no">1030</span><span id="line-1030"></span>
+<span class="source-line-no">1031</span><span id="line-1031">    /**</span>
+<span class="source-line-no">1032</span><span id="line-1032">     *  Sets the speciality type for this property.</span>
+<span class="source-line-no">1033</span><span id="line-1033">     *</span>
+<span class="source-line-no">1034</span><span id="line-1034">     *  @param  type    The speciality type.</span>
+<span class="source-line-no">1035</span><span id="line-1035">     */</span>
+<span class="source-line-no">1036</span><span id="line-1036">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">1037</span><span id="line-1037">    public final void setSpecialPropertyType( final SpecialPropertyType type )</span>
+<span class="source-line-no">1038</span><span id="line-1038">    {</span>
+<span class="source-line-no">1039</span><span id="line-1039">        m_SpecialPropertyType = type;</span>
+<span class="source-line-no">1040</span><span id="line-1040">        if( nonNull( m_SpecialPropertyType ) )</span>
+<span class="source-line-no">1041</span><span id="line-1041">        {</span>
+<span class="source-line-no">1042</span><span id="line-1042">            m_PropertyFlags.add( PROPERTY_IS_SPECIAL );</span>
+<span class="source-line-no">1043</span><span id="line-1043">        }</span>
+<span class="source-line-no">1044</span><span id="line-1044">        else</span>
+<span class="source-line-no">1045</span><span id="line-1045">        {</span>
+<span class="source-line-no">1046</span><span id="line-1046">            m_PropertyFlags.remove( PROPERTY_IS_SPECIAL );</span>
+<span class="source-line-no">1047</span><span id="line-1047">        }</span>
+<span class="source-line-no">1048</span><span id="line-1048">    }   //  setSpecialPropertyType()</span>
+<span class="source-line-no">1049</span><span id="line-1049"></span>
+<span class="source-line-no">1050</span><span id="line-1050">    /**</span>
+<span class="source-line-no">1051</span><span id="line-1051">     *  Sets the name for the class that implements</span>
+<span class="source-line-no">1052</span><span id="line-1052">     *  {@link org.tquadrat.foundation.lang.StringConverter}</span>
+<span class="source-line-no">1053</span><span id="line-1053">     *  for the type of this property.</span>
+<span class="source-line-no">1054</span><span id="line-1054">     *</span>
+<span class="source-line-no">1055</span><span id="line-1055">     *  @param  typeName    The String converter class; can be {@code null}.</span>
+<span class="source-line-no">1056</span><span id="line-1056">     */</span>
+<span class="source-line-no">1057</span><span id="line-1057">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">1058</span><span id="line-1058">    public final void setStringConverterClass( final TypeName typeName )</span>
+<span class="source-line-no">1059</span><span id="line-1059">    {</span>
+<span class="source-line-no">1060</span><span id="line-1060">        m_StringConverterClass = typeName;</span>
+<span class="source-line-no">1061</span><span id="line-1061">    }   //  setStringConverterClass()</span>
+<span class="source-line-no">1062</span><span id="line-1062"></span>
+<span class="source-line-no">1063</span><span id="line-1063">    /**</span>
+<span class="source-line-no">1064</span><span id="line-1064">     *  Sets the path for the SYSTEM {@code Preferences} node that holds the</span>
+<span class="source-line-no">1065</span><span id="line-1065">     *  initialisation data for this property.</span>
+<span class="source-line-no">1066</span><span id="line-1066">     *</span>
+<span class="source-line-no">1067</span><span id="line-1067">     *  @param  path    The path.</span>
+<span class="source-line-no">1068</span><span id="line-1068">     */</span>
+<span class="source-line-no">1069</span><span id="line-1069">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">1070</span><span id="line-1070">    public final void setSystemPrefsPath( final String path )</span>
+<span class="source-line-no">1071</span><span id="line-1071">    {</span>
+<span class="source-line-no">1072</span><span id="line-1072">        m_SystemPrefsPath = path;</span>
+<span class="source-line-no">1073</span><span id="line-1073">        if( isNotEmptyOrBlank( path ) )</span>
+<span class="source-line-no">1074</span><span id="line-1074">        {</span>
+<span class="source-line-no">1075</span><span id="line-1075">            m_PropertyFlags.add( SYSTEM_PREFERENCE );</span>
+<span class="source-line-no">1076</span><span id="line-1076">            m_ConstructorFragmentComposer = getConstructorFragment4SystemPreferenceComposer();</span>
+<span class="source-line-no">1077</span><span id="line-1077">        }</span>
+<span class="source-line-no">1078</span><span id="line-1078">        else</span>
+<span class="source-line-no">1079</span><span id="line-1079">        {</span>
+<span class="source-line-no">1080</span><span id="line-1080">            m_PropertyFlags.remove( SYSTEM_PREFERENCE );</span>
+<span class="source-line-no">1081</span><span id="line-1081">            m_ConstructorFragmentComposer = null;</span>
+<span class="source-line-no">1082</span><span id="line-1082">        }</span>
+<span class="source-line-no">1083</span><span id="line-1083">    }   //  setSystemPrefsPath()</span>
+<span class="source-line-no">1084</span><span id="line-1084"></span>
+<span class="source-line-no">1085</span><span id="line-1085">    /**</span>
+<span class="source-line-no">1086</span><span id="line-1086">     *  Sets the name of the system property that provides the (initial) value</span>
+<span class="source-line-no">1087</span><span id="line-1087">     *  for this property.</span>
+<span class="source-line-no">1088</span><span id="line-1088">     *</span>
+<span class="source-line-no">1089</span><span id="line-1089">     *  @param  name    The name of the system property.</span>
+<span class="source-line-no">1090</span><span id="line-1090">     */</span>
+<span class="source-line-no">1091</span><span id="line-1091">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
+<span class="source-line-no">1092</span><span id="line-1092">    public final void setSystemPropertyName( final String name )</span>
+<span class="source-line-no">1093</span><span id="line-1093">    {</span>
+<span class="source-line-no">1094</span><span id="line-1094">        m_SystemPropertyName = name;</span>
+<span class="source-line-no">1095</span><span id="line-1095">        if( isNotEmptyOrBlank( name ) )</span>
+<span class="source-line-no">1096</span><span id="line-1096">        {</span>
+<span class="source-line-no">1097</span><span id="line-1097">            m_PropertyFlags.add( SYSTEM_PROPERTY );</span>
+<span class="source-line-no">1098</span><span id="line-1098">            m_ConstructorFragmentComposer = getConstructorFragment4SystemPropComposer();</span>
+<span class="source-line-no">1099</span><span id="line-1099">        }</span>
+<span class="source-line-no">1100</span><span id="line-1100">        else</span>
+<span class="source-line-no">1101</span><span id="line-1101">        {</span>
+<span class="source-line-no">1102</span><span id="line-1102">            m_PropertyFlags.remove( SYSTEM_PROPERTY );</span>
+<span class="source-line-no">1103</span><span id="line-1103">            m_ConstructorFragmentComposer = null;</span>
+<span class="source-line-no">1104</span><span id="line-1104">        }</span>
+<span class="source-line-no">1105</span><span id="line-1105">    }   //  setSystemPropertyName()</span>
+<span class="source-line-no">1106</span><span id="line-1106">}</span>
+<span class="source-line-no">1107</span><span id="line-1107">//  class PropertySpecImpl</span>
+<span class="source-line-no">1108</span><span id="line-1108"></span>
+<span class="source-line-no">1109</span><span id="line-1109">/*</span>
+<span class="source-line-no">1110</span><span id="line-1110"> *  End of File</span>
+<span class="source-line-no">1111</span><span id="line-1111"> */</span>
 
 
 

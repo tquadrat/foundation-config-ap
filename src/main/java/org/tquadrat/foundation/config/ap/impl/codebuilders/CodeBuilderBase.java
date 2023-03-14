@@ -56,18 +56,16 @@ import static org.tquadrat.foundation.lang.Objects.nonNull;
 import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
 import static org.tquadrat.foundation.util.StringUtils.format;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Supplier;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import java.util.stream.Stream;
@@ -76,10 +74,10 @@ import org.apiguardian.api.API;
 import org.tquadrat.foundation.annotation.ClassVersion;
 import org.tquadrat.foundation.ap.CodeGenerationError;
 import org.tquadrat.foundation.config.ap.CodeGenerationConfiguration;
+import org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor;
 import org.tquadrat.foundation.config.ap.PropertySpec;
 import org.tquadrat.foundation.config.ap.impl.CodeBuilder;
 import org.tquadrat.foundation.config.ap.impl.PropertySpecImpl;
-import org.tquadrat.foundation.exception.UnexpectedExceptionError;
 import org.tquadrat.foundation.exception.UnsupportedEnumError;
 import org.tquadrat.foundation.javacomposer.ClassName;
 import org.tquadrat.foundation.javacomposer.CodeBlock;
@@ -93,19 +91,17 @@ import org.tquadrat.foundation.javacomposer.TypeName;
 import org.tquadrat.foundation.javacomposer.TypeSpec;
 import org.tquadrat.foundation.lang.Objects;
 import org.tquadrat.foundation.lang.StringConverter;
-import org.tquadrat.foundation.util.LazyMap;
-import org.tquadrat.foundation.util.stringconverter.DateLongStringConverter;
 
 /**
  *  The abstract base class for all the code builders.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CodeBuilderBase.java 1010 2022-02-05 19:28:36Z tquadrat $
+ *  @version $Id: CodeBuilderBase.java 1053 2023-03-11 00:10:49Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"OverlyCoupledClass", "OverlyComplexClass"} )
-@ClassVersion( sourceVersion = "$Id: CodeBuilderBase.java 1010 2022-02-05 19:28:36Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeBuilderBase.java 1053 2023-03-11 00:10:49Z tquadrat $" )
 @API( status = INTERNAL, since = "0.1.0" )
 abstract sealed class CodeBuilderBase implements CodeBuilder
     permits CLIBeanBuilder, ConfigBeanBuilder, I18nSupportBuilder, INIBeanBuilder, MapImplementor, PreferencesBeanBuilder, SessionBeanBuilder
@@ -119,11 +115,11 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
      *  class.
      *
      *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
-     *  @version $Id: CodeBuilderBase.java 1010 2022-02-05 19:28:36Z tquadrat $
+     *  @version $Id: CodeBuilderBase.java 1053 2023-03-11 00:10:49Z tquadrat $
      *  @UMLGraph.link
      *  @since 0.1.0
      */
-    @ClassVersion( sourceVersion = "$Id: CodeBuilderBase.java 1010 2022-02-05 19:28:36Z tquadrat $" )
+    @ClassVersion( sourceVersion = "$Id: CodeBuilderBase.java 1053 2023-03-11 00:10:49Z tquadrat $" )
     @API( status = INTERNAL, since = "0.1.0" )
     public static enum StringConverterInstantiation
     {
@@ -194,11 +190,13 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
     /**
      *  The standard fields.
      */
+    @SuppressWarnings( "StaticCollection" )
     private static final Map<StandardField,FieldSpec> m_StandardFields = new EnumMap<>( StandardField.class );
 
     /**
      *  The standard methods.
      */
+    @SuppressWarnings( "StaticCollection" )
     private static final Map<StandardMethod,MethodSpec> m_StandardMethods = new EnumMap<>( StandardMethod.class );
 
         /*------------------------*\
@@ -209,11 +207,19 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
      *  {@link StringConverter}
      *  implementations.
      */
-    private static final LazyMap<TypeName,TypeName> m_ConverterRegistry;
+    @SuppressWarnings( "StaticCollection" )
+    private static final Map<TypeName,ClassName> m_ConverterRegistry;
 
     static
     {
-        m_ConverterRegistry = LazyMap.use( true, CodeBuilderBase::loadStringConverters );
+        try
+        {
+            m_ConverterRegistry = Map.copyOf( ConfigAnnotationProcessor.createStringConverterRegistry() );
+        }
+        catch( final IOException e )
+        {
+            throw new ExceptionInInitializerError( e );
+        }
     }
 
         /*--------------*\
@@ -235,7 +241,7 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
 
         m_IsSynchronized = m_Configuration.getSynchronizationRequired();
 
-        m_Configuration.getInitDataMethod().ifPresent( m -> m_StandardMethods.put( StandardMethod.STD_METHOD_InitData, m ) );
+        m_Configuration.getInitDataMethod().ifPresent( spec -> m_StandardMethods.put( StandardMethod.STD_METHOD_InitData, spec ) );
     }   //  CodeBuilderBase()
 
         /*---------*\
@@ -321,7 +327,6 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
     /**
      *  {@inheritDoc}
      */
-    @SuppressWarnings( "AbstractMethodOverridesAbstractMethod" )
     @Override
     public abstract void build();
 
@@ -333,7 +338,7 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
      *  @param  property    The property.
      *  @return The method specification.
      */
-    @SuppressWarnings( {"OptionalGetWithoutIsPresent", "EnhancedSwitchMigration", "UseOfConcreteClass", "StaticMethodOnlyUsedInOneClass"} )
+    @SuppressWarnings( {"OptionalGetWithoutIsPresent", "EnhancedSwitchMigration", "UseOfConcreteClass", "StaticMethodOnlyUsedInOneClass", "OverlyCoupledMethod", "OverlyComplexMethod"} )
     public static MethodSpec composeAddMethod( final CodeBuilder codeBuilder, final PropertySpecImpl property )
     {
         final var composer = requireNonNullArgument( codeBuilder, "codeBuilder" ).getComposer();
@@ -515,6 +520,7 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
                         """
                 )
                 .addStaticImport( Objects.class, "isNull" )
+                .addStaticImport( System.class, "getenv" )
                 .addStatement( "value = $1S", defaultValue.get() )
                 .endControlFlow();
         }
@@ -523,6 +529,7 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
             builder.addStatement( "final var value = getenv( $1S )", property.getEnvironmentVariableName().orElseThrow( () -> new CodeGenerationError( format( MSG_MissingEnvironmentVar, property.getPropertyName() ) ) ) );
         }
         builder.addStaticImport( System.class, "getenv" )
+            .addStaticImport( System.class, "getenv" )
             .addStatement( "$1N = stringConverter.fromString( value )", property.getFieldName() )
             .endControlFlow();
 
@@ -543,7 +550,7 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
      *  @param  property    The property.
      *  @return The field specification.
      */
-    @SuppressWarnings( {"UseOfConcreteClass", "StaticMethodOnlyUsedInOneClass"} )
+    @SuppressWarnings( {"UseOfConcreteClass", "StaticMethodOnlyUsedInOneClass", "OverlyComplexMethod"} )
     public static CodeBlock composeConstructorFragment4SystemPreference( final CodeBuilder codeBuilder, final PropertySpecImpl property )
     {
         final var composer = requireNonNullArgument( codeBuilder, "codeBuilder" ).getComposer();
@@ -897,7 +904,6 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
      *      {@link Enum enum} type, {@code false} otherwise.
      *  @return The type of instantiation.
      */
-    @SuppressWarnings( "TryWithIdenticalCatches" )
     protected static final StringConverterInstantiation determineStringConverterInstantiation( final TypeName stringConverterClass, final boolean isEnum )
     {
         var retValue = THROUGH_CONSTRUCTOR;
@@ -910,7 +916,7 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
                 final var modifiers = field.getModifiers();
                 retValue = field.canAccess( null ) && isPublic( modifiers ) && isStatic( modifiers ) ? BY_INSTANCE : THROUGH_CONSTRUCTOR;
             }
-            catch( @SuppressWarnings( "unused" ) final NoSuchFieldException | SecurityException e )
+            catch( @SuppressWarnings( "unused" ) final NoSuchFieldException | SecurityException ignored )
             {
                 /*
                  * There is no INSTANCE field, or it is not static, or not public,
@@ -918,7 +924,7 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
                  */
                 retValue = THROUGH_CONSTRUCTOR;
             }
-            catch( @SuppressWarnings( "unused" ) final ClassNotFoundException e )
+            catch( @SuppressWarnings( "unused" ) final ClassNotFoundException ignored )
             {
                 /*
                  * The class for the StringConverter implementation does not
@@ -939,14 +945,12 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
     /**
      *  {@inheritDoc}
      */
-    @SuppressWarnings( "UseOfConcreteClass" )
     @Override
     public final JavaComposer getComposer() { return m_Composer; }
 
     /**
      *  {@inheritDoc}
      */
-    @SuppressWarnings( "UseOfConcreteClass" )
     @Override
     public final CodeGenerationConfiguration getConfiguration() { return m_Configuration; }
 
@@ -994,7 +998,7 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
      */
     protected static final Optional<TypeName> getStringConverter( final TypeName type )
     {
-        final var retValue = Optional.ofNullable( m_ConverterRegistry.get( requireNonNullArgument( type, "type" ) ) );
+        final var retValue = Optional.ofNullable( (TypeName) m_ConverterRegistry.get( requireNonNullArgument( type, "type" ) ) );
 
         //---* Done *----------------------------------------------------------
         return retValue;
@@ -1008,44 +1012,6 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
      *      otherwise.
      */
     protected final boolean isSynchronized() { return m_IsSynchronized; }
-
-    /**
-     *  The implementation of
-     *  {@link Supplier}
-     *  that loads the known
-     *  {@link StringConverter}
-     *  instances for
-     *  {@link #m_ConverterRegistry}.
-     *
-     *  @return The String converters.
-     *
-     *  @see    LazyMap#use(boolean, Supplier)
-     */
-    @SuppressWarnings( "UseOfObsoleteDateTimeApi" )
-    private static final Map<TypeName,TypeName> loadStringConverters()
-    {
-        final Map<TypeName,TypeName> retValue = new HashMap<>();
-        retValue.put( TypeName.from( Date.class ), TypeName.from( DateLongStringConverter.class ) );
-        for( final var type : StringConverter.list() )
-        {
-            @SuppressWarnings( "rawtypes" )
-            final Class<? extends StringConverter> converterClass;
-            try
-            {
-                converterClass = StringConverter.forClass( type )
-                    .orElseThrow()
-                    .getClass();
-            }
-            catch( final NoSuchElementException e )
-            {
-                throw new UnexpectedExceptionError( e );
-            }
-            retValue.put( TypeName.from( type ), TypeName.from( converterClass ) );
-        }
-
-        //---* Done *----------------------------------------------------------
-        return retValue;
-    }   //  loadStringConverters()
 }
 //  class CodeBuilderBase
 

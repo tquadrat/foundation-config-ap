@@ -35,6 +35,7 @@ import static org.tquadrat.foundation.config.ap.CollectionKind.NO_COLLECTION;
 import static org.tquadrat.foundation.config.ap.CollectionKind.SET;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ALLOWS_INIFILE;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ALLOWS_PREFERENCES;
+import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ELEMENTTYPE_IS_ENUM;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.EXEMPT_FROM_TOSTRING;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.GETTER_IS_DEFAULT;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.GETTER_ON_MAP;
@@ -51,6 +52,7 @@ import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER_IS_DEFAULT;
 import static org.tquadrat.foundation.javacomposer.Layout.LAYOUT_FOUNDATION;
 import static org.tquadrat.foundation.lang.CommonConstants.EMPTY_STRING;
+import static org.tquadrat.foundation.lang.CommonConstants.UTF8;
 import static org.tquadrat.foundation.lang.DebugOutput.ifDebug;
 import static org.tquadrat.foundation.lang.Objects.isNull;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
@@ -157,14 +159,14 @@ import org.tquadrat.foundation.util.stringconverter.EnumStringConverter;
  *  The annotation processor for the {@code org.tquadrat.foundation.config}
  *  module.
  *
- *  @version $Id: ConfigAnnotationProcessor.java 1018 2022-02-13 19:26:19Z tquadrat $
+ *  @version $Id: ConfigAnnotationProcessor.java 1053 2023-03-11 00:10:49Z tquadrat $
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"OverlyCoupledClass", "OverlyComplexClass", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1018 2022-02-13 19:26:19Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1053 2023-03-11 00:10:49Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @SupportedSourceVersion( SourceVersion.RELEASE_17 )
 @SupportedOptions( { APBase.ADD_DEBUG_OUTPUT, APBase.MAVEN_GOAL } )
@@ -608,6 +610,11 @@ public class ConfigAnnotationProcessor extends APBase
             case ARRAY ->
             {
                 //---* Check the component type *------------------------------
+                /*
+                 * Currently (as of 2023-03-08 and for Java 17), the class
+                 * SimpleTypeVisitor14 is the latest incarnation of this type.
+                 */
+                @SuppressWarnings( {"AnonymousInnerClassMayBeStatic", "AnonymousInnerClass"} )
                 final var componentType = typeName.accept( new SimpleTypeVisitor14<TypeMirror,Void>()
                 {
                     /**
@@ -632,7 +639,7 @@ public class ConfigAnnotationProcessor extends APBase
                 final var unwantedTypes = List.of( DoubleStream.class, IntStream.class, LongStream.class, InputStream.class, Stream.class );
                 final var isInappropriate = unwantedTypes.stream()
                     .map( Class::getName )
-                    .map( n -> getElementUtils().getTypeElement( n ) )
+                    .map( s -> getElementUtils().getTypeElement( s ) )
                     .map( Element::asType )
                     .map( e -> getTypeUtils().erasure( e ) )
                     .anyMatch( t -> getTypeUtils().isAssignable( erasure, t ) );
@@ -730,24 +737,24 @@ public class ConfigAnnotationProcessor extends APBase
         final var resources = classLoader.getResources( format( "META-INF/services/%s", StringConverter.class.getName() ) );
         for( final var file : list( resources ) )
         {
-            try( final var reader = new BufferedReader( new InputStreamReader( file.openStream() ) ) )
+            try( final var reader = new BufferedReader( new InputStreamReader( file.openStream(), UTF8 ) ) )
             {
                 final var converterClasses = reader.lines()
                     .map( String::trim )
-                    .filter( l -> !l.startsWith( "#" ) )
-                    .map( l -> loadClass( classLoader, l, StringConverter.class ) )
+                    .filter( s -> !s.startsWith( "#" ) )
+                    .map( s -> loadClass( classLoader, s, StringConverter.class ) )
                     .filter( Optional::isPresent )
                     .map( Optional::get )
                     .toList();
-                CreateLoop: for( final var c : converterClasses )
+                CreateLoop: for( final var aClass : converterClasses )
                 {
                     try
                     {
-                        final var constructor = c.getConstructor();
+                        final var constructor = aClass.getConstructor();
                         final var instance = constructor.newInstance();
                         for( final var subjectClass : retrieveSubjectClasses( instance ) )
                         {
-                            buffer.put( TypeName.from( subjectClass ), ClassName.from( c ) );
+                            buffer.put( TypeName.from( subjectClass ), ClassName.from( aClass ) );
                         }
                     }
                     catch( final InvocationTargetException | NoSuchMethodException |InstantiationException | IllegalAccessException e )
@@ -791,6 +798,33 @@ public class ConfigAnnotationProcessor extends APBase
         //---* Done *----------------------------------------------------------
         return retValue;
     }   //  determineCollectionKind()
+
+    /**
+     *  <p>{@summary Determines the element type from the given
+     *  {@link TypeMirror}
+     *  instance representing a collection.}</p>
+     *
+     *  @param  type   The type.
+     *  @return An instance of
+     *      {@link Optional}
+     *      that holds the element type.
+     */
+    private final Optional<TypeMirror> determineElementType( final TypeMirror type )
+    {
+        final var retValue = switch( determineCollectionKind( requireNonNullArgument( type, "type" ) ) )
+            {
+                case LIST, SET ->
+                {
+                    final var genericTypes = retrieveGenericTypes( type );
+                    yield genericTypes.size() == 1 ? Optional.of( genericTypes.get( 0 ) ) : Optional.<TypeMirror>empty();
+                }
+
+                default -> Optional.<TypeMirror>empty();
+            };
+
+        //---* Done *----------------------------------------------------------
+        return retValue;
+    }   //  determineElementType()
 
     /**
      *  <p>{@summary Retrieves the name of the property from the name of the
@@ -846,10 +880,11 @@ public class ConfigAnnotationProcessor extends APBase
 
     /**
      *  <p>{@summary Determines the property type from the given
-     *  {@link TypeMirror} instance.} This is either the return type of a
+     *  {@link TypeMirror}
+     *  instance.} This is either the return type of a
      *  getter or the argument type of a setter.</p>
      *  <p>Usually the property type will be the respective
-     *  {@link TypeName}
+     *  {@link TypeMirror}
      *  for the given type as is, only in case of
      *  {@link Optional},
      *  it will be the parameter type.</p>
@@ -967,7 +1002,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  @param  configuration   The code generation configuration.
      *  @param  addMethod   The 'add' method.
      */
-    @SuppressWarnings( "UseOfConcreteClass" )
+    @SuppressWarnings( {"UseOfConcreteClass", "OverlyCoupledMethod", "OverlyComplexMethod"} )
     private final void handleAddMethod( final CodeGenerationConfiguration configuration, final ExecutableElement addMethod )
     {
         //---* Get the method name *-------------------------------------------
@@ -1064,9 +1099,9 @@ public class ConfigAnnotationProcessor extends APBase
                 }
 
                 /*
-                 * Get the StringConverter; as this cannot be inferred it has to be
-                 * taken from the annotation @StringConversion, if present. And
-                 * then it will override the already set one.
+                 * Get the StringConverter; as this cannot be inferred it has
+                 * to be taken from the annotation @StringConversion, if
+                 * present. And then it will override the already set one.
                  */
                 extractStringConverterClass( addMethod )
                     .ifPresent( property::setStringConverterClass );
@@ -1095,7 +1130,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  @param  configuration   The code generation configuration.
      *  @param  getter  The getter method.
      */
-    @SuppressWarnings( "UseOfConcreteClass" )
+    @SuppressWarnings( {"UseOfConcreteClass", "OverlyCoupledMethod", "OverlyLongMethod", "OverlyComplexMethod"} )
     private final void handleGetter( final CodeGenerationConfiguration configuration, final ExecutableElement getter )
     {
         //---* Get the property name *-----------------------------------------
@@ -1160,6 +1195,20 @@ public class ConfigAnnotationProcessor extends APBase
         property.setCollectionKind( collectionKind );
         final var isEnum = isEnumType( rawPropertyType );
         property.setIsEnum( isEnum );
+        switch( collectionKind )
+        {
+            case LIST, SET ->
+                determineElementType( rawPropertyType )
+                    .filter( this::isEnumType )
+                    .ifPresent( $ -> property.setFlag( ELEMENTTYPE_IS_ENUM ) );
+
+            case MAP ->
+            {
+                // Does nothing currently
+            }
+
+            case NO_COLLECTION -> { /* Nothing to do */ }
+        }
 
         /*
          * Some properties are 'special', and that is reflected by the
@@ -1206,6 +1255,7 @@ public class ConfigAnnotationProcessor extends APBase
                     property.setINIConfiguration( a );
                     property.setFlag( ALLOWS_INIFILE, PROPERTY_IS_MUTABLE );
                 } );
+            //noinspection NonShortCircuitBooleanExpression
             allowsPreferences &= iniValue.isEmpty();
 
             final var systemPropertyAnnotation = getter.getAnnotation( SystemProperty.class );
@@ -1368,7 +1418,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  @param  configuration   The code generation configuration.
      *  @param  setter  The setter method.
      */
-    @SuppressWarnings( "UseOfConcreteClass" )
+    @SuppressWarnings( {"UseOfConcreteClass", "OverlyCoupledMethod", "OverlyLongMethod", "OverlyComplexMethod"} )
     private final void handleSetter( final CodeGenerationConfiguration configuration, final ExecutableElement setter )
     {
         //---* Get the method name *-------------------------------------------
@@ -1760,6 +1810,7 @@ public class ConfigAnnotationProcessor extends APBase
         }
 
         //---* The usage text *------------------------------------------------
+        //noinspection UnnecessaryCodeBlock
         {
             final var name = "usageKey";
             getAnnotationValue( annotationMirror, name )
@@ -1831,6 +1882,7 @@ public class ConfigAnnotationProcessor extends APBase
     /**
      *  {@inheritDoc}
      */
+    @SuppressWarnings( "OverlyNestedMethod" )
     @Override
     public final boolean process( final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnvironment )
     {
@@ -1909,6 +1961,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  @param  specification   The specification interface.
      *  @throws IOException A problem occurred when writing the source file.
      */
+    @SuppressWarnings( {"OverlyCoupledMethod", "OverlyComplexMethod"} )
     private final void processConfigurationBeanSpecification( final TypeElement specification ) throws IOException
     {
         //---* Create the composer *-------------------------------------------
@@ -2141,7 +2194,7 @@ public class ConfigAnnotationProcessor extends APBase
             .filter( e -> returnType.equals( TypeName.from( e.getReturnType() ) ) )
             .findFirst();
 
-        method.map( m -> configuration.getComposer().createMethod( m ) )
+        method.map( methodSpec -> configuration.getComposer().createMethod( methodSpec ) )
             .ifPresent( configuration::setInitDataMethod );
     }   //  retrieveInitDataMethod()
 
@@ -2171,8 +2224,9 @@ public class ConfigAnnotationProcessor extends APBase
         final Collection<ExecutableElement> getters = new ArrayList<>();
         final Collection<ExecutableElement> setters = new ArrayList<>();
         final Collection<ExecutableElement> addMethods = new ArrayList<>();
+        //noinspection OverlyLongLambda
         interfaces.stream()
-            .flatMap( i -> i.getEnclosedElements().stream() )
+            .flatMap( element -> element.getEnclosedElements().stream() )
             .filter( e -> e.getKind() == METHOD )
             .map( e -> (ExecutableElement) e )
             .forEach( element ->
@@ -2269,7 +2323,7 @@ public class ConfigAnnotationProcessor extends APBase
                 //noinspection unchecked
                 retValue = (Collection<Class<?>>) getSubjectClassMethod.invoke( converter );
             }
-            catch( @SuppressWarnings( "unused" ) final NoSuchMethodException e )
+            catch( @SuppressWarnings( "unused" ) final NoSuchMethodException ignored )
             {
                 final var fromStringMethod = converterClass.getMethod( "fromString", CharSequence.class );
                 retValue = List.of( fromStringMethod.getReturnType() );

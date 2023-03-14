@@ -7,7 +7,7 @@
      version='1.1'
      baseProfile='full'
      width='3570.000'
-     height='2194.000'>
+     height='2205.000'>
     <defs>
         <style><![CDATA[
             line
@@ -118,7 +118,7 @@
         </marker>
         <clipPath id='ID000001'>
             <rect class='focusClass'
-                  height='931.000'
+                  height='942.000'
                   width='1444.000'
                   x='0.000'
                   y='0.000'/>
@@ -130,7 +130,7 @@
                     <rect x='0.000'
                           y='0.000'
                           width='1444.000'
-                          height='931.000'
+                          height='942.000'
                           class='focusClass'/>
                     <line x1='0.000'
                           y1='17.000'
@@ -267,47 +267,49 @@
                     <text x='5.000'
                           y='696.000'>- determineCollectionKind(type:javax.lang.model.type.TypeMirror):org.tquadrat.foundation.config.ap.CollectionKind</text>
                     <text x='5.000'
-                          y='707.000'>- determinePropertyNameFromMethod(method:javax.lang.model.element.ExecutableElement):java.lang.String</text>
+                          y='707.000'>- determineElementType(type:javax.lang.model.type.TypeMirror):java.util.Optional&lt;javax.lang.model.type.TypeMirror&gt;</text>
                     <text x='5.000'
-                          y='718.000'>- determinePropertyType(type:javax.lang.model.type.TypeMirror):javax.lang.model.type.TypeMirror</text>
+                          y='718.000'>- determinePropertyNameFromMethod(method:javax.lang.model.element.ExecutableElement):java.lang.String</text>
                     <text x='5.000'
-                          y='729.000'>- determineStringConverterClass(method:javax.lang.model.element.ExecutableElement,type:org.tquadrat.foundation.javacomposer.TypeName,isEnum:boolean):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.ClassName&gt;</text>
+                          y='729.000'>- determinePropertyType(type:javax.lang.model.type.TypeMirror):javax.lang.model.type.TypeMirror</text>
                     <text x='5.000'
-                          y='740.000'>+ extractStringConverterClass(method:javax.lang.model.element.ExecutableElement):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.ClassName&gt;</text>
+                          y='740.000'>- determineStringConverterClass(method:javax.lang.model.element.ExecutableElement,type:org.tquadrat.foundation.javacomposer.TypeName,isEnum:boolean):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.ClassName&gt;</text>
                     <text x='5.000'
-                          y='751.000'># getSupportedAnnotationClasses():java.util.Collection&lt;java.lang.Class&lt;? extends java.lang.annotation.Annotation&gt;&gt;</text>
+                          y='751.000'>+ extractStringConverterClass(method:javax.lang.model.element.ExecutableElement):java.util.Optional&lt;org.tquadrat.foundation.javacomposer.ClassName&gt;</text>
                     <text x='5.000'
-                          y='762.000'>- handleAddMethod(configuration:org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,addMethod:javax.lang.model.element.ExecutableElement):void</text>
+                          y='762.000'># getSupportedAnnotationClasses():java.util.Collection&lt;java.lang.Class&lt;? extends java.lang.annotation.Annotation&gt;&gt;</text>
                     <text x='5.000'
-                          y='773.000'>- handleGetter(configuration:org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,getter:javax.lang.model.element.ExecutableElement):void</text>
+                          y='773.000'>- handleAddMethod(configuration:org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,addMethod:javax.lang.model.element.ExecutableElement):void</text>
                     <text x='5.000'
-                          y='784.000'>- handleSetter(configuration:org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,setter:javax.lang.model.element.ExecutableElement):void</text>
+                          y='784.000'>- handleGetter(configuration:org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,getter:javax.lang.model.element.ExecutableElement):void</text>
                     <text x='5.000'
-                          y='795.000'>- initStringConvertersForTypeNames():java.util.Map&lt;org.tquadrat.foundation.javacomposer.TypeName,org.tquadrat.foundation.javacomposer.ClassName&gt;</text>
+                          y='795.000'>- handleSetter(configuration:org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,setter:javax.lang.model.element.ExecutableElement):void</text>
                     <text x='5.000'
-                          y='806.000'>- parseArgumentAnnotation(annotation:org.tquadrat.foundation.config.Argument,method:javax.lang.model.element.ExecutableElement,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):void</text>
+                          y='806.000'>- initStringConvertersForTypeNames():java.util.Map&lt;org.tquadrat.foundation.javacomposer.TypeName,org.tquadrat.foundation.javacomposer.ClassName&gt;</text>
                     <text x='5.000'
-                          y='817.000'>- parseCLIAnnotation(annotation:java.lang.annotation.Annotation,method:javax.lang.model.element.ExecutableElement,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):void</text>
+                          y='817.000'>- parseArgumentAnnotation(annotation:org.tquadrat.foundation.config.Argument,method:javax.lang.model.element.ExecutableElement,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):void</text>
                     <text x='5.000'
-                          y='828.000'>- parseEnvironmentVariableAnnotation(annotation:org.tquadrat.foundation.config.EnvironmentVariable,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):void</text>
+                          y='828.000'>- parseCLIAnnotation(annotation:java.lang.annotation.Annotation,method:javax.lang.model.element.ExecutableElement,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):void</text>
                     <text x='5.000'
-                          y='839.000'>- parseOptionAnnotation(annotation:org.tquadrat.foundation.config.Option,method:javax.lang.model.element.ExecutableElement,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):void</text>
+                          y='839.000'>- parseEnvironmentVariableAnnotation(annotation:org.tquadrat.foundation.config.EnvironmentVariable,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):void</text>
                     <text x='5.000'
-                          y='850.000'>- parseSystemPropertyAnnotation(annotation:org.tquadrat.foundation.config.SystemProperty,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):void</text>
+                          y='850.000'>- parseOptionAnnotation(annotation:org.tquadrat.foundation.config.Option,method:javax.lang.model.element.ExecutableElement,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):void</text>
                     <text x='5.000'
-                          y='861.000'>+ process(annotations:java.util.Set&lt;? extends javax.lang.model.element.TypeElement&gt;,roundEnvironment:javax.annotation.processing.RoundEnvironment):boolean</text>
+                          y='861.000'>- parseSystemPropertyAnnotation(annotation:org.tquadrat.foundation.config.SystemProperty,property:org.tquadrat.foundation.config.ap.impl.PropertySpecImpl):void</text>
                     <text x='5.000'
-                          y='872.000'>- processConfigurationBeanSpecification(specification:javax.lang.model.element.TypeElement):void</text>
+                          y='872.000'>+ process(annotations:java.util.Set&lt;? extends javax.lang.model.element.TypeElement&gt;,roundEnvironment:javax.annotation.processing.RoundEnvironment):boolean</text>
                     <text x='5.000'
-                          y='883.000'>- retrieveAccessorClass(accessorType:org.tquadrat.foundation.javacomposer.TypeName,propertyType:javax.lang.model.type.TypeMirror,collectionKind:org.tquadrat.foundation.config.ap.CollectionKind):org.tquadrat.foundation.javacomposer.TypeName</text>
+                          y='883.000'>- processConfigurationBeanSpecification(specification:javax.lang.model.element.TypeElement):void</text>
                     <text x='5.000'
-                          y='894.000'>- retrieveInitDataMethod(configuration:org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,specification:javax.lang.model.element.TypeElement):void</text>
+                          y='894.000'>- retrieveAccessorClass(accessorType:org.tquadrat.foundation.javacomposer.TypeName,propertyType:javax.lang.model.type.TypeMirror,collectionKind:org.tquadrat.foundation.config.ap.CollectionKind):org.tquadrat.foundation.javacomposer.TypeName</text>
                     <text x='5.000'
-                          y='905.000'>- retrieveProperties(configuration:org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,interfaces:java.util.Collection&lt;? extends javax.lang.model.element.TypeElement&gt;):void</text>
+                          y='905.000'>- retrieveInitDataMethod(configuration:org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,specification:javax.lang.model.element.TypeElement):void</text>
                     <text x='5.000'
-                          y='916.000'>- retrieveSetterArgumentName(setter:javax.lang.model.element.ExecutableElement):javax.lang.model.element.Name</text>
+                          y='916.000'>- retrieveProperties(configuration:org.tquadrat.foundation.config.ap.CodeGenerationConfiguration,interfaces:java.util.Collection&lt;? extends javax.lang.model.element.TypeElement&gt;):void</text>
                     <text x='5.000'
-                          y='927.000'
+                          y='927.000'>- retrieveSetterArgumentName(setter:javax.lang.model.element.ExecutableElement):javax.lang.model.element.Name</text>
+                    <text x='5.000'
+                          y='938.000'
                           class='static'>- retrieveSubjectClasses(converter:org.tquadrat.foundation.lang.StringConverter&lt;?&gt;):java.util.Collection&lt;java.lang.Class&lt;?&gt;&gt;</text>
                 </g>
             </g>

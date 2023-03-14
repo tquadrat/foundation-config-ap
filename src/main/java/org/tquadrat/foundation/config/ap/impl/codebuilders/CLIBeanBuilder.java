@@ -26,6 +26,7 @@ import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_Du
 import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_InvalidCLIType;
 import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_NoArgumentIndex;
 import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_NoOptionName;
+import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ELEMENTTYPE_IS_ENUM;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_CLI_MANDATORY;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_CLI_MULTIVALUED;
 import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_ARGUMENT;
@@ -60,6 +61,7 @@ import org.tquadrat.foundation.annotation.ClassVersion;
 import org.tquadrat.foundation.ap.IllegalAnnotationError;
 import org.tquadrat.foundation.config.CmdLineException;
 import org.tquadrat.foundation.config.ConfigUtil;
+import org.tquadrat.foundation.config.ap.CollectionKind;
 import org.tquadrat.foundation.config.ap.PropertySpec;
 import org.tquadrat.foundation.config.cli.CmdLineValueHandler;
 import org.tquadrat.foundation.config.cli.SimpleCmdLineValueHandler;
@@ -70,6 +72,7 @@ import org.tquadrat.foundation.config.spi.CLIOptionDefinition;
 import org.tquadrat.foundation.javacomposer.ArrayTypeName;
 import org.tquadrat.foundation.javacomposer.ClassName;
 import org.tquadrat.foundation.javacomposer.FieldSpec;
+import org.tquadrat.foundation.javacomposer.LambdaSpec;
 import org.tquadrat.foundation.javacomposer.ParameterizedTypeName;
 import org.tquadrat.foundation.javacomposer.TypeName;
 import org.tquadrat.foundation.javacomposer.WildcardTypeName;
@@ -82,12 +85,12 @@ import org.tquadrat.foundation.lang.Objects;
  *  {@link org.tquadrat.foundation.config.CLIBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CLIBeanBuilder.java 1051 2023-02-26 19:14:46Z tquadrat $
+ *  @version $Id: CLIBeanBuilder.java 1053 2023-03-11 00:10:49Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: CLIBeanBuilder.java 1051 2023-02-26 19:14:46Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CLIBeanBuilder.java 1053 2023-03-11 00:10:49Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class CLIBeanBuilder extends CodeBuilderBase
 {
@@ -135,10 +138,9 @@ public final class CLIBeanBuilder extends CodeBuilderBase
     public final void build()
     {
         var doBuild = false;
-        //noinspection ForLoopWithMissingComponent
-        for( final var i = getProperties(); i.hasNext() && !doBuild; )
+        for( final var iterator = getProperties(); iterator.hasNext() && !doBuild; )
         {
-            final var property = i.next();
+            final var property = iterator.next();
             doBuild = property.hasFlag( PROPERTY_IS_OPTION ) || property.hasFlag( PROPERTY_IS_ARGUMENT );
         }
         if( doBuild ) doBuild();
@@ -157,33 +159,73 @@ public final class CLIBeanBuilder extends CodeBuilderBase
         //---* The method name *-----------------------------------------------
         final var retValue = format( "composeValueHandler_%s", capitalize( property.getPropertyName() ) );
 
-        //---* The lambda that sets the value to the attribute *---------------
-        final var lambdaType = ParameterizedTypeName.from( ClassName.from( BiConsumer.class ), ClassName.from( String.class ), property.getPropertyType().box() );
-        final var lambda = getComposer().lambdaBuilder()
-            .addParameter( "propertyName" )
-            .addParameter( "value" )
-            .addCode( "$N = value", property.getFieldName() )
-            .build();
-
-        //---* Retrieve the class for the value handler *----------------------
         final var objectType = WildcardTypeName.subtypeOf( Object.class );
         final var handlerType = ParameterizedTypeName.from( ClassName.from( CmdLineValueHandler.class ), objectType );
-        final var valueHandlerClass = retrieveValueHandlerClass( property );
         final var builder = getComposer().codeBlockBuilder();
-        valueHandlerClass.ifPresentOrElse(
-            t -> builder.addStatement( "final $T retValue = new $T( lambda ) ", handlerType, t ),
-            () ->
-            {
-                final var stringConverter = property.getStringConverterClass()
-                    .orElseThrow( () -> new IllegalAnnotationError( format( "No String converter for property '%s'", property.getPropertyName() ) ) );
-                switch( determineStringConverterInstantiation( stringConverter, property.isEnum() ) )
-                {
-                    case BY_INSTANCE -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, $3T.INSTANCE )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
-                    case THROUGH_CONSTRUCTOR -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, new $3T() )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
-                    case AS_ENUM -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, new $3T( $4T.class ) )", handlerType, SimpleCmdLineValueHandler.class, stringConverter, property.getPropertyType() );
-                }
-            });
 
+        final ParameterizedTypeName lambdaType;
+        final LambdaSpec lambda;
+
+        if( property.isCollection() )
+        {
+            if( property.getCollectionKind() == CollectionKind.MAP )
+            {
+                throw new IllegalAnnotationError( format( "Property '%s' is a map of type '%s'; maps are currently not supported for CLI properties", property.getPropertyName(), property.getPropertyType().toString() ) );
+            }
+
+            //---* Determine the element type of the collection *--------------
+            final var elementType = property.getElementType()
+                .orElseThrow( () -> new IllegalAnnotationError( format( "Cannot determine element type for property '%s'", property.getPropertyName() ) ) );
+
+            //---* The lambda that adds the value to the attribute *-----------
+            lambdaType = ParameterizedTypeName.from( ClassName.from( BiConsumer.class ), ClassName.from( String.class ), elementType );
+            lambda = getComposer().lambdaBuilder()
+                .addParameter( "propertyName" )
+                .addParameter( "value" )
+                .addCode( "$N.add( value )", property.getFieldName() )
+                .build();
+
+            //---* Get the StringConverter for the element type *--------------
+            final var stringConverter = property.getStringConverterClass()
+                .or( () -> getStringConverter( elementType ) )
+                .orElseThrow( () -> new IllegalAnnotationError( format( "Property '%1$s': cannot find StringConverter for '%2$s'", property.getPropertyName(), elementType.toString() ) ) );
+
+            switch( determineStringConverterInstantiation( stringConverter, property.hasFlag( ELEMENTTYPE_IS_ENUM ) ) )
+            {
+                case BY_INSTANCE -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, $3T.INSTANCE )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
+                case THROUGH_CONSTRUCTOR -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, new $3T() )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
+                case AS_ENUM -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, new $3T( $4T.class ) )", handlerType, SimpleCmdLineValueHandler.class, stringConverter, property.getPropertyType() );
+            }
+        }
+        else
+        {
+            //---* The lambda that sets the value to the attribute *-----------
+            lambdaType = ParameterizedTypeName.from( ClassName.from( BiConsumer.class ), ClassName.from( String.class ), property.getPropertyType().box() );
+            lambda = getComposer().lambdaBuilder()
+                .addParameter( "propertyName" )
+                .addParameter( "value" )
+                .addCode( "$N = value", property.getFieldName() )
+                .build();
+
+            //---* Retrieve the class for the value handler *------------------
+            final var valueHandlerClass = retrieveValueHandlerClass( property );
+            //noinspection OverlyLongLambda
+            valueHandlerClass.ifPresentOrElse(
+                t -> builder.addStatement( "final $T retValue = new $T( lambda ) ", handlerType, t ),
+                () ->
+                {
+                    final var stringConverter = property.getStringConverterClass()
+                        .orElseThrow( () -> new IllegalAnnotationError( format( "No String converter for property '%s'", property.getPropertyName() ) ) );
+                    switch( determineStringConverterInstantiation( stringConverter, property.isEnum() ) )
+                    {
+                        case BY_INSTANCE -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, $3T.INSTANCE )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
+                        case THROUGH_CONSTRUCTOR -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, new $3T() )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
+                        case AS_ENUM -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, new $3T( $4T.class ) )", handlerType, SimpleCmdLineValueHandler.class, stringConverter, property.getPropertyType() );
+                    }
+                });
+        }
+
+        //---* Compose the method *--------------------------------------------
         final var method = getComposer().methodBuilder( retValue )
             .addModifiers( PRIVATE, FINAL )
             .addJavadoc(
@@ -383,10 +425,9 @@ public final class CLIBeanBuilder extends CodeBuilderBase
             .addStatement( "$T $L", CLIDefinition.class, definitionName );
 
         CLIPropertiesLoop:
-        //noinspection ForLoopWithMissingComponent
-        for( final var i = getProperties(); i.hasNext(); )
+        for( final var iterator = getProperties(); iterator.hasNext(); )
         {
-            final var property = i.next();
+            final var property = iterator.next();
             if( !property.isOnCLI() ) continue CLIPropertiesLoop;
 
             //---* Create the value handler *----------------------------------
@@ -433,7 +474,7 @@ public final class CLIBeanBuilder extends CodeBuilderBase
                     }
                 }
                 final var names = optionNames.stream()
-                    .map( n -> format( "\"%s\"", n ) )
+                    .map( s -> format( "\"%s\"", s ) )
                     .collect( joining( ", ", "List.of( ", " )" ) );
                 builder.addStatement( "$1L = new $2T( $3S, $4L, $5S, $6S, $7S, $8L, $9L, $10L, $11S )",
                     definitionName,

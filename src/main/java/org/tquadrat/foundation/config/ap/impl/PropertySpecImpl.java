@@ -66,12 +66,12 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  {@link PropertySpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: PropertySpecImpl.java 1051 2023-02-26 19:14:46Z tquadrat $
+ *  @version $Id: PropertySpecImpl.java 1053 2023-03-11 00:10:49Z tquadrat $
  *  @since 0.1.0
  *  @UMLGraph.link
  */
 @SuppressWarnings( {"ClassWithTooManyFields", "OverlyComplexClass"} )
-@ClassVersion( sourceVersion = "$Id: PropertySpecImpl.java 1051 2023-02-26 19:14:46Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: PropertySpecImpl.java 1053 2023-03-11 00:10:49Z tquadrat $" )
 @API( status = INTERNAL, since = "0.1.0" )
 public final class PropertySpecImpl implements PropertySpec
 {
@@ -649,9 +649,9 @@ public final class PropertySpecImpl implements PropertySpec
             getGetterMethodName().ifPresent( retValue::setGetterMethodName );
             retValue.m_GetterComposer = otherSpec.getGetterComposer().orElse( m_GetterComposer );
             retValue.setGetterReturnType( otherSpec.getGetterReturnType() );
-            otherSpec.getINIComment().ifPresent( c -> retValue.m_INIComment = c );
+            otherSpec.getINIComment().ifPresent( s -> retValue.m_INIComment = s );
             otherSpec.getINIGroup().ifPresent( g -> retValue.m_INIGroup = g );
-            otherSpec.getINIKey().ifPresent( k -> retValue.m_INIKey = k );
+            otherSpec.getINIKey().ifPresent( s -> retValue.m_INIKey = s );
             retValue.setIsEnum( otherSpec.isEnum() );
             otherSpec.getPrefsAccessorClass().ifPresent( retValue::setPrefsAccessorClass );
             otherSpec.getPrefsKey().ifPresent( retValue::setPrefsKey );
@@ -829,6 +829,7 @@ public final class PropertySpecImpl implements PropertySpec
      *
      *  @param  value   The default value.
      */
+    @SuppressWarnings( "PublicMethodNotExposedInInterface" )
     public final void setEnvironmentDefaultValue( final String value )
     {
         m_EnvironmentDefaultValue = NUL.equals( value ) ? null : value;
@@ -944,7 +945,7 @@ public final class PropertySpecImpl implements PropertySpec
     public void setINIConfiguration( final INIValue configuration )
     {
         final var group = requireNonNullArgument( configuration, "configuration" ).group();
-        final var key = mapNonNull( configuration.key(), k -> isEmptyOrBlank( k ) ? getPropertyName() : k );
+        final var key = mapNonNull( configuration.key(), s -> isEmptyOrBlank( s ) ? getPropertyName() : s );
         final var comment = configuration.comment();
         setINIConfiguration( group, key, comment );
     }   //  setINIConfiguration()
@@ -957,6 +958,7 @@ public final class PropertySpecImpl implements PropertySpec
      *  @param  flag    {@code true} if the property type is an {@code enum}
      *      type, {@code false} otherwise.
      */
+    @SuppressWarnings( "PublicMethodNotExposedInInterface" )
     public final void setIsEnum( final boolean flag ) { m_IsEnum = flag; }
 
     /**

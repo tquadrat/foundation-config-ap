@@ -26,27 +26,30 @@ import javax.lang.model.element.Name;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.Set;
 
 import org.apiguardian.api.API;
 import org.tquadrat.foundation.annotation.ClassVersion;
 import org.tquadrat.foundation.config.SpecialPropertyType;
 import org.tquadrat.foundation.config.ap.impl.CodeBuilder;
+import org.tquadrat.foundation.exception.UnsupportedEnumError;
 import org.tquadrat.foundation.javacomposer.CodeBlock;
 import org.tquadrat.foundation.javacomposer.FieldSpec;
 import org.tquadrat.foundation.javacomposer.MethodSpec;
+import org.tquadrat.foundation.javacomposer.ParameterizedTypeName;
 import org.tquadrat.foundation.javacomposer.TypeName;
 
 /**
  *  The specification for a property of a configuration bean.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: PropertySpec.java 1010 2022-02-05 19:28:36Z tquadrat $
+ *  @version $Id: PropertySpec.java 1053 2023-03-11 00:10:49Z tquadrat $
  *  @since 0.1.0
  *
  *  @UMLGraph.link
  */
 @SuppressWarnings( "ClassWithTooManyMethods" )
-@ClassVersion( sourceVersion = "$Id: PropertySpec.java 1010 2022-02-05 19:28:36Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: PropertySpec.java 1053 2023-03-11 00:10:49Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public interface PropertySpec
 {
@@ -57,12 +60,12 @@ public interface PropertySpec
      *  The flags for a property.
      *
      *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
-     *  @version $Id: PropertySpec.java 1010 2022-02-05 19:28:36Z tquadrat $
+     *  @version $Id: PropertySpec.java 1053 2023-03-11 00:10:49Z tquadrat $
      *  @since 0.1.0
      *
      *  @UMLGraph.link
      */
-    @ClassVersion( sourceVersion = "$Id: PropertySpec.java 1010 2022-02-05 19:28:36Z tquadrat $" )
+    @ClassVersion( sourceVersion = "$Id: PropertySpec.java 1053 2023-03-11 00:10:49Z tquadrat $" )
     @API( status = MAINTAINED, since = "0.1.0" )
     public static enum PropertyFlag
     {
@@ -94,6 +97,17 @@ public interface PropertySpec
         ALLOWS_PREFERENCES,
 
         /**
+         *  <p>{@summary Indicates that the element type of a collection is an
+         *  enum type.} Obviously this is only relevant if the property is a
+         *  collection.</p>
+         *
+         *  @see PropertySpec#getCollectionKind()
+         *  @see CollectionKind#SET
+         *  @see CollectionKind#LIST
+         */
+        ELEMENTTYPE_IS_ENUM,
+
+        /**
          * Indicates that this property is initialised from the value of an
          * environment variable. The method
          * {@link #getEnvironmentVariableName()}
@@ -118,6 +132,7 @@ public interface PropertySpec
          *  Indicates that this property will not appear in the return value of
          *  {@link #toString()}.
          */
+        @SuppressWarnings( "SpellCheckingInspection" )
         EXEMPT_FROM_TOSTRING,
 
         /**
@@ -426,6 +441,42 @@ public interface PropertySpec
      *  @return The collection kind.
      */
     public CollectionKind getCollectionKind();
+
+    /**
+     *  If the property is a collection (either
+     *  {@link Set}
+     *  or
+     *  {@link List},
+     *  this method returns the element type of that collection.
+     *
+     *  @return An instance of
+     *      {@link Optional}
+     *      that holds the element type.
+     */
+    public default Optional<TypeName> getElementType()
+    {
+        final var elementType = switch( getCollectionKind() )
+            {
+                case LIST, SET ->
+                {
+                    if( getPropertyType() instanceof ParameterizedTypeName propertyType )
+                    {
+                        final var typeArguments = propertyType.typeArguments();
+                        yield typeArguments.get( 0 );
+                    }
+                    yield null;
+                }
+
+                case MAP, NO_COLLECTION -> null;
+
+                default -> throw new UnsupportedEnumError( getCollectionKind() );
+            };
+
+        final var retValue = Optional.ofNullable( elementType );
+
+        //---* Done *----------------------------------------------------------
+        return retValue;
+    }   //  getElementType()
 
     /**
      *  <p>{@summary Returns the default value for an environment variable or a
