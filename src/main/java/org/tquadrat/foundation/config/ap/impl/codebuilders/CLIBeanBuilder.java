@@ -188,6 +188,7 @@ public final class CLIBeanBuilder extends CodeBuilderBase
             //---* Get the StringConverter for the element type *--------------
             final var stringConverter = property.getStringConverterClass()
                 .or( () -> getStringConverter( elementType ) )
+//                .or( () -> )
                 .orElseThrow( () -> new IllegalAnnotationError( format( "Property '%1$s': cannot find StringConverter for '%2$s'", property.getPropertyName(), elementType.toString() ) ) );
 
             switch( determineStringConverterInstantiation( stringConverter, property.hasFlag( ELEMENTTYPE_IS_ENUM ) ) )
