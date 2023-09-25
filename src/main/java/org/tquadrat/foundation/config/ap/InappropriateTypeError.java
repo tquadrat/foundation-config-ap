@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2021 by Thomas Thrien.
+ *  Copyright © 2002-2023 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -17,9 +17,9 @@
 
 package org.tquadrat.foundation.config.ap;
 
+import static java.lang.String.format;
 import static org.apiguardian.api.API.Status.STABLE;
 import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
-import static org.tquadrat.foundation.util.StringUtils.format;
 
 import java.io.Serial;
 

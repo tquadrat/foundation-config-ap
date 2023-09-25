@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2021 by Thomas Thrien.
+ *  Copyright © 2002-2023 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -17,6 +17,7 @@
 
 package org.tquadrat.foundation.config.ap.impl.codebuilders;
 
+import static java.lang.String.format;
 import static javax.lang.model.element.Modifier.FINAL;
 import static javax.lang.model.element.Modifier.PRIVATE;
 import static javax.lang.model.element.Modifier.PUBLIC;
@@ -35,7 +36,6 @@ import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.THROW_CA
 import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.createSuppressWarningsAnnotation;
 import static org.tquadrat.foundation.lang.CommonConstants.EMPTY_STRING;
 import static org.tquadrat.foundation.util.JavaUtils.composeGetterName;
-import static org.tquadrat.foundation.util.StringUtils.format;
 import static org.tquadrat.foundation.util.Template.hasVariables;
 
 import java.io.FileNotFoundException;
@@ -139,6 +139,7 @@ public final class INIBeanBuilder extends CodeBuilderBase
     /**
      *  {@inheritDoc}
      */
+    @SuppressWarnings( {"OverlyCoupledMethod", "OverlyLongMethod", "OverlyComplexMethod"} )
     @Override
     public final void build()
     {
@@ -295,10 +296,9 @@ public final class INIBeanBuilder extends CodeBuilderBase
                 .endControlFlow();
         }
         PropertiesLoop:
-        //noinspection ForLoopWithMissingComponent
-        for( var i = getConfiguration().propertyIterator(); i.hasNext(); )
+        for( var iterator = getConfiguration().propertyIterator(); iterator.hasNext(); )
         {
-            final var property = i.next();
+            final var property = iterator.next();
 
             if( !property.hasFlag( ALLOWS_INIFILE ) ) continue PropertiesLoop;
             if( property.getINIComment().isEmpty() ) continue PropertiesLoop;
@@ -408,10 +408,9 @@ public final class INIBeanBuilder extends CodeBuilderBase
 
         //---* Process the properties *----------------------------------------
         PropertiesLoop:
-        //noinspection ForLoopWithMissingComponent
-        for( final var i = getProperties(); i.hasNext(); )
+        for( final var iterator = getProperties(); iterator.hasNext(); )
         {
-            final var propertySpec = i.next();
+            final var propertySpec = iterator.next();
             /*
              * Skip the properties that do not have a tie to the INI file.
              */

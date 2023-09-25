@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2022 by Thomas Thrien.
+ *  Copyright © 2002-2023 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -17,6 +17,7 @@
 
 package org.tquadrat.foundation.config.ap.impl.codebuilders;
 
+import static java.lang.String.format;
 import static java.util.stream.Collectors.joining;
 import static javax.lang.model.element.Modifier.FINAL;
 import static javax.lang.model.element.Modifier.PRIVATE;
@@ -43,7 +44,6 @@ import static org.tquadrat.foundation.lang.DebugOutput.ifDebug;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
 import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
 import static org.tquadrat.foundation.util.StringUtils.capitalize;
-import static org.tquadrat.foundation.util.StringUtils.format;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -172,12 +172,12 @@ public final class CLIBeanBuilder extends CodeBuilderBase
         {
             if( property.getCollectionKind() == CollectionKind.MAP )
             {
-                throw new IllegalAnnotationError( format( "Property '%s' is a map of type '%s'; maps are currently not supported for CLI properties", property.getPropertyName(), property.getPropertyType().toString() ) );
+                throw new IllegalAnnotationError( "Property '%s' is a map of type '%s'; maps are currently not supported for CLI properties".formatted( property.getPropertyName(), property.getPropertyType().toString() ) );
             }
 
             //---* Determine the element type of the collection *--------------
             final var elementType = property.getElementType()
-                .orElseThrow( () -> new IllegalAnnotationError( format( "Cannot determine element type for property '%s'", property.getPropertyName() ) ) );
+                .orElseThrow( () -> new IllegalAnnotationError( "Cannot determine element type for property '%s'".formatted( property.getPropertyName() ) ) );
 
             //---* The lambda that adds the value to the attribute *-----------
             lambdaType = ParameterizedTypeName.from( ClassName.from( BiConsumer.class ), ClassName.from( String.class ), elementType );
@@ -191,7 +191,7 @@ public final class CLIBeanBuilder extends CodeBuilderBase
             final var stringConverter = property.getStringConverterClass()
                 .or( () -> getStringConverter( elementType ) )
                 .or( () -> Optional.ofNullable( property.hasFlag( ELEMENTTYPE_IS_ENUM ) ? ClassName.from( EnumStringConverter.class ) : null ) )
-                .orElseThrow( () -> new IllegalAnnotationError( format( "Property '%1$s': cannot find StringConverter for '%2$s'", property.getPropertyName(), elementType.toString() ) ) );
+                .orElseThrow( () -> new IllegalAnnotationError( "Property '%1$s': cannot find StringConverter for '%2$s'".formatted( property.getPropertyName(), elementType.toString() ) ) );
 
             switch( determineStringConverterInstantiation( stringConverter, property.hasFlag( ELEMENTTYPE_IS_ENUM ) ) )
             {
@@ -218,7 +218,7 @@ public final class CLIBeanBuilder extends CodeBuilderBase
                 () ->
                 {
                     final var stringConverter = property.getStringConverterClass()
-                        .orElseThrow( () -> new IllegalAnnotationError( format( "No String converter for property '%s'", property.getPropertyName() ) ) );
+                        .orElseThrow( () -> new IllegalAnnotationError( "No String converter for property '%s'".formatted( property.getPropertyName() ) ) );
                     switch( determineStringConverterInstantiation( stringConverter, property.isEnum() ) )
                     {
                         case BY_INSTANCE -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, $3T.INSTANCE )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );

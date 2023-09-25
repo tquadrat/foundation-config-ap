@@ -13,7 +13,7 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">/*</span>
 <span class="source-line-no">002</span><span id="line-2"> * ============================================================================</span>
-<span class="source-line-no">003</span><span id="line-3"> *  Copyright © 2002-2021 by Thomas Thrien.</span>
+<span class="source-line-no">003</span><span id="line-3"> *  Copyright © 2002-2023 by Thomas Thrien.</span>
 <span class="source-line-no">004</span><span id="line-4"> *  All Rights Reserved.</span>
 <span class="source-line-no">005</span><span id="line-5"> * ============================================================================</span>
 <span class="source-line-no">006</span><span id="line-6"> *  Licensed to the public under the agreements of the GNU Lesser General Public</span>
@@ -30,44 +30,44 @@
 <span class="source-line-no">017</span><span id="line-17"></span>
 <span class="source-line-no">018</span><span id="line-18">package org.tquadrat.foundation.config.ap.impl.codebuilders;</span>
 <span class="source-line-no">019</span><span id="line-19"></span>
-<span class="source-line-no">020</span><span id="line-20">import static java.lang.reflect.Modifier.isPublic;</span>
-<span class="source-line-no">021</span><span id="line-21">import static java.lang.reflect.Modifier.isStatic;</span>
-<span class="source-line-no">022</span><span id="line-22">import static javax.lang.model.element.Modifier.FINAL;</span>
-<span class="source-line-no">023</span><span id="line-23">import static javax.lang.model.element.Modifier.PRIVATE;</span>
-<span class="source-line-no">024</span><span id="line-24">import static javax.lang.model.element.Modifier.PUBLIC;</span>
-<span class="source-line-no">025</span><span id="line-25">import static org.apiguardian.api.API.Status.INTERNAL;</span>
-<span class="source-line-no">026</span><span id="line-26">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.DEFAULT_ACCESSOR_TYPE;</span>
-<span class="source-line-no">027</span><span id="line-27">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.ENUM_ACCESSOR_TYPE;</span>
-<span class="source-line-no">028</span><span id="line-28">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.LIST_ACCESSOR_TYPE;</span>
-<span class="source-line-no">029</span><span id="line-29">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MAP_ACCESSOR_TYPE;</span>
-<span class="source-line-no">030</span><span id="line-30">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_AccessorMissing;</span>
-<span class="source-line-no">031</span><span id="line-31">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_MissingEnvironmentVar;</span>
-<span class="source-line-no">032</span><span id="line-32">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_MissingStringConverter;</span>
-<span class="source-line-no">033</span><span id="line-33">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_MissingStringConverterWithType;</span>
-<span class="source-line-no">034</span><span id="line-34">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_MissingSystemProp;</span>
-<span class="source-line-no">035</span><span id="line-35">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_NoCollection;</span>
-<span class="source-line-no">036</span><span id="line-36">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_PreferencesNotConfigured;</span>
-<span class="source-line-no">037</span><span id="line-37">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.SET_ACCESSOR_TYPE;</span>
-<span class="source-line-no">038</span><span id="line-38">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ALLOWS_PREFERENCES;</span>
-<span class="source-line-no">039</span><span id="line-39">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.GETTER_RETURNS_OPTIONAL;</span>
-<span class="source-line-no">040</span><span id="line-40">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_ARGUMENT;</span>
-<span class="source-line-no">041</span><span id="line-41">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_MUTABLE;</span>
-<span class="source-line-no">042</span><span id="line-42">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_OPTION;</span>
-<span class="source-line-no">043</span><span id="line-43">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_REQUIRES_SYNCHRONIZATION;</span>
-<span class="source-line-no">044</span><span id="line-44">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER_CHECK_EMPTY;</span>
-<span class="source-line-no">045</span><span id="line-45">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER_CHECK_NULL;</span>
-<span class="source-line-no">046</span><span id="line-46">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SYSTEM_PREFERENCE;</span>
-<span class="source-line-no">047</span><span id="line-47">import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_ListenerSupport;</span>
-<span class="source-line-no">048</span><span id="line-48">import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_ReadLock;</span>
-<span class="source-line-no">049</span><span id="line-49">import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_WriteLock;</span>
-<span class="source-line-no">050</span><span id="line-50">import static org.tquadrat.foundation.config.ap.impl.codebuilders.CodeBuilderBase.StringConverterInstantiation.AS_ENUM;</span>
-<span class="source-line-no">051</span><span id="line-51">import static org.tquadrat.foundation.config.ap.impl.codebuilders.CodeBuilderBase.StringConverterInstantiation.BY_INSTANCE;</span>
-<span class="source-line-no">052</span><span id="line-52">import static org.tquadrat.foundation.config.ap.impl.codebuilders.CodeBuilderBase.StringConverterInstantiation.THROUGH_CONSTRUCTOR;</span>
-<span class="source-line-no">053</span><span id="line-53">import static org.tquadrat.foundation.javacomposer.Primitives.VOID;</span>
-<span class="source-line-no">054</span><span id="line-54">import static org.tquadrat.foundation.lang.CommonConstants.EMPTY_STRING;</span>
-<span class="source-line-no">055</span><span id="line-55">import static org.tquadrat.foundation.lang.Objects.nonNull;</span>
-<span class="source-line-no">056</span><span id="line-56">import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;</span>
-<span class="source-line-no">057</span><span id="line-57">import static org.tquadrat.foundation.util.StringUtils.format;</span>
+<span class="source-line-no">020</span><span id="line-20">import static java.lang.String.format;</span>
+<span class="source-line-no">021</span><span id="line-21">import static java.lang.reflect.Modifier.isPublic;</span>
+<span class="source-line-no">022</span><span id="line-22">import static java.lang.reflect.Modifier.isStatic;</span>
+<span class="source-line-no">023</span><span id="line-23">import static javax.lang.model.element.Modifier.FINAL;</span>
+<span class="source-line-no">024</span><span id="line-24">import static javax.lang.model.element.Modifier.PRIVATE;</span>
+<span class="source-line-no">025</span><span id="line-25">import static javax.lang.model.element.Modifier.PUBLIC;</span>
+<span class="source-line-no">026</span><span id="line-26">import static org.apiguardian.api.API.Status.INTERNAL;</span>
+<span class="source-line-no">027</span><span id="line-27">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.DEFAULT_ACCESSOR_TYPE;</span>
+<span class="source-line-no">028</span><span id="line-28">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.ENUM_ACCESSOR_TYPE;</span>
+<span class="source-line-no">029</span><span id="line-29">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.LIST_ACCESSOR_TYPE;</span>
+<span class="source-line-no">030</span><span id="line-30">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MAP_ACCESSOR_TYPE;</span>
+<span class="source-line-no">031</span><span id="line-31">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_AccessorMissing;</span>
+<span class="source-line-no">032</span><span id="line-32">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_MissingEnvironmentVar;</span>
+<span class="source-line-no">033</span><span id="line-33">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_MissingStringConverter;</span>
+<span class="source-line-no">034</span><span id="line-34">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_MissingStringConverterWithType;</span>
+<span class="source-line-no">035</span><span id="line-35">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_MissingSystemProp;</span>
+<span class="source-line-no">036</span><span id="line-36">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_NoCollection;</span>
+<span class="source-line-no">037</span><span id="line-37">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_PreferencesNotConfigured;</span>
+<span class="source-line-no">038</span><span id="line-38">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.SET_ACCESSOR_TYPE;</span>
+<span class="source-line-no">039</span><span id="line-39">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ALLOWS_PREFERENCES;</span>
+<span class="source-line-no">040</span><span id="line-40">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.GETTER_RETURNS_OPTIONAL;</span>
+<span class="source-line-no">041</span><span id="line-41">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_ARGUMENT;</span>
+<span class="source-line-no">042</span><span id="line-42">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_MUTABLE;</span>
+<span class="source-line-no">043</span><span id="line-43">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_OPTION;</span>
+<span class="source-line-no">044</span><span id="line-44">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_REQUIRES_SYNCHRONIZATION;</span>
+<span class="source-line-no">045</span><span id="line-45">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER_CHECK_EMPTY;</span>
+<span class="source-line-no">046</span><span id="line-46">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER_CHECK_NULL;</span>
+<span class="source-line-no">047</span><span id="line-47">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SYSTEM_PREFERENCE;</span>
+<span class="source-line-no">048</span><span id="line-48">import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_ListenerSupport;</span>
+<span class="source-line-no">049</span><span id="line-49">import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_ReadLock;</span>
+<span class="source-line-no">050</span><span id="line-50">import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_WriteLock;</span>
+<span class="source-line-no">051</span><span id="line-51">import static org.tquadrat.foundation.config.ap.impl.codebuilders.CodeBuilderBase.StringConverterInstantiation.AS_ENUM;</span>
+<span class="source-line-no">052</span><span id="line-52">import static org.tquadrat.foundation.config.ap.impl.codebuilders.CodeBuilderBase.StringConverterInstantiation.BY_INSTANCE;</span>
+<span class="source-line-no">053</span><span id="line-53">import static org.tquadrat.foundation.config.ap.impl.codebuilders.CodeBuilderBase.StringConverterInstantiation.THROUGH_CONSTRUCTOR;</span>
+<span class="source-line-no">054</span><span id="line-54">import static org.tquadrat.foundation.javacomposer.Primitives.VOID;</span>
+<span class="source-line-no">055</span><span id="line-55">import static org.tquadrat.foundation.lang.CommonConstants.EMPTY_STRING;</span>
+<span class="source-line-no">056</span><span id="line-56">import static org.tquadrat.foundation.lang.Objects.nonNull;</span>
+<span class="source-line-no">057</span><span id="line-57">import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;</span>
 <span class="source-line-no">058</span><span id="line-58"></span>
 <span class="source-line-no">059</span><span id="line-59">import java.io.IOException;</span>
 <span class="source-line-no">060</span><span id="line-60">import java.util.ArrayList;</span>
@@ -378,7 +378,7 @@
 <span class="source-line-no">365</span><span id="line-365">            {</span>
 <span class="source-line-no">366</span><span id="line-366">                case LIST, SET -&gt;</span>
 <span class="source-line-no">367</span><span id="line-367">                    {</span>
-<span class="source-line-no">368</span><span id="line-368">                        if( property.getPropertyType() instanceof ParameterizedTypeName propertyType )</span>
+<span class="source-line-no">368</span><span id="line-368">                        if( property.getPropertyType() instanceof final ParameterizedTypeName propertyType )</span>
 <span class="source-line-no">369</span><span id="line-369">                        {</span>
 <span class="source-line-no">370</span><span id="line-370">                            final var typeArguments = propertyType.typeArguments();</span>
 <span class="source-line-no">371</span><span id="line-371">                            yield typeArguments.get( 0 );</span>
@@ -390,7 +390,7 @@
 <span class="source-line-no">377</span><span id="line-377">                    {</span>
 <span class="source-line-no">378</span><span id="line-378">                        TypeName keyType = ClassName.from( Object.class );</span>
 <span class="source-line-no">379</span><span id="line-379">                        TypeName valueType = ClassName.from( Object.class );</span>
-<span class="source-line-no">380</span><span id="line-380">                        if( property.getPropertyType() instanceof ParameterizedTypeName propertyType )</span>
+<span class="source-line-no">380</span><span id="line-380">                        if( property.getPropertyType() instanceof final ParameterizedTypeName propertyType )</span>
 <span class="source-line-no">381</span><span id="line-381">                        {</span>
 <span class="source-line-no">382</span><span id="line-382">                            final var typeArguments = propertyType.typeArguments();</span>
 <span class="source-line-no">383</span><span id="line-383">                            keyType = typeArguments.get( 0 );</span>
@@ -920,7 +920,7 @@
 <span class="source-line-no">907</span><span id="line-907">    protected static final StringConverterInstantiation determineStringConverterInstantiation( final TypeName stringConverterClass, final boolean isEnum )</span>
 <span class="source-line-no">908</span><span id="line-908">    {</span>
 <span class="source-line-no">909</span><span id="line-909">        var retValue = THROUGH_CONSTRUCTOR;</span>
-<span class="source-line-no">910</span><span id="line-910">        if( requireNonNullArgument( stringConverterClass, "stringConverterClass" ) instanceof ClassName className )</span>
+<span class="source-line-no">910</span><span id="line-910">        if( requireNonNullArgument( stringConverterClass, "stringConverterClass" ) instanceof final ClassName className )</span>
 <span class="source-line-no">911</span><span id="line-911">        {</span>
 <span class="source-line-no">912</span><span id="line-912">            try</span>
 <span class="source-line-no">913</span><span id="line-913">            {</span>

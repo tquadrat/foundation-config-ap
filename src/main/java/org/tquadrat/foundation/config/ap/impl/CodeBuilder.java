@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2021 by Thomas Thrien.
+ *  Copyright © 2002-2023 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -38,7 +38,6 @@ import org.tquadrat.foundation.javacomposer.MethodSpec;
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@SuppressWarnings( "OverlyCoupledClass" )
 @ClassVersion( sourceVersion = "$Id: CodeBuilder.java 946 2021-12-23 14:48:19Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public interface CodeBuilder
@@ -55,7 +54,6 @@ public interface CodeBuilder
      *
      *  @UMLGraph.link
      */
-    @SuppressWarnings( "ProtectedInnerClass" )
     @ClassVersion( sourceVersion = "$Id: CodeBuilder.java 946 2021-12-23 14:48:19Z tquadrat $" )
     @API( status = MAINTAINED, since = "0.2.0" )
     public enum StandardField
@@ -204,7 +202,6 @@ public interface CodeBuilder
      *
      *  @UMLGraph.link
      */
-    @SuppressWarnings( "ProtectedInnerClass" )
     @ClassVersion( sourceVersion = "$Id: CodeBuilder.java 946 2021-12-23 14:48:19Z tquadrat $" )
     @API( status = MAINTAINED, since = "0.2.0" )
     public enum StandardMethod
@@ -298,7 +295,6 @@ public interface CodeBuilder
      *
      *  @return The composer.
      */
-    @SuppressWarnings( "UseOfConcreteClass" )
     public JavaComposer getComposer();
 
     /**
@@ -306,7 +302,6 @@ public interface CodeBuilder
      *
      *  @return The configuration.
      */
-    @SuppressWarnings( "UseOfConcreteClass" )
     public CodeGenerationConfiguration getConfiguration();
 
     /**

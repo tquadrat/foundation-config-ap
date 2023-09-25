@@ -77,7 +77,6 @@ public interface CodeGeneratorContext
      *
      *  @return The reference for the composer.
      */
-    @SuppressWarnings( "UseOfConcreteClass" )
     public JavaComposer getComposer();
 
     /**
@@ -147,7 +146,6 @@ public interface CodeGeneratorContext
      *
      *  @return The configuration.
      */
-    @SuppressWarnings( "UseOfConcreteClass" )
     public CodeGenerationConfiguration getConfiguration();
 
     /**

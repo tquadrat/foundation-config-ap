@@ -101,265 +101,264 @@
 <span class="source-line-no">088</span><span id="line-88">    /**</span>
 <span class="source-line-no">089</span><span id="line-89">     *  {@inheritDoc}</span>
 <span class="source-line-no">090</span><span id="line-90">     */</span>
-<span class="source-line-no">091</span><span id="line-91">    @Override</span>
-<span class="source-line-no">092</span><span id="line-92">    public final void build()</span>
-<span class="source-line-no">093</span><span id="line-93">    {</span>
-<span class="source-line-no">094</span><span id="line-94">        //---* Create the field *----------------------------------------------</span>
-<span class="source-line-no">095</span><span id="line-95">        final var objectType = WildcardTypeName.subtypeOf( Object.class );</span>
-<span class="source-line-no">096</span><span id="line-96">        final var supplierType = ParameterizedTypeName.from( ClassName.from( Supplier.class ), objectType );</span>
-<span class="source-line-no">097</span><span id="line-97">        final var registryType = ParameterizedTypeName.from( ClassName.from( Map.class ), TypeName.from( String.class ), supplierType );</span>
-<span class="source-line-no">098</span><span id="line-98">        final var registry = getComposer().fieldBuilder( registryType, STD_FIELD_Registry.toString(), PRIVATE, FINAL )</span>
-<span class="source-line-no">099</span><span id="line-99">            .addJavadoc(</span>
-<span class="source-line-no">100</span><span id="line-100">                """</span>
-<span class="source-line-no">101</span><span id="line-101">                The shadow map for the properties, used for the implementation of the</span>
-<span class="source-line-no">102</span><span id="line-102">                {@link Map}</span>
-<span class="source-line-no">103</span><span id="line-103">                interface.</span>
-<span class="source-line-no">104</span><span id="line-104">                """ )</span>
-<span class="source-line-no">105</span><span id="line-105">            .initializer( "new $1T&lt;&gt;()", TreeMap.class )</span>
-<span class="source-line-no">106</span><span id="line-106">            .build();</span>
-<span class="source-line-no">107</span><span id="line-107">        addField( STD_FIELD_Registry, registry );</span>
-<span class="source-line-no">108</span><span id="line-108"></span>
-<span class="source-line-no">109</span><span id="line-109">        //---* Create the code for the constructor *---------------------------</span>
-<span class="source-line-no">110</span><span id="line-110">        final var builder = getComposer().codeBlockBuilder()</span>
-<span class="source-line-no">111</span><span id="line-111">            .add( """</span>
-<span class="source-line-no">112</span><span id="line-112"></span>
-<span class="source-line-no">113</span><span id="line-113">                /*</span>
-<span class="source-line-no">114</span><span id="line-114">                 * Initialising the shadow map.</span>
-<span class="source-line-no">115</span><span id="line-115">                 */</span>
-<span class="source-line-no">116</span><span id="line-116">                """ );</span>
-<span class="source-line-no">117</span><span id="line-117">        PropertyLoop:</span>
-<span class="source-line-no">118</span><span id="line-118">        //noinspection ForLoopWithMissingComponent</span>
-<span class="source-line-no">119</span><span id="line-119">        for( final var i = getProperties(); i.hasNext(); )</span>
-<span class="source-line-no">120</span><span id="line-120">        {</span>
-<span class="source-line-no">121</span><span id="line-121">            final var propertySpec = i.next().merge();</span>
-<span class="source-line-no">122</span><span id="line-122"></span>
-<span class="source-line-no">123</span><span id="line-123">            if( propertySpec.hasFlag( EXEMPT_FROM_MAP ) ) continue PropertyLoop;</span>
-<span class="source-line-no">124</span><span id="line-124"></span>
-<span class="source-line-no">125</span><span id="line-125">            //---* Create the supplier and add it to the registry *------------</span>
-<span class="source-line-no">126</span><span id="line-126">            if( !propertySpec.hasFlag( GETTER_ON_MAP ) )</span>
-<span class="source-line-no">127</span><span id="line-127">            {</span>
-<span class="source-line-no">128</span><span id="line-128">                final var field = propertySpec.getFieldName();</span>
-<span class="source-line-no">129</span><span id="line-129">                final var supplier = getComposer().lambdaBuilder()</span>
-<span class="source-line-no">130</span><span id="line-130">                    .addCode( "$1N", field )</span>
-<span class="source-line-no">131</span><span id="line-131">                    .build();</span>
-<span class="source-line-no">132</span><span id="line-132">                builder.addStatement( "$1N.put( $2S, $3L )", registry, propertySpec.getPropertyName(), supplier );</span>
-<span class="source-line-no">133</span><span id="line-133">            }</span>
-<span class="source-line-no">134</span><span id="line-134">            else</span>
-<span class="source-line-no">135</span><span id="line-135">            {</span>
-<span class="source-line-no">136</span><span id="line-136">                propertySpec.getGetterMethodName()</span>
-<span class="source-line-no">137</span><span id="line-137">                    .ifPresent( method -&gt; builder.addStatement( "$1N.put( $2S, this::$3L )", registry, propertySpec.getPropertyName(), method  ) );</span>
-<span class="source-line-no">138</span><span id="line-138">            }</span>
-<span class="source-line-no">139</span><span id="line-139">        }   //  PropertyLoop:</span>
-<span class="source-line-no">140</span><span id="line-140">        addConstructorCode( builder.build() );</span>
-<span class="source-line-no">141</span><span id="line-141"></span>
-<span class="source-line-no">142</span><span id="line-142">        //---* Add the methods from Map *--------------------------------------</span>
-<span class="source-line-no">143</span><span id="line-143">        final var throwException = getComposer().statementOf( "throw new $1T()", UnsupportedOperationException.class );</span>
-<span class="source-line-no">144</span><span id="line-144">        final var inheritDocComment = getComposer().createInheritDocComment();</span>
-<span class="source-line-no">145</span><span id="line-145">        final var lock = isSynchronized()</span>
-<span class="source-line-no">146</span><span id="line-146">             ? getField( STD_FIELD_ReadLock )</span>
-<span class="source-line-no">147</span><span id="line-147">             : null;</span>
-<span class="source-line-no">148</span><span id="line-148"></span>
-<span class="source-line-no">149</span><span id="line-149">        var method = getComposer().methodBuilder( "clear" )</span>
-<span class="source-line-no">150</span><span id="line-150">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">151</span><span id="line-151">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">152</span><span id="line-152">            .returns( VOID )</span>
-<span class="source-line-no">153</span><span id="line-153">            .addJavadoc( inheritDocComment )</span>
-<span class="source-line-no">154</span><span id="line-154">            .addCode( throwException )</span>
-<span class="source-line-no">155</span><span id="line-155">            .build();</span>
-<span class="source-line-no">156</span><span id="line-156">        addMethod( method );</span>
-<span class="source-line-no">157</span><span id="line-157"></span>
-<span class="source-line-no">158</span><span id="line-158">        var arg0 = getComposer().parameterBuilder( Object.class, "key", FINAL )</span>
-<span class="source-line-no">159</span><span id="line-159">            .build();</span>
-<span class="source-line-no">160</span><span id="line-160">        method = getComposer().methodBuilder( "containsKey" )</span>
-<span class="source-line-no">161</span><span id="line-161">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">162</span><span id="line-162">            .addAnnotation( createSuppressWarningsAnnotation( getComposer(), UNLIKELY_ARG_TYPE ) )</span>
-<span class="source-line-no">163</span><span id="line-163">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">164</span><span id="line-164">            .addParameter( arg0 )</span>
-<span class="source-line-no">165</span><span id="line-165">            .returns( BOOLEAN )</span>
-<span class="source-line-no">166</span><span id="line-166">            .addJavadoc( inheritDocComment )</span>
-<span class="source-line-no">167</span><span id="line-167">            .addStatement( "return $1N.containsKey( $2N )", registry, arg0 )</span>
-<span class="source-line-no">168</span><span id="line-168">            .build();</span>
-<span class="source-line-no">169</span><span id="line-169">        addMethod( method );</span>
-<span class="source-line-no">170</span><span id="line-170"></span>
-<span class="source-line-no">171</span><span id="line-171">        arg0 = getComposer().parameterBuilder( Object.class, "value", FINAL )</span>
-<span class="source-line-no">172</span><span id="line-172">            .build();</span>
-<span class="source-line-no">173</span><span id="line-173">        method = getComposer().methodBuilder( "containsValue" )</span>
-<span class="source-line-no">174</span><span id="line-174">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">175</span><span id="line-175">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">176</span><span id="line-176">            .addParameter( arg0 )</span>
-<span class="source-line-no">177</span><span id="line-177">            .returns( BOOLEAN )</span>
-<span class="source-line-no">178</span><span id="line-178">            .addJavadoc( inheritDocComment )</span>
-<span class="source-line-no">179</span><span id="line-179">            .addStatement( "return values().stream().anyMatch( v -&gt; $1T.equals( v, $2N ) )", Objects.class, arg0 )</span>
-<span class="source-line-no">180</span><span id="line-180">            .build();</span>
-<span class="source-line-no">181</span><span id="line-181">        addMethod( method );</span>
-<span class="source-line-no">182</span><span id="line-182"></span>
-<span class="source-line-no">183</span><span id="line-183">        TypeName returnType = ParameterizedTypeName.from( ClassName.from( Set.class ), ParameterizedTypeName.from( Map.Entry.class, String.class, Object.class ) );</span>
-<span class="source-line-no">184</span><span id="line-184">        var methodBuilder = getComposer().methodBuilder( "entrySet" )</span>
-<span class="source-line-no">185</span><span id="line-185">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">186</span><span id="line-186">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">187</span><span id="line-187">            .returns( returnType )</span>
-<span class="source-line-no">188</span><span id="line-188">            .addJavadoc( inheritDocComment )</span>
-<span class="source-line-no">189</span><span id="line-189">            .addStatement( "final $1T retValue = new $2T&lt;&gt;()", returnType, HashSet.class );</span>
-<span class="source-line-no">190</span><span id="line-190">        if( nonNull( lock) ) methodBuilder.beginControlFlow(</span>
-<span class="source-line-no">191</span><span id="line-191">            """</span>
-<span class="source-line-no">192</span><span id="line-192">            try( final var ignored = $N.lock() )</span>
-<span class="source-line-no">193</span><span id="line-193">            """, lock );</span>
-<span class="source-line-no">194</span><span id="line-194">        methodBuilder.beginControlFlow(</span>
-<span class="source-line-no">195</span><span id="line-195">            """</span>
-<span class="source-line-no">196</span><span id="line-196">            for( final var entry : $1N.entrySet() )</span>
-<span class="source-line-no">197</span><span id="line-197">            """, registry )</span>
-<span class="source-line-no">198</span><span id="line-198">            .addStatement( "final var key = entry.getKey()" )</span>
-<span class="source-line-no">199</span><span id="line-199">            .addStatement( "final var value = entry.getValue().get()" )</span>
-<span class="source-line-no">200</span><span id="line-200">            .addStatement( "retValue.add( $1T.entry( key, value ) )", Map.class )</span>
-<span class="source-line-no">201</span><span id="line-201">            .endControlFlow();</span>
-<span class="source-line-no">202</span><span id="line-202">        if( nonNull( lock ) ) methodBuilder.endControlFlow();</span>
-<span class="source-line-no">203</span><span id="line-203">        method = methodBuilder.addCode( getComposer().createReturnStatement() )</span>
-<span class="source-line-no">204</span><span id="line-204">            .build();</span>
-<span class="source-line-no">205</span><span id="line-205">        addMethod( method );</span>
-<span class="source-line-no">206</span><span id="line-206"></span>
-<span class="source-line-no">207</span><span id="line-207">        arg0 = getComposer().parameterBuilder( Object.class, "o", FINAL )</span>
-<span class="source-line-no">208</span><span id="line-208">            .build();</span>
-<span class="source-line-no">209</span><span id="line-209">        method = getComposer().methodBuilder( "equals" )</span>
-<span class="source-line-no">210</span><span id="line-210">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">211</span><span id="line-211">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">212</span><span id="line-212">            .addParameter( arg0 )</span>
-<span class="source-line-no">213</span><span id="line-213">            .returns( BOOLEAN )</span>
-<span class="source-line-no">214</span><span id="line-214">            .addJavadoc( inheritDocComment )</span>
-<span class="source-line-no">215</span><span id="line-215">            .addStatement( "return this == $1N", arg0 )</span>
-<span class="source-line-no">216</span><span id="line-216">            .build();</span>
-<span class="source-line-no">217</span><span id="line-217">        addMethod( method );</span>
-<span class="source-line-no">218</span><span id="line-218"></span>
-<span class="source-line-no">219</span><span id="line-219">        arg0 = getComposer().parameterBuilder( Object.class, "key", FINAL )</span>
-<span class="source-line-no">220</span><span id="line-220">            .build();</span>
-<span class="source-line-no">221</span><span id="line-221">        methodBuilder = getComposer().methodBuilder( "get" )</span>
-<span class="source-line-no">222</span><span id="line-222">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">223</span><span id="line-223">            .addAnnotation( createSuppressWarningsAnnotation( getComposer(), UNLIKELY_ARG_TYPE ) )</span>
-<span class="source-line-no">224</span><span id="line-224">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">225</span><span id="line-225">            .addParameter( arg0 )</span>
-<span class="source-line-no">226</span><span id="line-226">            .returns( Object.class )</span>
-<span class="source-line-no">227</span><span id="line-227">            .addJavadoc( inheritDocComment )</span>
-<span class="source-line-no">228</span><span id="line-228">            .addStatement( "$1T retValue = null", Object.class )</span>
-<span class="source-line-no">229</span><span id="line-229">            .addStatement( "final var supplier = $1N.get( $2N )", registry, arg0 )</span>
-<span class="source-line-no">230</span><span id="line-230">            .beginControlFlow(</span>
-<span class="source-line-no">231</span><span id="line-231">                """</span>
-<span class="source-line-no">232</span><span id="line-232">                if( nonNull( supplier) )</span>
-<span class="source-line-no">233</span><span id="line-233">                """ )</span>
-<span class="source-line-no">234</span><span id="line-234">            .addStaticImport( Objects.class, "nonNull" );</span>
-<span class="source-line-no">235</span><span id="line-235">        if( nonNull( lock) ) methodBuilder.beginControlFlow(</span>
-<span class="source-line-no">236</span><span id="line-236">            """</span>
-<span class="source-line-no">237</span><span id="line-237">            try( final var ignored = $N.lock() )</span>
-<span class="source-line-no">238</span><span id="line-238">            """, lock );</span>
-<span class="source-line-no">239</span><span id="line-239">        methodBuilder.addStatement( "retValue = supplier.get()" );</span>
-<span class="source-line-no">240</span><span id="line-240">        if( nonNull( lock ) ) methodBuilder.endControlFlow();</span>
-<span class="source-line-no">241</span><span id="line-241">        method = methodBuilder.endControlFlow()</span>
-<span class="source-line-no">242</span><span id="line-242">            .addCode( getComposer().createReturnStatement() )</span>
-<span class="source-line-no">243</span><span id="line-243">            .build();</span>
-<span class="source-line-no">244</span><span id="line-244">        addMethod( method );</span>
-<span class="source-line-no">245</span><span id="line-245"></span>
-<span class="source-line-no">246</span><span id="line-246">        method = getComposer().methodBuilder( "hashCode" )</span>
-<span class="source-line-no">247</span><span id="line-247">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">248</span><span id="line-248">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">249</span><span id="line-249">            .returns( INT )</span>
-<span class="source-line-no">250</span><span id="line-250">            .addJavadoc( inheritDocComment )</span>
-<span class="source-line-no">251</span><span id="line-251">            .addStatement( "return $1N.hashCode()", registry )</span>
-<span class="source-line-no">252</span><span id="line-252">            .build();</span>
-<span class="source-line-no">253</span><span id="line-253">        addMethod( method );</span>
-<span class="source-line-no">254</span><span id="line-254"></span>
-<span class="source-line-no">255</span><span id="line-255">        method = getComposer().methodBuilder( "isEmpty" )</span>
-<span class="source-line-no">256</span><span id="line-256">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">257</span><span id="line-257">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">258</span><span id="line-258">            .returns( BOOLEAN )</span>
-<span class="source-line-no">259</span><span id="line-259">            .addJavadoc( inheritDocComment )</span>
-<span class="source-line-no">260</span><span id="line-260">            .addStatement( "return $1N.isEmpty()", registry )</span>
-<span class="source-line-no">261</span><span id="line-261">            .build();</span>
-<span class="source-line-no">262</span><span id="line-262">        addMethod( method );</span>
-<span class="source-line-no">263</span><span id="line-263"></span>
-<span class="source-line-no">264</span><span id="line-264">        returnType = ParameterizedTypeName.from( Set.class, String.class );</span>
-<span class="source-line-no">265</span><span id="line-265">        method = getComposer().methodBuilder( "keySet" )</span>
-<span class="source-line-no">266</span><span id="line-266">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">267</span><span id="line-267">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">268</span><span id="line-268">            .returns( returnType )</span>
-<span class="source-line-no">269</span><span id="line-269">            .addJavadoc( inheritDocComment )</span>
-<span class="source-line-no">270</span><span id="line-270">            .addStatement( "return $N.keySet()", registry )</span>
-<span class="source-line-no">271</span><span id="line-271">            .build();</span>
-<span class="source-line-no">272</span><span id="line-272">        addMethod( method );</span>
-<span class="source-line-no">273</span><span id="line-273"></span>
-<span class="source-line-no">274</span><span id="line-274">        arg0 = getComposer().parameterBuilder( String.class, "key", FINAL )</span>
-<span class="source-line-no">275</span><span id="line-275">            .build();</span>
-<span class="source-line-no">276</span><span id="line-276">        method = getComposer().methodBuilder( "put" )</span>
-<span class="source-line-no">277</span><span id="line-277">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">278</span><span id="line-278">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">279</span><span id="line-279">            .addParameter( arg0 )</span>
-<span class="source-line-no">280</span><span id="line-280">            .addParameter( Object.class, "value", FINAL )</span>
-<span class="source-line-no">281</span><span id="line-281">            .returns( Object.class )</span>
-<span class="source-line-no">282</span><span id="line-282">            .addJavadoc( inheritDocComment )</span>
-<span class="source-line-no">283</span><span id="line-283">            .addCode( throwException )</span>
-<span class="source-line-no">284</span><span id="line-284">            .build();</span>
-<span class="source-line-no">285</span><span id="line-285">        addMethod( method );</span>
-<span class="source-line-no">286</span><span id="line-286"></span>
-<span class="source-line-no">287</span><span id="line-287">        final TypeName argType = ParameterizedTypeName.from( ClassName.from( Map.class ), WildcardTypeName.subtypeOf( String.class ), WildcardTypeName.subtypeOf( Object.class ) );</span>
-<span class="source-line-no">288</span><span id="line-288">        arg0 = getComposer().parameterBuilder( argType, "m", FINAL )</span>
-<span class="source-line-no">289</span><span id="line-289">            .build();</span>
-<span class="source-line-no">290</span><span id="line-290">        method = getComposer().methodBuilder( "putAll" )</span>
-<span class="source-line-no">291</span><span id="line-291">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">292</span><span id="line-292">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">293</span><span id="line-293">            .addParameter( arg0 )</span>
-<span class="source-line-no">294</span><span id="line-294">            .addJavadoc( inheritDocComment )</span>
-<span class="source-line-no">295</span><span id="line-295">            .addCode( throwException )</span>
-<span class="source-line-no">296</span><span id="line-296">            .build();</span>
-<span class="source-line-no">297</span><span id="line-297">        addMethod( method );</span>
-<span class="source-line-no">298</span><span id="line-298"></span>
-<span class="source-line-no">299</span><span id="line-299">        arg0 = getComposer().parameterBuilder( Object.class, "key", FINAL )</span>
-<span class="source-line-no">300</span><span id="line-300">            .build();</span>
-<span class="source-line-no">301</span><span id="line-301">        method = getComposer().methodBuilder( "remove" )</span>
-<span class="source-line-no">302</span><span id="line-302">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">303</span><span id="line-303">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">304</span><span id="line-304">            .addParameter( arg0 )</span>
-<span class="source-line-no">305</span><span id="line-305">            .returns( Object.class )</span>
-<span class="source-line-no">306</span><span id="line-306">            .addJavadoc( inheritDocComment )</span>
-<span class="source-line-no">307</span><span id="line-307">            .addCode( throwException )</span>
-<span class="source-line-no">308</span><span id="line-308">            .build();</span>
-<span class="source-line-no">309</span><span id="line-309">        addMethod( method );</span>
-<span class="source-line-no">310</span><span id="line-310"></span>
-<span class="source-line-no">311</span><span id="line-311">        method = getComposer().methodBuilder( "size" )</span>
-<span class="source-line-no">312</span><span id="line-312">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">313</span><span id="line-313">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">314</span><span id="line-314">            .returns( INT )</span>
-<span class="source-line-no">315</span><span id="line-315">            .addJavadoc( inheritDocComment )</span>
-<span class="source-line-no">316</span><span id="line-316">            .addStatement( "return $1N.size()", registry )</span>
-<span class="source-line-no">317</span><span id="line-317">            .build();</span>
-<span class="source-line-no">318</span><span id="line-318">        addMethod( method );</span>
-<span class="source-line-no">319</span><span id="line-319"></span>
-<span class="source-line-no">320</span><span id="line-320">        returnType = ParameterizedTypeName.from( Collection.class, Object.class );</span>
-<span class="source-line-no">321</span><span id="line-321">        methodBuilder = getComposer().methodBuilder( "values" )</span>
-<span class="source-line-no">322</span><span id="line-322">            .addModifiers( PUBLIC, FINAL )</span>
-<span class="source-line-no">323</span><span id="line-323">            .addAnnotation( Override.class )</span>
-<span class="source-line-no">324</span><span id="line-324">            .addAnnotation( createSuppressWarningsAnnotation( getComposer(), SIMPLIFY_STREAM_API_CALL_CHAIN ) )</span>
-<span class="source-line-no">325</span><span id="line-325">            .returns( returnType )</span>
-<span class="source-line-no">326</span><span id="line-326">            .addJavadoc( inheritDocComment )</span>
-<span class="source-line-no">327</span><span id="line-327">            .addStatement( "final $1T retValue", returnType );</span>
-<span class="source-line-no">328</span><span id="line-328">        if( nonNull( lock) ) methodBuilder.beginControlFlow(</span>
-<span class="source-line-no">329</span><span id="line-329">            """</span>
-<span class="source-line-no">330</span><span id="line-330">            try( final var ignored = $N.lock() )</span>
-<span class="source-line-no">331</span><span id="line-331">            """, lock );</span>
-<span class="source-line-no">332</span><span id="line-332">        methodBuilder.addStatement( """</span>
-<span class="source-line-no">333</span><span id="line-333">            retValue = $1N.values()</span>
-<span class="source-line-no">334</span><span id="line-334">                .stream()</span>
-<span class="source-line-no">335</span><span id="line-335">                .map( $2T::get )</span>
-<span class="source-line-no">336</span><span id="line-336">                .collect( toUnmodifiableList() )\</span>
-<span class="source-line-no">337</span><span id="line-337">            """, registry, Supplier.class )</span>
-<span class="source-line-no">338</span><span id="line-338">            .addStaticImport( Collectors.class, "toUnmodifiableList" );</span>
-<span class="source-line-no">339</span><span id="line-339">        if( nonNull( lock ) ) methodBuilder.endControlFlow();</span>
-<span class="source-line-no">340</span><span id="line-340">        method = methodBuilder.addCode( getComposer().createReturnStatement() )</span>
-<span class="source-line-no">341</span><span id="line-341">            .build();</span>
-<span class="source-line-no">342</span><span id="line-342">        addMethod( method );</span>
-<span class="source-line-no">343</span><span id="line-343">    }   //  build()</span>
-<span class="source-line-no">344</span><span id="line-344">}</span>
-<span class="source-line-no">345</span><span id="line-345">//  class MapImplementor</span>
-<span class="source-line-no">346</span><span id="line-346"></span>
-<span class="source-line-no">347</span><span id="line-347">/*</span>
-<span class="source-line-no">348</span><span id="line-348"> *  End of File</span>
-<span class="source-line-no">349</span><span id="line-349"> */</span>
+<span class="source-line-no">091</span><span id="line-91">    @SuppressWarnings( {"OverlyCoupledMethod", "OverlyLongMethod", "OverlyComplexMethod"} )</span>
+<span class="source-line-no">092</span><span id="line-92">    @Override</span>
+<span class="source-line-no">093</span><span id="line-93">    public final void build()</span>
+<span class="source-line-no">094</span><span id="line-94">    {</span>
+<span class="source-line-no">095</span><span id="line-95">        //---* Create the field *----------------------------------------------</span>
+<span class="source-line-no">096</span><span id="line-96">        final var objectType = WildcardTypeName.subtypeOf( Object.class );</span>
+<span class="source-line-no">097</span><span id="line-97">        final var supplierType = ParameterizedTypeName.from( ClassName.from( Supplier.class ), objectType );</span>
+<span class="source-line-no">098</span><span id="line-98">        final var registryType = ParameterizedTypeName.from( ClassName.from( Map.class ), TypeName.from( String.class ), supplierType );</span>
+<span class="source-line-no">099</span><span id="line-99">        final var registry = getComposer().fieldBuilder( registryType, STD_FIELD_Registry.toString(), PRIVATE, FINAL )</span>
+<span class="source-line-no">100</span><span id="line-100">            .addJavadoc(</span>
+<span class="source-line-no">101</span><span id="line-101">                """</span>
+<span class="source-line-no">102</span><span id="line-102">                The shadow map for the properties, used for the implementation of the</span>
+<span class="source-line-no">103</span><span id="line-103">                {@link Map}</span>
+<span class="source-line-no">104</span><span id="line-104">                interface.</span>
+<span class="source-line-no">105</span><span id="line-105">                """ )</span>
+<span class="source-line-no">106</span><span id="line-106">            .initializer( "new $1T&lt;&gt;()", TreeMap.class )</span>
+<span class="source-line-no">107</span><span id="line-107">            .build();</span>
+<span class="source-line-no">108</span><span id="line-108">        addField( STD_FIELD_Registry, registry );</span>
+<span class="source-line-no">109</span><span id="line-109"></span>
+<span class="source-line-no">110</span><span id="line-110">        //---* Create the code for the constructor *---------------------------</span>
+<span class="source-line-no">111</span><span id="line-111">        final var builder = getComposer().codeBlockBuilder()</span>
+<span class="source-line-no">112</span><span id="line-112">            .add( """</span>
+<span class="source-line-no">113</span><span id="line-113"></span>
+<span class="source-line-no">114</span><span id="line-114">                /*</span>
+<span class="source-line-no">115</span><span id="line-115">                 * Initialising the shadow map.</span>
+<span class="source-line-no">116</span><span id="line-116">                 */</span>
+<span class="source-line-no">117</span><span id="line-117">                """ );</span>
+<span class="source-line-no">118</span><span id="line-118">        PropertyLoop: for( final var iterator = getProperties(); iterator.hasNext(); )</span>
+<span class="source-line-no">119</span><span id="line-119">        {</span>
+<span class="source-line-no">120</span><span id="line-120">            final var propertySpec = iterator.next().merge();</span>
+<span class="source-line-no">121</span><span id="line-121"></span>
+<span class="source-line-no">122</span><span id="line-122">            if( propertySpec.hasFlag( EXEMPT_FROM_MAP ) ) continue PropertyLoop;</span>
+<span class="source-line-no">123</span><span id="line-123"></span>
+<span class="source-line-no">124</span><span id="line-124">            //---* Create the supplier and add it to the registry *------------</span>
+<span class="source-line-no">125</span><span id="line-125">            if( !propertySpec.hasFlag( GETTER_ON_MAP ) )</span>
+<span class="source-line-no">126</span><span id="line-126">            {</span>
+<span class="source-line-no">127</span><span id="line-127">                final var field = propertySpec.getFieldName();</span>
+<span class="source-line-no">128</span><span id="line-128">                final var supplier = getComposer().lambdaBuilder()</span>
+<span class="source-line-no">129</span><span id="line-129">                    .addCode( "$1N", field )</span>
+<span class="source-line-no">130</span><span id="line-130">                    .build();</span>
+<span class="source-line-no">131</span><span id="line-131">                builder.addStatement( "$1N.put( $2S, $3L )", registry, propertySpec.getPropertyName(), supplier );</span>
+<span class="source-line-no">132</span><span id="line-132">            }</span>
+<span class="source-line-no">133</span><span id="line-133">            else</span>
+<span class="source-line-no">134</span><span id="line-134">            {</span>
+<span class="source-line-no">135</span><span id="line-135">                propertySpec.getGetterMethodName()</span>
+<span class="source-line-no">136</span><span id="line-136">                    .ifPresent( method -&gt; builder.addStatement( "$1N.put( $2S, this::$3L )", registry, propertySpec.getPropertyName(), method  ) );</span>
+<span class="source-line-no">137</span><span id="line-137">            }</span>
+<span class="source-line-no">138</span><span id="line-138">        }   //  PropertyLoop:</span>
+<span class="source-line-no">139</span><span id="line-139">        addConstructorCode( builder.build() );</span>
+<span class="source-line-no">140</span><span id="line-140"></span>
+<span class="source-line-no">141</span><span id="line-141">        //---* Add the methods from Map *--------------------------------------</span>
+<span class="source-line-no">142</span><span id="line-142">        final var throwException = getComposer().statementOf( "throw new $1T()", UnsupportedOperationException.class );</span>
+<span class="source-line-no">143</span><span id="line-143">        final var inheritDocComment = getComposer().createInheritDocComment();</span>
+<span class="source-line-no">144</span><span id="line-144">        final var lock = isSynchronized()</span>
+<span class="source-line-no">145</span><span id="line-145">             ? getField( STD_FIELD_ReadLock )</span>
+<span class="source-line-no">146</span><span id="line-146">             : null;</span>
+<span class="source-line-no">147</span><span id="line-147"></span>
+<span class="source-line-no">148</span><span id="line-148">        var method = getComposer().methodBuilder( "clear" )</span>
+<span class="source-line-no">149</span><span id="line-149">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">150</span><span id="line-150">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">151</span><span id="line-151">            .returns( VOID )</span>
+<span class="source-line-no">152</span><span id="line-152">            .addJavadoc( inheritDocComment )</span>
+<span class="source-line-no">153</span><span id="line-153">            .addCode( throwException )</span>
+<span class="source-line-no">154</span><span id="line-154">            .build();</span>
+<span class="source-line-no">155</span><span id="line-155">        addMethod( method );</span>
+<span class="source-line-no">156</span><span id="line-156"></span>
+<span class="source-line-no">157</span><span id="line-157">        var arg0 = getComposer().parameterBuilder( Object.class, "key", FINAL )</span>
+<span class="source-line-no">158</span><span id="line-158">            .build();</span>
+<span class="source-line-no">159</span><span id="line-159">        method = getComposer().methodBuilder( "containsKey" )</span>
+<span class="source-line-no">160</span><span id="line-160">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">161</span><span id="line-161">            .addAnnotation( createSuppressWarningsAnnotation( getComposer(), UNLIKELY_ARG_TYPE ) )</span>
+<span class="source-line-no">162</span><span id="line-162">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">163</span><span id="line-163">            .addParameter( arg0 )</span>
+<span class="source-line-no">164</span><span id="line-164">            .returns( BOOLEAN )</span>
+<span class="source-line-no">165</span><span id="line-165">            .addJavadoc( inheritDocComment )</span>
+<span class="source-line-no">166</span><span id="line-166">            .addStatement( "return $1N.containsKey( $2N )", registry, arg0 )</span>
+<span class="source-line-no">167</span><span id="line-167">            .build();</span>
+<span class="source-line-no">168</span><span id="line-168">        addMethod( method );</span>
+<span class="source-line-no">169</span><span id="line-169"></span>
+<span class="source-line-no">170</span><span id="line-170">        arg0 = getComposer().parameterBuilder( Object.class, "value", FINAL )</span>
+<span class="source-line-no">171</span><span id="line-171">            .build();</span>
+<span class="source-line-no">172</span><span id="line-172">        method = getComposer().methodBuilder( "containsValue" )</span>
+<span class="source-line-no">173</span><span id="line-173">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">174</span><span id="line-174">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">175</span><span id="line-175">            .addParameter( arg0 )</span>
+<span class="source-line-no">176</span><span id="line-176">            .returns( BOOLEAN )</span>
+<span class="source-line-no">177</span><span id="line-177">            .addJavadoc( inheritDocComment )</span>
+<span class="source-line-no">178</span><span id="line-178">            .addStatement( "return values().stream().anyMatch( v -&gt; $1T.equals( v, $2N ) )", Objects.class, arg0 )</span>
+<span class="source-line-no">179</span><span id="line-179">            .build();</span>
+<span class="source-line-no">180</span><span id="line-180">        addMethod( method );</span>
+<span class="source-line-no">181</span><span id="line-181"></span>
+<span class="source-line-no">182</span><span id="line-182">        TypeName returnType = ParameterizedTypeName.from( ClassName.from( Set.class ), ParameterizedTypeName.from( Map.Entry.class, String.class, Object.class ) );</span>
+<span class="source-line-no">183</span><span id="line-183">        var methodBuilder = getComposer().methodBuilder( "entrySet" )</span>
+<span class="source-line-no">184</span><span id="line-184">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">185</span><span id="line-185">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">186</span><span id="line-186">            .returns( returnType )</span>
+<span class="source-line-no">187</span><span id="line-187">            .addJavadoc( inheritDocComment )</span>
+<span class="source-line-no">188</span><span id="line-188">            .addStatement( "final $1T retValue = new $2T&lt;&gt;()", returnType, HashSet.class );</span>
+<span class="source-line-no">189</span><span id="line-189">        if( nonNull( lock) ) methodBuilder.beginControlFlow(</span>
+<span class="source-line-no">190</span><span id="line-190">            """</span>
+<span class="source-line-no">191</span><span id="line-191">            try( final var ignored = $N.lock() )</span>
+<span class="source-line-no">192</span><span id="line-192">            """, lock );</span>
+<span class="source-line-no">193</span><span id="line-193">        methodBuilder.beginControlFlow(</span>
+<span class="source-line-no">194</span><span id="line-194">            """</span>
+<span class="source-line-no">195</span><span id="line-195">            for( final var entry : $1N.entrySet() )</span>
+<span class="source-line-no">196</span><span id="line-196">            """, registry )</span>
+<span class="source-line-no">197</span><span id="line-197">            .addStatement( "final var key = entry.getKey()" )</span>
+<span class="source-line-no">198</span><span id="line-198">            .addStatement( "final var value = entry.getValue().get()" )</span>
+<span class="source-line-no">199</span><span id="line-199">            .addStatement( "retValue.add( $1T.entry( key, value ) )", Map.class )</span>
+<span class="source-line-no">200</span><span id="line-200">            .endControlFlow();</span>
+<span class="source-line-no">201</span><span id="line-201">        if( nonNull( lock ) ) methodBuilder.endControlFlow();</span>
+<span class="source-line-no">202</span><span id="line-202">        method = methodBuilder.addCode( getComposer().createReturnStatement() )</span>
+<span class="source-line-no">203</span><span id="line-203">            .build();</span>
+<span class="source-line-no">204</span><span id="line-204">        addMethod( method );</span>
+<span class="source-line-no">205</span><span id="line-205"></span>
+<span class="source-line-no">206</span><span id="line-206">        arg0 = getComposer().parameterBuilder( Object.class, "o", FINAL )</span>
+<span class="source-line-no">207</span><span id="line-207">            .build();</span>
+<span class="source-line-no">208</span><span id="line-208">        method = getComposer().methodBuilder( "equals" )</span>
+<span class="source-line-no">209</span><span id="line-209">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">210</span><span id="line-210">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">211</span><span id="line-211">            .addParameter( arg0 )</span>
+<span class="source-line-no">212</span><span id="line-212">            .returns( BOOLEAN )</span>
+<span class="source-line-no">213</span><span id="line-213">            .addJavadoc( inheritDocComment )</span>
+<span class="source-line-no">214</span><span id="line-214">            .addStatement( "return this == $1N", arg0 )</span>
+<span class="source-line-no">215</span><span id="line-215">            .build();</span>
+<span class="source-line-no">216</span><span id="line-216">        addMethod( method );</span>
+<span class="source-line-no">217</span><span id="line-217"></span>
+<span class="source-line-no">218</span><span id="line-218">        arg0 = getComposer().parameterBuilder( Object.class, "key", FINAL )</span>
+<span class="source-line-no">219</span><span id="line-219">            .build();</span>
+<span class="source-line-no">220</span><span id="line-220">        methodBuilder = getComposer().methodBuilder( "get" )</span>
+<span class="source-line-no">221</span><span id="line-221">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">222</span><span id="line-222">            .addAnnotation( createSuppressWarningsAnnotation( getComposer(), UNLIKELY_ARG_TYPE ) )</span>
+<span class="source-line-no">223</span><span id="line-223">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">224</span><span id="line-224">            .addParameter( arg0 )</span>
+<span class="source-line-no">225</span><span id="line-225">            .returns( Object.class )</span>
+<span class="source-line-no">226</span><span id="line-226">            .addJavadoc( inheritDocComment )</span>
+<span class="source-line-no">227</span><span id="line-227">            .addStatement( "$1T retValue = null", Object.class )</span>
+<span class="source-line-no">228</span><span id="line-228">            .addStatement( "final var supplier = $1N.get( $2N )", registry, arg0 )</span>
+<span class="source-line-no">229</span><span id="line-229">            .beginControlFlow(</span>
+<span class="source-line-no">230</span><span id="line-230">                """</span>
+<span class="source-line-no">231</span><span id="line-231">                if( nonNull( supplier) )</span>
+<span class="source-line-no">232</span><span id="line-232">                """ )</span>
+<span class="source-line-no">233</span><span id="line-233">            .addStaticImport( Objects.class, "nonNull" );</span>
+<span class="source-line-no">234</span><span id="line-234">        if( nonNull( lock) ) methodBuilder.beginControlFlow(</span>
+<span class="source-line-no">235</span><span id="line-235">            """</span>
+<span class="source-line-no">236</span><span id="line-236">            try( final var ignored = $N.lock() )</span>
+<span class="source-line-no">237</span><span id="line-237">            """, lock );</span>
+<span class="source-line-no">238</span><span id="line-238">        methodBuilder.addStatement( "retValue = supplier.get()" );</span>
+<span class="source-line-no">239</span><span id="line-239">        if( nonNull( lock ) ) methodBuilder.endControlFlow();</span>
+<span class="source-line-no">240</span><span id="line-240">        method = methodBuilder.endControlFlow()</span>
+<span class="source-line-no">241</span><span id="line-241">            .addCode( getComposer().createReturnStatement() )</span>
+<span class="source-line-no">242</span><span id="line-242">            .build();</span>
+<span class="source-line-no">243</span><span id="line-243">        addMethod( method );</span>
+<span class="source-line-no">244</span><span id="line-244"></span>
+<span class="source-line-no">245</span><span id="line-245">        method = getComposer().methodBuilder( "hashCode" )</span>
+<span class="source-line-no">246</span><span id="line-246">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">247</span><span id="line-247">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">248</span><span id="line-248">            .returns( INT )</span>
+<span class="source-line-no">249</span><span id="line-249">            .addJavadoc( inheritDocComment )</span>
+<span class="source-line-no">250</span><span id="line-250">            .addStatement( "return $1N.hashCode()", registry )</span>
+<span class="source-line-no">251</span><span id="line-251">            .build();</span>
+<span class="source-line-no">252</span><span id="line-252">        addMethod( method );</span>
+<span class="source-line-no">253</span><span id="line-253"></span>
+<span class="source-line-no">254</span><span id="line-254">        method = getComposer().methodBuilder( "isEmpty" )</span>
+<span class="source-line-no">255</span><span id="line-255">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">256</span><span id="line-256">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">257</span><span id="line-257">            .returns( BOOLEAN )</span>
+<span class="source-line-no">258</span><span id="line-258">            .addJavadoc( inheritDocComment )</span>
+<span class="source-line-no">259</span><span id="line-259">            .addStatement( "return $1N.isEmpty()", registry )</span>
+<span class="source-line-no">260</span><span id="line-260">            .build();</span>
+<span class="source-line-no">261</span><span id="line-261">        addMethod( method );</span>
+<span class="source-line-no">262</span><span id="line-262"></span>
+<span class="source-line-no">263</span><span id="line-263">        returnType = ParameterizedTypeName.from( Set.class, String.class );</span>
+<span class="source-line-no">264</span><span id="line-264">        method = getComposer().methodBuilder( "keySet" )</span>
+<span class="source-line-no">265</span><span id="line-265">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">266</span><span id="line-266">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">267</span><span id="line-267">            .returns( returnType )</span>
+<span class="source-line-no">268</span><span id="line-268">            .addJavadoc( inheritDocComment )</span>
+<span class="source-line-no">269</span><span id="line-269">            .addStatement( "return $N.keySet()", registry )</span>
+<span class="source-line-no">270</span><span id="line-270">            .build();</span>
+<span class="source-line-no">271</span><span id="line-271">        addMethod( method );</span>
+<span class="source-line-no">272</span><span id="line-272"></span>
+<span class="source-line-no">273</span><span id="line-273">        arg0 = getComposer().parameterBuilder( String.class, "key", FINAL )</span>
+<span class="source-line-no">274</span><span id="line-274">            .build();</span>
+<span class="source-line-no">275</span><span id="line-275">        method = getComposer().methodBuilder( "put" )</span>
+<span class="source-line-no">276</span><span id="line-276">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">277</span><span id="line-277">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">278</span><span id="line-278">            .addParameter( arg0 )</span>
+<span class="source-line-no">279</span><span id="line-279">            .addParameter( Object.class, "value", FINAL )</span>
+<span class="source-line-no">280</span><span id="line-280">            .returns( Object.class )</span>
+<span class="source-line-no">281</span><span id="line-281">            .addJavadoc( inheritDocComment )</span>
+<span class="source-line-no">282</span><span id="line-282">            .addCode( throwException )</span>
+<span class="source-line-no">283</span><span id="line-283">            .build();</span>
+<span class="source-line-no">284</span><span id="line-284">        addMethod( method );</span>
+<span class="source-line-no">285</span><span id="line-285"></span>
+<span class="source-line-no">286</span><span id="line-286">        final TypeName argType = ParameterizedTypeName.from( ClassName.from( Map.class ), WildcardTypeName.subtypeOf( String.class ), WildcardTypeName.subtypeOf( Object.class ) );</span>
+<span class="source-line-no">287</span><span id="line-287">        arg0 = getComposer().parameterBuilder( argType, "m", FINAL )</span>
+<span class="source-line-no">288</span><span id="line-288">            .build();</span>
+<span class="source-line-no">289</span><span id="line-289">        method = getComposer().methodBuilder( "putAll" )</span>
+<span class="source-line-no">290</span><span id="line-290">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">291</span><span id="line-291">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">292</span><span id="line-292">            .addParameter( arg0 )</span>
+<span class="source-line-no">293</span><span id="line-293">            .addJavadoc( inheritDocComment )</span>
+<span class="source-line-no">294</span><span id="line-294">            .addCode( throwException )</span>
+<span class="source-line-no">295</span><span id="line-295">            .build();</span>
+<span class="source-line-no">296</span><span id="line-296">        addMethod( method );</span>
+<span class="source-line-no">297</span><span id="line-297"></span>
+<span class="source-line-no">298</span><span id="line-298">        arg0 = getComposer().parameterBuilder( Object.class, "key", FINAL )</span>
+<span class="source-line-no">299</span><span id="line-299">            .build();</span>
+<span class="source-line-no">300</span><span id="line-300">        method = getComposer().methodBuilder( "remove" )</span>
+<span class="source-line-no">301</span><span id="line-301">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">302</span><span id="line-302">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">303</span><span id="line-303">            .addParameter( arg0 )</span>
+<span class="source-line-no">304</span><span id="line-304">            .returns( Object.class )</span>
+<span class="source-line-no">305</span><span id="line-305">            .addJavadoc( inheritDocComment )</span>
+<span class="source-line-no">306</span><span id="line-306">            .addCode( throwException )</span>
+<span class="source-line-no">307</span><span id="line-307">            .build();</span>
+<span class="source-line-no">308</span><span id="line-308">        addMethod( method );</span>
+<span class="source-line-no">309</span><span id="line-309"></span>
+<span class="source-line-no">310</span><span id="line-310">        method = getComposer().methodBuilder( "size" )</span>
+<span class="source-line-no">311</span><span id="line-311">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">312</span><span id="line-312">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">313</span><span id="line-313">            .returns( INT )</span>
+<span class="source-line-no">314</span><span id="line-314">            .addJavadoc( inheritDocComment )</span>
+<span class="source-line-no">315</span><span id="line-315">            .addStatement( "return $1N.size()", registry )</span>
+<span class="source-line-no">316</span><span id="line-316">            .build();</span>
+<span class="source-line-no">317</span><span id="line-317">        addMethod( method );</span>
+<span class="source-line-no">318</span><span id="line-318"></span>
+<span class="source-line-no">319</span><span id="line-319">        returnType = ParameterizedTypeName.from( Collection.class, Object.class );</span>
+<span class="source-line-no">320</span><span id="line-320">        methodBuilder = getComposer().methodBuilder( "values" )</span>
+<span class="source-line-no">321</span><span id="line-321">            .addModifiers( PUBLIC, FINAL )</span>
+<span class="source-line-no">322</span><span id="line-322">            .addAnnotation( Override.class )</span>
+<span class="source-line-no">323</span><span id="line-323">            .addAnnotation( createSuppressWarningsAnnotation( getComposer(), SIMPLIFY_STREAM_API_CALL_CHAIN ) )</span>
+<span class="source-line-no">324</span><span id="line-324">            .returns( returnType )</span>
+<span class="source-line-no">325</span><span id="line-325">            .addJavadoc( inheritDocComment )</span>
+<span class="source-line-no">326</span><span id="line-326">            .addStatement( "final $1T retValue", returnType );</span>
+<span class="source-line-no">327</span><span id="line-327">        if( nonNull( lock) ) methodBuilder.beginControlFlow(</span>
+<span class="source-line-no">328</span><span id="line-328">            """</span>
+<span class="source-line-no">329</span><span id="line-329">            try( final var ignored = $N.lock() )</span>
+<span class="source-line-no">330</span><span id="line-330">            """, lock );</span>
+<span class="source-line-no">331</span><span id="line-331">        methodBuilder.addStatement( """</span>
+<span class="source-line-no">332</span><span id="line-332">            retValue = $1N.values()</span>
+<span class="source-line-no">333</span><span id="line-333">                .stream()</span>
+<span class="source-line-no">334</span><span id="line-334">                .map( $2T::get )</span>
+<span class="source-line-no">335</span><span id="line-335">                .collect( toUnmodifiableList() )\</span>
+<span class="source-line-no">336</span><span id="line-336">            """, registry, Supplier.class )</span>
+<span class="source-line-no">337</span><span id="line-337">            .addStaticImport( Collectors.class, "toUnmodifiableList" );</span>
+<span class="source-line-no">338</span><span id="line-338">        if( nonNull( lock ) ) methodBuilder.endControlFlow();</span>
+<span class="source-line-no">339</span><span id="line-339">        method = methodBuilder.addCode( getComposer().createReturnStatement() )</span>
+<span class="source-line-no">340</span><span id="line-340">            .build();</span>
+<span class="source-line-no">341</span><span id="line-341">        addMethod( method );</span>
+<span class="source-line-no">342</span><span id="line-342">    }   //  build()</span>
+<span class="source-line-no">343</span><span id="line-343">}</span>
+<span class="source-line-no">344</span><span id="line-344">//  class MapImplementor</span>
+<span class="source-line-no">345</span><span id="line-345"></span>
+<span class="source-line-no">346</span><span id="line-346">/*</span>
+<span class="source-line-no">347</span><span id="line-347"> *  End of File</span>
+<span class="source-line-no">348</span><span id="line-348"> */</span>
 
 
 

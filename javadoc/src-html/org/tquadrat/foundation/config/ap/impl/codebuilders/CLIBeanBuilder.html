@@ -13,7 +13,7 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">/*</span>
 <span class="source-line-no">002</span><span id="line-2"> * ============================================================================</span>
-<span class="source-line-no">003</span><span id="line-3"> *  Copyright © 2002-2022 by Thomas Thrien.</span>
+<span class="source-line-no">003</span><span id="line-3"> *  Copyright © 2002-2023 by Thomas Thrien.</span>
 <span class="source-line-no">004</span><span id="line-4"> *  All Rights Reserved.</span>
 <span class="source-line-no">005</span><span id="line-5"> * ============================================================================</span>
 <span class="source-line-no">006</span><span id="line-6"> *  Licensed to the public under the agreements of the GNU Lesser General Public</span>
@@ -30,33 +30,33 @@
 <span class="source-line-no">017</span><span id="line-17"></span>
 <span class="source-line-no">018</span><span id="line-18">package org.tquadrat.foundation.config.ap.impl.codebuilders;</span>
 <span class="source-line-no">019</span><span id="line-19"></span>
-<span class="source-line-no">020</span><span id="line-20">import static java.util.stream.Collectors.joining;</span>
-<span class="source-line-no">021</span><span id="line-21">import static javax.lang.model.element.Modifier.FINAL;</span>
-<span class="source-line-no">022</span><span id="line-22">import static javax.lang.model.element.Modifier.PRIVATE;</span>
-<span class="source-line-no">023</span><span id="line-23">import static javax.lang.model.element.Modifier.PUBLIC;</span>
-<span class="source-line-no">024</span><span id="line-24">import static org.apiguardian.api.API.Status.MAINTAINED;</span>
-<span class="source-line-no">025</span><span id="line-25">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_DuplicateOptionName;</span>
-<span class="source-line-no">026</span><span id="line-26">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_InvalidCLIType;</span>
-<span class="source-line-no">027</span><span id="line-27">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_NoArgumentIndex;</span>
-<span class="source-line-no">028</span><span id="line-28">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_NoOptionName;</span>
-<span class="source-line-no">029</span><span id="line-29">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ELEMENTTYPE_IS_ENUM;</span>
-<span class="source-line-no">030</span><span id="line-30">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_CLI_MANDATORY;</span>
-<span class="source-line-no">031</span><span id="line-31">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_CLI_MULTIVALUED;</span>
-<span class="source-line-no">032</span><span id="line-32">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_ARGUMENT;</span>
-<span class="source-line-no">033</span><span id="line-33">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_OPTION;</span>
-<span class="source-line-no">034</span><span id="line-34">import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_CLIDefinitions;</span>
-<span class="source-line-no">035</span><span id="line-35">import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_CLIError;</span>
-<span class="source-line-no">036</span><span id="line-36">import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_WriteLock;</span>
-<span class="source-line-no">037</span><span id="line-37">import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardMethod.STD_METHOD_GetRessourceBundle;</span>
-<span class="source-line-no">038</span><span id="line-38">import static org.tquadrat.foundation.javacomposer.Primitives.BOOLEAN;</span>
-<span class="source-line-no">039</span><span id="line-39">import static org.tquadrat.foundation.javacomposer.Primitives.VOID;</span>
-<span class="source-line-no">040</span><span id="line-40">import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.REDUNDANT_EXPLICIT_VARIABLE_TYPE;</span>
-<span class="source-line-no">041</span><span id="line-41">import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.createSuppressWarningsAnnotation;</span>
-<span class="source-line-no">042</span><span id="line-42">import static org.tquadrat.foundation.lang.DebugOutput.ifDebug;</span>
-<span class="source-line-no">043</span><span id="line-43">import static org.tquadrat.foundation.lang.Objects.nonNull;</span>
-<span class="source-line-no">044</span><span id="line-44">import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;</span>
-<span class="source-line-no">045</span><span id="line-45">import static org.tquadrat.foundation.util.StringUtils.capitalize;</span>
-<span class="source-line-no">046</span><span id="line-46">import static org.tquadrat.foundation.util.StringUtils.format;</span>
+<span class="source-line-no">020</span><span id="line-20">import static java.lang.String.format;</span>
+<span class="source-line-no">021</span><span id="line-21">import static java.util.stream.Collectors.joining;</span>
+<span class="source-line-no">022</span><span id="line-22">import static javax.lang.model.element.Modifier.FINAL;</span>
+<span class="source-line-no">023</span><span id="line-23">import static javax.lang.model.element.Modifier.PRIVATE;</span>
+<span class="source-line-no">024</span><span id="line-24">import static javax.lang.model.element.Modifier.PUBLIC;</span>
+<span class="source-line-no">025</span><span id="line-25">import static org.apiguardian.api.API.Status.MAINTAINED;</span>
+<span class="source-line-no">026</span><span id="line-26">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_DuplicateOptionName;</span>
+<span class="source-line-no">027</span><span id="line-27">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_InvalidCLIType;</span>
+<span class="source-line-no">028</span><span id="line-28">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_NoArgumentIndex;</span>
+<span class="source-line-no">029</span><span id="line-29">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_NoOptionName;</span>
+<span class="source-line-no">030</span><span id="line-30">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ELEMENTTYPE_IS_ENUM;</span>
+<span class="source-line-no">031</span><span id="line-31">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_CLI_MANDATORY;</span>
+<span class="source-line-no">032</span><span id="line-32">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_CLI_MULTIVALUED;</span>
+<span class="source-line-no">033</span><span id="line-33">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_ARGUMENT;</span>
+<span class="source-line-no">034</span><span id="line-34">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_OPTION;</span>
+<span class="source-line-no">035</span><span id="line-35">import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_CLIDefinitions;</span>
+<span class="source-line-no">036</span><span id="line-36">import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_CLIError;</span>
+<span class="source-line-no">037</span><span id="line-37">import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardField.STD_FIELD_WriteLock;</span>
+<span class="source-line-no">038</span><span id="line-38">import static org.tquadrat.foundation.config.ap.impl.CodeBuilder.StandardMethod.STD_METHOD_GetRessourceBundle;</span>
+<span class="source-line-no">039</span><span id="line-39">import static org.tquadrat.foundation.javacomposer.Primitives.BOOLEAN;</span>
+<span class="source-line-no">040</span><span id="line-40">import static org.tquadrat.foundation.javacomposer.Primitives.VOID;</span>
+<span class="source-line-no">041</span><span id="line-41">import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.REDUNDANT_EXPLICIT_VARIABLE_TYPE;</span>
+<span class="source-line-no">042</span><span id="line-42">import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.createSuppressWarningsAnnotation;</span>
+<span class="source-line-no">043</span><span id="line-43">import static org.tquadrat.foundation.lang.DebugOutput.ifDebug;</span>
+<span class="source-line-no">044</span><span id="line-44">import static org.tquadrat.foundation.lang.Objects.nonNull;</span>
+<span class="source-line-no">045</span><span id="line-45">import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;</span>
+<span class="source-line-no">046</span><span id="line-46">import static org.tquadrat.foundation.util.StringUtils.capitalize;</span>
 <span class="source-line-no">047</span><span id="line-47"></span>
 <span class="source-line-no">048</span><span id="line-48">import java.io.IOException;</span>
 <span class="source-line-no">049</span><span id="line-49">import java.io.OutputStream;</span>
@@ -185,12 +185,12 @@
 <span class="source-line-no">172</span><span id="line-172">        {</span>
 <span class="source-line-no">173</span><span id="line-173">            if( property.getCollectionKind() == CollectionKind.MAP )</span>
 <span class="source-line-no">174</span><span id="line-174">            {</span>
-<span class="source-line-no">175</span><span id="line-175">                throw new IllegalAnnotationError( format( "Property '%s' is a map of type '%s'; maps are currently not supported for CLI properties", property.getPropertyName(), property.getPropertyType().toString() ) );</span>
+<span class="source-line-no">175</span><span id="line-175">                throw new IllegalAnnotationError( "Property '%s' is a map of type '%s'; maps are currently not supported for CLI properties".formatted( property.getPropertyName(), property.getPropertyType().toString() ) );</span>
 <span class="source-line-no">176</span><span id="line-176">            }</span>
 <span class="source-line-no">177</span><span id="line-177"></span>
 <span class="source-line-no">178</span><span id="line-178">            //---* Determine the element type of the collection *--------------</span>
 <span class="source-line-no">179</span><span id="line-179">            final var elementType = property.getElementType()</span>
-<span class="source-line-no">180</span><span id="line-180">                .orElseThrow( () -&gt; new IllegalAnnotationError( format( "Cannot determine element type for property '%s'", property.getPropertyName() ) ) );</span>
+<span class="source-line-no">180</span><span id="line-180">                .orElseThrow( () -&gt; new IllegalAnnotationError( "Cannot determine element type for property '%s'".formatted( property.getPropertyName() ) ) );</span>
 <span class="source-line-no">181</span><span id="line-181"></span>
 <span class="source-line-no">182</span><span id="line-182">            //---* The lambda that adds the value to the attribute *-----------</span>
 <span class="source-line-no">183</span><span id="line-183">            lambdaType = ParameterizedTypeName.from( ClassName.from( BiConsumer.class ), ClassName.from( String.class ), elementType );</span>
@@ -204,7 +204,7 @@
 <span class="source-line-no">191</span><span id="line-191">            final var stringConverter = property.getStringConverterClass()</span>
 <span class="source-line-no">192</span><span id="line-192">                .or( () -&gt; getStringConverter( elementType ) )</span>
 <span class="source-line-no">193</span><span id="line-193">                .or( () -&gt; Optional.ofNullable( property.hasFlag( ELEMENTTYPE_IS_ENUM ) ? ClassName.from( EnumStringConverter.class ) : null ) )</span>
-<span class="source-line-no">194</span><span id="line-194">                .orElseThrow( () -&gt; new IllegalAnnotationError( format( "Property '%1$s': cannot find StringConverter for '%2$s'", property.getPropertyName(), elementType.toString() ) ) );</span>
+<span class="source-line-no">194</span><span id="line-194">                .orElseThrow( () -&gt; new IllegalAnnotationError( "Property '%1$s': cannot find StringConverter for '%2$s'".formatted( property.getPropertyName(), elementType.toString() ) ) );</span>
 <span class="source-line-no">195</span><span id="line-195"></span>
 <span class="source-line-no">196</span><span id="line-196">            switch( determineStringConverterInstantiation( stringConverter, property.hasFlag( ELEMENTTYPE_IS_ENUM ) ) )</span>
 <span class="source-line-no">197</span><span id="line-197">            {</span>
@@ -231,7 +231,7 @@
 <span class="source-line-no">218</span><span id="line-218">                () -&gt;</span>
 <span class="source-line-no">219</span><span id="line-219">                {</span>
 <span class="source-line-no">220</span><span id="line-220">                    final var stringConverter = property.getStringConverterClass()</span>
-<span class="source-line-no">221</span><span id="line-221">                        .orElseThrow( () -&gt; new IllegalAnnotationError( format( "No String converter for property '%s'", property.getPropertyName() ) ) );</span>
+<span class="source-line-no">221</span><span id="line-221">                        .orElseThrow( () -&gt; new IllegalAnnotationError( "No String converter for property '%s'".formatted( property.getPropertyName() ) ) );</span>
 <span class="source-line-no">222</span><span id="line-222">                    switch( determineStringConverterInstantiation( stringConverter, property.isEnum() ) )</span>
 <span class="source-line-no">223</span><span id="line-223">                    {</span>
 <span class="source-line-no">224</span><span id="line-224">                        case BY_INSTANCE -&gt; builder.addStatement( "final $1T retValue = new $2T&lt;&gt;( lambda, $3T.INSTANCE )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );</span>

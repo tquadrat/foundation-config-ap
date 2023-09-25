@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2021 by Thomas Thrien.
+ *  Copyright © 2002-2023 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -17,6 +17,7 @@
 
 package org.tquadrat.foundation.config.ap.impl.codebuilders;
 
+import static java.lang.String.format;
 import static javax.lang.model.element.Modifier.FINAL;
 import static javax.lang.model.element.Modifier.PRIVATE;
 import static javax.lang.model.element.Modifier.PUBLIC;
@@ -40,7 +41,6 @@ import static org.tquadrat.foundation.javacomposer.Primitives.VOID;
 import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.USE_OF_CONCRETE_CLASS;
 import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.createSuppressWarningsAnnotation;
 import static org.tquadrat.foundation.lang.CommonConstants.EMPTY_STRING;
-import static org.tquadrat.foundation.util.StringUtils.format;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -95,7 +95,7 @@ public final class PreferencesBeanBuilder extends CodeBuilderBase
     /**
      *  {@inheritDoc}
      */
-    @SuppressWarnings( "IfStatementWithTooManyBranches" )
+    @SuppressWarnings( {"IfStatementWithTooManyBranches", "OverlyCoupledMethod", "OverlyLongMethod", "OverlyComplexMethod"} )
     @Override
     public final void build()
     {
@@ -229,11 +229,9 @@ public final class PreferencesBeanBuilder extends CodeBuilderBase
             """ ) );
 
         //---* Process the properties *----------------------------------------
-        PropertiesLoop:
-        //noinspection ForLoopWithMissingComponent
-        for( final var i = getProperties(); i.hasNext(); )
+        PropertiesLoop: for( final var iterator = getProperties(); iterator.hasNext(); )
         {
-            final var propertySpec = i.next();
+            final var propertySpec = iterator.next();
             /*
              * Skip the properties that do not have a tie to the preferences.
              */
@@ -294,7 +292,7 @@ public final class PreferencesBeanBuilder extends CodeBuilderBase
                         case THROUGH_CONSTRUCTOR -> "new $5T()";
                         case AS_ENUM -> EMPTY_STRING;
                     };
-                codeBlockBuilder.addStatement( format( "$1N.put( $2S, new $3T<>( $2S, %1$s, %2$s, $6L, $7L ) )", keySnippet, valueSnippet ), accessorRegistry, key, accessorClass, keyStringConverterType, valueStringConverterType, getter, setter );
+                codeBlockBuilder.addStatement( "$1N.put( $2S, new $3T<>( $2S, %1$s, %2$s, $6L, $7L ) )".formatted( keySnippet, valueSnippet ), accessorRegistry, key, accessorClass, keyStringConverterType, valueStringConverterType, getter, setter );
             }
             else if( accessorClass.equals( DEFAULT_ACCESSOR_TYPE ) )
             {

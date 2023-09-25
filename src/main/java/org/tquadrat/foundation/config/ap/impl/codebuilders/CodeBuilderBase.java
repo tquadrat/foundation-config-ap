@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2021 by Thomas Thrien.
+ *  Copyright © 2002-2023 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -17,6 +17,7 @@
 
 package org.tquadrat.foundation.config.ap.impl.codebuilders;
 
+import static java.lang.String.format;
 import static java.lang.reflect.Modifier.isPublic;
 import static java.lang.reflect.Modifier.isStatic;
 import static javax.lang.model.element.Modifier.FINAL;
@@ -54,7 +55,6 @@ import static org.tquadrat.foundation.javacomposer.Primitives.VOID;
 import static org.tquadrat.foundation.lang.CommonConstants.EMPTY_STRING;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
 import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
-import static org.tquadrat.foundation.util.StringUtils.format;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -365,7 +365,7 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
             {
                 case LIST, SET ->
                     {
-                        if( property.getPropertyType() instanceof ParameterizedTypeName propertyType )
+                        if( property.getPropertyType() instanceof final ParameterizedTypeName propertyType )
                         {
                             final var typeArguments = propertyType.typeArguments();
                             yield typeArguments.get( 0 );
@@ -377,7 +377,7 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
                     {
                         TypeName keyType = ClassName.from( Object.class );
                         TypeName valueType = ClassName.from( Object.class );
-                        if( property.getPropertyType() instanceof ParameterizedTypeName propertyType )
+                        if( property.getPropertyType() instanceof final ParameterizedTypeName propertyType )
                         {
                             final var typeArguments = propertyType.typeArguments();
                             keyType = typeArguments.get( 0 );
@@ -907,7 +907,7 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
     protected static final StringConverterInstantiation determineStringConverterInstantiation( final TypeName stringConverterClass, final boolean isEnum )
     {
         var retValue = THROUGH_CONSTRUCTOR;
-        if( requireNonNullArgument( stringConverterClass, "stringConverterClass" ) instanceof ClassName className )
+        if( requireNonNullArgument( stringConverterClass, "stringConverterClass" ) instanceof final ClassName className )
         {
             try
             {

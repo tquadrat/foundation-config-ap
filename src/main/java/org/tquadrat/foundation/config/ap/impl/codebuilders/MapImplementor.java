@@ -88,6 +88,7 @@ public final class MapImplementor extends CodeBuilderBase
     /**
      *  {@inheritDoc}
      */
+    @SuppressWarnings( {"OverlyCoupledMethod", "OverlyLongMethod", "OverlyComplexMethod"} )
     @Override
     public final void build()
     {
@@ -114,11 +115,9 @@ public final class MapImplementor extends CodeBuilderBase
                  * Initialising the shadow map.
                  */
                 """ );
-        PropertyLoop:
-        //noinspection ForLoopWithMissingComponent
-        for( final var i = getProperties(); i.hasNext(); )
+        PropertyLoop: for( final var iterator = getProperties(); iterator.hasNext(); )
         {
-            final var propertySpec = i.next().merge();
+            final var propertySpec = iterator.next().merge();
 
             if( propertySpec.hasFlag( EXEMPT_FROM_MAP ) ) continue PropertyLoop;
 

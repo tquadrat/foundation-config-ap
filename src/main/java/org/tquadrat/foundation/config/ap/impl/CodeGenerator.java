@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2021 by Thomas Thrien.
+ *  Copyright © 2002-2023 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -17,6 +17,7 @@
 
 package org.tquadrat.foundation.config.ap.impl;
 
+import static java.lang.String.format;
 import static java.util.Collections.unmodifiableMap;
 import static javax.lang.model.element.Modifier.FINAL;
 import static javax.lang.model.element.Modifier.PUBLIC;
@@ -36,7 +37,6 @@ import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.OVERLY_C
 import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.OVERLY_COUPLED_CLASS;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
 import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
-import static org.tquadrat.foundation.util.StringUtils.format;
 
 import java.util.EnumMap;
 import java.util.EnumSet;
@@ -105,13 +105,13 @@ public final class CodeGenerator implements CodeGeneratorContext
      *  {@link org.tquadrat.foundation.javacomposer.JavaComposer}
      *  that is used for the code generation.
      */
-    @SuppressWarnings( "InstanceVariableOfConcreteClass" )
+    @SuppressWarnings( "UseOfConcreteClass" )
     private final JavaComposer m_Composer;
 
     /**
      *  The configuration for the generation process.
      */
-    @SuppressWarnings( "InstanceVariableOfConcreteClass" )
+    @SuppressWarnings( "UseOfConcreteClass" )
     private final CodeGenerationConfiguration m_Configuration;
 
     /**
@@ -136,6 +136,7 @@ public final class CodeGenerator implements CodeGeneratorContext
     /**
      *  The special properties.
      */
+    @SuppressWarnings( "StaticCollection" )
     private static final Map<SpecialPropertyType,SpecialPropertySpec> m_SpecialProperties;
 
     static
@@ -181,6 +182,7 @@ public final class CodeGenerator implements CodeGeneratorContext
     /**
      *  {@inheritDoc}
      */
+    @Override
     public final void addConstructorSuppressedWarning( final SuppressableWarnings warning )
     {
         if( nonNull( warning ) ) m_SuppressedWarningsForConstructor.add( warning );
@@ -191,7 +193,7 @@ public final class CodeGenerator implements CodeGeneratorContext
      *
      *  @return The generated code.
      */
-    @SuppressWarnings( "PublicMethodNotExposedInInterface" )
+    @SuppressWarnings( {"PublicMethodNotExposedInInterface", "OverlyCoupledMethod"} )
     public final JavaFile createCode()
     {
         /*
@@ -294,7 +296,7 @@ public final class CodeGenerator implements CodeGeneratorContext
             .build();
 
         //---* Finish the class *----------------------------------------------
-        final var sourceVersion = format( "Generated through %1$s at %2$s", ConfigAnnotationProcessor.class.getName(), m_Configuration.getBuildTime().toString() );
+        final var sourceVersion = "Generated through %1$s at %2$s".formatted( ConfigAnnotationProcessor.class.getName(), m_Configuration.getBuildTime().toString() );
         m_Configuration.getBaseClass().ifPresent( m_ClassBuilder::superclass );
         final var configurationBean = m_ClassBuilder.addSuperinterface( m_Configuration.getSpecification() )
             .addModifiers( PUBLIC, FINAL )
@@ -341,14 +343,12 @@ public final class CodeGenerator implements CodeGeneratorContext
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings( "UseOfConcreteClass" )
     @Override
     public final JavaComposer getComposer() { return m_Composer; }
 
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings( "UseOfConcreteClass" )
     @Override
     public final CodeGenerationConfiguration getConfiguration() { return m_Configuration; }
 

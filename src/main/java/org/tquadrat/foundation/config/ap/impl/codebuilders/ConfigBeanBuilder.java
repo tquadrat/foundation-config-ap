@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2021 by Thomas Thrien.
+ *  Copyright © 2002-2023 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -43,7 +43,6 @@ import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.UNCHECKE
 import static org.tquadrat.foundation.javacomposer.SuppressableWarnings.createSuppressWarningsAnnotation;
 import static org.tquadrat.foundation.lang.CommonConstants.EMPTY_STRING;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
-import static org.tquadrat.foundation.util.StringUtils.format;
 import static org.tquadrat.foundation.util.StringUtils.repeat;
 
 import java.io.FileNotFoundException;
@@ -461,7 +460,8 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
             if( addEmptyLine ) builder.addCode( "\n" );
             addEmptyLine = true;
             final var propertyName = propertySpec.getPropertyName();
-            final var comment = format( "//---* Property \"%1$s\" *%2$s", propertyName, repeat( '-', 80 ) ).substring( 0, commentLen );
+            final var comment = "//---* Property \"%1$s\" *%2$s".formatted( propertyName, repeat( '-', 80 ) )
+                .substring( 0, commentLen );
             builder.addCode(
                 """
                 $L
