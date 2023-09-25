@@ -13,7 +13,7 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">/*</span>
 <span class="source-line-no">002</span><span id="line-2"> * ============================================================================</span>
-<span class="source-line-no">003</span><span id="line-3"> *  Copyright © 2002-2021 by Thomas Thrien.</span>
+<span class="source-line-no">003</span><span id="line-3"> *  Copyright © 2002-2023 by Thomas Thrien.</span>
 <span class="source-line-no">004</span><span id="line-4"> *  All Rights Reserved.</span>
 <span class="source-line-no">005</span><span id="line-5"> * ============================================================================</span>
 <span class="source-line-no">006</span><span id="line-6"> *  Licensed to the public under the agreements of the GNU Lesser General Public</span>
@@ -31,55 +31,55 @@
 <span class="source-line-no">018</span><span id="line-18">package org.tquadrat.foundation.config.ap;</span>
 <span class="source-line-no">019</span><span id="line-19"></span>
 <span class="source-line-no">020</span><span id="line-20">import static java.lang.Boolean.FALSE;</span>
-<span class="source-line-no">021</span><span id="line-21">import static java.util.Arrays.asList;</span>
-<span class="source-line-no">022</span><span id="line-22">import static java.util.Collections.list;</span>
-<span class="source-line-no">023</span><span id="line-23">import static java.util.stream.Collectors.joining;</span>
-<span class="source-line-no">024</span><span id="line-24">import static javax.lang.model.element.ElementKind.METHOD;</span>
-<span class="source-line-no">025</span><span id="line-25">import static javax.lang.model.element.Modifier.DEFAULT;</span>
-<span class="source-line-no">026</span><span id="line-26">import static javax.lang.model.element.Modifier.PUBLIC;</span>
-<span class="source-line-no">027</span><span id="line-27">import static javax.lang.model.element.Modifier.STATIC;</span>
-<span class="source-line-no">028</span><span id="line-28">import static javax.tools.Diagnostic.Kind.ERROR;</span>
-<span class="source-line-no">029</span><span id="line-29">import static javax.tools.Diagnostic.Kind.NOTE;</span>
-<span class="source-line-no">030</span><span id="line-30">import static org.apiguardian.api.API.Status.INTERNAL;</span>
-<span class="source-line-no">031</span><span id="line-31">import static org.apiguardian.api.API.Status.STABLE;</span>
-<span class="source-line-no">032</span><span id="line-32">import static org.tquadrat.foundation.config.ap.CollectionKind.LIST;</span>
-<span class="source-line-no">033</span><span id="line-33">import static org.tquadrat.foundation.config.ap.CollectionKind.MAP;</span>
-<span class="source-line-no">034</span><span id="line-34">import static org.tquadrat.foundation.config.ap.CollectionKind.NO_COLLECTION;</span>
-<span class="source-line-no">035</span><span id="line-35">import static org.tquadrat.foundation.config.ap.CollectionKind.SET;</span>
-<span class="source-line-no">036</span><span id="line-36">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ALLOWS_INIFILE;</span>
-<span class="source-line-no">037</span><span id="line-37">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ALLOWS_PREFERENCES;</span>
-<span class="source-line-no">038</span><span id="line-38">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ELEMENTTYPE_IS_ENUM;</span>
-<span class="source-line-no">039</span><span id="line-39">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.EXEMPT_FROM_TOSTRING;</span>
-<span class="source-line-no">040</span><span id="line-40">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.GETTER_IS_DEFAULT;</span>
-<span class="source-line-no">041</span><span id="line-41">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.GETTER_ON_MAP;</span>
-<span class="source-line-no">042</span><span id="line-42">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.GETTER_RETURNS_OPTIONAL;</span>
-<span class="source-line-no">043</span><span id="line-43">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_CLI_MANDATORY;</span>
-<span class="source-line-no">044</span><span id="line-44">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_CLI_MULTIVALUED;</span>
-<span class="source-line-no">045</span><span id="line-45">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_ARGUMENT;</span>
-<span class="source-line-no">046</span><span id="line-46">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_MUTABLE;</span>
-<span class="source-line-no">047</span><span id="line-47">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_OPTION;</span>
-<span class="source-line-no">048</span><span id="line-48">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_SPECIAL;</span>
-<span class="source-line-no">049</span><span id="line-49">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_REQUIRES_SYNCHRONIZATION;</span>
-<span class="source-line-no">050</span><span id="line-50">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER_CHECK_EMPTY;</span>
-<span class="source-line-no">051</span><span id="line-51">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER_CHECK_NULL;</span>
-<span class="source-line-no">052</span><span id="line-52">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER_IS_DEFAULT;</span>
-<span class="source-line-no">053</span><span id="line-53">import static org.tquadrat.foundation.javacomposer.Layout.LAYOUT_FOUNDATION;</span>
-<span class="source-line-no">054</span><span id="line-54">import static org.tquadrat.foundation.lang.CommonConstants.EMPTY_STRING;</span>
-<span class="source-line-no">055</span><span id="line-55">import static org.tquadrat.foundation.lang.CommonConstants.UTF8;</span>
-<span class="source-line-no">056</span><span id="line-56">import static org.tquadrat.foundation.lang.DebugOutput.ifDebug;</span>
-<span class="source-line-no">057</span><span id="line-57">import static org.tquadrat.foundation.lang.Objects.isNull;</span>
-<span class="source-line-no">058</span><span id="line-58">import static org.tquadrat.foundation.lang.Objects.nonNull;</span>
-<span class="source-line-no">059</span><span id="line-59">import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;</span>
-<span class="source-line-no">060</span><span id="line-60">import static org.tquadrat.foundation.lang.StringConverter.METHOD_NAME_GetSubjectClass;</span>
-<span class="source-line-no">061</span><span id="line-61">import static org.tquadrat.foundation.util.JavaUtils.PREFIX_GET;</span>
-<span class="source-line-no">062</span><span id="line-62">import static org.tquadrat.foundation.util.JavaUtils.PREFIX_IS;</span>
-<span class="source-line-no">063</span><span id="line-63">import static org.tquadrat.foundation.util.JavaUtils.isAddMethod;</span>
-<span class="source-line-no">064</span><span id="line-64">import static org.tquadrat.foundation.util.JavaUtils.isGetter;</span>
-<span class="source-line-no">065</span><span id="line-65">import static org.tquadrat.foundation.util.JavaUtils.isSetter;</span>
-<span class="source-line-no">066</span><span id="line-66">import static org.tquadrat.foundation.util.JavaUtils.loadClass;</span>
-<span class="source-line-no">067</span><span id="line-67">import static org.tquadrat.foundation.util.StringUtils.capitalize;</span>
-<span class="source-line-no">068</span><span id="line-68">import static org.tquadrat.foundation.util.StringUtils.decapitalize;</span>
-<span class="source-line-no">069</span><span id="line-69">import static org.tquadrat.foundation.util.StringUtils.format;</span>
+<span class="source-line-no">021</span><span id="line-21">import static java.lang.String.format;</span>
+<span class="source-line-no">022</span><span id="line-22">import static java.util.Arrays.asList;</span>
+<span class="source-line-no">023</span><span id="line-23">import static java.util.Collections.list;</span>
+<span class="source-line-no">024</span><span id="line-24">import static java.util.stream.Collectors.joining;</span>
+<span class="source-line-no">025</span><span id="line-25">import static javax.lang.model.element.ElementKind.METHOD;</span>
+<span class="source-line-no">026</span><span id="line-26">import static javax.lang.model.element.Modifier.DEFAULT;</span>
+<span class="source-line-no">027</span><span id="line-27">import static javax.lang.model.element.Modifier.PUBLIC;</span>
+<span class="source-line-no">028</span><span id="line-28">import static javax.lang.model.element.Modifier.STATIC;</span>
+<span class="source-line-no">029</span><span id="line-29">import static javax.tools.Diagnostic.Kind.ERROR;</span>
+<span class="source-line-no">030</span><span id="line-30">import static javax.tools.Diagnostic.Kind.NOTE;</span>
+<span class="source-line-no">031</span><span id="line-31">import static org.apiguardian.api.API.Status.INTERNAL;</span>
+<span class="source-line-no">032</span><span id="line-32">import static org.apiguardian.api.API.Status.STABLE;</span>
+<span class="source-line-no">033</span><span id="line-33">import static org.tquadrat.foundation.config.ap.CollectionKind.LIST;</span>
+<span class="source-line-no">034</span><span id="line-34">import static org.tquadrat.foundation.config.ap.CollectionKind.MAP;</span>
+<span class="source-line-no">035</span><span id="line-35">import static org.tquadrat.foundation.config.ap.CollectionKind.NO_COLLECTION;</span>
+<span class="source-line-no">036</span><span id="line-36">import static org.tquadrat.foundation.config.ap.CollectionKind.SET;</span>
+<span class="source-line-no">037</span><span id="line-37">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ALLOWS_INIFILE;</span>
+<span class="source-line-no">038</span><span id="line-38">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ALLOWS_PREFERENCES;</span>
+<span class="source-line-no">039</span><span id="line-39">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.ELEMENTTYPE_IS_ENUM;</span>
+<span class="source-line-no">040</span><span id="line-40">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.EXEMPT_FROM_TOSTRING;</span>
+<span class="source-line-no">041</span><span id="line-41">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.GETTER_IS_DEFAULT;</span>
+<span class="source-line-no">042</span><span id="line-42">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.GETTER_ON_MAP;</span>
+<span class="source-line-no">043</span><span id="line-43">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.GETTER_RETURNS_OPTIONAL;</span>
+<span class="source-line-no">044</span><span id="line-44">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_CLI_MANDATORY;</span>
+<span class="source-line-no">045</span><span id="line-45">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_CLI_MULTIVALUED;</span>
+<span class="source-line-no">046</span><span id="line-46">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_ARGUMENT;</span>
+<span class="source-line-no">047</span><span id="line-47">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_MUTABLE;</span>
+<span class="source-line-no">048</span><span id="line-48">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_OPTION;</span>
+<span class="source-line-no">049</span><span id="line-49">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_IS_SPECIAL;</span>
+<span class="source-line-no">050</span><span id="line-50">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.PROPERTY_REQUIRES_SYNCHRONIZATION;</span>
+<span class="source-line-no">051</span><span id="line-51">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER_CHECK_EMPTY;</span>
+<span class="source-line-no">052</span><span id="line-52">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER_CHECK_NULL;</span>
+<span class="source-line-no">053</span><span id="line-53">import static org.tquadrat.foundation.config.ap.PropertySpec.PropertyFlag.SETTER_IS_DEFAULT;</span>
+<span class="source-line-no">054</span><span id="line-54">import static org.tquadrat.foundation.javacomposer.Layout.LAYOUT_FOUNDATION;</span>
+<span class="source-line-no">055</span><span id="line-55">import static org.tquadrat.foundation.lang.CommonConstants.EMPTY_STRING;</span>
+<span class="source-line-no">056</span><span id="line-56">import static org.tquadrat.foundation.lang.CommonConstants.UTF8;</span>
+<span class="source-line-no">057</span><span id="line-57">import static org.tquadrat.foundation.lang.DebugOutput.ifDebug;</span>
+<span class="source-line-no">058</span><span id="line-58">import static org.tquadrat.foundation.lang.Objects.isNull;</span>
+<span class="source-line-no">059</span><span id="line-59">import static org.tquadrat.foundation.lang.Objects.nonNull;</span>
+<span class="source-line-no">060</span><span id="line-60">import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;</span>
+<span class="source-line-no">061</span><span id="line-61">import static org.tquadrat.foundation.lang.StringConverter.METHOD_NAME_GetSubjectClass;</span>
+<span class="source-line-no">062</span><span id="line-62">import static org.tquadrat.foundation.util.JavaUtils.PREFIX_GET;</span>
+<span class="source-line-no">063</span><span id="line-63">import static org.tquadrat.foundation.util.JavaUtils.PREFIX_IS;</span>
+<span class="source-line-no">064</span><span id="line-64">import static org.tquadrat.foundation.util.JavaUtils.isAddMethod;</span>
+<span class="source-line-no">065</span><span id="line-65">import static org.tquadrat.foundation.util.JavaUtils.isGetter;</span>
+<span class="source-line-no">066</span><span id="line-66">import static org.tquadrat.foundation.util.JavaUtils.isSetter;</span>
+<span class="source-line-no">067</span><span id="line-67">import static org.tquadrat.foundation.util.JavaUtils.loadClass;</span>
+<span class="source-line-no">068</span><span id="line-68">import static org.tquadrat.foundation.util.StringUtils.capitalize;</span>
+<span class="source-line-no">069</span><span id="line-69">import static org.tquadrat.foundation.util.StringUtils.decapitalize;</span>
 <span class="source-line-no">070</span><span id="line-70">import static org.tquadrat.foundation.util.StringUtils.isEmpty;</span>
 <span class="source-line-no">071</span><span id="line-71">import static org.tquadrat.foundation.util.StringUtils.isEmptyOrBlank;</span>
 <span class="source-line-no">072</span><span id="line-72">import static org.tquadrat.foundation.util.StringUtils.isNotEmptyOrBlank;</span>
@@ -747,7 +747,7 @@
 <span class="source-line-no">734</span><span id="line-734">         */</span>
 <span class="source-line-no">735</span><span id="line-735"></span>
 <span class="source-line-no">736</span><span id="line-736">        final var classLoader = CodeGenerationConfiguration.class.getClassLoader();</span>
-<span class="source-line-no">737</span><span id="line-737">        final var resources = classLoader.getResources( format( "META-INF/services/%s", StringConverter.class.getName() ) );</span>
+<span class="source-line-no">737</span><span id="line-737">        final var resources = classLoader.getResources( "META-INF/services/%s".formatted( StringConverter.class.getName() ) );</span>
 <span class="source-line-no">738</span><span id="line-738">        for( final var file : list( resources ) )</span>
 <span class="source-line-no">739</span><span id="line-739">        {</span>
 <span class="source-line-no">740</span><span id="line-740">            try( final var reader = new BufferedReader( new InputStreamReader( file.openStream(), UTF8 ) ) )</span>
@@ -948,7 +948,7 @@
 <span class="source-line-no">935</span><span id="line-935">    {</span>
 <span class="source-line-no">936</span><span id="line-936">        requireNonNullArgument( type, "type" );</span>
 <span class="source-line-no">937</span><span id="line-937">        requireNonNullArgument( method, "method" );</span>
-<span class="source-line-no">938</span><span id="line-938">        ifDebug( a -&gt; format( "Method: %2$s%n\tType for StringConverter request: %1$s%n\tisEnum: %3$b", a [0].toString(), ((Element) a[1]).getSimpleName(), a [2] ), type, method, Boolean.valueOf( isEnum ) );</span>
+<span class="source-line-no">938</span><span id="line-938">        ifDebug( a -&gt; "Method: %2$s%n\tType for StringConverter request: %1$s%n\tisEnum: %3$b".formatted( a [0].toString(), ((Element) a[1]).getSimpleName(), a [2] ), type, method, Boolean.valueOf( isEnum ) );</span>
 <span class="source-line-no">939</span><span id="line-939"></span>
 <span class="source-line-no">940</span><span id="line-940">        //---* Retrieve the StringConverter from the annotation *--------------</span>
 <span class="source-line-no">941</span><span id="line-941">        final var retValue = extractStringConverterClass( method )</span>
@@ -1934,7 +1934,7 @@
 <span class="source-line-no">1921</span><span id="line-1921">                     * We are only interested in elements that are type</span>
 <span class="source-line-no">1922</span><span id="line-1922">                     * elements, and to be honest, we only want interfaces.</span>
 <span class="source-line-no">1923</span><span id="line-1923">                     */</span>
-<span class="source-line-no">1924</span><span id="line-1924">                    if( element instanceof TypeElement typeElement )</span>
+<span class="source-line-no">1924</span><span id="line-1924">                    if( element instanceof final TypeElement typeElement )</span>
 <span class="source-line-no">1925</span><span id="line-1925">                    {</span>
 <span class="source-line-no">1926</span><span id="line-1926">                        if( typeElement.getKind() == ElementKind.INTERFACE )</span>
 <span class="source-line-no">1927</span><span id="line-1927">                        {</span>
@@ -1950,7 +1950,7 @@
 <span class="source-line-no">1937</span><span id="line-1937">                        }</span>
 <span class="source-line-no">1938</span><span id="line-1938">                        else</span>
 <span class="source-line-no">1939</span><span id="line-1939">                        {</span>
-<span class="source-line-no">1940</span><span id="line-1940">                            printMessage( ERROR, format( "%s: Only interfaces may be annotated with '%s'", typeElement.getQualifiedName().toString(), ConfigurationBeanSpecification.class.getSimpleName() ), element );</span>
+<span class="source-line-no">1940</span><span id="line-1940">                            printMessage( ERROR, "%s: Only interfaces may be annotated with '%s'".formatted( typeElement.getQualifiedName().toString(), ConfigurationBeanSpecification.class.getSimpleName() ), element );</span>
 <span class="source-line-no">1941</span><span id="line-1941">                            throw new IllegalAnnotationError( MSG_InterfacesOnly, ConfigurationBeanSpecification.class );</span>
 <span class="source-line-no">1942</span><span id="line-1942">                        }</span>
 <span class="source-line-no">1943</span><span id="line-1943">                    }</span>

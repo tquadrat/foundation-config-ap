@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2021 by Thomas Thrien.
+ *  Copyright © 2002-2023 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -18,6 +18,7 @@
 package org.tquadrat.foundation.config.ap;
 
 import static java.lang.Boolean.FALSE;
+import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static java.util.Collections.list;
 import static java.util.stream.Collectors.joining;
@@ -66,7 +67,6 @@ import static org.tquadrat.foundation.util.JavaUtils.isSetter;
 import static org.tquadrat.foundation.util.JavaUtils.loadClass;
 import static org.tquadrat.foundation.util.StringUtils.capitalize;
 import static org.tquadrat.foundation.util.StringUtils.decapitalize;
-import static org.tquadrat.foundation.util.StringUtils.format;
 import static org.tquadrat.foundation.util.StringUtils.isEmpty;
 import static org.tquadrat.foundation.util.StringUtils.isEmptyOrBlank;
 import static org.tquadrat.foundation.util.StringUtils.isNotEmptyOrBlank;
@@ -734,7 +734,7 @@ public class ConfigAnnotationProcessor extends APBase
          */
 
         final var classLoader = CodeGenerationConfiguration.class.getClassLoader();
-        final var resources = classLoader.getResources( format( "META-INF/services/%s", StringConverter.class.getName() ) );
+        final var resources = classLoader.getResources( "META-INF/services/%s".formatted( StringConverter.class.getName() ) );
         for( final var file : list( resources ) )
         {
             try( final var reader = new BufferedReader( new InputStreamReader( file.openStream(), UTF8 ) ) )
@@ -935,7 +935,7 @@ public class ConfigAnnotationProcessor extends APBase
     {
         requireNonNullArgument( type, "type" );
         requireNonNullArgument( method, "method" );
-        ifDebug( a -> format( "Method: %2$s%n\tType for StringConverter request: %1$s%n\tisEnum: %3$b", a [0].toString(), ((Element) a[1]).getSimpleName(), a [2] ), type, method, Boolean.valueOf( isEnum ) );
+        ifDebug( a -> "Method: %2$s%n\tType for StringConverter request: %1$s%n\tisEnum: %3$b".formatted( a [0].toString(), ((Element) a[1]).getSimpleName(), a [2] ), type, method, Boolean.valueOf( isEnum ) );
 
         //---* Retrieve the StringConverter from the annotation *--------------
         final var retValue = extractStringConverterClass( method )
@@ -1921,7 +1921,7 @@ public class ConfigAnnotationProcessor extends APBase
                      * We are only interested in elements that are type
                      * elements, and to be honest, we only want interfaces.
                      */
-                    if( element instanceof TypeElement typeElement )
+                    if( element instanceof final TypeElement typeElement )
                     {
                         if( typeElement.getKind() == ElementKind.INTERFACE )
                         {
@@ -1937,7 +1937,7 @@ public class ConfigAnnotationProcessor extends APBase
                         }
                         else
                         {
-                            printMessage( ERROR, format( "%s: Only interfaces may be annotated with '%s'", typeElement.getQualifiedName().toString(), ConfigurationBeanSpecification.class.getSimpleName() ), element );
+                            printMessage( ERROR, "%s: Only interfaces may be annotated with '%s'".formatted( typeElement.getQualifiedName().toString(), ConfigurationBeanSpecification.class.getSimpleName() ), element );
                             throw new IllegalAnnotationError( MSG_InterfacesOnly, ConfigurationBeanSpecification.class );
                         }
                     }
