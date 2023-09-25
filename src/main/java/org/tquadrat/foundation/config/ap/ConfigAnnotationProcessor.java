@@ -19,6 +19,7 @@ package org.tquadrat.foundation.config.ap;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.String.format;
+import static java.lang.System.out;
 import static java.util.Arrays.asList;
 import static java.util.Collections.list;
 import static java.util.stream.Collectors.joining;
@@ -745,6 +746,7 @@ public class ConfigAnnotationProcessor extends APBase
                     .map( s -> loadClass( classLoader, s, StringConverter.class ) )
                     .filter( Optional::isPresent )
                     .map( Optional::get )
+                    .peek( value -> out.println( value.getName() ) )
                     .toList();
                 CreateLoop: for( final var aClass : converterClasses )
                 {
