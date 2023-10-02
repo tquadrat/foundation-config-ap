@@ -35,12 +35,12 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  {@link java.util.stream.Stream}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: InappropriateTypeError.java 918 2021-05-15 15:35:03Z tquadrat $
+ *  @version $Id: InappropriateTypeError.java 1061 2023-09-25 16:32:43Z tquadrat $
  *  @since 0.0.1
  *
  *  @UMLGraph.link
  */
-@ClassVersion( sourceVersion = "$Id: InappropriateTypeError.java 918 2021-05-15 15:35:03Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: InappropriateTypeError.java 1061 2023-09-25 16:32:43Z tquadrat $" )
 @API( status = STABLE, since = "0.0.1" )
 public final class InappropriateTypeError extends Error
 {

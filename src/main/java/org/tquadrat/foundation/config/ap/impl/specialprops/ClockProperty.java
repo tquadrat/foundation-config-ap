@@ -46,12 +46,12 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  for
  *  {@link SpecialPropertyType#CONFIG_PROPERTY_CLOCK}.
  *
- *  @version $Id: ClockProperty.java 943 2021-12-21 01:34:32Z tquadrat $
+ *  @version $Id: ClockProperty.java 1061 2023-09-25 16:32:43Z tquadrat $
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@ClassVersion( sourceVersion = "$Id: ClockProperty.java 943 2021-12-21 01:34:32Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ClockProperty.java 1061 2023-09-25 16:32:43Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public final class ClockProperty extends SpecialPropertySpecBase
 {

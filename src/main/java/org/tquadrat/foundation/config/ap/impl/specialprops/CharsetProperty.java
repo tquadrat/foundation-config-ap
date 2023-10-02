@@ -46,12 +46,12 @@ import org.tquadrat.foundation.util.stringconverter.CharsetStringConverter;
  *  for
  *  {@link SpecialPropertyType#CONFIG_PROPERTY_CHARSET}.
  *
- *  @version $Id: CharsetProperty.java 997 2022-01-26 14:55:05Z tquadrat $
+ *  @version $Id: CharsetProperty.java 1061 2023-09-25 16:32:43Z tquadrat $
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@ClassVersion( sourceVersion = "$Id: CharsetProperty.java 997 2022-01-26 14:55:05Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CharsetProperty.java 1061 2023-09-25 16:32:43Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public final class CharsetProperty extends SpecialPropertySpecBase
 {

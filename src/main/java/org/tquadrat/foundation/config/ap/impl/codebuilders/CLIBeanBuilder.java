@@ -86,12 +86,12 @@ import org.tquadrat.foundation.util.stringconverter.EnumStringConverter;
  *  {@link org.tquadrat.foundation.config.CLIBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CLIBeanBuilder.java 1054 2023-03-16 19:59:26Z tquadrat $
+ *  @version $Id: CLIBeanBuilder.java 1061 2023-09-25 16:32:43Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: CLIBeanBuilder.java 1054 2023-03-16 19:59:26Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CLIBeanBuilder.java 1061 2023-09-25 16:32:43Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class CLIBeanBuilder extends CodeBuilderBase
 {

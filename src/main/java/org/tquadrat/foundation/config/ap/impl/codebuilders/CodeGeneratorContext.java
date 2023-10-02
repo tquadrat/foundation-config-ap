@@ -41,11 +41,11 @@ import org.tquadrat.foundation.javacomposer.TypeSpec;
  *  already generated code.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CodeGeneratorContext.java 946 2021-12-23 14:48:19Z tquadrat $
+ *  @version $Id: CodeGeneratorContext.java 1061 2023-09-25 16:32:43Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@ClassVersion( sourceVersion = "$Id: CodeGeneratorContext.java 946 2021-12-23 14:48:19Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeGeneratorContext.java 1061 2023-09-25 16:32:43Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public interface CodeGeneratorContext
 {

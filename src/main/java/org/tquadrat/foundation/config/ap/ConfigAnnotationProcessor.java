@@ -19,7 +19,6 @@ package org.tquadrat.foundation.config.ap;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.String.format;
-import static java.lang.System.out;
 import static java.util.Arrays.asList;
 import static java.util.Collections.list;
 import static java.util.stream.Collectors.joining;
@@ -160,14 +159,14 @@ import org.tquadrat.foundation.util.stringconverter.EnumStringConverter;
  *  The annotation processor for the {@code org.tquadrat.foundation.config}
  *  module.
  *
- *  @version $Id: ConfigAnnotationProcessor.java 1053 2023-03-11 00:10:49Z tquadrat $
+ *  @version $Id: ConfigAnnotationProcessor.java 1061 2023-09-25 16:32:43Z tquadrat $
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"OverlyCoupledClass", "OverlyComplexClass", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1053 2023-03-11 00:10:49Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1061 2023-09-25 16:32:43Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @SupportedSourceVersion( SourceVersion.RELEASE_17 )
 @SupportedOptions( { APBase.ADD_DEBUG_OUTPUT, APBase.MAVEN_GOAL } )
@@ -746,7 +745,6 @@ public class ConfigAnnotationProcessor extends APBase
                     .map( s -> loadClass( classLoader, s, StringConverter.class ) )
                     .filter( Optional::isPresent )
                     .map( Optional::get )
-                    .peek( value -> out.println( value.getName() ) )
                     .toList();
                 CreateLoop: for( final var aClass : converterClasses )
                 {

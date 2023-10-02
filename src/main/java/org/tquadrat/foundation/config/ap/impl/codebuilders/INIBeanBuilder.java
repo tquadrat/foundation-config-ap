@@ -66,12 +66,12 @@ import org.tquadrat.foundation.util.stringconverter.PathStringConverter;
  *  {@link org.tquadrat.foundation.config.INIBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: INIBeanBuilder.java 1051 2023-02-26 19:14:46Z tquadrat $
+ *  @version $Id: INIBeanBuilder.java 1061 2023-09-25 16:32:43Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: INIBeanBuilder.java 1051 2023-02-26 19:14:46Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: INIBeanBuilder.java 1061 2023-09-25 16:32:43Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class INIBeanBuilder extends CodeBuilderBase
 {
@@ -87,11 +87,11 @@ public final class INIBeanBuilder extends CodeBuilderBase
      *  instance.
      *
      *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
-     *  @version $Id: INIBeanBuilder.java 1051 2023-02-26 19:14:46Z tquadrat $
+     *  @version $Id: INIBeanBuilder.java 1061 2023-09-25 16:32:43Z tquadrat $
      *  @UMLGraph.link
      *  @since 0.1.0
      */
-    @ClassVersion( sourceVersion = "$Id: INIBeanBuilder.java 1051 2023-02-26 19:14:46Z tquadrat $" )
+    @ClassVersion( sourceVersion = "$Id: INIBeanBuilder.java 1061 2023-09-25 16:32:43Z tquadrat $" )
     @API( status = INTERNAL, since = "0.1.0" )
     private static enum InitType
     {
