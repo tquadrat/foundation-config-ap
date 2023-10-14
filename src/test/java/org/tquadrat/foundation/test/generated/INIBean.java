@@ -15,6 +15,7 @@
 
 package org.tquadrat.foundation.test.generated;
 
+import static java.lang.String.format;
 import static java.lang.System.getProperty;
 import static java.nio.charset.Charset.defaultCharset;
 import static java.nio.file.Files.exists;
@@ -22,7 +23,6 @@ import static org.tquadrat.foundation.lang.CommonConstants.NULL_STRING;
 import static org.tquadrat.foundation.lang.Objects.isNull;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
 import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
-import static org.tquadrat.foundation.util.StringUtils.format;
 import static org.tquadrat.foundation.util.SystemUtils.getPID;
 
 import java.io.FileNotFoundException;

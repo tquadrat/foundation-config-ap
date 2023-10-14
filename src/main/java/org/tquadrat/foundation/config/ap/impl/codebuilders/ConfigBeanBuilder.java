@@ -63,7 +63,6 @@ import org.tquadrat.foundation.javacomposer.TypeName;
 import org.tquadrat.foundation.lang.AutoLock;
 import org.tquadrat.foundation.lang.CommonConstants;
 import org.tquadrat.foundation.lang.Objects;
-import org.tquadrat.foundation.util.StringUtils;
 
 /**
  *  The
@@ -72,12 +71,12 @@ import org.tquadrat.foundation.util.StringUtils;
  *  {@link org.tquadrat.foundation.config.ConfigBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: ConfigBeanBuilder.java 1061 2023-09-25 16:32:43Z tquadrat $
+ *  @version $Id: ConfigBeanBuilder.java 1076 2023-10-03 18:36:07Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: ConfigBeanBuilder.java 1061 2023-09-25 16:32:43Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ConfigBeanBuilder.java 1076 2023-10-03 18:36:07Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class ConfigBeanBuilder extends CodeBuilderBase
 {
@@ -364,8 +363,7 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
                 """, IOException.class )
             .addStatement(
                 """
-                final var eiie = new $1T( format( "Cannot load resource '%s'", resource.toExternalForm() ) )""", ExceptionInInitializerError.class )
-            .addStaticImport( StringUtils.class, "format" )
+                final var eiie = new $1T( "Cannot load resource '%s'".formatted( resource.toExternalForm() ) )""", ExceptionInInitializerError.class )
             .addStatement( "eiie.addSuppressed( e )" )
             .addStatement( "throw eiie" )
             .endControlFlow()
@@ -435,7 +433,7 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
         //---* Create the 'toString()' method *--------------------------------
         final var builder = getComposer().createToStringBuilder()
             .addStatement( "final var prefix = format ( $1S, getClass().getName() )", "%s [" )
-            .addStaticImport( StringUtils.class, "format" )
+            .addStaticImport( String.class, "format" )
             .addStatement( "final var joiner = new $1T( $2S, prefix, $3S )", StringJoiner.class, ", ", "]" )
             .addCode( "\n" );
 
@@ -489,7 +487,7 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
                             """, propertyName )
                         .addStaticImport( Objects.class, "nonNull" )
                         .addStaticImport( CommonConstants.class, "NULL_STRING" )
-                        .addStaticImport( StringUtils.class, "format" );
+                        .addStaticImport( String.class, "format" );
                 }
                 else
                 {
@@ -497,7 +495,7 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
                         """
                         joiner.add( format( "$1N = \\"%1$$S\\"", $2T.toString( $3L ) ) )\
                         """, propertyName, Objects.class, field )
-                        .addStaticImport( StringUtils.class, "format" );
+                        .addStaticImport( String.class, "format" );
                 }
             }
             else if( propertySpec.getGetterMethodName().isPresent())
@@ -520,7 +518,7 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
                             """, propertyName )
                         .addStaticImport( Objects.class, "nonNull" )
                         .addStaticImport( CommonConstants.class, "NULL_STRING" )
-                        .addStaticImport( StringUtils.class, "format" );
+                        .addStaticImport( String.class, "format" );
                 }
                 else
                 {
@@ -528,7 +526,7 @@ public final class ConfigBeanBuilder extends CodeBuilderBase
                         """
                         joiner.add( format( "$1N = \\"%1$$s\\"", $2T.toString( $3L() ) ) )\
                         """, propertyName, Objects.class, getterMethod )
-                        .addStaticImport( StringUtils.class, "format" );
+                        .addStaticImport( String.class, "format" );
                 }
             }
             builder.endControlFlow();

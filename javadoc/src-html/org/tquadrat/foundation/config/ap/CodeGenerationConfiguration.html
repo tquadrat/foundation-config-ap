@@ -30,16 +30,16 @@
 <span class="source-line-no">017</span><span id="line-17"></span>
 <span class="source-line-no">018</span><span id="line-18">package org.tquadrat.foundation.config.ap;</span>
 <span class="source-line-no">019</span><span id="line-19"></span>
-<span class="source-line-no">020</span><span id="line-20">import static java.util.Collections.unmodifiableMap;</span>
-<span class="source-line-no">021</span><span id="line-21">import static org.apiguardian.api.API.Status.MAINTAINED;</span>
-<span class="source-line-no">022</span><span id="line-22">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_DuplicateProperty;</span>
-<span class="source-line-no">023</span><span id="line-23">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_IllegalImplementation;</span>
-<span class="source-line-no">024</span><span id="line-24">import static org.tquadrat.foundation.lang.Objects.isNull;</span>
-<span class="source-line-no">025</span><span id="line-25">import static org.tquadrat.foundation.lang.Objects.nonNull;</span>
-<span class="source-line-no">026</span><span id="line-26">import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;</span>
-<span class="source-line-no">027</span><span id="line-27">import static org.tquadrat.foundation.lang.Objects.requireNotEmptyArgument;</span>
-<span class="source-line-no">028</span><span id="line-28">import static org.tquadrat.foundation.util.Comparators.caseInsensitiveComparator;</span>
-<span class="source-line-no">029</span><span id="line-29">import static org.tquadrat.foundation.util.StringUtils.format;</span>
+<span class="source-line-no">020</span><span id="line-20">import static java.lang.String.format;</span>
+<span class="source-line-no">021</span><span id="line-21">import static java.util.Collections.unmodifiableMap;</span>
+<span class="source-line-no">022</span><span id="line-22">import static org.apiguardian.api.API.Status.MAINTAINED;</span>
+<span class="source-line-no">023</span><span id="line-23">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_DuplicateProperty;</span>
+<span class="source-line-no">024</span><span id="line-24">import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_IllegalImplementation;</span>
+<span class="source-line-no">025</span><span id="line-25">import static org.tquadrat.foundation.lang.Objects.isNull;</span>
+<span class="source-line-no">026</span><span id="line-26">import static org.tquadrat.foundation.lang.Objects.nonNull;</span>
+<span class="source-line-no">027</span><span id="line-27">import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;</span>
+<span class="source-line-no">028</span><span id="line-28">import static org.tquadrat.foundation.lang.Objects.requireNotEmptyArgument;</span>
+<span class="source-line-no">029</span><span id="line-29">import static org.tquadrat.foundation.util.Comparators.caseInsensitiveComparator;</span>
 <span class="source-line-no">030</span><span id="line-30">import static org.tquadrat.foundation.util.StringUtils.isEmptyOrBlank;</span>
 <span class="source-line-no">031</span><span id="line-31">import static org.tquadrat.foundation.util.StringUtils.isNotEmptyOrBlank;</span>
 <span class="source-line-no">032</span><span id="line-32"></span>
@@ -72,12 +72,12 @@
 <span class="source-line-no">059</span><span id="line-59"> *  generation, and it collects the results from the different code generators.</span>
 <span class="source-line-no">060</span><span id="line-60"> *</span>
 <span class="source-line-no">061</span><span id="line-61"> *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org</span>
-<span class="source-line-no">062</span><span id="line-62"> *  @version $Id: CodeGenerationConfiguration.java 1015 2022-02-09 08:25:36Z tquadrat $</span>
+<span class="source-line-no">062</span><span id="line-62"> *  @version $Id: CodeGenerationConfiguration.java 1076 2023-10-03 18:36:07Z tquadrat $</span>
 <span class="source-line-no">063</span><span id="line-63"> *  @UMLGraph.link</span>
 <span class="source-line-no">064</span><span id="line-64"> *  @since 0.1.0</span>
 <span class="source-line-no">065</span><span id="line-65"> */</span>
 <span class="source-line-no">066</span><span id="line-66">@SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods"} )</span>
-<span class="source-line-no">067</span><span id="line-67">@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 1015 2022-02-09 08:25:36Z tquadrat $" )</span>
+<span class="source-line-no">067</span><span id="line-67">@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 1076 2023-10-03 18:36:07Z tquadrat $" )</span>
 <span class="source-line-no">068</span><span id="line-68">@API( status = MAINTAINED, since = "0.1.0" )</span>
 <span class="source-line-no">069</span><span id="line-69">public final class CodeGenerationConfiguration</span>
 <span class="source-line-no">070</span><span id="line-70">{</span>
@@ -224,7 +224,7 @@
 <span class="source-line-no">211</span><span id="line-211">     *      configuration bean properties should be thread safe, {@code false}</span>
 <span class="source-line-no">212</span><span id="line-212">     *      if a synchronisation/locking is not required.</span>
 <span class="source-line-no">213</span><span id="line-213">     */</span>
-<span class="source-line-no">214</span><span id="line-214">    @SuppressWarnings( "UseOfConcreteClass" )</span>
+<span class="source-line-no">214</span><span id="line-214">    @SuppressWarnings( {"UseOfConcreteClass", "ConstructorWithTooManyParameters"} )</span>
 <span class="source-line-no">215</span><span id="line-215">    public CodeGenerationConfiguration( final APHelper environment, final JavaComposer composer, final ClassName specification, final Name className, final Name packageName, final TypeName baseClass, final boolean synchronizeAccess )</span>
 <span class="source-line-no">216</span><span id="line-216">    {</span>
 <span class="source-line-no">217</span><span id="line-217">        m_Environment = requireNonNullArgument( environment, "environment" );</span>
@@ -293,7 +293,7 @@
 <span class="source-line-no">280</span><span id="line-280">     */</span>
 <span class="source-line-no">281</span><span id="line-281">    public final void addProperty( final PropertySpec property ) throws CodeGenerationError</span>
 <span class="source-line-no">282</span><span id="line-282">    {</span>
-<span class="source-line-no">283</span><span id="line-283">        if( requireNonNullArgument( property, "property" ) instanceof PropertySpecImpl propertyImpl )</span>
+<span class="source-line-no">283</span><span id="line-283">        if( requireNonNullArgument( property, "property" ) instanceof final PropertySpecImpl propertyImpl )</span>
 <span class="source-line-no">284</span><span id="line-284">        {</span>
 <span class="source-line-no">285</span><span id="line-285">            final var propertyName = propertyImpl.getPropertyName();</span>
 <span class="source-line-no">286</span><span id="line-286">            if( nonNull( m_Properties.put( propertyName, propertyImpl ) ) )</span>
@@ -347,242 +347,242 @@
 <span class="source-line-no">334</span><span id="line-334">     *</span>
 <span class="source-line-no">335</span><span id="line-335">     *  @return The composer instance.</span>
 <span class="source-line-no">336</span><span id="line-336">     */</span>
-<span class="source-line-no">337</span><span id="line-337">    @SuppressWarnings( "UseOfConcreteClass" )</span>
-<span class="source-line-no">338</span><span id="line-338">    public final JavaComposer getComposer() { return m_Composer; }</span>
-<span class="source-line-no">339</span><span id="line-339"></span>
-<span class="source-line-no">340</span><span id="line-340">    /**</span>
-<span class="source-line-no">341</span><span id="line-341">     *  Returns an implementation of some utility methods for operating on</span>
-<span class="source-line-no">342</span><span id="line-342">     *  elements.</span>
-<span class="source-line-no">343</span><span id="line-343">     *</span>
-<span class="source-line-no">344</span><span id="line-344">     *  @return The element utilities.</span>
-<span class="source-line-no">345</span><span id="line-345">     */</span>
-<span class="source-line-no">346</span><span id="line-346">    public final Elements getElementUtils() { return getEnvironment().getElementUtils(); }</span>
-<span class="source-line-no">347</span><span id="line-347"></span>
-<span class="source-line-no">348</span><span id="line-348">    /**</span>
-<span class="source-line-no">349</span><span id="line-349">     *  Returns the processing environment.</span>
-<span class="source-line-no">350</span><span id="line-350">     *</span>
-<span class="source-line-no">351</span><span id="line-351">     *  @return The processing environment.</span>
-<span class="source-line-no">352</span><span id="line-352">     */</span>
-<span class="source-line-no">353</span><span id="line-353">    public final APHelper getEnvironment() { return m_Environment; }</span>
-<span class="source-line-no">354</span><span id="line-354"></span>
-<span class="source-line-no">355</span><span id="line-355">    /**</span>
-<span class="source-line-no">356</span><span id="line-356">     *  Returns the comment for the {@code INI} file.</span>
-<span class="source-line-no">357</span><span id="line-357">     *</span>
-<span class="source-line-no">358</span><span id="line-358">     *  @return The comment for the configuration file.</span>
-<span class="source-line-no">359</span><span id="line-359">     */</span>
-<span class="source-line-no">360</span><span id="line-360">    public final Optional&lt;String&gt; getINIFileComment() { return Optional.ofNullable( m_INIFileComment ); }</span>
-<span class="source-line-no">361</span><span id="line-361"></span>
-<span class="source-line-no">362</span><span id="line-362">    /**</span>
-<span class="source-line-no">363</span><span id="line-363">     *  Returns the flag that indicates whether the configuration file must</span>
-<span class="source-line-no">364</span><span id="line-364">     *  exist before the program starts.</span>
-<span class="source-line-no">365</span><span id="line-365">     *</span>
-<span class="source-line-no">366</span><span id="line-366">     *  @return {@code true} if the file must exist already, {@code false} if</span>
-<span class="source-line-no">367</span><span id="line-367">     *      it will be created on startup.</span>
-<span class="source-line-no">368</span><span id="line-368">     *</span>
-<span class="source-line-no">369</span><span id="line-369">     * @see org.tquadrat.foundation.config.INIFileConfig#mustExist()</span>
-<span class="source-line-no">370</span><span id="line-370">     */</span>
-<span class="source-line-no">371</span><span id="line-371">    @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )</span>
-<span class="source-line-no">372</span><span id="line-372">    public final boolean getINIFileMustExist() { return m_INIFileMustExist; }</span>
-<span class="source-line-no">373</span><span id="line-373"></span>
-<span class="source-line-no">374</span><span id="line-374">    /**</span>
-<span class="source-line-no">375</span><span id="line-375">     *  Returns the name for the file that backs the</span>
-<span class="source-line-no">376</span><span id="line-376">     *  {@link org.tquadrat.foundation.inifile.INIFile}</span>
-<span class="source-line-no">377</span><span id="line-377">     *  instance used by the generated configuration bean.</span>
-<span class="source-line-no">378</span><span id="line-378">     *</span>
-<span class="source-line-no">379</span><span id="line-379">     *  @return An instance of</span>
-<span class="source-line-no">380</span><span id="line-380">     *      {@link Optional}</span>
-<span class="source-line-no">381</span><span id="line-381">     *      that holds the filename.</span>
-<span class="source-line-no">382</span><span id="line-382">     */</span>
-<span class="source-line-no">383</span><span id="line-383">    public final Optional&lt;String&gt; getINIFilePath() { return Optional.ofNullable( m_INIFilePath ); }</span>
-<span class="source-line-no">384</span><span id="line-384"></span>
-<span class="source-line-no">385</span><span id="line-385">    /**</span>
-<span class="source-line-no">386</span><span id="line-386">     *  Returns the {@code INI} file groups.</span>
-<span class="source-line-no">387</span><span id="line-387">     *</span>
-<span class="source-line-no">388</span><span id="line-388">     *  @return The group names and the related comments.</span>
-<span class="source-line-no">389</span><span id="line-389">     */</span>
-<span class="source-line-no">390</span><span id="line-390">    public final Map&lt;String,String&gt; getINIGroups() { return unmodifiableMap( m_INIGroups ); }</span>
-<span class="source-line-no">391</span><span id="line-391"></span>
-<span class="source-line-no">392</span><span id="line-392">    /**</span>
-<span class="source-line-no">393</span><span id="line-393">     *  &lt;p&gt;{@summary Returns the method that is provided as a source for the</span>
-<span class="source-line-no">394</span><span id="line-394">     *  initialisation of the properties of the configuration bean.}&lt;/p&gt;</span>
-<span class="source-line-no">395</span><span id="line-395">     *  &lt;p&gt;It it is {@code default} or {@code static}, the implementation of</span>
-<span class="source-line-no">396</span><span id="line-396">     *  the method has to be part of the configuration bean specification</span>
-<span class="source-line-no">397</span><span id="line-397">     *  interface itself, otherwise it has to be implemented in base class.&lt;/p&gt;</span>
-<span class="source-line-no">398</span><span id="line-398">     *  &lt;p&gt;It is an error if there is an {@code initData()} method that is</span>
-<span class="source-line-no">399</span><span id="line-399">     *  neither {@code default} nor {@code static}, and no base class is</span>
-<span class="source-line-no">400</span><span id="line-400">     *  defined with the</span>
-<span class="source-line-no">401</span><span id="line-401">     *  {@link org.tquadrat.foundation.config.ConfigurationBeanSpecification &amp;#64;ConfigurationBeanSpecificatgion}</span>
-<span class="source-line-no">402</span><span id="line-402">     *  annotation.&lt;/p&gt;</span>
-<span class="source-line-no">403</span><span id="line-403">     *  &lt;p&gt;The signature for the method has to be&lt;/p&gt;</span>
-<span class="source-line-no">404</span><span id="line-404">     *  &lt;pre&gt;&lt;code&gt;public Map&amp;lt;String,Object&amp;gt; initData() throws Exception&lt;/code&gt;&lt;/pre&gt;</span>
-<span class="source-line-no">405</span><span id="line-405">     *  &lt;p&gt;and the return value is a map with the initialisation values, where</span>
-<span class="source-line-no">406</span><span id="line-406">     *  the property names are the keys.&lt;/p&gt;</span>
-<span class="source-line-no">407</span><span id="line-407">     *</span>
-<span class="source-line-no">408</span><span id="line-408">     *  @return An instance of</span>
-<span class="source-line-no">409</span><span id="line-409">     *      {@link Optional}</span>
-<span class="source-line-no">410</span><span id="line-410">     *      that holds the method.</span>
-<span class="source-line-no">411</span><span id="line-411">     *</span>
-<span class="source-line-no">412</span><span id="line-412">     *  @see org.tquadrat.foundation.config.ConfigurationBeanSpecification#baseClass()</span>
-<span class="source-line-no">413</span><span id="line-413">     */</span>
-<span class="source-line-no">414</span><span id="line-414">    public final Optional&lt;MethodSpec&gt; getInitDataMethod() { return Optional.ofNullable( m_InitDataMethod ); }</span>
-<span class="source-line-no">415</span><span id="line-415"></span>
-<span class="source-line-no">416</span><span id="line-416">    /**</span>
-<span class="source-line-no">417</span><span id="line-417">     *  Returns the name of the resource that is used to initialise the</span>
-<span class="source-line-no">418</span><span id="line-418">     *  properties of the configuration bean.</span>
-<span class="source-line-no">419</span><span id="line-419">     *</span>
-<span class="source-line-no">420</span><span id="line-420">     *  @return An instance of</span>
-<span class="source-line-no">421</span><span id="line-421">     *      {@link Optional}</span>
-<span class="source-line-no">422</span><span id="line-422">     *      that holds the resource name.</span>
-<span class="source-line-no">423</span><span id="line-423">     */</span>
-<span class="source-line-no">424</span><span id="line-424">    public final Optional&lt;String&gt; getInitDataResource() { return Optional.ofNullable( m_InitDataResource ); }</span>
-<span class="source-line-no">425</span><span id="line-425"></span>
-<span class="source-line-no">426</span><span id="line-426">    /**</span>
-<span class="source-line-no">427</span><span id="line-427">     *  Returns the interfaces that have to be implemented by the new</span>
-<span class="source-line-no">428</span><span id="line-428">     *  configuration bean.</span>
-<span class="source-line-no">429</span><span id="line-429">     *</span>
-<span class="source-line-no">430</span><span id="line-430">     *  @return The interfaces to implement.</span>
-<span class="source-line-no">431</span><span id="line-431">     */</span>
-<span class="source-line-no">432</span><span id="line-432">    public final Collection&lt;TypeName&gt; getInterfacesToImplement() { return List.copyOf( m_InterfacesToImplement ); }</span>
-<span class="source-line-no">433</span><span id="line-433"></span>
-<span class="source-line-no">434</span><span id="line-434">    /**</span>
-<span class="source-line-no">435</span><span id="line-435">     *  Returns the name of the field that holds the message prefix, in case</span>
-<span class="source-line-no">436</span><span id="line-436">     *  i18n support is configured.</span>
-<span class="source-line-no">437</span><span id="line-437">     *</span>
-<span class="source-line-no">438</span><span id="line-438">     *  @return An instance of</span>
-<span class="source-line-no">439</span><span id="line-439">     *      {@link Optional}</span>
-<span class="source-line-no">440</span><span id="line-440">     *      holding the fully qualified field name.</span>
-<span class="source-line-no">441</span><span id="line-441">     */</span>
-<span class="source-line-no">442</span><span id="line-442">    public final Optional&lt;String&gt; getMessagePrefix() { return Optional.ofNullable( m_MessagePrefix ); }</span>
-<span class="source-line-no">443</span><span id="line-443"></span>
-<span class="source-line-no">444</span><span id="line-444">    /**</span>
-<span class="source-line-no">445</span><span id="line-445">     *  Returns the name of the package for the new configuration bean.</span>
-<span class="source-line-no">446</span><span id="line-446">     *</span>
-<span class="source-line-no">447</span><span id="line-447">     *  @return The package name.</span>
-<span class="source-line-no">448</span><span id="line-448">     */</span>
-<span class="source-line-no">449</span><span id="line-449">    public final Name getPackageName() { return m_PackageName; }</span>
-<span class="source-line-no">450</span><span id="line-450"></span>
-<span class="source-line-no">451</span><span id="line-451">    /**</span>
-<span class="source-line-no">452</span><span id="line-452">     *  &lt;p&gt;{@summary Returns the class for the {@code Preferences} change</span>
-<span class="source-line-no">453</span><span id="line-453">     *  listener.} If no listener class is defined, the change listener support</span>
-<span class="source-line-no">454</span><span id="line-454">     *  for the {@code Preferences} will be omitted.</span>
-<span class="source-line-no">455</span><span id="line-455">     *</span>
-<span class="source-line-no">456</span><span id="line-456">     *  @return An instance of</span>
-<span class="source-line-no">457</span><span id="line-457">     *      {@link Optional}</span>
-<span class="source-line-no">458</span><span id="line-458">     *      that holds the listener class.</span>
-<span class="source-line-no">459</span><span id="line-459">     *</span>
-<span class="source-line-no">460</span><span id="line-460">     *  @see org.tquadrat.foundation.config.PreferencesRoot#changeListenerClass()</span>
-<span class="source-line-no">461</span><span id="line-461">     */</span>
-<span class="source-line-no">462</span><span id="line-462">    public final Optional&lt;TypeName&gt; getPreferenceChangeListenerClass()</span>
-<span class="source-line-no">463</span><span id="line-463">    {</span>
-<span class="source-line-no">464</span><span id="line-464">        final var retValue = Optional.ofNullable( m_PreferenceChangeListenerClass );</span>
-<span class="source-line-no">465</span><span id="line-465"></span>
-<span class="source-line-no">466</span><span id="line-466">        //---* Done *----------------------------------------------------------</span>
-<span class="source-line-no">467</span><span id="line-467">        return retValue;</span>
-<span class="source-line-no">468</span><span id="line-468">    }   //  getPreferenceChangeListenerClass()</span>
-<span class="source-line-no">469</span><span id="line-469"></span>
-<span class="source-line-no">470</span><span id="line-470">    /**</span>
-<span class="source-line-no">471</span><span id="line-471">     *  Returns the name for the {@code Preferences} root node.</span>
-<span class="source-line-no">472</span><span id="line-472">     *</span>
-<span class="source-line-no">473</span><span id="line-473">     *  @return The name for the {@code Preferences} root node.</span>
-<span class="source-line-no">474</span><span id="line-474">     *</span>
-<span class="source-line-no">475</span><span id="line-475">     *  @see org.tquadrat.foundation.config.PreferencesRoot#nodeName()</span>
-<span class="source-line-no">476</span><span id="line-476">     */</span>
-<span class="source-line-no">477</span><span id="line-477">    public final String getPreferencesRoot()</span>
-<span class="source-line-no">478</span><span id="line-478">    {</span>
-<span class="source-line-no">479</span><span id="line-479">        final var retValue = isNotEmptyOrBlank( m_PreferencesRoot) ? m_PreferencesRoot : m_Specification.canonicalName();</span>
-<span class="source-line-no">480</span><span id="line-480"></span>
-<span class="source-line-no">481</span><span id="line-481">        //---* Done *----------------------------------------------------------</span>
-<span class="source-line-no">482</span><span id="line-482">        return retValue;</span>
-<span class="source-line-no">483</span><span id="line-483">    }   //  getPreferencesRoot()</span>
-<span class="source-line-no">484</span><span id="line-484">    /**</span>
-<span class="source-line-no">485</span><span id="line-485">     *  Returns the property with the given name.</span>
-<span class="source-line-no">486</span><span id="line-486">     *</span>
-<span class="source-line-no">487</span><span id="line-487">     *  @param  propertyName    The name of the property.</span>
-<span class="source-line-no">488</span><span id="line-488">     *  @return An instance of</span>
-<span class="source-line-no">489</span><span id="line-489">     *      {@link Optional}</span>
-<span class="source-line-no">490</span><span id="line-490">     *      that holds the retrieved property.</span>
-<span class="source-line-no">491</span><span id="line-491">     */</span>
-<span class="source-line-no">492</span><span id="line-492">    public final Optional&lt;PropertySpec&gt; getProperty( final String propertyName )</span>
-<span class="source-line-no">493</span><span id="line-493">    {</span>
-<span class="source-line-no">494</span><span id="line-494">        final Optional&lt;PropertySpec&gt; retValue = Optional.ofNullable( m_Properties.get( requireNotEmptyArgument( propertyName, "propertyName" ) ) );</span>
-<span class="source-line-no">495</span><span id="line-495"></span>
-<span class="source-line-no">496</span><span id="line-496">        //---* Done *----------------------------------------------------------</span>
-<span class="source-line-no">497</span><span id="line-497">        return retValue;</span>
-<span class="source-line-no">498</span><span id="line-498">    }   //  getProperty()</span>
-<span class="source-line-no">499</span><span id="line-499"></span>
-<span class="source-line-no">500</span><span id="line-500">    /**</span>
-<span class="source-line-no">501</span><span id="line-501">     *  Returns the configuration bean specification.</span>
-<span class="source-line-no">502</span><span id="line-502">     *</span>
-<span class="source-line-no">503</span><span id="line-503">     *  @return The configuration bean specification.</span>
-<span class="source-line-no">504</span><span id="line-504">     */</span>
-<span class="source-line-no">505</span><span id="line-505">    public final ClassName getSpecification() { return m_Specification;}</span>
-<span class="source-line-no">506</span><span id="line-506"></span>
-<span class="source-line-no">507</span><span id="line-507">    /**</span>
-<span class="source-line-no">508</span><span id="line-508">     *  Returns the flag that controls whether the generated code for the</span>
-<span class="source-line-no">509</span><span id="line-509">     *  access to the configuration bean properties has to be thread-safe.</span>
-<span class="source-line-no">510</span><span id="line-510">     *</span>
-<span class="source-line-no">511</span><span id="line-511">     *  @return {@code true} if synchronisation/locking is required,</span>
-<span class="source-line-no">512</span><span id="line-512">     *      {@code false} if not.</span>
-<span class="source-line-no">513</span><span id="line-513">     */</span>
-<span class="source-line-no">514</span><span id="line-514">    @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )</span>
-<span class="source-line-no">515</span><span id="line-515">    public final boolean getSynchronizationRequired() { return m_SynchronizeAccess; }</span>
-<span class="source-line-no">516</span><span id="line-516"></span>
-<span class="source-line-no">517</span><span id="line-517">    /**</span>
-<span class="source-line-no">518</span><span id="line-518">     *  Checks whether a property with the given name does already exist.</span>
-<span class="source-line-no">519</span><span id="line-519">     *</span>
-<span class="source-line-no">520</span><span id="line-520">     *  @param  propertyName    The name of the property.</span>
-<span class="source-line-no">521</span><span id="line-521">     *  @return {@code true} if the property with the given name already</span>
-<span class="source-line-no">522</span><span id="line-522">     *      exists, {@code false} otherwise.</span>
-<span class="source-line-no">523</span><span id="line-523">     */</span>
-<span class="source-line-no">524</span><span id="line-524">    public final boolean hasProperty( final String propertyName ) { return m_Properties.containsKey( propertyName ); }</span>
-<span class="source-line-no">525</span><span id="line-525"></span>
-<span class="source-line-no">526</span><span id="line-526">    /**</span>
-<span class="source-line-no">527</span><span id="line-527">     *  Checks whether the given interface must be implemented by the new</span>
-<span class="source-line-no">528</span><span id="line-528">     *  configuration bean.</span>
-<span class="source-line-no">529</span><span id="line-529">     *</span>
-<span class="source-line-no">530</span><span id="line-530">     *  @param  interfaceToImplement    The class for the interface that has to</span>
-<span class="source-line-no">531</span><span id="line-531">     *      be implemented.</span>
-<span class="source-line-no">532</span><span id="line-532">     *  @return {@code true} if the given interface must be implemented,</span>
-<span class="source-line-no">533</span><span id="line-533">     *      {@code false} otherwise.</span>
-<span class="source-line-no">534</span><span id="line-534">     */</span>
-<span class="source-line-no">535</span><span id="line-535">    @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )</span>
-<span class="source-line-no">536</span><span id="line-536">    public final boolean implementInterface( final TypeName interfaceToImplement )</span>
-<span class="source-line-no">537</span><span id="line-537">    {</span>
-<span class="source-line-no">538</span><span id="line-538">        final var retValue = m_InterfacesToImplement.contains( requireNonNullArgument( interfaceToImplement, "interfaceToImplement" ) );</span>
-<span class="source-line-no">539</span><span id="line-539"></span>
-<span class="source-line-no">540</span><span id="line-540">        //---* Done *----------------------------------------------------------</span>
-<span class="source-line-no">541</span><span id="line-541">        return retValue;</span>
-<span class="source-line-no">542</span><span id="line-542">    }   //  implementInterface()</span>
-<span class="source-line-no">543</span><span id="line-543"></span>
-<span class="source-line-no">544</span><span id="line-544">    /**</span>
-<span class="source-line-no">545</span><span id="line-545">     *  Checks whether the given interface must be implemented by the new</span>
-<span class="source-line-no">546</span><span id="line-546">     *  configuration bean.</span>
-<span class="source-line-no">547</span><span id="line-547">     *</span>
-<span class="source-line-no">548</span><span id="line-548">     *  @param  interfaceToImplement    The class for the interface that has to</span>
-<span class="source-line-no">549</span><span id="line-549">     *      be implemented.</span>
-<span class="source-line-no">550</span><span id="line-550">     *  @return {@code true} if the given interface must be implemented,</span>
-<span class="source-line-no">551</span><span id="line-551">     *      {@code false} otherwise.</span>
-<span class="source-line-no">552</span><span id="line-552">     */</span>
-<span class="source-line-no">553</span><span id="line-553">    @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )</span>
-<span class="source-line-no">554</span><span id="line-554">    public final boolean implementInterface( final Type interfaceToImplement )</span>
-<span class="source-line-no">555</span><span id="line-555">    {</span>
-<span class="source-line-no">556</span><span id="line-556">        final var element = TypeName.from( interfaceToImplement );</span>
-<span class="source-line-no">557</span><span id="line-557">        final var retValue = implementInterface( element );</span>
-<span class="source-line-no">558</span><span id="line-558"></span>
-<span class="source-line-no">559</span><span id="line-559">        //---* Done *----------------------------------------------------------</span>
-<span class="source-line-no">560</span><span id="line-560">        return retValue;</span>
-<span class="source-line-no">561</span><span id="line-561">    }   //  implementInterface()</span>
-<span class="source-line-no">562</span><span id="line-562"></span>
-<span class="source-line-no">563</span><span id="line-563">    /**</span>
-<span class="source-line-no">564</span><span id="line-564">     *  Returns an</span>
-<span class="source-line-no">565</span><span id="line-565">     *  {@link java.util.Iterator}</span>
-<span class="source-line-no">566</span><span id="line-566">     *  over the defined properties.</span>
-<span class="source-line-no">567</span><span id="line-567">     *</span>
-<span class="source-line-no">568</span><span id="line-568">     *  @return The iterator.</span>
-<span class="source-line-no">569</span><span id="line-569">     */</span>
-<span class="source-line-no">570</span><span id="line-570">    public final Iterator&lt;PropertySpec&gt; propertyIterator()</span>
-<span class="source-line-no">571</span><span id="line-571">    {</span>
-<span class="source-line-no">572</span><span id="line-572">        final var iterator = m_Properties.values().iterator();</span>
+<span class="source-line-no">337</span><span id="line-337">    public final JavaComposer getComposer() { return m_Composer; }</span>
+<span class="source-line-no">338</span><span id="line-338"></span>
+<span class="source-line-no">339</span><span id="line-339">    /**</span>
+<span class="source-line-no">340</span><span id="line-340">     *  Returns an implementation of some utility methods for operating on</span>
+<span class="source-line-no">341</span><span id="line-341">     *  elements.</span>
+<span class="source-line-no">342</span><span id="line-342">     *</span>
+<span class="source-line-no">343</span><span id="line-343">     *  @return The element utilities.</span>
+<span class="source-line-no">344</span><span id="line-344">     */</span>
+<span class="source-line-no">345</span><span id="line-345">    public final Elements getElementUtils() { return getEnvironment().getElementUtils(); }</span>
+<span class="source-line-no">346</span><span id="line-346"></span>
+<span class="source-line-no">347</span><span id="line-347">    /**</span>
+<span class="source-line-no">348</span><span id="line-348">     *  Returns the processing environment.</span>
+<span class="source-line-no">349</span><span id="line-349">     *</span>
+<span class="source-line-no">350</span><span id="line-350">     *  @return The processing environment.</span>
+<span class="source-line-no">351</span><span id="line-351">     */</span>
+<span class="source-line-no">352</span><span id="line-352">    public final APHelper getEnvironment() { return m_Environment; }</span>
+<span class="source-line-no">353</span><span id="line-353"></span>
+<span class="source-line-no">354</span><span id="line-354">    /**</span>
+<span class="source-line-no">355</span><span id="line-355">     *  Returns the comment for the {@code INI} file.</span>
+<span class="source-line-no">356</span><span id="line-356">     *</span>
+<span class="source-line-no">357</span><span id="line-357">     *  @return The comment for the configuration file.</span>
+<span class="source-line-no">358</span><span id="line-358">     */</span>
+<span class="source-line-no">359</span><span id="line-359">    public final Optional&lt;String&gt; getINIFileComment() { return Optional.ofNullable( m_INIFileComment ); }</span>
+<span class="source-line-no">360</span><span id="line-360"></span>
+<span class="source-line-no">361</span><span id="line-361">    /**</span>
+<span class="source-line-no">362</span><span id="line-362">     *  Returns the flag that indicates whether the configuration file must</span>
+<span class="source-line-no">363</span><span id="line-363">     *  exist before the program starts.</span>
+<span class="source-line-no">364</span><span id="line-364">     *</span>
+<span class="source-line-no">365</span><span id="line-365">     *  @return {@code true} if the file must exist already, {@code false} if</span>
+<span class="source-line-no">366</span><span id="line-366">     *      it will be created on startup.</span>
+<span class="source-line-no">367</span><span id="line-367">     *</span>
+<span class="source-line-no">368</span><span id="line-368">     * @see org.tquadrat.foundation.config.INIFileConfig#mustExist()</span>
+<span class="source-line-no">369</span><span id="line-369">     */</span>
+<span class="source-line-no">370</span><span id="line-370">    @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )</span>
+<span class="source-line-no">371</span><span id="line-371">    public final boolean getINIFileMustExist() { return m_INIFileMustExist; }</span>
+<span class="source-line-no">372</span><span id="line-372"></span>
+<span class="source-line-no">373</span><span id="line-373">    /**</span>
+<span class="source-line-no">374</span><span id="line-374">     *  Returns the name for the file that backs the</span>
+<span class="source-line-no">375</span><span id="line-375">     *  {@link org.tquadrat.foundation.inifile.INIFile}</span>
+<span class="source-line-no">376</span><span id="line-376">     *  instance used by the generated configuration bean.</span>
+<span class="source-line-no">377</span><span id="line-377">     *</span>
+<span class="source-line-no">378</span><span id="line-378">     *  @return An instance of</span>
+<span class="source-line-no">379</span><span id="line-379">     *      {@link Optional}</span>
+<span class="source-line-no">380</span><span id="line-380">     *      that holds the filename.</span>
+<span class="source-line-no">381</span><span id="line-381">     */</span>
+<span class="source-line-no">382</span><span id="line-382">    public final Optional&lt;String&gt; getINIFilePath() { return Optional.ofNullable( m_INIFilePath ); }</span>
+<span class="source-line-no">383</span><span id="line-383"></span>
+<span class="source-line-no">384</span><span id="line-384">    /**</span>
+<span class="source-line-no">385</span><span id="line-385">     *  Returns the {@code INI} file groups.</span>
+<span class="source-line-no">386</span><span id="line-386">     *</span>
+<span class="source-line-no">387</span><span id="line-387">     *  @return The group names and the related comments.</span>
+<span class="source-line-no">388</span><span id="line-388">     */</span>
+<span class="source-line-no">389</span><span id="line-389">    public final Map&lt;String,String&gt; getINIGroups() { return unmodifiableMap( m_INIGroups ); }</span>
+<span class="source-line-no">390</span><span id="line-390"></span>
+<span class="source-line-no">391</span><span id="line-391">    /**</span>
+<span class="source-line-no">392</span><span id="line-392">     *  &lt;p&gt;{@summary Returns the method that is provided as a source for the</span>
+<span class="source-line-no">393</span><span id="line-393">     *  initialisation of the properties of the configuration bean.}&lt;/p&gt;</span>
+<span class="source-line-no">394</span><span id="line-394">     *  &lt;p&gt;It it is {@code default} or {@code static}, the implementation of</span>
+<span class="source-line-no">395</span><span id="line-395">     *  the method has to be part of the configuration bean specification</span>
+<span class="source-line-no">396</span><span id="line-396">     *  interface itself, otherwise it has to be implemented in base class.&lt;/p&gt;</span>
+<span class="source-line-no">397</span><span id="line-397">     *  &lt;p&gt;It is an error if there is an {@code initData()} method that is</span>
+<span class="source-line-no">398</span><span id="line-398">     *  neither {@code default} nor {@code static}, and no base class is</span>
+<span class="source-line-no">399</span><span id="line-399">     *  defined with the</span>
+<span class="source-line-no">400</span><span id="line-400">     *  {@link org.tquadrat.foundation.config.ConfigurationBeanSpecification &amp;#64;ConfigurationBeanSpecificatgion}</span>
+<span class="source-line-no">401</span><span id="line-401">     *  annotation.&lt;/p&gt;</span>
+<span class="source-line-no">402</span><span id="line-402">     *  &lt;p&gt;The signature for the method has to be&lt;/p&gt;</span>
+<span class="source-line-no">403</span><span id="line-403">     *  &lt;pre&gt;&lt;code&gt;public Map&amp;lt;String,Object&amp;gt; initData() throws Exception&lt;/code&gt;&lt;/pre&gt;</span>
+<span class="source-line-no">404</span><span id="line-404">     *  &lt;p&gt;and the return value is a map with the initialisation values, where</span>
+<span class="source-line-no">405</span><span id="line-405">     *  the property names are the keys.&lt;/p&gt;</span>
+<span class="source-line-no">406</span><span id="line-406">     *</span>
+<span class="source-line-no">407</span><span id="line-407">     *  @return An instance of</span>
+<span class="source-line-no">408</span><span id="line-408">     *      {@link Optional}</span>
+<span class="source-line-no">409</span><span id="line-409">     *      that holds the method.</span>
+<span class="source-line-no">410</span><span id="line-410">     *</span>
+<span class="source-line-no">411</span><span id="line-411">     *  @see org.tquadrat.foundation.config.ConfigurationBeanSpecification#baseClass()</span>
+<span class="source-line-no">412</span><span id="line-412">     */</span>
+<span class="source-line-no">413</span><span id="line-413">    public final Optional&lt;MethodSpec&gt; getInitDataMethod() { return Optional.ofNullable( m_InitDataMethod ); }</span>
+<span class="source-line-no">414</span><span id="line-414"></span>
+<span class="source-line-no">415</span><span id="line-415">    /**</span>
+<span class="source-line-no">416</span><span id="line-416">     *  Returns the name of the resource that is used to initialise the</span>
+<span class="source-line-no">417</span><span id="line-417">     *  properties of the configuration bean.</span>
+<span class="source-line-no">418</span><span id="line-418">     *</span>
+<span class="source-line-no">419</span><span id="line-419">     *  @return An instance of</span>
+<span class="source-line-no">420</span><span id="line-420">     *      {@link Optional}</span>
+<span class="source-line-no">421</span><span id="line-421">     *      that holds the resource name.</span>
+<span class="source-line-no">422</span><span id="line-422">     */</span>
+<span class="source-line-no">423</span><span id="line-423">    public final Optional&lt;String&gt; getInitDataResource() { return Optional.ofNullable( m_InitDataResource ); }</span>
+<span class="source-line-no">424</span><span id="line-424"></span>
+<span class="source-line-no">425</span><span id="line-425">    /**</span>
+<span class="source-line-no">426</span><span id="line-426">     *  Returns the interfaces that have to be implemented by the new</span>
+<span class="source-line-no">427</span><span id="line-427">     *  configuration bean.</span>
+<span class="source-line-no">428</span><span id="line-428">     *</span>
+<span class="source-line-no">429</span><span id="line-429">     *  @return The interfaces to implement.</span>
+<span class="source-line-no">430</span><span id="line-430">     */</span>
+<span class="source-line-no">431</span><span id="line-431">    public final Collection&lt;TypeName&gt; getInterfacesToImplement() { return List.copyOf( m_InterfacesToImplement ); }</span>
+<span class="source-line-no">432</span><span id="line-432"></span>
+<span class="source-line-no">433</span><span id="line-433">    /**</span>
+<span class="source-line-no">434</span><span id="line-434">     *  Returns the name of the field that holds the message prefix, in case</span>
+<span class="source-line-no">435</span><span id="line-435">     *  i18n support is configured.</span>
+<span class="source-line-no">436</span><span id="line-436">     *</span>
+<span class="source-line-no">437</span><span id="line-437">     *  @return An instance of</span>
+<span class="source-line-no">438</span><span id="line-438">     *      {@link Optional}</span>
+<span class="source-line-no">439</span><span id="line-439">     *      holding the fully qualified field name.</span>
+<span class="source-line-no">440</span><span id="line-440">     */</span>
+<span class="source-line-no">441</span><span id="line-441">    public final Optional&lt;String&gt; getMessagePrefix() { return Optional.ofNullable( m_MessagePrefix ); }</span>
+<span class="source-line-no">442</span><span id="line-442"></span>
+<span class="source-line-no">443</span><span id="line-443">    /**</span>
+<span class="source-line-no">444</span><span id="line-444">     *  Returns the name of the package for the new configuration bean.</span>
+<span class="source-line-no">445</span><span id="line-445">     *</span>
+<span class="source-line-no">446</span><span id="line-446">     *  @return The package name.</span>
+<span class="source-line-no">447</span><span id="line-447">     */</span>
+<span class="source-line-no">448</span><span id="line-448">    public final Name getPackageName() { return m_PackageName; }</span>
+<span class="source-line-no">449</span><span id="line-449"></span>
+<span class="source-line-no">450</span><span id="line-450">    /**</span>
+<span class="source-line-no">451</span><span id="line-451">     *  &lt;p&gt;{@summary Returns the class for the {@code Preferences} change</span>
+<span class="source-line-no">452</span><span id="line-452">     *  listener.} If no listener class is defined, the change listener support</span>
+<span class="source-line-no">453</span><span id="line-453">     *  for the {@code Preferences} will be omitted.</span>
+<span class="source-line-no">454</span><span id="line-454">     *</span>
+<span class="source-line-no">455</span><span id="line-455">     *  @return An instance of</span>
+<span class="source-line-no">456</span><span id="line-456">     *      {@link Optional}</span>
+<span class="source-line-no">457</span><span id="line-457">     *      that holds the listener class.</span>
+<span class="source-line-no">458</span><span id="line-458">     *</span>
+<span class="source-line-no">459</span><span id="line-459">     *  @see org.tquadrat.foundation.config.PreferencesRoot#changeListenerClass()</span>
+<span class="source-line-no">460</span><span id="line-460">     */</span>
+<span class="source-line-no">461</span><span id="line-461">    public final Optional&lt;TypeName&gt; getPreferenceChangeListenerClass()</span>
+<span class="source-line-no">462</span><span id="line-462">    {</span>
+<span class="source-line-no">463</span><span id="line-463">        final var retValue = Optional.ofNullable( m_PreferenceChangeListenerClass );</span>
+<span class="source-line-no">464</span><span id="line-464"></span>
+<span class="source-line-no">465</span><span id="line-465">        //---* Done *----------------------------------------------------------</span>
+<span class="source-line-no">466</span><span id="line-466">        return retValue;</span>
+<span class="source-line-no">467</span><span id="line-467">    }   //  getPreferenceChangeListenerClass()</span>
+<span class="source-line-no">468</span><span id="line-468"></span>
+<span class="source-line-no">469</span><span id="line-469">    /**</span>
+<span class="source-line-no">470</span><span id="line-470">     *  Returns the name for the {@code Preferences} root node.</span>
+<span class="source-line-no">471</span><span id="line-471">     *</span>
+<span class="source-line-no">472</span><span id="line-472">     *  @return The name for the {@code Preferences} root node.</span>
+<span class="source-line-no">473</span><span id="line-473">     *</span>
+<span class="source-line-no">474</span><span id="line-474">     *  @see org.tquadrat.foundation.config.PreferencesRoot#nodeName()</span>
+<span class="source-line-no">475</span><span id="line-475">     */</span>
+<span class="source-line-no">476</span><span id="line-476">    public final String getPreferencesRoot()</span>
+<span class="source-line-no">477</span><span id="line-477">    {</span>
+<span class="source-line-no">478</span><span id="line-478">        final var retValue = isNotEmptyOrBlank( m_PreferencesRoot) ? m_PreferencesRoot : m_Specification.canonicalName();</span>
+<span class="source-line-no">479</span><span id="line-479"></span>
+<span class="source-line-no">480</span><span id="line-480">        //---* Done *----------------------------------------------------------</span>
+<span class="source-line-no">481</span><span id="line-481">        return retValue;</span>
+<span class="source-line-no">482</span><span id="line-482">    }   //  getPreferencesRoot()</span>
+<span class="source-line-no">483</span><span id="line-483">    /**</span>
+<span class="source-line-no">484</span><span id="line-484">     *  Returns the property with the given name.</span>
+<span class="source-line-no">485</span><span id="line-485">     *</span>
+<span class="source-line-no">486</span><span id="line-486">     *  @param  propertyName    The name of the property.</span>
+<span class="source-line-no">487</span><span id="line-487">     *  @return An instance of</span>
+<span class="source-line-no">488</span><span id="line-488">     *      {@link Optional}</span>
+<span class="source-line-no">489</span><span id="line-489">     *      that holds the retrieved property.</span>
+<span class="source-line-no">490</span><span id="line-490">     */</span>
+<span class="source-line-no">491</span><span id="line-491">    public final Optional&lt;PropertySpec&gt; getProperty( final String propertyName )</span>
+<span class="source-line-no">492</span><span id="line-492">    {</span>
+<span class="source-line-no">493</span><span id="line-493">        final Optional&lt;PropertySpec&gt; retValue = Optional.ofNullable( m_Properties.get( requireNotEmptyArgument( propertyName, "propertyName" ) ) );</span>
+<span class="source-line-no">494</span><span id="line-494"></span>
+<span class="source-line-no">495</span><span id="line-495">        //---* Done *----------------------------------------------------------</span>
+<span class="source-line-no">496</span><span id="line-496">        return retValue;</span>
+<span class="source-line-no">497</span><span id="line-497">    }   //  getProperty()</span>
+<span class="source-line-no">498</span><span id="line-498"></span>
+<span class="source-line-no">499</span><span id="line-499">    /**</span>
+<span class="source-line-no">500</span><span id="line-500">     *  Returns the configuration bean specification.</span>
+<span class="source-line-no">501</span><span id="line-501">     *</span>
+<span class="source-line-no">502</span><span id="line-502">     *  @return The configuration bean specification.</span>
+<span class="source-line-no">503</span><span id="line-503">     */</span>
+<span class="source-line-no">504</span><span id="line-504">    public final ClassName getSpecification() { return m_Specification;}</span>
+<span class="source-line-no">505</span><span id="line-505"></span>
+<span class="source-line-no">506</span><span id="line-506">    /**</span>
+<span class="source-line-no">507</span><span id="line-507">     *  Returns the flag that controls whether the generated code for the</span>
+<span class="source-line-no">508</span><span id="line-508">     *  access to the configuration bean properties has to be thread-safe.</span>
+<span class="source-line-no">509</span><span id="line-509">     *</span>
+<span class="source-line-no">510</span><span id="line-510">     *  @return {@code true} if synchronisation/locking is required,</span>
+<span class="source-line-no">511</span><span id="line-511">     *      {@code false} if not.</span>
+<span class="source-line-no">512</span><span id="line-512">     */</span>
+<span class="source-line-no">513</span><span id="line-513">    @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )</span>
+<span class="source-line-no">514</span><span id="line-514">    public final boolean getSynchronizationRequired() { return m_SynchronizeAccess; }</span>
+<span class="source-line-no">515</span><span id="line-515"></span>
+<span class="source-line-no">516</span><span id="line-516">    /**</span>
+<span class="source-line-no">517</span><span id="line-517">     *  Checks whether a property with the given name does already exist.</span>
+<span class="source-line-no">518</span><span id="line-518">     *</span>
+<span class="source-line-no">519</span><span id="line-519">     *  @param  propertyName    The name of the property.</span>
+<span class="source-line-no">520</span><span id="line-520">     *  @return {@code true} if the property with the given name already</span>
+<span class="source-line-no">521</span><span id="line-521">     *      exists, {@code false} otherwise.</span>
+<span class="source-line-no">522</span><span id="line-522">     */</span>
+<span class="source-line-no">523</span><span id="line-523">    public final boolean hasProperty( final String propertyName ) { return m_Properties.containsKey( propertyName ); }</span>
+<span class="source-line-no">524</span><span id="line-524"></span>
+<span class="source-line-no">525</span><span id="line-525">    /**</span>
+<span class="source-line-no">526</span><span id="line-526">     *  Checks whether the given interface must be implemented by the new</span>
+<span class="source-line-no">527</span><span id="line-527">     *  configuration bean.</span>
+<span class="source-line-no">528</span><span id="line-528">     *</span>
+<span class="source-line-no">529</span><span id="line-529">     *  @param  interfaceToImplement    The class for the interface that has to</span>
+<span class="source-line-no">530</span><span id="line-530">     *      be implemented.</span>
+<span class="source-line-no">531</span><span id="line-531">     *  @return {@code true} if the given interface must be implemented,</span>
+<span class="source-line-no">532</span><span id="line-532">     *      {@code false} otherwise.</span>
+<span class="source-line-no">533</span><span id="line-533">     */</span>
+<span class="source-line-no">534</span><span id="line-534">    @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )</span>
+<span class="source-line-no">535</span><span id="line-535">    public final boolean implementInterface( final TypeName interfaceToImplement )</span>
+<span class="source-line-no">536</span><span id="line-536">    {</span>
+<span class="source-line-no">537</span><span id="line-537">        final var retValue = m_InterfacesToImplement.contains( requireNonNullArgument( interfaceToImplement, "interfaceToImplement" ) );</span>
+<span class="source-line-no">538</span><span id="line-538"></span>
+<span class="source-line-no">539</span><span id="line-539">        //---* Done *----------------------------------------------------------</span>
+<span class="source-line-no">540</span><span id="line-540">        return retValue;</span>
+<span class="source-line-no">541</span><span id="line-541">    }   //  implementInterface()</span>
+<span class="source-line-no">542</span><span id="line-542"></span>
+<span class="source-line-no">543</span><span id="line-543">    /**</span>
+<span class="source-line-no">544</span><span id="line-544">     *  Checks whether the given interface must be implemented by the new</span>
+<span class="source-line-no">545</span><span id="line-545">     *  configuration bean.</span>
+<span class="source-line-no">546</span><span id="line-546">     *</span>
+<span class="source-line-no">547</span><span id="line-547">     *  @param  interfaceToImplement    The class for the interface that has to</span>
+<span class="source-line-no">548</span><span id="line-548">     *      be implemented.</span>
+<span class="source-line-no">549</span><span id="line-549">     *  @return {@code true} if the given interface must be implemented,</span>
+<span class="source-line-no">550</span><span id="line-550">     *      {@code false} otherwise.</span>
+<span class="source-line-no">551</span><span id="line-551">     */</span>
+<span class="source-line-no">552</span><span id="line-552">    @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )</span>
+<span class="source-line-no">553</span><span id="line-553">    public final boolean implementInterface( final Type interfaceToImplement )</span>
+<span class="source-line-no">554</span><span id="line-554">    {</span>
+<span class="source-line-no">555</span><span id="line-555">        final var element = TypeName.from( interfaceToImplement );</span>
+<span class="source-line-no">556</span><span id="line-556">        final var retValue = implementInterface( element );</span>
+<span class="source-line-no">557</span><span id="line-557"></span>
+<span class="source-line-no">558</span><span id="line-558">        //---* Done *----------------------------------------------------------</span>
+<span class="source-line-no">559</span><span id="line-559">        return retValue;</span>
+<span class="source-line-no">560</span><span id="line-560">    }   //  implementInterface()</span>
+<span class="source-line-no">561</span><span id="line-561"></span>
+<span class="source-line-no">562</span><span id="line-562">    /**</span>
+<span class="source-line-no">563</span><span id="line-563">     *  Returns an</span>
+<span class="source-line-no">564</span><span id="line-564">     *  {@link java.util.Iterator}</span>
+<span class="source-line-no">565</span><span id="line-565">     *  over the defined properties.</span>
+<span class="source-line-no">566</span><span id="line-566">     *</span>
+<span class="source-line-no">567</span><span id="line-567">     *  @return The iterator.</span>
+<span class="source-line-no">568</span><span id="line-568">     */</span>
+<span class="source-line-no">569</span><span id="line-569">    public final Iterator&lt;PropertySpec&gt; propertyIterator()</span>
+<span class="source-line-no">570</span><span id="line-570">    {</span>
+<span class="source-line-no">571</span><span id="line-571">        final var iterator = m_Properties.values().iterator();</span>
+<span class="source-line-no">572</span><span id="line-572">        @SuppressWarnings( {"AnonymousInnerClassMayBeStatic", "AnonymousInnerClass"} )</span>
 <span class="source-line-no">573</span><span id="line-573">        final Iterator&lt;PropertySpec&gt; retValue = new Iterator&lt;&gt;()</span>
 <span class="source-line-no">574</span><span id="line-574">        {</span>
 <span class="source-line-no">575</span><span id="line-575">            /**</span>

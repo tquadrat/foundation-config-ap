@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2021 by Thomas Thrien.
+ *  Copyright © 2002-2023 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -17,10 +17,10 @@
 
 package org.tquadrat.foundation.config.ap;
 
+import static java.lang.String.format;
 import static org.apiguardian.api.API.Status.MAINTAINED;
 import static org.tquadrat.foundation.config.ap.CollectionKind.NO_COLLECTION;
 import static org.tquadrat.foundation.util.StringUtils.capitalize;
-import static org.tquadrat.foundation.util.StringUtils.format;
 
 import javax.lang.model.element.Name;
 import java.util.List;
@@ -43,13 +43,13 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  The specification for a property of a configuration bean.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: PropertySpec.java 1053 2023-03-11 00:10:49Z tquadrat $
+ *  @version $Id: PropertySpec.java 1076 2023-10-03 18:36:07Z tquadrat $
  *  @since 0.1.0
  *
  *  @UMLGraph.link
  */
 @SuppressWarnings( "ClassWithTooManyMethods" )
-@ClassVersion( sourceVersion = "$Id: PropertySpec.java 1053 2023-03-11 00:10:49Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: PropertySpec.java 1076 2023-10-03 18:36:07Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public interface PropertySpec
 {
@@ -60,12 +60,12 @@ public interface PropertySpec
      *  The flags for a property.
      *
      *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
-     *  @version $Id: PropertySpec.java 1053 2023-03-11 00:10:49Z tquadrat $
+     *  @version $Id: PropertySpec.java 1076 2023-10-03 18:36:07Z tquadrat $
      *  @since 0.1.0
      *
      *  @UMLGraph.link
      */
-    @ClassVersion( sourceVersion = "$Id: PropertySpec.java 1053 2023-03-11 00:10:49Z tquadrat $" )
+    @ClassVersion( sourceVersion = "$Id: PropertySpec.java 1076 2023-10-03 18:36:07Z tquadrat $" )
     @API( status = MAINTAINED, since = "0.1.0" )
     public static enum PropertyFlag
     {
@@ -459,7 +459,7 @@ public interface PropertySpec
             {
                 case LIST, SET ->
                 {
-                    if( getPropertyType() instanceof ParameterizedTypeName propertyType )
+                    if( getPropertyType() instanceof final ParameterizedTypeName propertyType )
                     {
                         final var typeArguments = propertyType.typeArguments();
                         yield typeArguments.get( 0 );

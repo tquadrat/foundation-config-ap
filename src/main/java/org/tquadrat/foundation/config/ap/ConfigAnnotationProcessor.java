@@ -159,14 +159,14 @@ import org.tquadrat.foundation.util.stringconverter.EnumStringConverter;
  *  The annotation processor for the {@code org.tquadrat.foundation.config}
  *  module.
  *
- *  @version $Id: ConfigAnnotationProcessor.java 1061 2023-09-25 16:32:43Z tquadrat $
+ *  @version $Id: ConfigAnnotationProcessor.java 1076 2023-10-03 18:36:07Z tquadrat $
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"OverlyCoupledClass", "OverlyComplexClass", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1061 2023-09-25 16:32:43Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1076 2023-10-03 18:36:07Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @SupportedSourceVersion( SourceVersion.RELEASE_17 )
 @SupportedOptions( { APBase.ADD_DEBUG_OUTPUT, APBase.MAVEN_GOAL } )
@@ -271,7 +271,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  interface was used: {@value}.
      */
     @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
-    public static final String MSG_IllegalImplementation = "Illegal implementation for '%1$s': %1$2";
+    public static final String MSG_IllegalImplementation = "Illegal implementation for '%1$s': %2$s";
 
     /**
      *  The message that indicates that a mutator was provided for an immutable

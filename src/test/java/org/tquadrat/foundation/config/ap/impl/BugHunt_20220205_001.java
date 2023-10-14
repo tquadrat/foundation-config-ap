@@ -17,6 +17,7 @@
 
 package org.tquadrat.foundation.config.ap.impl;
 
+import static java.lang.String.format;
 import static java.lang.System.out;
 import static org.apiguardian.api.API.Status.STABLE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,7 +36,6 @@ import static org.tquadrat.foundation.test.helper.CodeGeneratorTestBase.createPr
 import static org.tquadrat.foundation.test.helper.CodeGeneratorTestBase.createProperty_random;
 import static org.tquadrat.foundation.test.helper.CodeGeneratorTestBase.createProperty_resourceBundle;
 import static org.tquadrat.foundation.test.helper.CodeGeneratorTestBase.createProperty_timezone;
-import static org.tquadrat.foundation.util.StringUtils.format;
 import static org.tquadrat.foundation.util.StringUtils.isNotEmpty;
 import static org.tquadrat.foundation.util.StringUtils.isNotEmptyOrBlank;
 
@@ -59,10 +59,10 @@ import org.tquadrat.foundation.testutil.TestBaseClass;
 /**
  *  Enum properties are causing issues.
  *
- *  @version $Id: BugHunt_20220205_001.java 1015 2022-02-09 08:25:36Z tquadrat $
+ *  @version $Id: BugHunt_20220205_001.java 1076 2023-10-03 18:36:07Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
-@ClassVersion( sourceVersion = "$Id: BugHunt_20220205_001.java 1015 2022-02-09 08:25:36Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: BugHunt_20220205_001.java 1076 2023-10-03 18:36:07Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.BugHunt_20220205_001" )
 public class BugHunt_20220205_001 extends TestBaseClass
@@ -203,7 +203,6 @@ public class BugHunt_20220205_001 extends TestBaseClass
              * bean specification; that should give us the methods and
              * attributes for the CLI handling.
              */
-            @SuppressWarnings( "GrazieInspection" )
             final var expected =
                 """
                     /*
@@ -223,12 +222,12 @@ public class BugHunt_20220205_001 extends TestBaseClass
 
                     package org.tquadrat.foundation.test.generated;
 
+                    import static java.lang.String.format;
                     import static java.lang.System.getProperty;
                     import static java.nio.charset.Charset.defaultCharset;
                     import static org.tquadrat.foundation.lang.CommonConstants.NULL_STRING;
                     import static org.tquadrat.foundation.lang.Objects.nonNull;
                     import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
-                    import static org.tquadrat.foundation.util.StringUtils.format;
                     import static org.tquadrat.foundation.util.SystemUtils.getPID;
 
                     import java.io.IOException;

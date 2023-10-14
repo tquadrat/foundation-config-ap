@@ -17,6 +17,7 @@
 
 package org.tquadrat.foundation.config.ap;
 
+import static java.lang.String.format;
 import static java.util.Collections.unmodifiableMap;
 import static org.apiguardian.api.API.Status.MAINTAINED;
 import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_DuplicateProperty;
@@ -26,7 +27,6 @@ import static org.tquadrat.foundation.lang.Objects.nonNull;
 import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
 import static org.tquadrat.foundation.lang.Objects.requireNotEmptyArgument;
 import static org.tquadrat.foundation.util.Comparators.caseInsensitiveComparator;
-import static org.tquadrat.foundation.util.StringUtils.format;
 import static org.tquadrat.foundation.util.StringUtils.isEmptyOrBlank;
 import static org.tquadrat.foundation.util.StringUtils.isNotEmptyOrBlank;
 
@@ -59,12 +59,12 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  generation, and it collects the results from the different code generators.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CodeGenerationConfiguration.java 1015 2022-02-09 08:25:36Z tquadrat $
+ *  @version $Id: CodeGenerationConfiguration.java 1076 2023-10-03 18:36:07Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 1015 2022-02-09 08:25:36Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 1076 2023-10-03 18:36:07Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class CodeGenerationConfiguration
 {
@@ -211,7 +211,7 @@ public final class CodeGenerationConfiguration
      *      configuration bean properties should be thread safe, {@code false}
      *      if a synchronisation/locking is not required.
      */
-    @SuppressWarnings( "UseOfConcreteClass" )
+    @SuppressWarnings( {"UseOfConcreteClass", "ConstructorWithTooManyParameters"} )
     public CodeGenerationConfiguration( final APHelper environment, final JavaComposer composer, final ClassName specification, final Name className, final Name packageName, final TypeName baseClass, final boolean synchronizeAccess )
     {
         m_Environment = requireNonNullArgument( environment, "environment" );
@@ -280,7 +280,7 @@ public final class CodeGenerationConfiguration
      */
     public final void addProperty( final PropertySpec property ) throws CodeGenerationError
     {
-        if( requireNonNullArgument( property, "property" ) instanceof PropertySpecImpl propertyImpl )
+        if( requireNonNullArgument( property, "property" ) instanceof final PropertySpecImpl propertyImpl )
         {
             final var propertyName = propertyImpl.getPropertyName();
             if( nonNull( m_Properties.put( propertyName, propertyImpl ) ) )
@@ -334,7 +334,6 @@ public final class CodeGenerationConfiguration
      *
      *  @return The composer instance.
      */
-    @SuppressWarnings( "UseOfConcreteClass" )
     public final JavaComposer getComposer() { return m_Composer; }
 
     /**
@@ -570,6 +569,7 @@ public final class CodeGenerationConfiguration
     public final Iterator<PropertySpec> propertyIterator()
     {
         final var iterator = m_Properties.values().iterator();
+        @SuppressWarnings( {"AnonymousInnerClassMayBeStatic", "AnonymousInnerClass"} )
         final Iterator<PropertySpec> retValue = new Iterator<>()
         {
             /**

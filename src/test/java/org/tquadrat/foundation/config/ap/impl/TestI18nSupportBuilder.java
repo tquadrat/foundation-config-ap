@@ -17,11 +17,11 @@
 
 package org.tquadrat.foundation.config.ap.impl;
 
+import static java.lang.String.format;
 import static java.lang.System.out;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.tquadrat.foundation.util.StringUtils.format;
 import static org.tquadrat.foundation.util.StringUtils.isNotEmpty;
 import static org.tquadrat.foundation.util.StringUtils.isNotEmptyOrBlank;
 
@@ -44,9 +44,9 @@ import org.tquadrat.foundation.test.helper.CodeGeneratorTestBase;
  *  interface.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: TestI18nSupportBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $
+ *  @version $Id: TestI18nSupportBuilder.java 1076 2023-10-03 18:36:07Z tquadrat $
  */
-@ClassVersion( sourceVersion = "$Id: TestI18nSupportBuilder.java 1010 2022-02-05 19:28:36Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: TestI18nSupportBuilder.java 1076 2023-10-03 18:36:07Z tquadrat $" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.TestConfigBeanBuilder" )
 public class TestI18nSupportBuilder extends CodeGeneratorTestBase
 {
@@ -124,6 +124,7 @@ public class TestI18nSupportBuilder extends CodeGeneratorTestBase
 
                     package org.tquadrat.foundation.test.generated;
 
+                    import static java.lang.String.format;
                     import static java.lang.System.getProperty;
                     import static java.nio.charset.Charset.defaultCharset;
                     import static java.util.stream.Collectors.toUnmodifiableList;
@@ -131,7 +132,6 @@ public class TestI18nSupportBuilder extends CodeGeneratorTestBase
                     import static org.tquadrat.foundation.lang.Objects.isNull;
                     import static org.tquadrat.foundation.lang.Objects.nonNull;
                     import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
-                    import static org.tquadrat.foundation.util.StringUtils.format;
                     import static org.tquadrat.foundation.util.SystemUtils.getPID;
 
                     import java.io.FileNotFoundException;
@@ -447,7 +447,7 @@ public class TestI18nSupportBuilder extends CodeGeneratorTestBase
                                 }
                                 catch( final IOException e )
                                 {
-                                    final var eiie = new ExceptionInInitializerError( format( "Cannot load resource '%s'", resource.toExternalForm() ) );
+                                    final var eiie = new ExceptionInInitializerError( "Cannot load resource '%s'".formatted( resource.toExternalForm() ) );
                                     eiie.addSuppressed( e );
                                     throw eiie;
                                 }

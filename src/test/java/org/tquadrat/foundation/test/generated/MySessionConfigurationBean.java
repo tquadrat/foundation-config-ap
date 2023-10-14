@@ -15,6 +15,7 @@
 
 package org.tquadrat.foundation.test.generated;
 
+import static java.lang.String.format;
 import static java.lang.System.getProperty;
 import static java.nio.charset.Charset.defaultCharset;
 import static java.util.stream.Collectors.toUnmodifiableList;
@@ -23,7 +24,6 @@ import static org.tquadrat.foundation.lang.Objects.isNull;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
 import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
 import static org.tquadrat.foundation.lang.Objects.requireNotEmptyArgument;
-import static org.tquadrat.foundation.util.StringUtils.format;
 import static org.tquadrat.foundation.util.SystemUtils.getPID;
 
 import java.io.FileNotFoundException;
@@ -335,7 +335,7 @@ public final class MySessionConfigurationBean extends BaseClass implements MySes
             }
             catch( final IOException e )
             {
-                final var eiie = new ExceptionInInitializerError( format( "Cannot load resource '%s'", resource.toExternalForm() ) );
+                final var eiie = new ExceptionInInitializerError( "Cannot load resource '%s'".formatted( resource.toExternalForm() ) );
                 eiie.addSuppressed( e );
                 throw eiie;
             }

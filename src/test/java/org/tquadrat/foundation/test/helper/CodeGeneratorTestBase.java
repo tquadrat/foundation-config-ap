@@ -18,6 +18,7 @@
 package org.tquadrat.foundation.test.helper;
 
 import static java.lang.Boolean.FALSE;
+import static java.lang.String.format;
 import static javax.lang.model.element.Modifier.DEFAULT;
 import static javax.lang.model.element.Modifier.PUBLIC;
 import static org.apiguardian.api.API.Status.STABLE;
@@ -50,7 +51,6 @@ import static org.tquadrat.foundation.lang.Objects.isNull;
 import static org.tquadrat.foundation.lang.Objects.requireNotEmptyArgument;
 import static org.tquadrat.foundation.util.JavaUtils.composeGetterName;
 import static org.tquadrat.foundation.util.JavaUtils.composeSetterName;
-import static org.tquadrat.foundation.util.StringUtils.format;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -89,11 +89,11 @@ import org.tquadrat.foundation.util.stringconverter.StringStringConverter;
 /**
  *  The base class for the code generation tests.
  *
- *  @version $Id: CodeGeneratorTestBase.java 1015 2022-02-09 08:25:36Z tquadrat $
+ *  @version $Id: CodeGeneratorTestBase.java 1076 2023-10-03 18:36:07Z tquadrat $
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  */
 @SuppressWarnings( {"AbstractClassWithoutAbstractMethods", "OverlyCoupledClass", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: CodeGeneratorTestBase.java 1015 2022-02-09 08:25:36Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeGeneratorTestBase.java 1076 2023-10-03 18:36:07Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public abstract class CodeGeneratorTestBase extends TestBaseClass
 {
@@ -213,7 +213,7 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
      *
      *  @param  configuration   The configuration.
      */
-    @SuppressWarnings( "UseOfConcreteClass" )
+    @SuppressWarnings( {"UseOfConcreteClass", "OverlyCoupledMethod"} )
     protected final void createCustomProperties1( final CodeGenerationConfiguration configuration )
     {
         PropertySpecImpl property;
@@ -565,7 +565,6 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
      *      property.
      *  @throws Exception   Something went unexpectedly wrong.
      */
-    @SuppressWarnings( "UseOfConcreteClass" )
     public static final void createProperty_int3( final CodeGenerationConfiguration configuration ) throws Exception
     {
         final var propertyName = "int3";
@@ -880,6 +879,7 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
      *  @throws IllegalAccessException  Not allowed accessing
      *      {@code composeFieldName(String}.
      */
+    @SuppressWarnings( "MethodWithTooExceptionsDeclared" )
     protected static final String makeFieldName( final String name ) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException
     {
         if( isNull( m_ComposeFieldNameMethod ) )

@@ -17,11 +17,11 @@
 
 package org.tquadrat.foundation.config.ap.impl;
 
+import static java.lang.String.format;
 import static java.lang.System.out;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.tquadrat.foundation.util.StringUtils.format;
 import static org.tquadrat.foundation.util.StringUtils.isNotEmpty;
 import static org.tquadrat.foundation.util.StringUtils.isNotEmptyOrBlank;
 
@@ -42,10 +42,10 @@ import org.tquadrat.foundation.test.helper.CodeGeneratorTestBase;
  *  annotation.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: TestConfigBeanBuilder2.java 1010 2022-02-05 19:28:36Z tquadrat $
+ *  @version $Id: TestConfigBeanBuilder2.java 1076 2023-10-03 18:36:07Z tquadrat $
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: TestConfigBeanBuilder2.java 1010 2022-02-05 19:28:36Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: TestConfigBeanBuilder2.java 1076 2023-10-03 18:36:07Z tquadrat $" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.TestConfigBeanBuilder2" )
 public class TestConfigBeanBuilder2 extends CodeGeneratorTestBase
 {
@@ -120,13 +120,13 @@ public class TestConfigBeanBuilder2 extends CodeGeneratorTestBase
                                     
                     package org.tquadrat.foundation.test.generated;
                                     
+                    import static java.lang.String.format;
                     import static java.lang.System.getProperty;
                     import static java.nio.charset.Charset.defaultCharset;
                     import static java.util.prefs.Preferences.systemRoot;
                     import static org.tquadrat.foundation.lang.CommonConstants.NULL_STRING;
                     import static org.tquadrat.foundation.lang.Objects.nonNull;
                     import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
-                    import static org.tquadrat.foundation.util.StringUtils.format;
                                     
                     import java.lang.ExceptionInInitializerError;
                     import java.lang.Override;

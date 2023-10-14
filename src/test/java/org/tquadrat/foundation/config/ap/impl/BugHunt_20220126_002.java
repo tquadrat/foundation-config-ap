@@ -17,6 +17,7 @@
 
 package org.tquadrat.foundation.config.ap.impl;
 
+import static java.lang.String.format;
 import static java.lang.System.out;
 import static org.apiguardian.api.API.Status.STABLE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,7 +35,6 @@ import static org.tquadrat.foundation.test.helper.CodeGeneratorTestBase.createPr
 import static org.tquadrat.foundation.test.helper.CodeGeneratorTestBase.createProperty_random;
 import static org.tquadrat.foundation.test.helper.CodeGeneratorTestBase.createProperty_resourceBundle;
 import static org.tquadrat.foundation.test.helper.CodeGeneratorTestBase.createProperty_timezone;
-import static org.tquadrat.foundation.util.StringUtils.format;
 import static org.tquadrat.foundation.util.StringUtils.isNotEmpty;
 import static org.tquadrat.foundation.util.StringUtils.isNotEmptyOrBlank;
 
@@ -60,10 +60,10 @@ import org.tquadrat.foundation.testutil.TestBaseClass;
 /**
  *  Generation caused &quot;cannot unindent 1 from 0&quot;.
  *
- *  @version $Id: BugHunt_20220126_002.java 1051 2023-02-26 19:14:46Z tquadrat $
+ *  @version $Id: BugHunt_20220126_002.java 1076 2023-10-03 18:36:07Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
-@ClassVersion( sourceVersion = "$Id: BugHunt_20220126_002.java 1051 2023-02-26 19:14:46Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: BugHunt_20220126_002.java 1076 2023-10-03 18:36:07Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.BugHunt_20220126_002" )
 public class BugHunt_20220126_002 extends TestBaseClass
@@ -204,7 +204,6 @@ public class BugHunt_20220126_002 extends TestBaseClass
              * bean specification; that should give us the methods and
              * attributes for the CLI handling.
              */
-            @SuppressWarnings( "GrazieInspection" )
             final var expected =
                 """
                     /*
@@ -224,6 +223,7 @@ public class BugHunt_20220126_002 extends TestBaseClass
                                     
                     package org.tquadrat.foundation.test.generated;
                                     
+                    import static java.lang.String.format;
                     import static java.lang.System.getProperty;
                     import static java.nio.charset.Charset.defaultCharset;
                     import static java.nio.file.Files.exists;
@@ -231,7 +231,6 @@ public class BugHunt_20220126_002 extends TestBaseClass
                     import static org.tquadrat.foundation.lang.Objects.isNull;
                     import static org.tquadrat.foundation.lang.Objects.nonNull;
                     import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
-                    import static org.tquadrat.foundation.util.StringUtils.format;
                     import static org.tquadrat.foundation.util.SystemUtils.getPID;
                                     
                     import java.io.FileNotFoundException;

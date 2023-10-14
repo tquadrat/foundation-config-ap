@@ -15,13 +15,13 @@
 
 package org.tquadrat.foundation.test.generated;
 
+import static java.lang.String.format;
 import static java.lang.System.getProperty;
 import static java.nio.charset.Charset.defaultCharset;
 import static java.util.prefs.Preferences.systemRoot;
 import static org.tquadrat.foundation.lang.CommonConstants.NULL_STRING;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
 import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
-import static org.tquadrat.foundation.util.StringUtils.format;
 
 import java.lang.ExceptionInInitializerError;
 import java.lang.Override;
