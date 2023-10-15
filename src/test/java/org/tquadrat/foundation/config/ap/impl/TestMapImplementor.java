@@ -43,10 +43,10 @@ import org.tquadrat.foundation.test.helper.CodeGeneratorTestBase;
  *  interface.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: TestMapImplementor.java 1076 2023-10-03 18:36:07Z tquadrat $
+ *  @version $Id: TestMapImplementor.java 1077 2023-10-14 23:00:23Z tquadrat $
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: TestMapImplementor.java 1076 2023-10-03 18:36:07Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: TestMapImplementor.java 1077 2023-10-14 23:00:23Z tquadrat $" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.TestMapImplementor" )
 public class TestMapImplementor extends CodeGeneratorTestBase
 {

@@ -59,10 +59,10 @@ import org.tquadrat.foundation.testutil.TestBaseClass;
 /**
  *  Enum properties are causing issues.
  *
- *  @version $Id: BugHunt_20220205_001.java 1076 2023-10-03 18:36:07Z tquadrat $
+ *  @version $Id: BugHunt_20220205_001.java 1077 2023-10-14 23:00:23Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
-@ClassVersion( sourceVersion = "$Id: BugHunt_20220205_001.java 1076 2023-10-03 18:36:07Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: BugHunt_20220205_001.java 1077 2023-10-14 23:00:23Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.BugHunt_20220205_001" )
 public class BugHunt_20220205_001 extends TestBaseClass
