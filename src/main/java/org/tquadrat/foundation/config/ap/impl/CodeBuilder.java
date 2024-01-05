@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2023 by Thomas Thrien.
+ *  Copyright © 2002-2024 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -34,11 +34,11 @@ import org.tquadrat.foundation.javacomposer.MethodSpec;
  *  An API to the internals of the code builders.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CodeBuilder.java 1061 2023-09-25 16:32:43Z tquadrat $
+ *  @version $Id: CodeBuilder.java 1085 2024-01-05 16:23:28Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@ClassVersion( sourceVersion = "$Id: CodeBuilder.java 1061 2023-09-25 16:32:43Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeBuilder.java 1085 2024-01-05 16:23:28Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public interface CodeBuilder
 {
@@ -49,12 +49,12 @@ public interface CodeBuilder
      *  The standard fields.
      *
      *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
-     *  @version $Id: CodeBuilder.java 1061 2023-09-25 16:32:43Z tquadrat $
+     *  @version $Id: CodeBuilder.java 1085 2024-01-05 16:23:28Z tquadrat $
      *  @since 0.2.0
      *
      *  @UMLGraph.link
      */
-    @ClassVersion( sourceVersion = "$Id: CodeBuilder.java 1061 2023-09-25 16:32:43Z tquadrat $" )
+    @ClassVersion( sourceVersion = "$Id: CodeBuilder.java 1085 2024-01-05 16:23:28Z tquadrat $" )
     @API( status = MAINTAINED, since = "0.2.0" )
     public enum StandardField
     {
@@ -138,15 +138,6 @@ public interface CodeBuilder
         STD_FIELD_ResourceBundle( "m_ResourceBundle" ),
 
         /**
-         *  The system preferences.
-         *
-         *  @deprecated Obsolete now.
-         */
-        @Deprecated( since = "0.1.0", forRemoval = true )
-        @API( status = MAINTAINED, since = "0.0.1" )
-        STD_FIELD_SystemPreferences( "m_SystemPreferences" ),
-
-        /**
          *  The user preferences.
          */
         @API( status = MAINTAINED, since = "0.0.1" )
@@ -197,12 +188,12 @@ public interface CodeBuilder
      *  The standard methods.
      *
      *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
-     *  @version $Id: CodeBuilder.java 1061 2023-09-25 16:32:43Z tquadrat $
+     *  @version $Id: CodeBuilder.java 1085 2024-01-05 16:23:28Z tquadrat $
      *  @since 0.2.0
      *
      *  @UMLGraph.link
      */
-    @ClassVersion( sourceVersion = "$Id: CodeBuilder.java 1061 2023-09-25 16:32:43Z tquadrat $" )
+    @ClassVersion( sourceVersion = "$Id: CodeBuilder.java 1085 2024-01-05 16:23:28Z tquadrat $" )
     @API( status = MAINTAINED, since = "0.2.0" )
     public enum StandardMethod
     {
