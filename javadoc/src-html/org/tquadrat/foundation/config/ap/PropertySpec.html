@@ -13,7 +13,7 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">/*</span>
 <span class="source-line-no">002</span><span id="line-2"> * ============================================================================</span>
-<span class="source-line-no">003</span><span id="line-3"> *  Copyright © 2002-2023 by Thomas Thrien.</span>
+<span class="source-line-no">003</span><span id="line-3"> *  Copyright © 2002-2024 by Thomas Thrien.</span>
 <span class="source-line-no">004</span><span id="line-4"> *  All Rights Reserved.</span>
 <span class="source-line-no">005</span><span id="line-5"> * ============================================================================</span>
 <span class="source-line-no">006</span><span id="line-6"> *  Licensed to the public under the agreements of the GNU Lesser General Public</span>
@@ -475,7 +475,7 @@
 <span class="source-line-no">462</span><span id="line-462">                    if( getPropertyType() instanceof final ParameterizedTypeName propertyType )</span>
 <span class="source-line-no">463</span><span id="line-463">                    {</span>
 <span class="source-line-no">464</span><span id="line-464">                        final var typeArguments = propertyType.typeArguments();</span>
-<span class="source-line-no">465</span><span id="line-465">                        yield typeArguments.get( 0 );</span>
+<span class="source-line-no">465</span><span id="line-465">                        yield typeArguments.getFirst();</span>
 <span class="source-line-no">466</span><span id="line-466">                    }</span>
 <span class="source-line-no">467</span><span id="line-467">                    yield null;</span>
 <span class="source-line-no">468</span><span id="line-468">                }</span>

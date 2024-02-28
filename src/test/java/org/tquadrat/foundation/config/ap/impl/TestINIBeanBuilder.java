@@ -606,35 +606,14 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                             }
                                     
                             // Sets the structure of the INIFile
-                            if( !retValue.hasGroup( "Group1" ) )
-                            {
-                                retValue.addComment( "Group1", "The comment for group 1.\\n" );
-                            }
-                            if( !retValue.hasGroup( "Group2" ) )
-                            {
-                                retValue.addComment( "Group2", "The comment for group 2.\\n" );
-                            }
-                            if( !retValue.hasGroup( "Group3" ) )
-                            {
-                                retValue.addComment( "Group3", "The comment for group 3.\\n" );
-                            }
-                            if( !retValue.hasValue( "Group1", "date1Ini" ) )
-                            {
-                                retValue.addComment( "Group1", "date1Ini", "Property 'date1Ini'" );
-                            }
-                            if( !retValue.hasValue( "Group1", "int1Ini" ) )
-                            {
-                                retValue.addComment( "Group1", "int1Ini", "Property 'int1Ini'" );
-                            }
-                            if( !retValue.hasValue( "Group1", "int2Ini" ) )
-                            {
-                                retValue.addComment( "Group1", "int2Ini", "Property 'int2Ini'" );
-                            }
-                            if( !retValue.hasValue( "Group1", "string1Ini" ) )
-                            {
-                                retValue.addComment( "Group1", "string1Ini", "Property 'string1Ini'" );
-                            }
-                                    
+                            retValue.setComment( "Group1", "The comment for group 1.\\n" );
+                            retValue.setComment( "Group2", "The comment for group 2.\\n" );
+                            retValue.setComment( "Group3", "The comment for group 3.\\n" );
+                            retValue.setComment( "Group1", "date1Ini", "Property 'date1Ini'" );
+                            retValue.setComment( "Group1", "int1Ini", "Property 'int1Ini'" );
+                            retValue.setComment( "Group1", "int2Ini", "Property 'int2Ini'" );
+                            retValue.setComment( "Group1", "string1Ini", "Property 'string1Ini'" );
+                                                
                             //---* Done *----------------------------------------------------------
                             return retValue;
                         }  //  createINIFile()

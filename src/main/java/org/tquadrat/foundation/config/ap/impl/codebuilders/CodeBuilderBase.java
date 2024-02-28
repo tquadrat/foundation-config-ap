@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2023 by Thomas Thrien.
+ *  Copyright © 2002-2024 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -368,7 +368,7 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
                         if( property.getPropertyType() instanceof final ParameterizedTypeName propertyType )
                         {
                             final var typeArguments = propertyType.typeArguments();
-                            yield typeArguments.get( 0 );
+                            yield typeArguments.getFirst();
                         }
                         yield ClassName.from( Object.class );
                     }
@@ -613,7 +613,7 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
         else if( accessorClass.equals( LIST_ACCESSOR_TYPE ) || accessorClass.equals( SET_ACCESSOR_TYPE ) )
         {
             final var propertyType = (ParameterizedTypeName) property.getPropertyType();
-            final var argumentType = propertyType.typeArguments().get( 0 );
+            final var argumentType = propertyType.typeArguments().getFirst();
             final var stringConverterType = getStringConverter( argumentType )
                 .orElseThrow( () -> new CodeGenerationError( format( MSG_MissingStringConverterWithType, property.getPropertyName(), argumentType.toString() ) ) );
             switch( determineStringConverterInstantiation( stringConverterType, false ) )
@@ -627,8 +627,8 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
         {
             final var propertyType = (ParameterizedTypeName) property.getPropertyType();
             final var argumentTypes = propertyType.typeArguments();
-            final var keyStringConverterType = getStringConverter( argumentTypes.get( 0 ) )
-                .orElseThrow( () -> new CodeGenerationError( format( MSG_MissingStringConverterWithType, property.getPropertyName(), argumentTypes.get( 0 ).toString() ) ) );
+            final var keyStringConverterType = getStringConverter( argumentTypes.getFirst() )
+                .orElseThrow( () -> new CodeGenerationError( format( MSG_MissingStringConverterWithType, property.getPropertyName(), argumentTypes.getFirst().toString() ) ) );
             final var keySnippet =
                 switch( determineStringConverterInstantiation( keyStringConverterType, false ) )
                 {

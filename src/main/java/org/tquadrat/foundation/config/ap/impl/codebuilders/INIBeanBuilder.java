@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2023 by Thomas Thrien.
+ *  Copyright © 2002-2024 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -160,7 +160,7 @@ public final class INIBeanBuilder extends CodeBuilderBase
             initType = InitType.INIT_PROPERTY;
             final var template = new Template( rawINIFilePath );
             final var variables = new LinkedList<>( template.findVariables() );
-            propertyName = variables.get( 0 );
+            propertyName = variables.getFirst();
             iniFilePath = PathStringConverter.INSTANCE.fromString( template.replaceVariable( Map.of( propertyName, EMPTY_STRING ) ) );
         }
         else
@@ -265,7 +265,7 @@ public final class INIBeanBuilder extends CodeBuilderBase
                         """
                         if( isNew )
                         """ )
-                    .addStatement( "retValue.addComment( $S )", fileComment.get() )
+                    .addStatement( "retValue.setComment( $S )", fileComment.get() )
                     .endControlFlow();
             }
             else
@@ -287,13 +287,7 @@ public final class INIBeanBuilder extends CodeBuilderBase
             .addComment( "Sets the structure of the INIFile" );
         for( final var group : getConfiguration().getINIGroups().entrySet() )
         {
-            createINIFileBuilder.beginControlFlow(
-                    """
-                    if( !retValue.hasGroup( $S ) )
-                    """, group.getKey()
-                )
-                .addStatement( "retValue.addComment( $S, $S )", group.getKey(), group.getValue() )
-                .endControlFlow();
+            createINIFileBuilder.addStatement( "retValue.setComment( $S, $S )", group.getKey(), group.getValue() );
         }
         PropertiesLoop:
         for( var iterator = getConfiguration().propertyIterator(); iterator.hasNext(); )
@@ -305,13 +299,7 @@ public final class INIBeanBuilder extends CodeBuilderBase
             final var group = property.getINIGroup().orElseThrow( () -> new CodeGenerationError( format( MSG_INIGroupMissing, property.getPropertyName() ) ) );
             final var key = property.getINIKey().orElseThrow( () -> new CodeGenerationError( format( MSG_INIKeyMissing, property.getPropertyName() ) ) );
             final var comment = property.getINIComment().orElseThrow();
-            createINIFileBuilder.beginControlFlow(
-                    """
-                     if( !retValue.hasValue( $S, $S ) )
-                     """, group, key
-                )
-                .addStatement( "retValue.addComment( $S, $S, $S )", group, key, comment )
-                .endControlFlow();
+            createINIFileBuilder.addStatement( "retValue.setComment( $S, $S, $S )", group, key, comment );
         }   //  PropertiesLoop:
 
         final var createINIFile = createINIFileBuilder.addCode( getComposer().createReturnStatement() )

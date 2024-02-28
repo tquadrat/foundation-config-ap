@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2023 by Thomas Thrien.
+ *  Copyright © 2002-2024 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -614,7 +614,7 @@ public class ConfigAnnotationProcessor extends APBase
                  * Currently (as of 2023-03-08 and for Java 17), the class
                  * SimpleTypeVisitor14 is the latest incarnation of this type.
                  */
-                @SuppressWarnings( {"AnonymousInnerClassMayBeStatic", "AnonymousInnerClass"} )
+                @SuppressWarnings( {"AnonymousInnerClass"} )
                 final var componentType = typeName.accept( new SimpleTypeVisitor14<TypeMirror,Void>()
                 {
                     /**
@@ -816,7 +816,7 @@ public class ConfigAnnotationProcessor extends APBase
                 case LIST, SET ->
                 {
                     final var genericTypes = retrieveGenericTypes( type );
-                    yield genericTypes.size() == 1 ? Optional.of( genericTypes.get( 0 ) ) : Optional.<TypeMirror>empty();
+                    yield genericTypes.size() == 1 ? Optional.of( genericTypes.getFirst() ) : Optional.<TypeMirror>empty();
                 }
 
                 default -> Optional.<TypeMirror>empty();
@@ -903,7 +903,7 @@ public class ConfigAnnotationProcessor extends APBase
              * and have to look at that.
              */
             final var genericTypes = retrieveGenericTypes( retValue );
-            if( genericTypes.size() == 1 ) retValue = genericTypes.get( 0 );
+            if( genericTypes.size() == 1 ) retValue = genericTypes.getFirst();
         }
 
         //---* Check whether the property type is appropriate *----------------
@@ -1454,7 +1454,7 @@ public class ConfigAnnotationProcessor extends APBase
         final TypeName propertyType;
         final CollectionKind collectionKind;
         ifDebug( "propertyName: %s"::formatted, propertyName );
-        final var rawArgumentType = setter.getParameters().get( 0 ).asType();
+        final var rawArgumentType = setter.getParameters().getFirst().asType();
         final boolean isEnum;
         if( configuration.hasProperty( propertyName ) )
         {
@@ -1475,9 +1475,9 @@ public class ConfigAnnotationProcessor extends APBase
              *  again.
              */
             propertyType = property.getPropertyType();
-            if( !propertyType.equals( TypeName.from( setter.getParameters().get( 0 ).asType() ) ) )
+            if( !propertyType.equals( TypeName.from( setter.getParameters().getFirst().asType() ) ) )
             {
-                throw new CodeGenerationError( format( MSG_TypeMismatch, TypeName.from( setter.getParameters().get( 0 ).asType() ).toString(), setterMethodName, propertyType.toString() ) );
+                throw new CodeGenerationError( format( MSG_TypeMismatch, TypeName.from( setter.getParameters().getFirst().asType() ).toString(), setterMethodName, propertyType.toString() ) );
             }
             collectionKind = property.getCollectionKind();
             isEnum = property.isEnum();
@@ -2294,7 +2294,7 @@ public class ConfigAnnotationProcessor extends APBase
     {
         final var parameters = retrieveArgumentNames( setter );
         if( parameters.size() != 1 ) throw new CodeGenerationError( format( MSG_NoSetter, setter.getSimpleName() ) );
-        final var retValue = parameters.get( 0 );
+        final var retValue = parameters.getFirst();
 
         //---* Done *----------------------------------------------------------
         return retValue;

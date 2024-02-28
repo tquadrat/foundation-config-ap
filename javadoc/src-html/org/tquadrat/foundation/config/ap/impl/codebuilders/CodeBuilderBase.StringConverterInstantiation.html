@@ -13,7 +13,7 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">/*</span>
 <span class="source-line-no">002</span><span id="line-2"> * ============================================================================</span>
-<span class="source-line-no">003</span><span id="line-3"> *  Copyright © 2002-2023 by Thomas Thrien.</span>
+<span class="source-line-no">003</span><span id="line-3"> *  Copyright © 2002-2024 by Thomas Thrien.</span>
 <span class="source-line-no">004</span><span id="line-4"> *  All Rights Reserved.</span>
 <span class="source-line-no">005</span><span id="line-5"> * ============================================================================</span>
 <span class="source-line-no">006</span><span id="line-6"> *  Licensed to the public under the agreements of the GNU Lesser General Public</span>
@@ -381,7 +381,7 @@
 <span class="source-line-no">368</span><span id="line-368">                        if( property.getPropertyType() instanceof final ParameterizedTypeName propertyType )</span>
 <span class="source-line-no">369</span><span id="line-369">                        {</span>
 <span class="source-line-no">370</span><span id="line-370">                            final var typeArguments = propertyType.typeArguments();</span>
-<span class="source-line-no">371</span><span id="line-371">                            yield typeArguments.get( 0 );</span>
+<span class="source-line-no">371</span><span id="line-371">                            yield typeArguments.getFirst();</span>
 <span class="source-line-no">372</span><span id="line-372">                        }</span>
 <span class="source-line-no">373</span><span id="line-373">                        yield ClassName.from( Object.class );</span>
 <span class="source-line-no">374</span><span id="line-374">                    }</span>
@@ -626,7 +626,7 @@
 <span class="source-line-no">613</span><span id="line-613">        else if( accessorClass.equals( LIST_ACCESSOR_TYPE ) || accessorClass.equals( SET_ACCESSOR_TYPE ) )</span>
 <span class="source-line-no">614</span><span id="line-614">        {</span>
 <span class="source-line-no">615</span><span id="line-615">            final var propertyType = (ParameterizedTypeName) property.getPropertyType();</span>
-<span class="source-line-no">616</span><span id="line-616">            final var argumentType = propertyType.typeArguments().get( 0 );</span>
+<span class="source-line-no">616</span><span id="line-616">            final var argumentType = propertyType.typeArguments().getFirst();</span>
 <span class="source-line-no">617</span><span id="line-617">            final var stringConverterType = getStringConverter( argumentType )</span>
 <span class="source-line-no">618</span><span id="line-618">                .orElseThrow( () -&gt; new CodeGenerationError( format( MSG_MissingStringConverterWithType, property.getPropertyName(), argumentType.toString() ) ) );</span>
 <span class="source-line-no">619</span><span id="line-619">            switch( determineStringConverterInstantiation( stringConverterType, false ) )</span>
@@ -640,8 +640,8 @@
 <span class="source-line-no">627</span><span id="line-627">        {</span>
 <span class="source-line-no">628</span><span id="line-628">            final var propertyType = (ParameterizedTypeName) property.getPropertyType();</span>
 <span class="source-line-no">629</span><span id="line-629">            final var argumentTypes = propertyType.typeArguments();</span>
-<span class="source-line-no">630</span><span id="line-630">            final var keyStringConverterType = getStringConverter( argumentTypes.get( 0 ) )</span>
-<span class="source-line-no">631</span><span id="line-631">                .orElseThrow( () -&gt; new CodeGenerationError( format( MSG_MissingStringConverterWithType, property.getPropertyName(), argumentTypes.get( 0 ).toString() ) ) );</span>
+<span class="source-line-no">630</span><span id="line-630">            final var keyStringConverterType = getStringConverter( argumentTypes.getFirst() )</span>
+<span class="source-line-no">631</span><span id="line-631">                .orElseThrow( () -&gt; new CodeGenerationError( format( MSG_MissingStringConverterWithType, property.getPropertyName(), argumentTypes.getFirst().toString() ) ) );</span>
 <span class="source-line-no">632</span><span id="line-632">            final var keySnippet =</span>
 <span class="source-line-no">633</span><span id="line-633">                switch( determineStringConverterInstantiation( keyStringConverterType, false ) )</span>
 <span class="source-line-no">634</span><span id="line-634">                {</span>

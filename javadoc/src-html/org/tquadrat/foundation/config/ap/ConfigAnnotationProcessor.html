@@ -13,7 +13,7 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">/*</span>
 <span class="source-line-no">002</span><span id="line-2"> * ============================================================================</span>
-<span class="source-line-no">003</span><span id="line-3"> *  Copyright © 2002-2023 by Thomas Thrien.</span>
+<span class="source-line-no">003</span><span id="line-3"> *  Copyright © 2002-2024 by Thomas Thrien.</span>
 <span class="source-line-no">004</span><span id="line-4"> *  All Rights Reserved.</span>
 <span class="source-line-no">005</span><span id="line-5"> * ============================================================================</span>
 <span class="source-line-no">006</span><span id="line-6"> *  Licensed to the public under the agreements of the GNU Lesser General Public</span>
@@ -627,7 +627,7 @@
 <span class="source-line-no">614</span><span id="line-614">                 * Currently (as of 2023-03-08 and for Java 17), the class</span>
 <span class="source-line-no">615</span><span id="line-615">                 * SimpleTypeVisitor14 is the latest incarnation of this type.</span>
 <span class="source-line-no">616</span><span id="line-616">                 */</span>
-<span class="source-line-no">617</span><span id="line-617">                @SuppressWarnings( {"AnonymousInnerClassMayBeStatic", "AnonymousInnerClass"} )</span>
+<span class="source-line-no">617</span><span id="line-617">                @SuppressWarnings( {"AnonymousInnerClass"} )</span>
 <span class="source-line-no">618</span><span id="line-618">                final var componentType = typeName.accept( new SimpleTypeVisitor14&lt;TypeMirror,Void&gt;()</span>
 <span class="source-line-no">619</span><span id="line-619">                {</span>
 <span class="source-line-no">620</span><span id="line-620">                    /**</span>
@@ -829,7 +829,7 @@
 <span class="source-line-no">816</span><span id="line-816">                case LIST, SET -&gt;</span>
 <span class="source-line-no">817</span><span id="line-817">                {</span>
 <span class="source-line-no">818</span><span id="line-818">                    final var genericTypes = retrieveGenericTypes( type );</span>
-<span class="source-line-no">819</span><span id="line-819">                    yield genericTypes.size() == 1 ? Optional.of( genericTypes.get( 0 ) ) : Optional.&lt;TypeMirror&gt;empty();</span>
+<span class="source-line-no">819</span><span id="line-819">                    yield genericTypes.size() == 1 ? Optional.of( genericTypes.getFirst() ) : Optional.&lt;TypeMirror&gt;empty();</span>
 <span class="source-line-no">820</span><span id="line-820">                }</span>
 <span class="source-line-no">821</span><span id="line-821"></span>
 <span class="source-line-no">822</span><span id="line-822">                default -&gt; Optional.&lt;TypeMirror&gt;empty();</span>
@@ -916,7 +916,7 @@
 <span class="source-line-no">903</span><span id="line-903">             * and have to look at that.</span>
 <span class="source-line-no">904</span><span id="line-904">             */</span>
 <span class="source-line-no">905</span><span id="line-905">            final var genericTypes = retrieveGenericTypes( retValue );</span>
-<span class="source-line-no">906</span><span id="line-906">            if( genericTypes.size() == 1 ) retValue = genericTypes.get( 0 );</span>
+<span class="source-line-no">906</span><span id="line-906">            if( genericTypes.size() == 1 ) retValue = genericTypes.getFirst();</span>
 <span class="source-line-no">907</span><span id="line-907">        }</span>
 <span class="source-line-no">908</span><span id="line-908"></span>
 <span class="source-line-no">909</span><span id="line-909">        //---* Check whether the property type is appropriate *----------------</span>
@@ -1467,7 +1467,7 @@
 <span class="source-line-no">1454</span><span id="line-1454">        final TypeName propertyType;</span>
 <span class="source-line-no">1455</span><span id="line-1455">        final CollectionKind collectionKind;</span>
 <span class="source-line-no">1456</span><span id="line-1456">        ifDebug( "propertyName: %s"::formatted, propertyName );</span>
-<span class="source-line-no">1457</span><span id="line-1457">        final var rawArgumentType = setter.getParameters().get( 0 ).asType();</span>
+<span class="source-line-no">1457</span><span id="line-1457">        final var rawArgumentType = setter.getParameters().getFirst().asType();</span>
 <span class="source-line-no">1458</span><span id="line-1458">        final boolean isEnum;</span>
 <span class="source-line-no">1459</span><span id="line-1459">        if( configuration.hasProperty( propertyName ) )</span>
 <span class="source-line-no">1460</span><span id="line-1460">        {</span>
@@ -1488,9 +1488,9 @@
 <span class="source-line-no">1475</span><span id="line-1475">             *  again.</span>
 <span class="source-line-no">1476</span><span id="line-1476">             */</span>
 <span class="source-line-no">1477</span><span id="line-1477">            propertyType = property.getPropertyType();</span>
-<span class="source-line-no">1478</span><span id="line-1478">            if( !propertyType.equals( TypeName.from( setter.getParameters().get( 0 ).asType() ) ) )</span>
+<span class="source-line-no">1478</span><span id="line-1478">            if( !propertyType.equals( TypeName.from( setter.getParameters().getFirst().asType() ) ) )</span>
 <span class="source-line-no">1479</span><span id="line-1479">            {</span>
-<span class="source-line-no">1480</span><span id="line-1480">                throw new CodeGenerationError( format( MSG_TypeMismatch, TypeName.from( setter.getParameters().get( 0 ).asType() ).toString(), setterMethodName, propertyType.toString() ) );</span>
+<span class="source-line-no">1480</span><span id="line-1480">                throw new CodeGenerationError( format( MSG_TypeMismatch, TypeName.from( setter.getParameters().getFirst().asType() ).toString(), setterMethodName, propertyType.toString() ) );</span>
 <span class="source-line-no">1481</span><span id="line-1481">            }</span>
 <span class="source-line-no">1482</span><span id="line-1482">            collectionKind = property.getCollectionKind();</span>
 <span class="source-line-no">1483</span><span id="line-1483">            isEnum = property.isEnum();</span>
@@ -2307,7 +2307,7 @@
 <span class="source-line-no">2294</span><span id="line-2294">    {</span>
 <span class="source-line-no">2295</span><span id="line-2295">        final var parameters = retrieveArgumentNames( setter );</span>
 <span class="source-line-no">2296</span><span id="line-2296">        if( parameters.size() != 1 ) throw new CodeGenerationError( format( MSG_NoSetter, setter.getSimpleName() ) );</span>
-<span class="source-line-no">2297</span><span id="line-2297">        final var retValue = parameters.get( 0 );</span>
+<span class="source-line-no">2297</span><span id="line-2297">        final var retValue = parameters.getFirst();</span>
 <span class="source-line-no">2298</span><span id="line-2298"></span>
 <span class="source-line-no">2299</span><span id="line-2299">        //---* Done *----------------------------------------------------------</span>
 <span class="source-line-no">2300</span><span id="line-2300">        return retValue;</span>

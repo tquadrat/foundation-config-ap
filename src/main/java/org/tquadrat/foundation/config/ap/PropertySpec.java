@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2023 by Thomas Thrien.
+ *  Copyright © 2002-2024 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -462,7 +462,7 @@ public interface PropertySpec
                     if( getPropertyType() instanceof final ParameterizedTypeName propertyType )
                     {
                         final var typeArguments = propertyType.typeArguments();
-                        yield typeArguments.get( 0 );
+                        yield typeArguments.getFirst();
                     }
                     yield null;
                 }

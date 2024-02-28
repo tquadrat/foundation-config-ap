@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2023 by Thomas Thrien.
+ *  Copyright © 2002-2024 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -260,7 +260,7 @@ public final class PreferencesBeanBuilder extends CodeBuilderBase
             else if( accessorClass.equals( LIST_ACCESSOR_TYPE ) || accessorClass.equals( SET_ACCESSOR_TYPE ) )
             {
                 final var propertyType = (ParameterizedTypeName) propertySpec.getPropertyType();
-                final var argumentType = propertyType.typeArguments().get( 0 );
+                final var argumentType = propertyType.typeArguments().getFirst();
                 final var stringConverterType = getStringConverter( argumentType )
                     .orElseThrow( () -> new CodeGenerationError( format( MSG_MissingStringConverterWithType, name, argumentType.toString() ) ) );
                 switch( determineStringConverterInstantiation( stringConverterType, false ) )
@@ -274,8 +274,8 @@ public final class PreferencesBeanBuilder extends CodeBuilderBase
             {
                 final var propertyType = (ParameterizedTypeName) propertySpec.getPropertyType();
                 final var argumentTypes = propertyType.typeArguments();
-                final var keyStringConverterType = getStringConverter( argumentTypes.get( 0 ) )
-                    .orElseThrow( () -> new CodeGenerationError( format( MSG_MissingStringConverterWithType, name, argumentTypes.get( 0 ).toString() ) ) );
+                final var keyStringConverterType = getStringConverter( argumentTypes.getFirst() )
+                    .orElseThrow( () -> new CodeGenerationError( format( MSG_MissingStringConverterWithType, name, argumentTypes.getFirst().toString() ) ) );
                 final var keySnippet =
                     switch( determineStringConverterInstantiation( keyStringConverterType, false ) )
                     {

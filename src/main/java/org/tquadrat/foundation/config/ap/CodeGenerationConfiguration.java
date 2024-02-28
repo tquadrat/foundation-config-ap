@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2021 by Thomas Thrien.
+ *  Copyright © 2002-2024 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -569,7 +569,7 @@ public final class CodeGenerationConfiguration
     public final Iterator<PropertySpec> propertyIterator()
     {
         final var iterator = m_Properties.values().iterator();
-        @SuppressWarnings( {"AnonymousInnerClassMayBeStatic", "AnonymousInnerClass"} )
+        @SuppressWarnings( {"AnonymousInnerClass"} )
         final Iterator<PropertySpec> retValue = new Iterator<>()
         {
             /**

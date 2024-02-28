@@ -13,7 +13,7 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">/*</span>
 <span class="source-line-no">002</span><span id="line-2"> * ============================================================================</span>
-<span class="source-line-no">003</span><span id="line-3"> *  Copyright © 2002-2023 by Thomas Thrien.</span>
+<span class="source-line-no">003</span><span id="line-3"> *  Copyright © 2002-2024 by Thomas Thrien.</span>
 <span class="source-line-no">004</span><span id="line-4"> *  All Rights Reserved.</span>
 <span class="source-line-no">005</span><span id="line-5"> * ============================================================================</span>
 <span class="source-line-no">006</span><span id="line-6"> *  Licensed to the public under the agreements of the GNU Lesser General Public</span>
@@ -273,7 +273,7 @@
 <span class="source-line-no">260</span><span id="line-260">            else if( accessorClass.equals( LIST_ACCESSOR_TYPE ) || accessorClass.equals( SET_ACCESSOR_TYPE ) )</span>
 <span class="source-line-no">261</span><span id="line-261">            {</span>
 <span class="source-line-no">262</span><span id="line-262">                final var propertyType = (ParameterizedTypeName) propertySpec.getPropertyType();</span>
-<span class="source-line-no">263</span><span id="line-263">                final var argumentType = propertyType.typeArguments().get( 0 );</span>
+<span class="source-line-no">263</span><span id="line-263">                final var argumentType = propertyType.typeArguments().getFirst();</span>
 <span class="source-line-no">264</span><span id="line-264">                final var stringConverterType = getStringConverter( argumentType )</span>
 <span class="source-line-no">265</span><span id="line-265">                    .orElseThrow( () -&gt; new CodeGenerationError( format( MSG_MissingStringConverterWithType, name, argumentType.toString() ) ) );</span>
 <span class="source-line-no">266</span><span id="line-266">                switch( determineStringConverterInstantiation( stringConverterType, false ) )</span>
@@ -287,8 +287,8 @@
 <span class="source-line-no">274</span><span id="line-274">            {</span>
 <span class="source-line-no">275</span><span id="line-275">                final var propertyType = (ParameterizedTypeName) propertySpec.getPropertyType();</span>
 <span class="source-line-no">276</span><span id="line-276">                final var argumentTypes = propertyType.typeArguments();</span>
-<span class="source-line-no">277</span><span id="line-277">                final var keyStringConverterType = getStringConverter( argumentTypes.get( 0 ) )</span>
-<span class="source-line-no">278</span><span id="line-278">                    .orElseThrow( () -&gt; new CodeGenerationError( format( MSG_MissingStringConverterWithType, name, argumentTypes.get( 0 ).toString() ) ) );</span>
+<span class="source-line-no">277</span><span id="line-277">                final var keyStringConverterType = getStringConverter( argumentTypes.getFirst() )</span>
+<span class="source-line-no">278</span><span id="line-278">                    .orElseThrow( () -&gt; new CodeGenerationError( format( MSG_MissingStringConverterWithType, name, argumentTypes.getFirst().toString() ) ) );</span>
 <span class="source-line-no">279</span><span id="line-279">                final var keySnippet =</span>
 <span class="source-line-no">280</span><span id="line-280">                    switch( determineStringConverterInstantiation( keyStringConverterType, false ) )</span>
 <span class="source-line-no">281</span><span id="line-281">                    {</span>

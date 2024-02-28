@@ -444,19 +444,10 @@ public class BugHunt_20220126_002 extends TestBaseClass
                             }
                                     
                             // Sets the structure of the INIFile
-                            if( !retValue.hasGroup( "Group1" ) )
-                            {
-                                retValue.addComment( "Group1", "The comment for group 1.\\n" );
-                            }
-                            if( !retValue.hasGroup( "Group2" ) )
-                            {
-                                retValue.addComment( "Group2", "The comment for group 2.\\n" );
-                            }
-                            if( !retValue.hasGroup( "Group3" ) )
-                            {
-                                retValue.addComment( "Group3", "The comment for group 3.\\n" );
-                            }
-                                    
+                            retValue.setComment( "Group1", "The comment for group 1.\\n" );
+                            retValue.setComment( "Group2", "The comment for group 2.\\n" );
+                            retValue.setComment( "Group3", "The comment for group 3.\\n" );
+                                                
                             //---* Done *----------------------------------------------------------
                             return retValue;
                         }  //  createINIFile()
