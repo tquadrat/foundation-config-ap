@@ -96,12 +96,12 @@ import org.tquadrat.foundation.lang.StringConverter;
  *  The abstract base class for all the code builders.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CodeBuilderBase.java 1061 2023-09-25 16:32:43Z tquadrat $
+ *  @version $Id: CodeBuilderBase.java 1105 2024-02-28 12:58:46Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"OverlyCoupledClass", "OverlyComplexClass"} )
-@ClassVersion( sourceVersion = "$Id: CodeBuilderBase.java 1061 2023-09-25 16:32:43Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeBuilderBase.java 1105 2024-02-28 12:58:46Z tquadrat $" )
 @API( status = INTERNAL, since = "0.1.0" )
 abstract sealed class CodeBuilderBase implements CodeBuilder
     permits CLIBeanBuilder, ConfigBeanBuilder, I18nSupportBuilder, INIBeanBuilder, MapImplementor, PreferencesBeanBuilder, SessionBeanBuilder
@@ -115,11 +115,11 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
      *  class.
      *
      *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
-     *  @version $Id: CodeBuilderBase.java 1061 2023-09-25 16:32:43Z tquadrat $
+     *  @version $Id: CodeBuilderBase.java 1105 2024-02-28 12:58:46Z tquadrat $
      *  @UMLGraph.link
      *  @since 0.1.0
      */
-    @ClassVersion( sourceVersion = "$Id: CodeBuilderBase.java 1061 2023-09-25 16:32:43Z tquadrat $" )
+    @ClassVersion( sourceVersion = "$Id: CodeBuilderBase.java 1105 2024-02-28 12:58:46Z tquadrat $" )
     @API( status = INTERNAL, since = "0.1.0" )
     public static enum StringConverterInstantiation
     {

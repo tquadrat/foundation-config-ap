@@ -68,11 +68,11 @@ import org.tquadrat.foundation.lang.Objects;
  *  {@link org.tquadrat.foundation.config.PreferencesBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: PreferencesBeanBuilder.java 1061 2023-09-25 16:32:43Z tquadrat $
+ *  @version $Id: PreferencesBeanBuilder.java 1105 2024-02-28 12:58:46Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@ClassVersion( sourceVersion = "$Id: PreferencesBeanBuilder.java 1061 2023-09-25 16:32:43Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: PreferencesBeanBuilder.java 1105 2024-02-28 12:58:46Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class PreferencesBeanBuilder extends CodeBuilderBase
 {
