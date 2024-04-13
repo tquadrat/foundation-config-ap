@@ -415,7 +415,7 @@ public final class INIBeanBuilder extends CodeBuilderBase
                 {
                     case BY_INSTANCE -> getComposer().statementOf( "final var stringConverter = $T.INSTANCE", stringConverterType );
                     case THROUGH_CONSTRUCTOR -> getComposer().statementOf( "final var stringConverter = new $T()", stringConverterType );
-                    case AS_ENUM -> getComposer().statementOf( "final var stringConverter = new $1T( $2T.class )", stringConverterType, propertySpec.getPropertyType() );
+                    case AS_ENUM -> getComposer().statementOf( "final var stringConverter = new $1T<>( $2T.class )", stringConverterType, propertySpec.getPropertyType() );
                 };
 
             //---* Load the value *--------------------------------------------
