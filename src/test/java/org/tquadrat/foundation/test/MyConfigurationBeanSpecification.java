@@ -37,13 +37,13 @@ import org.tquadrat.foundation.config.SpecialProperty;
 /**
  *  A configuration bean specification.
  *
- *  @version $Id: MyConfigurationBeanSpecification.java 938 2021-12-15 14:42:53Z tquadrat $
+ *  @version $Id: MyConfigurationBeanSpecification.java 1130 2024-05-05 16:16:09Z tquadrat $
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "InterfaceNeverImplemented" )
-@ClassVersion( sourceVersion = "$Id: MyConfigurationBeanSpecification.java 938 2021-12-15 14:42:53Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: MyConfigurationBeanSpecification.java 1130 2024-05-05 16:16:09Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public interface MyConfigurationBeanSpecification extends I18nSupport, Map<String,Object>
 {
