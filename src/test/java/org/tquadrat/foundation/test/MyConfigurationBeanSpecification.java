@@ -54,7 +54,6 @@ public interface MyConfigurationBeanSpecification extends I18nSupport, Map<Strin
         /*---------*\
     ====** Methods **==========================================================
         \*---------*/
-
     /**
      * Returns the clock that is used by this program.
      *
