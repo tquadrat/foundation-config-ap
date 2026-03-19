@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2024 by Thomas Thrien.
+ *  Copyright © 2002-2025 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -159,14 +159,14 @@ import org.tquadrat.foundation.util.stringconverter.EnumStringConverter;
  *  The annotation processor for the {@code org.tquadrat.foundation.config}
  *  module.
  *
- *  @version $Id: ConfigAnnotationProcessor.java 1105 2024-02-28 12:58:46Z tquadrat $
+ *  @version $Id: ConfigAnnotationProcessor.java 1151 2025-10-01 21:32:15Z tquadrat $
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"OverlyCoupledClass", "OverlyComplexClass", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1105 2024-02-28 12:58:46Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1151 2025-10-01 21:32:15Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @SupportedSourceVersion( SourceVersion.RELEASE_17 )
 @SupportedOptions( { APBase.ADD_DEBUG_OUTPUT, APBase.MAVEN_GOAL } )
@@ -892,6 +892,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  @param  type   The type.
      *  @return The property type.
      */
+    @SuppressWarnings( "GrazieInspection" )
     private final TypeMirror determinePropertyType( final TypeMirror type )
     {
         var retValue = requireNonNullArgument( type, "type" );
@@ -917,7 +918,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  Determines the implementation of
      *  {@link StringConverter}
      *  that can translate a String into an instance of the given type and
-     *  vice-versa.
+     *  vice versa.
      *
      *  @param  method  The annotated method; it is only used to get the
      *      instance of
@@ -953,7 +954,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  annotation from the given method.}</p>
      *  <p>The type for the annotation value is an instance of
      *  {@link Class Class&lt;? extends StringConverter&gt;},
-     *  so it cannot be retrieved directly. Therefore this method will return
+     *  so it cannot be retrieved directly. Therefore, this method will return
      *  the
      *  {@link TypeName}
      *  for the
@@ -1200,7 +1201,7 @@ public class ConfigAnnotationProcessor extends APBase
             case LIST, SET ->
                 determineElementType( rawPropertyType )
                     .filter( this::isEnumType )
-                    .ifPresent( $ -> property.setFlag( ELEMENTTYPE_IS_ENUM ) );
+                    .ifPresent( _ -> property.setFlag( ELEMENTTYPE_IS_ENUM ) );
 
             case MAP ->
             {
@@ -1703,7 +1704,7 @@ public class ConfigAnnotationProcessor extends APBase
         {
             throw new ExceptionInInitializerError( e );
         }
-        ifDebug( retValue.isEmpty(), $ -> "No StringConverters??" );
+        ifDebug( retValue.isEmpty(), _ -> "No StringConverters??" );
 
         //---* Done *----------------------------------------------------------
         return retValue;
@@ -1895,6 +1896,7 @@ public class ConfigAnnotationProcessor extends APBase
         final var retValue = !roundEnvironment.errorRaised() && !annotations.isEmpty();
         if( retValue )
         {
+            //noinspection ConstantExpression
             if( !annotations.isEmpty() )
             {
                 /*

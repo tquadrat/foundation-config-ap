@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2024 by Thomas Thrien.
+ *  Copyright © 2002-2025 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -59,12 +59,12 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  generation, and it collects the results from the different code generators.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CodeGenerationConfiguration.java 1105 2024-02-28 12:58:46Z tquadrat $
+ *  @version $Id: CodeGenerationConfiguration.java 1151 2025-10-01 21:32:15Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 1105 2024-02-28 12:58:46Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 1151 2025-10-01 21:32:15Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class CodeGenerationConfiguration
 {
@@ -391,7 +391,7 @@ public final class CodeGenerationConfiguration
     /**
      *  <p>{@summary Returns the method that is provided as a source for the
      *  initialisation of the properties of the configuration bean.}</p>
-     *  <p>It it is {@code default} or {@code static}, the implementation of
+     *  <p>If it is {@code default} or {@code static}, the implementation of
      *  the method has to be part of the configuration bean specification
      *  interface itself, otherwise it has to be implemented in base class.</p>
      *  <p>It is an error if there is an {@code initData()} method that is

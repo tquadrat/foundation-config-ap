@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2023 by Thomas Thrien.
+ *  Copyright © 2002-2025 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -83,12 +83,12 @@ import org.tquadrat.foundation.javacomposer.TypeSpec;
  *  Generates the code for the new configuration bean.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CodeGenerator.java 1061 2023-09-25 16:32:43Z tquadrat $
+ *  @version $Id: CodeGenerator.java 1151 2025-10-01 21:32:15Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: CodeGenerator.java 1061 2023-09-25 16:32:43Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeGenerator.java 1151 2025-10-01 21:32:15Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public final class CodeGenerator implements CodeGeneratorContext
 {
@@ -319,11 +319,11 @@ public final class CodeGenerator implements CodeGeneratorContext
                 implemented by the class
                 
                     $1L.$2N
-                  
+                
                 Refer to
                 
                     $3L
-                    
+                
                 and the file comment there for the details.
                 ============================================================================""",
                 m_Configuration.getPackageName(), configurationBean, m_Configuration.getSpecification().canonicalName()

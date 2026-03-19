@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2021 by Thomas Thrien.
+ *  Copyright © 2002-2025 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -62,12 +62,12 @@ import org.tquadrat.foundation.lang.Objects;
  *  for
  *  {@link SpecialPropertyType#CONFIG_PROPERTY_RESOURCEBUNDLE}.
  *
- *  @version $Id: ResourceBundleProperty.java 1001 2022-01-29 16:42:15Z tquadrat $
+ *  @version $Id: ResourceBundleProperty.java 1151 2025-10-01 21:32:15Z tquadrat $
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@ClassVersion( sourceVersion = "$Id: ResourceBundleProperty.java 1001 2022-01-29 16:42:15Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ResourceBundleProperty.java 1151 2025-10-01 21:32:15Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public final class ResourceBundleProperty extends SpecialPropertySpecBase
 {
@@ -120,7 +120,7 @@ public final class ResourceBundleProperty extends SpecialPropertySpecBase
     /**
      *  <p>{@summary The implementation of the method that composes a getter
      *  for the given property.}</p>
-     *  <p>The implementation details depend from the usage: with
+     *  <p>The implementation details depend on the usage: with
      *  {@link I18nSupport},
      *  it is a bit more complex.</p>
      *

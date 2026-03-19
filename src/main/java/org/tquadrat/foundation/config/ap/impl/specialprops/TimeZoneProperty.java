@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2023 by Thomas Thrien.
+ *  Copyright © 2002-2025 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -46,12 +46,12 @@ import org.tquadrat.foundation.util.stringconverter.ZoneIdStringConverter;
  *  for
  *  {@link SpecialPropertyType#CONFIG_PROPERTY_TIMEZONE}.
  *
- *  @version $Id: TimeZoneProperty.java 1061 2023-09-25 16:32:43Z tquadrat $
+ *  @version $Id: TimeZoneProperty.java 1151 2025-10-01 21:32:15Z tquadrat $
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@ClassVersion( sourceVersion = "$Id: TimeZoneProperty.java 1061 2023-09-25 16:32:43Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: TimeZoneProperty.java 1151 2025-10-01 21:32:15Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public final class TimeZoneProperty extends SpecialPropertySpecBase
 {
@@ -64,7 +64,7 @@ public final class TimeZoneProperty extends SpecialPropertySpecBase
     public TimeZoneProperty()
     {
         super( CONFIG_PROPERTY_TIMEZONE, ALLOWS_PREFERENCES, PROPERTY_IS_MUTABLE, SETTER_CHECK_NULL );
-    }   //  ClockProperty()
+    }   //  TimeZoneProperty()
 
         /*---------*\
     ====** Methods **==========================================================
@@ -129,7 +129,7 @@ public final class TimeZoneProperty extends SpecialPropertySpecBase
     @Override
     public final Optional<TypeName> getStringConverterClass() { return Optional.of( ClassName.from( ZoneIdStringConverter.class ) ); }
 }
-//  class ClockProperty
+//  class TimeZoneProperty
 
 /*
  *  End of File

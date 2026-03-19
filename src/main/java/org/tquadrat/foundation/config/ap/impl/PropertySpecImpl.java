@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2021 by Thomas Thrien.
+ *  Copyright © 2002-2025 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -66,12 +66,12 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  {@link PropertySpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: PropertySpecImpl.java 1053 2023-03-11 00:10:49Z tquadrat $
+ *  @version $Id: PropertySpecImpl.java 1151 2025-10-01 21:32:15Z tquadrat $
  *  @since 0.1.0
  *  @UMLGraph.link
  */
 @SuppressWarnings( {"ClassWithTooManyFields", "OverlyComplexClass"} )
-@ClassVersion( sourceVersion = "$Id: PropertySpecImpl.java 1053 2023-03-11 00:10:49Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: PropertySpecImpl.java 1151 2025-10-01 21:32:15Z tquadrat $" )
 @API( status = INTERNAL, since = "0.1.0" )
 public final class PropertySpecImpl implements PropertySpec
 {
@@ -94,7 +94,7 @@ public final class PropertySpecImpl implements PropertySpec
     private BiFunction<CodeBuilder,PropertySpecImpl,MethodSpec> m_AddMethodComposer;
 
     /**
-     *  The name for the 'add'' method.
+     *  The name for the 'add' method.
      */
     private Name m_AddMethodName;
 
@@ -697,7 +697,7 @@ public final class PropertySpecImpl implements PropertySpec
     }   //  setAddMethodBuilder()
 
     /**
-     *  Sets the name of the 'add'' method for this property.
+     *  Sets the name of the 'add' method for this property.
      *
      *  @param  name    The name of the setter method.
      */
@@ -824,7 +824,7 @@ public final class PropertySpecImpl implements PropertySpec
      *  but no value is provided.</p>
      *  <p>A default value is mandatory when the annotated property has a
      *  primitive type.</p>
-     *  <p>A String with the only the {@code NUL} character is treated as
+     *  <p>A String with only the {@code NUL} character is treated as
      *  {@code null}.</p>
      *
      *  @param  value   The default value.
