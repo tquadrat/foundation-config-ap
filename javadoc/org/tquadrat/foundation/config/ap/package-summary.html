@@ -20,7 +20,7 @@ loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<header role="banner"><div style="overflow:auto;"><img src="../../../../../resources/tquadrat_logo.jpg" alt="tquadrat.org"style="float:right;"><div style="font-family:sans-serif;font-size:40px;font-weight:bold;padding-left:30px;"><p>tquadrat's <i>Foundation</i> Tool<br>org.tquadrat.foundation.config.ap 0.25.4 API</p></div>      <p>Build: 2026-03-20T14:58:11.329377935Z[UTC]</p>      </div>
+<header role="banner"><div style="overflow:auto;"><img src="../../../../../resources/tquadrat_logo.jpg" alt="tquadrat.org"style="float:right;"><div style="font-family:sans-serif;font-size:40px;font-weight:bold;padding-left:30px;"><p>tquadrat's <i>Foundation</i> Tool<br>org.tquadrat.foundation.config.ap 0.25.4 API</p></div>      <p>Build: 2026-03-20T17:08:11.163080620Z[UTC]</p>      </div>
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
 <div class="top-nav" id="navbar-top">
@@ -53,7 +53,18 @@ loadScripts(document, 'script');</script>
 <nav role="navigation" class="toc" aria-label="Table of contents">
 <div class="toc-header">Contents</div>
 <ol class="toc-list" tabindex="-1">
-<li><a href="#" tabindex="0">Description</a></li>
+<li><a href="#" tabindex="0">Description</a>
+<ol class="toc-list">
+<li><a href="#configuration-heading" tabindex="0">Configuration</a>
+<ol class="toc-list">
+<li><a href="#javac-heading" tabindex="0">javac</a></li>
+<li><a href="#maven-heading" tabindex="0">Maven</a></li>
+<li><a href="#gradle-heading" tabindex="0">Gradle</a></li>
+<li><a href="#ant-heading" tabindex="0">ant</a></li>
+</ol>
+</li>
+</ol>
+</li>
 <li><a href="#related-package-summary" tabindex="0">Related Packages</a></li>
 <li><a href="#class-summary" tabindex="0">Classes and Interfaces</a></li>
 </ol>
@@ -75,8 +86,11 @@ Processor generates during compilation from an annotated interface, the
 <i>configuration bean specification</i>. For the details, refer to the
 <code>org.tquadrat.foundation.config</code> module itself.</p>
 
-<p>The Annotation Processor can be used with with plain <code>javac</code> as
+<h2 id="configuration-heading">Configuration</h2>
+<p>The Annotation Processor can be used with plain <code>javac</code> as
 well as with Maven, Gradle or ant.</p>
+
+<h3 id="javac-heading"><code>javac</code></h3>
 <p>That <code>javac</code> can find the Annotation Processor requires to add the
 <code>*.jar</code> file with this code (it should be something like
 <code>org.tquadrat.foundation.config.ap-&lt;version&gt;.jar</code>) to the CLASSPATH;
@@ -104,9 +118,10 @@ be specified explicitly, using the <code>-processor</code> option.
 mechanism, so the recommendation is to use the <code>-processor</code> option
 always instead of relying on the auto-detection mechanism.</p></div>
 
+<h3 id="maven-heading">Maven</h3>
 <p>To use the Annotation Processor with Maven, the following lines must be
 added to the <code>pom.xml</code> of the project to build:</p>
-<blockquote><pre><code>&hellip;
+<blockquote><div class="source-container"><pre>
 &hellip;
 &lt;build&gt;
     &hellip;
@@ -160,9 +175,23 @@ added to the <code>pom.xml</code> of the project to build:</p>
         &hellip;
     &lt;/plugins&gt;
     &hellip;
-&lt;/build&gt;</code></pre></blockquote>
+&lt;/build&gt;</pre></div></blockquote>
 
-TODO Add the configuration for Gradle and for ant.
+<h3 id="gradle-heading">Gradle</h3>
+<p>To use the annotation processor with Gradle, you need to configure these
+dependencies:</p>
+<blockquote><div class="source-container"><pre>&hellip;
+dependencies {
+  &hellip;
+  //---* The Foundation Configuration stuff ---------------------------------
+  implementation 'org.tquadrat.library:org.tquadrat.foundation.config:0.25.1'
+  annotationProcessor 'org.tquadrat.tool:org.tquadrat.foundation.config.ap:0.25.3'
+  &hellip;
+} //  dependencies
+</pre></div></blockquote>
+
+<h3 id="ant-heading"><code>ant</code></h3>
+TODO Add the configuration for ant.
 
 <p>Unless otherwise stated, <code>null</code> argument values will cause
 methods and constructors of all classes in this package to throw an

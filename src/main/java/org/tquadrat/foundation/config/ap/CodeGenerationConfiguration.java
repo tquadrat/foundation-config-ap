@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2025 by Thomas Thrien.
+ *  Copyright © 2002-2026 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -400,7 +400,7 @@ public final class CodeGenerationConfiguration
      *  {@link org.tquadrat.foundation.config.ConfigurationBeanSpecification &#64;ConfigurationBeanSpecificatgion}
      *  annotation.</p>
      *  <p>The signature for the method has to be</p>
-     *  <pre><code>public Map&lt;String,Object&gt; initData() throws Exception</code></pre>
+     *  <div class="source-container"><pre>public Map&lt;String,Object&gt; initData() throws Exception</pre></div>
      *  <p>and the return value is a map with the initialisation values, where
      *  the property names are the keys.</p>
      *

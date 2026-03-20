@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2021 by Thomas Thrien.
+ *  Copyright © 2002-2026 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -25,8 +25,11 @@
  *  <i>configuration bean specification</i>. For the details, refer to the
  *  {@code org.tquadrat.foundation.config} module itself.</p>
  *
- *  <p>The Annotation Processor can be used with with plain {@code javac} as
+ *  <h2>Configuration</h2>
+ *  <p>The Annotation Processor can be used with plain {@code javac} as
  *  well as with Maven, Gradle or ant.</p>
+ *
+ *  <h3>{@code javac}</h3>
  *  <p>That {@code javac} can find the Annotation Processor requires to add the
  *  {@code *.jar} file with this code (it should be something like
  *  {@code org.tquadrat.foundation.config.ap-<version>.jar}) to the CLASSPATH;
@@ -54,9 +57,10 @@
  *  mechanism, so the recommendation is to use the {@code -processor} option
  *  always instead of relying on the auto-detection mechanism.</p></div>
  *
+ *  <h3>Maven</h3>
  *  <p>To use the Annotation Processor with Maven, the following lines must be
  *  added to the {@code pom.xml} of the project to build:</p>
- *  <blockquote><pre><code>&hellip;
+ *  <blockquote><div class="source-container"><pre>
  *  &hellip;
  *  &lt;build&gt;
  *      &hellip;
@@ -110,9 +114,23 @@
  *          &hellip;
  *      &lt;/plugins&gt;
  *      &hellip;
- *  &lt;/build&gt;</code></pre></blockquote>
+ *  &lt;/build&gt;</pre></div></blockquote>
  *
- *  TODO Add the configuration for Gradle and for ant.
+ *  <h3>Gradle</h3>
+ *  <p>To use the annotation processor with Gradle, you need to configure these
+ *  dependencies:</p>
+ *  <blockquote><div class="source-container"><pre>&hellip;
+ *  dependencies {
+ *    &hellip;
+ *    //---* The Foundation Configuration stuff ---------------------------------
+ *    implementation 'org.tquadrat.library:org.tquadrat.foundation.config:0.25.1'
+ *    annotationProcessor 'org.tquadrat.tool:org.tquadrat.foundation.config.ap:0.25.3'
+ *    &hellip;
+ *  } //  dependencies
+ *  </pre></div></blockquote>
+ *
+ *  <h3>{@code ant}</h3>
+ *  TODO Add the configuration for ant.
  *
  *  <p>Unless otherwise stated, {@code null} argument values will cause
  *  methods and constructors of all classes in this package to throw an
