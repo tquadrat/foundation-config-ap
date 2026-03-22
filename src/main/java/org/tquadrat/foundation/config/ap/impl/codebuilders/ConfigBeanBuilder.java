@@ -17,6 +17,25 @@
 
 package org.tquadrat.foundation.config.ap.impl.codebuilders;
 
+import org.apiguardian.api.API;
+import org.tquadrat.foundation.annotation.ClassVersion;
+import org.tquadrat.foundation.config.ConfigurationChangeListener;
+import org.tquadrat.foundation.config.ap.PropertySpec;
+import org.tquadrat.foundation.config.spi.ConfigChangeListenerSupport;
+import org.tquadrat.foundation.exception.ValidationException;
+import org.tquadrat.foundation.javacomposer.MethodSpec;
+import org.tquadrat.foundation.javacomposer.ParameterizedTypeName;
+import org.tquadrat.foundation.javacomposer.TypeName;
+import org.tquadrat.foundation.lang.AutoLock;
+import org.tquadrat.foundation.lang.CommonConstants;
+import org.tquadrat.foundation.lang.Objects;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.StringJoiner;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import static javax.lang.model.element.Modifier.FINAL;
 import static javax.lang.model.element.Modifier.PRIVATE;
 import static javax.lang.model.element.Modifier.PUBLIC;
@@ -45,25 +64,6 @@ import static org.tquadrat.foundation.lang.CommonConstants.EMPTY_STRING;
 import static org.tquadrat.foundation.lang.Objects.nonNull;
 import static org.tquadrat.foundation.util.StringUtils.repeat;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Properties;
-import java.util.StringJoiner;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-
-import org.apiguardian.api.API;
-import org.tquadrat.foundation.annotation.ClassVersion;
-import org.tquadrat.foundation.config.ConfigurationChangeListener;
-import org.tquadrat.foundation.config.ap.PropertySpec;
-import org.tquadrat.foundation.config.spi.ConfigChangeListenerSupport;
-import org.tquadrat.foundation.exception.ValidationException;
-import org.tquadrat.foundation.javacomposer.MethodSpec;
-import org.tquadrat.foundation.javacomposer.ParameterizedTypeName;
-import org.tquadrat.foundation.javacomposer.TypeName;
-import org.tquadrat.foundation.lang.AutoLock;
-import org.tquadrat.foundation.lang.CommonConstants;
-import org.tquadrat.foundation.lang.Objects;
-
 /**
  *  The
  *  {@linkplain org.tquadrat.foundation.config.ap.impl.CodeBuilder code builder implementation}
@@ -71,12 +71,12 @@ import org.tquadrat.foundation.lang.Objects;
  *  {@link org.tquadrat.foundation.config.ConfigBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: ConfigBeanBuilder.java 1076 2023-10-03 18:36:07Z tquadrat $
+ *  @version $Id: ConfigBeanBuilder.java 1164 2026-03-20 17:38:18Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: ConfigBeanBuilder.java 1076 2023-10-03 18:36:07Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ConfigBeanBuilder.java 1164 2026-03-20 17:38:18Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class ConfigBeanBuilder extends CodeBuilderBase
 {

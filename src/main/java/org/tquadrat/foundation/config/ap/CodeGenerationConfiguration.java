@@ -17,18 +17,16 @@
 
 package org.tquadrat.foundation.config.ap;
 
-import static java.lang.String.format;
-import static java.util.Collections.unmodifiableMap;
-import static org.apiguardian.api.API.Status.MAINTAINED;
-import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_DuplicateProperty;
-import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_IllegalImplementation;
-import static org.tquadrat.foundation.lang.Objects.isNull;
-import static org.tquadrat.foundation.lang.Objects.nonNull;
-import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
-import static org.tquadrat.foundation.lang.Objects.requireNotEmptyArgument;
-import static org.tquadrat.foundation.util.Comparators.caseInsensitiveComparator;
-import static org.tquadrat.foundation.util.StringUtils.isEmptyOrBlank;
-import static org.tquadrat.foundation.util.StringUtils.isNotEmptyOrBlank;
+import org.apiguardian.api.API;
+import org.tquadrat.foundation.annotation.ClassVersion;
+import org.tquadrat.foundation.ap.APHelper;
+import org.tquadrat.foundation.ap.CodeGenerationError;
+import org.tquadrat.foundation.config.INIGroup;
+import org.tquadrat.foundation.config.ap.impl.PropertySpecImpl;
+import org.tquadrat.foundation.javacomposer.ClassName;
+import org.tquadrat.foundation.javacomposer.JavaComposer;
+import org.tquadrat.foundation.javacomposer.MethodSpec;
+import org.tquadrat.foundation.javacomposer.TypeName;
 
 import javax.lang.model.element.Name;
 import javax.lang.model.util.Elements;
@@ -43,28 +41,30 @@ import java.util.Optional;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.apiguardian.api.API;
-import org.tquadrat.foundation.annotation.ClassVersion;
-import org.tquadrat.foundation.ap.APHelper;
-import org.tquadrat.foundation.ap.CodeGenerationError;
-import org.tquadrat.foundation.config.INIGroup;
-import org.tquadrat.foundation.config.ap.impl.PropertySpecImpl;
-import org.tquadrat.foundation.javacomposer.ClassName;
-import org.tquadrat.foundation.javacomposer.JavaComposer;
-import org.tquadrat.foundation.javacomposer.MethodSpec;
-import org.tquadrat.foundation.javacomposer.TypeName;
+import static java.lang.String.format;
+import static java.util.Collections.unmodifiableMap;
+import static org.apiguardian.api.API.Status.MAINTAINED;
+import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_DuplicateProperty;
+import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_IllegalImplementation;
+import static org.tquadrat.foundation.lang.Objects.isNull;
+import static org.tquadrat.foundation.lang.Objects.nonNull;
+import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
+import static org.tquadrat.foundation.lang.Objects.requireNotEmptyArgument;
+import static org.tquadrat.foundation.util.Comparators.caseInsensitiveComparator;
+import static org.tquadrat.foundation.util.StringUtils.isEmptyOrBlank;
+import static org.tquadrat.foundation.util.StringUtils.isNotEmptyOrBlank;
 
 /**
  *  An instance of this class provides the configuration for the code
  *  generation, and it collects the results from the different code generators.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CodeGenerationConfiguration.java 1151 2025-10-01 21:32:15Z tquadrat $
+ *  @version $Id: CodeGenerationConfiguration.java 1164 2026-03-20 17:38:18Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 1151 2025-10-01 21:32:15Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 1164 2026-03-20 17:38:18Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class CodeGenerationConfiguration
 {
