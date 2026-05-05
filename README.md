@@ -6,7 +6,7 @@ Refer also to [`foundation-config`](https://tquadrat.github.io/foundation-config
 
 - [Javadoc Reference](https://tquadrat.github.io/foundation-config-ap/javadoc/index.html)
 
-The current version for the annotation processor is 0.25.5.
+The current version for the annotation processor is 0.25.6.
 
 ---  
-Last updated: 2026-05-05T10:22:31.518004913+02:00[Europe/Berlin]
+Last updated: 2026-05-05T10:49:19.10502781+02:00[Europe/Berlin]
