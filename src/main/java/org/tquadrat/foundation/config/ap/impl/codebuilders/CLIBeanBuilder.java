@@ -86,12 +86,12 @@ import org.tquadrat.foundation.util.stringconverter.EnumStringConverter;
  *  {@link org.tquadrat.foundation.config.CLIBeanSpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CLIBeanBuilder.java 1061 2023-09-25 16:32:43Z tquadrat $
+ *  @version $Id: CLIBeanBuilder.java 1231 2026-05-05 14:28:23Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: CLIBeanBuilder.java 1061 2023-09-25 16:32:43Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CLIBeanBuilder.java 1231 2026-05-05 14:28:23Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class CLIBeanBuilder extends CodeBuilderBase
 {
@@ -155,7 +155,7 @@ public final class CLIBeanBuilder extends CodeBuilderBase
      *  @return The name of the method that creates the CLI value handler for
      *      this property.
      */
-    @SuppressWarnings( "OverlyCoupledMethod" )
+    @SuppressWarnings( {"OverlyCoupledMethod", "OverlyComplexMethod"} )
     private final String composeValueHandlerCreation( final PropertySpec property )
     {
         //---* The method name *-----------------------------------------------
@@ -187,17 +187,26 @@ public final class CLIBeanBuilder extends CodeBuilderBase
                 .addCode( "$N.add( value )", property.getFieldName() )
                 .build();
 
-            //---* Get the StringConverter for the element type *--------------
-            final var stringConverter = property.getStringConverterClass()
-                .or( () -> getStringConverter( elementType ) )
-                .or( () -> Optional.ofNullable( property.hasFlag( ELEMENTTYPE_IS_ENUM ) ? ClassName.from( EnumStringConverter.class ) : null ) )
-                .orElseThrow( () -> new IllegalAnnotationError( "Property '%1$s': cannot find StringConverter for '%2$s'".formatted( property.getPropertyName(), elementType.toString() ) ) );
-
-            switch( determineStringConverterInstantiation( stringConverter, property.hasFlag( ELEMENTTYPE_IS_ENUM ) ) )
+            //---* Retrieve the class for the value handler *------------------
+            final var valueHandlerClass = retrieveValueHandlerClass( property );
+            if( valueHandlerClass.isPresent() )
             {
-                case BY_INSTANCE -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, $3T.INSTANCE )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
-                case THROUGH_CONSTRUCTOR -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, new $3T() )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
-                case AS_ENUM -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, new $3T( $4T.class ) )", handlerType, SimpleCmdLineValueHandler.class, stringConverter, elementType );
+                builder.addStatement( "final $T retValue = new $T( lambda ) ", handlerType, valueHandlerClass.get() );
+            }
+            else
+            {
+                //---* Get the StringConverter for the element type *--------------
+                final var stringConverter = property.getStringConverterClass()
+                    .or( () -> getStringConverter( elementType ) )
+                    .or( () -> Optional.ofNullable( property.hasFlag( ELEMENTTYPE_IS_ENUM ) ? ClassName.from( EnumStringConverter.class ) : null ) )
+                    .orElseThrow( () -> new IllegalAnnotationError( "Property '%1$s': cannot find StringConverter for '%2$s'".formatted( property.getPropertyName(), elementType.toString() ) ) );
+
+                switch( determineStringConverterInstantiation( stringConverter, property.hasFlag( ELEMENTTYPE_IS_ENUM ) ) )
+                {
+                    case BY_INSTANCE -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, $3T.INSTANCE )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
+                    case THROUGH_CONSTRUCTOR -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, new $3T() )", handlerType, SimpleCmdLineValueHandler.class, stringConverter );
+                    case AS_ENUM -> builder.addStatement( "final $1T retValue = new $2T<>( lambda, new $3T( $4T.class ) )", handlerType, SimpleCmdLineValueHandler.class, stringConverter, elementType );
+                }
             }
         }
         else
@@ -504,7 +513,7 @@ public final class CLIBeanBuilder extends CodeBuilderBase
     /**
      *  <p>{@summary Retrieves the class for the value handler for the given
      *  property.} If returning
-     *  {@link Optional#empty()} empty},
+     *  {@link Optional#empty() empty},
      *  an instance of
      *  {@link SimpleCmdLineValueHandler}
      *  must be used that will be instantiated with the
