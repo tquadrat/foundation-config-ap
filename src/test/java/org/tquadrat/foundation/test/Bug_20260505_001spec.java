@@ -32,13 +32,13 @@ import org.tquadrat.foundation.config.cli.PathMatcherValueHandler;
  *  <p>{@summary @TODO Comment for Bug_20260505_001spec.}</p>
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: Bug_20260505_001spec.java 1231 2026-05-05 14:28:23Z tquadrat $
+ *  @version $Id: Bug_20260505_001spec.java 1232 2026-05-06 05:05:51Z tquadrat $
  *  @since 0.25.0
  *
  *  @UMLGraph.link
  */
 @SuppressWarnings( "NewClassNamingConvention" )
-@ClassVersion( sourceVersion = "$Id: Bug_20260505_001spec.java 1231 2026-05-05 14:28:23Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: Bug_20260505_001spec.java 1232 2026-05-06 05:05:51Z tquadrat $" )
 @API( status = STABLE, since = "0.25.0" )
 public interface Bug_20260505_001spec extends CLIBeanSpec
 {

@@ -56,12 +56,12 @@ import org.tquadrat.foundation.test.helper.CodeGeneratorTestBase;
  *  {@link org.tquadrat.foundation.config.cli.CmdLineValueHandler}.}</p>
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: BugHunt_20260505_001.java 1231 2026-05-05 14:28:23Z tquadrat $
+ *  @version $Id: BugHunt_20260505_001.java 1232 2026-05-06 05:05:51Z tquadrat $
  *  @since 0.25.0
  *
  *  @UMLGraph.link
  */
-@ClassVersion( sourceVersion = "$Id: BugHunt_20260505_001.java 1231 2026-05-05 14:28:23Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: BugHunt_20260505_001.java 1232 2026-05-06 05:05:51Z tquadrat $" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.BugHunt_20260505_001" )
 public class BugHunt_20260505_001 extends CodeGeneratorTestBase
 {
