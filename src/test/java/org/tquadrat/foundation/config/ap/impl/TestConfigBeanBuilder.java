@@ -43,9 +43,9 @@ import org.tquadrat.foundation.test.helper.CodeGeneratorTestBase;
  *  Tests the generation of a configuration bean.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: TestConfigBeanBuilder.java 1077 2023-10-14 23:00:23Z tquadrat $
+ *  @version $Id: TestConfigBeanBuilder.java 1258 2026-06-04 18:33:06Z tquadrat $
  */
-@ClassVersion( sourceVersion = "$Id: TestConfigBeanBuilder.java 1077 2023-10-14 23:00:23Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: TestConfigBeanBuilder.java 1258 2026-06-04 18:33:06Z tquadrat $" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.TestConfigBeanBuilder" )
 public class TestConfigBeanBuilder extends CodeGeneratorTestBase
 {
@@ -96,8 +96,8 @@ public class TestConfigBeanBuilder extends CodeGeneratorTestBase
     /**
      *  A test for the code generation.
      *
-     *  @param  flag    {@code true} if debug output should be created,
-     *      {@code false} if not.
+     *  @param  flag    {@true} if debug output should be created,
+     *      {@false} if not.
      *  @throws Exception   Something went wrong unexpectedly.
      */
     @ParameterizedTest( name = "testCodeGeneration2 [{index}] = {0}" )
@@ -503,8 +503,8 @@ public class TestConfigBeanBuilder extends CodeGeneratorTestBase
     /**
      *  A test for the code generation.
      *
-     *  @param  flag    {@code true} if debug output should be created,
-     *      {@code false} if not.
+     *  @param  flag    {@true} if debug output should be created,
+     *      {@false} if not.
      *  @throws Exception   Something went wrong unexpectedly.
      */
     @ParameterizedTest( name = "testCodeGeneration3 [{index}] = {0}" )

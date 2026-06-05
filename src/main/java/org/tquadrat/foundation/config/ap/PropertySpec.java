@@ -43,13 +43,13 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  The specification for a property of a configuration bean.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: PropertySpec.java 1105 2024-02-28 12:58:46Z tquadrat $
+ *  @version $Id: PropertySpec.java 1258 2026-06-04 18:33:06Z tquadrat $
  *  @since 0.1.0
  *
  *  @UMLGraph.link
  */
 @SuppressWarnings( "ClassWithTooManyMethods" )
-@ClassVersion( sourceVersion = "$Id: PropertySpec.java 1105 2024-02-28 12:58:46Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: PropertySpec.java 1258 2026-06-04 18:33:06Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public interface PropertySpec
 {
@@ -60,12 +60,12 @@ public interface PropertySpec
      *  The flags for a property.
      *
      *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
-     *  @version $Id: PropertySpec.java 1105 2024-02-28 12:58:46Z tquadrat $
+     *  @version $Id: PropertySpec.java 1258 2026-06-04 18:33:06Z tquadrat $
      *  @since 0.1.0
      *
      *  @UMLGraph.link
      */
-    @ClassVersion( sourceVersion = "$Id: PropertySpec.java 1105 2024-02-28 12:58:46Z tquadrat $" )
+    @ClassVersion( sourceVersion = "$Id: PropertySpec.java 1258 2026-06-04 18:33:06Z tquadrat $" )
     @API( status = MAINTAINED, since = "0.1.0" )
     public static enum PropertyFlag
     {
@@ -323,7 +323,7 @@ public interface PropertySpec
     /**
      *  Returns the name of the 'add' method's argument.
      *
-     *  @return The argument name; is probable {@code null} when
+     *  @return The argument name; is probable {@null} when
      *      {@link #getAddMethodName()}
      *      returns
      *      {@link Optional#empty()}.
@@ -620,7 +620,7 @@ public interface PropertySpec
     /**
      *  Returns the name of the setter's argument.
      *
-     *  @return The argument name; is probably {@code null} when
+     *  @return The argument name; is probably {@null} when
      *      {@link #getSetterMethodName()}
      *      returns
      *      {@link Optional#empty()}.
@@ -694,14 +694,14 @@ public interface PropertySpec
      *  Checks whether the given flag is set for this property.
      *
      *  @param  flag    The flag to test for.
-     *  @return {@code true} if the flag is set, {@code false} otherwise.
+     *  @return {@true} if the flag is set, {@false} otherwise.
      */
     public boolean hasFlag( final PropertyFlag flag );
 
     /**
      *  Checks whether this property is a collection of some kind.
      *
-     *  @return {@code true} if this property is a collection, {@code false}
+     *  @return {@true} if this property is a collection, {@false}
      *      otherwise.
      */
     public default boolean isCollection() { return getCollectionKind() != NO_COLLECTION; }
@@ -711,8 +711,8 @@ public interface PropertySpec
      *  {@link Enum enum}
      *  type.
      *
-     *  @return {@code true} if the property type is an {@code enum},
-     *      {@code false} otherwise.
+     *  @return {@true} if the property type is an {@code enum},
+     *      {@false} otherwise.
      */
     public boolean isEnum();
 
@@ -724,8 +724,8 @@ public interface PropertySpec
      *  {@link PropertyFlag#PROPERTY_IS_OPTION}
      *  set to it.
      *
-     *  @return {@code true} if the property is exposed to the CLI,
-     *      {@code false} otherwise.
+     *  @return {@true} if the property is exposed to the CLI,
+     *      {@false} otherwise.
      */
     public default boolean isOnCLI() { return hasFlag( PropertyFlag.PROPERTY_IS_ARGUMENT ) || hasFlag( PropertyFlag.PROPERTY_IS_OPTION ); }
 

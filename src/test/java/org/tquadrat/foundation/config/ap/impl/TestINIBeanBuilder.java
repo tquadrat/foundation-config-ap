@@ -44,9 +44,9 @@ import org.tquadrat.foundation.test.helper.CodeGeneratorTestBase;
  *  interface.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: TestINIBeanBuilder.java 1105 2024-02-28 12:58:46Z tquadrat $
+ *  @version $Id: TestINIBeanBuilder.java 1258 2026-06-04 18:33:06Z tquadrat $
  */
-@ClassVersion( sourceVersion = "$Id: TestINIBeanBuilder.java 1105 2024-02-28 12:58:46Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: TestINIBeanBuilder.java 1258 2026-06-04 18:33:06Z tquadrat $" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.TestINIBeanBuilder" )
 public class TestINIBeanBuilder extends CodeGeneratorTestBase
 {
@@ -56,8 +56,8 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
     /**
      *  A test for the code generation.
      *
-     *  @param  flag    {@code true} if debug output should be created,
-     *      {@code false} if not.
+     *  @param  flag    {@true} if debug output should be created,
+     *      {@false} if not.
      *  @throws Exception   Something went wrong unexpectedly.
      */
     @ParameterizedTest( name = "testCodeGeneration9 [{index}] = {0}" )

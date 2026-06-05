@@ -96,12 +96,12 @@ import org.tquadrat.foundation.lang.StringConverter;
  *  The abstract base class for all the code builders.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CodeBuilderBase.java 1105 2024-02-28 12:58:46Z tquadrat $
+ *  @version $Id: CodeBuilderBase.java 1258 2026-06-04 18:33:06Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"OverlyCoupledClass", "OverlyComplexClass"} )
-@ClassVersion( sourceVersion = "$Id: CodeBuilderBase.java 1105 2024-02-28 12:58:46Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeBuilderBase.java 1258 2026-06-04 18:33:06Z tquadrat $" )
 @API( status = INTERNAL, since = "0.1.0" )
 abstract sealed class CodeBuilderBase implements CodeBuilder
     permits CLIBeanBuilder, ConfigBeanBuilder, I18nSupportBuilder, INIBeanBuilder, MapImplementor, PreferencesBeanBuilder, SessionBeanBuilder
@@ -115,11 +115,11 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
      *  class.
      *
      *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
-     *  @version $Id: CodeBuilderBase.java 1105 2024-02-28 12:58:46Z tquadrat $
+     *  @version $Id: CodeBuilderBase.java 1258 2026-06-04 18:33:06Z tquadrat $
      *  @UMLGraph.link
      *  @since 0.1.0
      */
-    @ClassVersion( sourceVersion = "$Id: CodeBuilderBase.java 1105 2024-02-28 12:58:46Z tquadrat $" )
+    @ClassVersion( sourceVersion = "$Id: CodeBuilderBase.java 1258 2026-06-04 18:33:06Z tquadrat $" )
     @API( status = INTERNAL, since = "0.1.0" )
     public static enum StringConverterInstantiation
     {
@@ -900,8 +900,8 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
      *  {@link org.tquadrat.foundation.lang.StringConverter}.
      *
      *  @param  stringConverterClass    The String converter class.
-     *  @param  isEnum  {@code true} if the property is of an
-     *      {@link Enum enum} type, {@code false} otherwise.
+     *  @param  isEnum  {@true} if the property is of an
+     *      {@link Enum enum} type, {@false} otherwise.
      *  @return The type of instantiation.
      */
     protected static final StringConverterInstantiation determineStringConverterInstantiation( final TypeName stringConverterClass, final boolean isEnum )
@@ -1008,7 +1008,7 @@ abstract sealed class CodeBuilderBase implements CodeBuilder
      *  Returns the flag that controls whether the configuration bean has to be
      *  generated thread safe.
      *
-     *  @return {@code true} if lock support is required, {@code false}
+     *  @return {@true} if lock support is required, {@false}
      *      otherwise.
      */
     protected final boolean isSynchronized() { return m_IsSynchronized; }

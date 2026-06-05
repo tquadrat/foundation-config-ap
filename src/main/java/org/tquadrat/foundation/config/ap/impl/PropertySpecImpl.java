@@ -66,12 +66,12 @@ import org.tquadrat.foundation.javacomposer.TypeName;
  *  {@link PropertySpec}.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: PropertySpecImpl.java 1151 2025-10-01 21:32:15Z tquadrat $
+ *  @version $Id: PropertySpecImpl.java 1258 2026-06-04 18:33:06Z tquadrat $
  *  @since 0.1.0
  *  @UMLGraph.link
  */
 @SuppressWarnings( {"ClassWithTooManyFields", "OverlyComplexClass"} )
-@ClassVersion( sourceVersion = "$Id: PropertySpecImpl.java 1151 2025-10-01 21:32:15Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: PropertySpecImpl.java 1258 2026-06-04 18:33:06Z tquadrat $" )
 @API( status = INTERNAL, since = "0.1.0" )
 public final class PropertySpecImpl implements PropertySpec
 {
@@ -283,7 +283,7 @@ public final class PropertySpecImpl implements PropertySpec
     private Name m_SetterMethodName;
 
     /**
-     *  The speciality type for this property; usually, this is {@code null}.
+     *  The speciality type for this property; usually, this is {@null}.
      */
     private SpecialPropertyType m_SpecialPropertyType = null;
 
@@ -688,7 +688,7 @@ public final class PropertySpecImpl implements PropertySpec
     /**
      *  Sets the builder for the 'add' method of this property.
      *
-     *  @param  builder The builder; can be {@code null}.
+     *  @param  builder The builder; can be {@null}.
      */
     @SuppressWarnings( "PublicMethodNotExposedInInterface" )
     public final void setAddMethodBuilder( final MethodSpec.Builder builder )
@@ -722,7 +722,7 @@ public final class PropertySpecImpl implements PropertySpec
     /**
      *  Sets the special CLI format.
      *
-     *  @param  format  The format String; can be {@code null}.
+     *  @param  format  The format String; can be {@null}.
      *
      *  @see org.tquadrat.foundation.config.Argument#format()
      *  @see org.tquadrat.foundation.config.Option#format()
@@ -733,7 +733,7 @@ public final class PropertySpecImpl implements PropertySpec
     /**
      *  Sets the CLI meta variable.
      *
-     *  @param  metaVar The meta variable; can be {@code null}.
+     *  @param  metaVar The meta variable; can be {@null}.
      *
      *  @see org.tquadrat.foundation.config.Argument#metaVar()
      *  @see org.tquadrat.foundation.config.Option#metaVar()
@@ -747,7 +747,7 @@ public final class PropertySpecImpl implements PropertySpec
      *  aliases.</p>
      *
      *  @param  names   The name and the aliases for the CLI option for this
-     *      property; can be {@code null}, but may not be empty.
+     *      property; can be {@null}, but may not be empty.
      *
      *  @see org.tquadrat.foundation.config.Option#name()
      *  @see org.tquadrat.foundation.config.Option#aliases()
@@ -761,7 +761,7 @@ public final class PropertySpecImpl implements PropertySpec
     /**
      *  Sets the CLI usage text.
      *
-     *  @param  text    The usage text; can be {@code null}.
+     *  @param  text    The usage text; can be {@null}.
      *
      *  @see org.tquadrat.foundation.config.Argument#usage()
      *  @see org.tquadrat.foundation.config.Option#usage()
@@ -775,7 +775,7 @@ public final class PropertySpecImpl implements PropertySpec
     /**
      *  Sets the CLI usage key.
      *
-     *  @param  key The usage key; can be {@code null}.
+     *  @param  key The usage key; can be {@null}.
      *
      *  @see org.tquadrat.foundation.config.Argument#usageKey()
      *  @see org.tquadrat.foundation.config.Option#usageKey()
@@ -791,7 +791,7 @@ public final class PropertySpecImpl implements PropertySpec
      *
      *  @param  handlerClass    The
      *      {@link TypeName}
-     *      for the value handler class; can be {@code null}.
+     *      for the value handler class; can be {@null}.
      *
      *  @see org.tquadrat.foundation.config.Argument#handler()
      *  @see org.tquadrat.foundation.config.Option#handler()
@@ -825,7 +825,7 @@ public final class PropertySpecImpl implements PropertySpec
      *  <p>A default value is mandatory when the annotated property has a
      *  primitive type.</p>
      *  <p>A String with only the {@code NUL} character is treated as
-     *  {@code null}.</p>
+     *  {@null}.</p>
      *
      *  @param  value   The default value.
      */
@@ -890,7 +890,7 @@ public final class PropertySpecImpl implements PropertySpec
     /**
      *  Sets the builder for the getter of this property.
      *
-     *  @param  builder The builder; can be {@code null}.
+     *  @param  builder The builder; can be {@null}.
      */
     @SuppressWarnings( "PublicMethodNotExposedInInterface" )
     public final void setGetterBuilder( final MethodSpec.Builder builder )
@@ -926,7 +926,7 @@ public final class PropertySpecImpl implements PropertySpec
      *
      *  @param  group   The group.
      *  @param  key The key.
-     *  @param  comment The comment; can be {@code null}.
+     *  @param  comment The comment; can be {@null}.
      */
     @SuppressWarnings( "PublicMethodNotExposedInInterface" )
     public final void setINIConfiguration( final String group, final String key, final String comment )
@@ -955,8 +955,8 @@ public final class PropertySpecImpl implements PropertySpec
      *  {@link Enum enum}
      *  type.
      *
-     *  @param  flag    {@code true} if the property type is an {@code enum}
-     *      type, {@code false} otherwise.
+     *  @param  flag    {@true} if the property type is an {@code enum}
+     *      type, {@false} otherwise.
      */
     @SuppressWarnings( "PublicMethodNotExposedInInterface" )
     public final void setIsEnum( final boolean flag ) { m_IsEnum = flag; }
@@ -964,7 +964,7 @@ public final class PropertySpecImpl implements PropertySpec
     /**
      *  Sets the preferences accessor class for this property.
      *
-     *  @param  accessorClass   The accessor class; can be {@code null}.
+     *  @param  accessorClass   The accessor class; can be {@null}.
      */
     @SuppressWarnings( "PublicMethodNotExposedInInterface" )
     public final void setPrefsAccessorClass( final TypeName accessorClass )
@@ -1008,7 +1008,7 @@ public final class PropertySpecImpl implements PropertySpec
     /**
      *  Sets the builder for the setter of this property.
      *
-     *  @param  builder The builder; can be {@code null}.
+     *  @param  builder The builder; can be {@null}.
      */
     @SuppressWarnings( "PublicMethodNotExposedInInterface" )
     public final void setSetterBuilder( final MethodSpec.Builder builder )
@@ -1052,7 +1052,7 @@ public final class PropertySpecImpl implements PropertySpec
      *  {@link org.tquadrat.foundation.lang.StringConverter}
      *  for the type of this property.
      *
-     *  @param  typeName    The String converter class; can be {@code null}.
+     *  @param  typeName    The String converter class; can be {@null}.
      */
     @SuppressWarnings( "PublicMethodNotExposedInInterface" )
     public final void setStringConverterClass( final TypeName typeName )

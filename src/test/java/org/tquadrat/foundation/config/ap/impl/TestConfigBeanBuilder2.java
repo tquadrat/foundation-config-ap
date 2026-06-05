@@ -42,10 +42,10 @@ import org.tquadrat.foundation.test.helper.CodeGeneratorTestBase;
  *  annotation.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: TestConfigBeanBuilder2.java 1077 2023-10-14 23:00:23Z tquadrat $
+ *  @version $Id: TestConfigBeanBuilder2.java 1258 2026-06-04 18:33:06Z tquadrat $
  */
 @SuppressWarnings( "OverlyCoupledClass" )
-@ClassVersion( sourceVersion = "$Id: TestConfigBeanBuilder2.java 1077 2023-10-14 23:00:23Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: TestConfigBeanBuilder2.java 1258 2026-06-04 18:33:06Z tquadrat $" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.TestConfigBeanBuilder2" )
 public class TestConfigBeanBuilder2 extends CodeGeneratorTestBase
 {
@@ -55,8 +55,8 @@ public class TestConfigBeanBuilder2 extends CodeGeneratorTestBase
     /**
      *  A test for the code generation.
      *
-     *  @param  flag    {@code true} if debug output should be created,
-     *      {@code false} if not.
+     *  @param  flag    {@true} if debug output should be created,
+     *      {@false} if not.
      *  @throws Exception   Something went wrong unexpectedly.
      */
     @ParameterizedTest( name = "testCodeGeneration8 [{index}] = {0}" )

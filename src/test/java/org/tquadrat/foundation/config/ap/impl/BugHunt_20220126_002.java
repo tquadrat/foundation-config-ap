@@ -60,10 +60,10 @@ import org.tquadrat.foundation.testutil.TestBaseClass;
 /**
  *  Generation caused &quot;cannot unindent 1 from 0&quot;.
  *
- *  @version $Id: BugHunt_20220126_002.java 1105 2024-02-28 12:58:46Z tquadrat $
+ *  @version $Id: BugHunt_20220126_002.java 1258 2026-06-04 18:33:06Z tquadrat $
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  */
-@ClassVersion( sourceVersion = "$Id: BugHunt_20220126_002.java 1105 2024-02-28 12:58:46Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: BugHunt_20220126_002.java 1258 2026-06-04 18:33:06Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.BugHunt_20220126_002" )
 public class BugHunt_20220126_002 extends TestBaseClass
@@ -78,8 +78,8 @@ public class BugHunt_20220126_002 extends TestBaseClass
      *  @param  specName    The name for the configuration bean specification.
      *  @param  environment The mock for the
      *      {@link APHelper}.
-     *  @param  flag    {@code true} if debug output should be created,
-     *      {@code false} if not.
+     *  @param  flag    {@true} if debug output should be created,
+     *      {@false} if not.
      *  @return The configuration.
      */
     @SuppressWarnings( "UseOfConcreteClass" )
@@ -152,8 +152,8 @@ public class BugHunt_20220126_002 extends TestBaseClass
     /**
      *  A test for the code generation.
      *
-     *  @param  flag    {@code true} if debug output should be created,
-     *      {@code false} if not.
+     *  @param  flag    {@true} if debug output should be created,
+     *      {@false} if not.
      *  @throws Exception   Something went wrong unexpectedly.
      */
     @ParameterizedTest( name = "testCodeGeneration7 [{index}] = {0}" )

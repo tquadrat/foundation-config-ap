@@ -56,12 +56,12 @@ import org.tquadrat.foundation.test.helper.CodeGeneratorTestBase;
  *  {@link org.tquadrat.foundation.config.cli.CmdLineValueHandler}.}</p>
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: BugHunt_20260505_001.java 1232 2026-05-06 05:05:51Z tquadrat $
+ *  @version $Id: BugHunt_20260505_001.java 1258 2026-06-04 18:33:06Z tquadrat $
  *  @since 0.25.0
  *
  *  @UMLGraph.link
  */
-@ClassVersion( sourceVersion = "$Id: BugHunt_20260505_001.java 1232 2026-05-06 05:05:51Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: BugHunt_20260505_001.java 1258 2026-06-04 18:33:06Z tquadrat $" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.BugHunt_20260505_001" )
 public class BugHunt_20260505_001 extends CodeGeneratorTestBase
 {
@@ -75,8 +75,8 @@ public class BugHunt_20260505_001 extends CodeGeneratorTestBase
      *  @param  specName    The name for the configuration bean specification.
      *  @param  environment The mock for the
      *      {@link APHelper}.
-     *  @param  flag    {@code true} if debug output should be created,
-     *      {@code false} if not.
+     *  @param  flag    {@true} if debug output should be created,
+     *      {@false} if not.
      *  @return The configuration.
      */
     @SuppressWarnings( "UseOfConcreteClass" )
@@ -155,8 +155,8 @@ public class BugHunt_20260505_001 extends CodeGeneratorTestBase
     /**
      *  The test bed.
      *
-     *  @param  flag    {@code true} if debug output should be created,
-     *      {@code false} if not.
+     *  @param  flag    {@true} if debug output should be created,
+     *      {@false} if not.
      *  @throws Exception   Something went awfully wrong.
      */
     @ParameterizedTest( name = "testForBug [{index}] = {0}" )

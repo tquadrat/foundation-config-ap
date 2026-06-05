@@ -109,12 +109,12 @@
 <span class="source-line-no">096</span><span id="line-96"> *  The abstract base class for all the code builders.</span>
 <span class="source-line-no">097</span><span id="line-97"> *</span>
 <span class="source-line-no">098</span><span id="line-98"> *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org</span>
-<span class="source-line-no">099</span><span id="line-99"> *  @version $Id: CodeBuilderBase.java 1105 2024-02-28 12:58:46Z tquadrat $</span>
+<span class="source-line-no">099</span><span id="line-99"> *  @version $Id: CodeBuilderBase.java 1258 2026-06-04 18:33:06Z tquadrat $</span>
 <span class="source-line-no">100</span><span id="line-100"> *  @UMLGraph.link</span>
 <span class="source-line-no">101</span><span id="line-101"> *  @since 0.1.0</span>
 <span class="source-line-no">102</span><span id="line-102"> */</span>
 <span class="source-line-no">103</span><span id="line-103">@SuppressWarnings( {"OverlyCoupledClass", "OverlyComplexClass"} )</span>
-<span class="source-line-no">104</span><span id="line-104">@ClassVersion( sourceVersion = "$Id: CodeBuilderBase.java 1105 2024-02-28 12:58:46Z tquadrat $" )</span>
+<span class="source-line-no">104</span><span id="line-104">@ClassVersion( sourceVersion = "$Id: CodeBuilderBase.java 1258 2026-06-04 18:33:06Z tquadrat $" )</span>
 <span class="source-line-no">105</span><span id="line-105">@API( status = INTERNAL, since = "0.1.0" )</span>
 <span class="source-line-no">106</span><span id="line-106">abstract sealed class CodeBuilderBase implements CodeBuilder</span>
 <span class="source-line-no">107</span><span id="line-107">    permits CLIBeanBuilder, ConfigBeanBuilder, I18nSupportBuilder, INIBeanBuilder, MapImplementor, PreferencesBeanBuilder, SessionBeanBuilder</span>
@@ -128,11 +128,11 @@
 <span class="source-line-no">115</span><span id="line-115">     *  class.</span>
 <span class="source-line-no">116</span><span id="line-116">     *</span>
 <span class="source-line-no">117</span><span id="line-117">     *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org</span>
-<span class="source-line-no">118</span><span id="line-118">     *  @version $Id: CodeBuilderBase.java 1105 2024-02-28 12:58:46Z tquadrat $</span>
+<span class="source-line-no">118</span><span id="line-118">     *  @version $Id: CodeBuilderBase.java 1258 2026-06-04 18:33:06Z tquadrat $</span>
 <span class="source-line-no">119</span><span id="line-119">     *  @UMLGraph.link</span>
 <span class="source-line-no">120</span><span id="line-120">     *  @since 0.1.0</span>
 <span class="source-line-no">121</span><span id="line-121">     */</span>
-<span class="source-line-no">122</span><span id="line-122">    @ClassVersion( sourceVersion = "$Id: CodeBuilderBase.java 1105 2024-02-28 12:58:46Z tquadrat $" )</span>
+<span class="source-line-no">122</span><span id="line-122">    @ClassVersion( sourceVersion = "$Id: CodeBuilderBase.java 1258 2026-06-04 18:33:06Z tquadrat $" )</span>
 <span class="source-line-no">123</span><span id="line-123">    @API( status = INTERNAL, since = "0.1.0" )</span>
 <span class="source-line-no">124</span><span id="line-124">    public static enum StringConverterInstantiation</span>
 <span class="source-line-no">125</span><span id="line-125">    {</span>
@@ -913,8 +913,8 @@
 <span class="source-line-no">900</span><span id="line-900">     *  {@link org.tquadrat.foundation.lang.StringConverter}.</span>
 <span class="source-line-no">901</span><span id="line-901">     *</span>
 <span class="source-line-no">902</span><span id="line-902">     *  @param  stringConverterClass    The String converter class.</span>
-<span class="source-line-no">903</span><span id="line-903">     *  @param  isEnum  {@code true} if the property is of an</span>
-<span class="source-line-no">904</span><span id="line-904">     *      {@link Enum enum} type, {@code false} otherwise.</span>
+<span class="source-line-no">903</span><span id="line-903">     *  @param  isEnum  {@true} if the property is of an</span>
+<span class="source-line-no">904</span><span id="line-904">     *      {@link Enum enum} type, {@false} otherwise.</span>
 <span class="source-line-no">905</span><span id="line-905">     *  @return The type of instantiation.</span>
 <span class="source-line-no">906</span><span id="line-906">     */</span>
 <span class="source-line-no">907</span><span id="line-907">    protected static final StringConverterInstantiation determineStringConverterInstantiation( final TypeName stringConverterClass, final boolean isEnum )</span>
@@ -1021,7 +1021,7 @@
 <span class="source-line-no">1008</span><span id="line-1008">     *  Returns the flag that controls whether the configuration bean has to be</span>
 <span class="source-line-no">1009</span><span id="line-1009">     *  generated thread safe.</span>
 <span class="source-line-no">1010</span><span id="line-1010">     *</span>
-<span class="source-line-no">1011</span><span id="line-1011">     *  @return {@code true} if lock support is required, {@code false}</span>
+<span class="source-line-no">1011</span><span id="line-1011">     *  @return {@true} if lock support is required, {@false}</span>
 <span class="source-line-no">1012</span><span id="line-1012">     *      otherwise.</span>
 <span class="source-line-no">1013</span><span id="line-1013">     */</span>
 <span class="source-line-no">1014</span><span id="line-1014">    protected final boolean isSynchronized() { return m_IsSynchronized; }</span>

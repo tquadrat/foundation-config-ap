@@ -159,14 +159,14 @@ import org.tquadrat.foundation.util.stringconverter.EnumStringConverter;
  *  The annotation processor for the {@code org.tquadrat.foundation.config}
  *  module.
  *
- *  @version $Id: ConfigAnnotationProcessor.java 1151 2025-10-01 21:32:15Z tquadrat $
+ *  @version $Id: ConfigAnnotationProcessor.java 1258 2026-06-04 18:33:06Z tquadrat $
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"OverlyCoupledClass", "OverlyComplexClass", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1151 2025-10-01 21:32:15Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1258 2026-06-04 18:33:06Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @SupportedSourceVersion( SourceVersion.RELEASE_17 )
 @SupportedOptions( { APBase.ADD_DEBUG_OUTPUT, APBase.MAVEN_GOAL } )
@@ -925,9 +925,9 @@ public class ConfigAnnotationProcessor extends APBase
      *      {@link StringConversion &#64;StringConversion}
      *      from it.
      *  @param  type    The target type.
-     *  @param  isEnum  {@code true} if the target type is an
+     *  @param  isEnum  {@true} if the target type is an
      *      {@link Enum enum}
-     *      type, {@code false} otherwise.
+     *      type, {@false} otherwise.
      *  @return An instance of
      *      {@link Optional}
      *      that holds the determined class.

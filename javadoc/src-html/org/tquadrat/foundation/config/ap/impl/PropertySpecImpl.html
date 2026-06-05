@@ -79,12 +79,12 @@
 <span class="source-line-no">066</span><span id="line-66"> *  {@link PropertySpec}.</span>
 <span class="source-line-no">067</span><span id="line-67"> *</span>
 <span class="source-line-no">068</span><span id="line-68"> *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org</span>
-<span class="source-line-no">069</span><span id="line-69"> *  @version $Id: PropertySpecImpl.java 1151 2025-10-01 21:32:15Z tquadrat $</span>
+<span class="source-line-no">069</span><span id="line-69"> *  @version $Id: PropertySpecImpl.java 1258 2026-06-04 18:33:06Z tquadrat $</span>
 <span class="source-line-no">070</span><span id="line-70"> *  @since 0.1.0</span>
 <span class="source-line-no">071</span><span id="line-71"> *  @UMLGraph.link</span>
 <span class="source-line-no">072</span><span id="line-72"> */</span>
 <span class="source-line-no">073</span><span id="line-73">@SuppressWarnings( {"ClassWithTooManyFields", "OverlyComplexClass"} )</span>
-<span class="source-line-no">074</span><span id="line-74">@ClassVersion( sourceVersion = "$Id: PropertySpecImpl.java 1151 2025-10-01 21:32:15Z tquadrat $" )</span>
+<span class="source-line-no">074</span><span id="line-74">@ClassVersion( sourceVersion = "$Id: PropertySpecImpl.java 1258 2026-06-04 18:33:06Z tquadrat $" )</span>
 <span class="source-line-no">075</span><span id="line-75">@API( status = INTERNAL, since = "0.1.0" )</span>
 <span class="source-line-no">076</span><span id="line-76">public final class PropertySpecImpl implements PropertySpec</span>
 <span class="source-line-no">077</span><span id="line-77">{</span>
@@ -296,7 +296,7 @@
 <span class="source-line-no">283</span><span id="line-283">    private Name m_SetterMethodName;</span>
 <span class="source-line-no">284</span><span id="line-284"></span>
 <span class="source-line-no">285</span><span id="line-285">    /**</span>
-<span class="source-line-no">286</span><span id="line-286">     *  The speciality type for this property; usually, this is {@code null}.</span>
+<span class="source-line-no">286</span><span id="line-286">     *  The speciality type for this property; usually, this is {@null}.</span>
 <span class="source-line-no">287</span><span id="line-287">     */</span>
 <span class="source-line-no">288</span><span id="line-288">    private SpecialPropertyType m_SpecialPropertyType = null;</span>
 <span class="source-line-no">289</span><span id="line-289"></span>
@@ -701,7 +701,7 @@
 <span class="source-line-no">688</span><span id="line-688">    /**</span>
 <span class="source-line-no">689</span><span id="line-689">     *  Sets the builder for the 'add' method of this property.</span>
 <span class="source-line-no">690</span><span id="line-690">     *</span>
-<span class="source-line-no">691</span><span id="line-691">     *  @param  builder The builder; can be {@code null}.</span>
+<span class="source-line-no">691</span><span id="line-691">     *  @param  builder The builder; can be {@null}.</span>
 <span class="source-line-no">692</span><span id="line-692">     */</span>
 <span class="source-line-no">693</span><span id="line-693">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
 <span class="source-line-no">694</span><span id="line-694">    public final void setAddMethodBuilder( final MethodSpec.Builder builder )</span>
@@ -735,7 +735,7 @@
 <span class="source-line-no">722</span><span id="line-722">    /**</span>
 <span class="source-line-no">723</span><span id="line-723">     *  Sets the special CLI format.</span>
 <span class="source-line-no">724</span><span id="line-724">     *</span>
-<span class="source-line-no">725</span><span id="line-725">     *  @param  format  The format String; can be {@code null}.</span>
+<span class="source-line-no">725</span><span id="line-725">     *  @param  format  The format String; can be {@null}.</span>
 <span class="source-line-no">726</span><span id="line-726">     *</span>
 <span class="source-line-no">727</span><span id="line-727">     *  @see org.tquadrat.foundation.config.Argument#format()</span>
 <span class="source-line-no">728</span><span id="line-728">     *  @see org.tquadrat.foundation.config.Option#format()</span>
@@ -746,7 +746,7 @@
 <span class="source-line-no">733</span><span id="line-733">    /**</span>
 <span class="source-line-no">734</span><span id="line-734">     *  Sets the CLI meta variable.</span>
 <span class="source-line-no">735</span><span id="line-735">     *</span>
-<span class="source-line-no">736</span><span id="line-736">     *  @param  metaVar The meta variable; can be {@code null}.</span>
+<span class="source-line-no">736</span><span id="line-736">     *  @param  metaVar The meta variable; can be {@null}.</span>
 <span class="source-line-no">737</span><span id="line-737">     *</span>
 <span class="source-line-no">738</span><span id="line-738">     *  @see org.tquadrat.foundation.config.Argument#metaVar()</span>
 <span class="source-line-no">739</span><span id="line-739">     *  @see org.tquadrat.foundation.config.Option#metaVar()</span>
@@ -760,7 +760,7 @@
 <span class="source-line-no">747</span><span id="line-747">     *  aliases.&lt;/p&gt;</span>
 <span class="source-line-no">748</span><span id="line-748">     *</span>
 <span class="source-line-no">749</span><span id="line-749">     *  @param  names   The name and the aliases for the CLI option for this</span>
-<span class="source-line-no">750</span><span id="line-750">     *      property; can be {@code null}, but may not be empty.</span>
+<span class="source-line-no">750</span><span id="line-750">     *      property; can be {@null}, but may not be empty.</span>
 <span class="source-line-no">751</span><span id="line-751">     *</span>
 <span class="source-line-no">752</span><span id="line-752">     *  @see org.tquadrat.foundation.config.Option#name()</span>
 <span class="source-line-no">753</span><span id="line-753">     *  @see org.tquadrat.foundation.config.Option#aliases()</span>
@@ -774,7 +774,7 @@
 <span class="source-line-no">761</span><span id="line-761">    /**</span>
 <span class="source-line-no">762</span><span id="line-762">     *  Sets the CLI usage text.</span>
 <span class="source-line-no">763</span><span id="line-763">     *</span>
-<span class="source-line-no">764</span><span id="line-764">     *  @param  text    The usage text; can be {@code null}.</span>
+<span class="source-line-no">764</span><span id="line-764">     *  @param  text    The usage text; can be {@null}.</span>
 <span class="source-line-no">765</span><span id="line-765">     *</span>
 <span class="source-line-no">766</span><span id="line-766">     *  @see org.tquadrat.foundation.config.Argument#usage()</span>
 <span class="source-line-no">767</span><span id="line-767">     *  @see org.tquadrat.foundation.config.Option#usage()</span>
@@ -788,7 +788,7 @@
 <span class="source-line-no">775</span><span id="line-775">    /**</span>
 <span class="source-line-no">776</span><span id="line-776">     *  Sets the CLI usage key.</span>
 <span class="source-line-no">777</span><span id="line-777">     *</span>
-<span class="source-line-no">778</span><span id="line-778">     *  @param  key The usage key; can be {@code null}.</span>
+<span class="source-line-no">778</span><span id="line-778">     *  @param  key The usage key; can be {@null}.</span>
 <span class="source-line-no">779</span><span id="line-779">     *</span>
 <span class="source-line-no">780</span><span id="line-780">     *  @see org.tquadrat.foundation.config.Argument#usageKey()</span>
 <span class="source-line-no">781</span><span id="line-781">     *  @see org.tquadrat.foundation.config.Option#usageKey()</span>
@@ -804,7 +804,7 @@
 <span class="source-line-no">791</span><span id="line-791">     *</span>
 <span class="source-line-no">792</span><span id="line-792">     *  @param  handlerClass    The</span>
 <span class="source-line-no">793</span><span id="line-793">     *      {@link TypeName}</span>
-<span class="source-line-no">794</span><span id="line-794">     *      for the value handler class; can be {@code null}.</span>
+<span class="source-line-no">794</span><span id="line-794">     *      for the value handler class; can be {@null}.</span>
 <span class="source-line-no">795</span><span id="line-795">     *</span>
 <span class="source-line-no">796</span><span id="line-796">     *  @see org.tquadrat.foundation.config.Argument#handler()</span>
 <span class="source-line-no">797</span><span id="line-797">     *  @see org.tquadrat.foundation.config.Option#handler()</span>
@@ -838,7 +838,7 @@
 <span class="source-line-no">825</span><span id="line-825">     *  &lt;p&gt;A default value is mandatory when the annotated property has a</span>
 <span class="source-line-no">826</span><span id="line-826">     *  primitive type.&lt;/p&gt;</span>
 <span class="source-line-no">827</span><span id="line-827">     *  &lt;p&gt;A String with only the {@code NUL} character is treated as</span>
-<span class="source-line-no">828</span><span id="line-828">     *  {@code null}.&lt;/p&gt;</span>
+<span class="source-line-no">828</span><span id="line-828">     *  {@null}.&lt;/p&gt;</span>
 <span class="source-line-no">829</span><span id="line-829">     *</span>
 <span class="source-line-no">830</span><span id="line-830">     *  @param  value   The default value.</span>
 <span class="source-line-no">831</span><span id="line-831">     */</span>
@@ -903,7 +903,7 @@
 <span class="source-line-no">890</span><span id="line-890">    /**</span>
 <span class="source-line-no">891</span><span id="line-891">     *  Sets the builder for the getter of this property.</span>
 <span class="source-line-no">892</span><span id="line-892">     *</span>
-<span class="source-line-no">893</span><span id="line-893">     *  @param  builder The builder; can be {@code null}.</span>
+<span class="source-line-no">893</span><span id="line-893">     *  @param  builder The builder; can be {@null}.</span>
 <span class="source-line-no">894</span><span id="line-894">     */</span>
 <span class="source-line-no">895</span><span id="line-895">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
 <span class="source-line-no">896</span><span id="line-896">    public final void setGetterBuilder( final MethodSpec.Builder builder )</span>
@@ -939,7 +939,7 @@
 <span class="source-line-no">926</span><span id="line-926">     *</span>
 <span class="source-line-no">927</span><span id="line-927">     *  @param  group   The group.</span>
 <span class="source-line-no">928</span><span id="line-928">     *  @param  key The key.</span>
-<span class="source-line-no">929</span><span id="line-929">     *  @param  comment The comment; can be {@code null}.</span>
+<span class="source-line-no">929</span><span id="line-929">     *  @param  comment The comment; can be {@null}.</span>
 <span class="source-line-no">930</span><span id="line-930">     */</span>
 <span class="source-line-no">931</span><span id="line-931">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
 <span class="source-line-no">932</span><span id="line-932">    public final void setINIConfiguration( final String group, final String key, final String comment )</span>
@@ -968,8 +968,8 @@
 <span class="source-line-no">955</span><span id="line-955">     *  {@link Enum enum}</span>
 <span class="source-line-no">956</span><span id="line-956">     *  type.</span>
 <span class="source-line-no">957</span><span id="line-957">     *</span>
-<span class="source-line-no">958</span><span id="line-958">     *  @param  flag    {@code true} if the property type is an {@code enum}</span>
-<span class="source-line-no">959</span><span id="line-959">     *      type, {@code false} otherwise.</span>
+<span class="source-line-no">958</span><span id="line-958">     *  @param  flag    {@true} if the property type is an {@code enum}</span>
+<span class="source-line-no">959</span><span id="line-959">     *      type, {@false} otherwise.</span>
 <span class="source-line-no">960</span><span id="line-960">     */</span>
 <span class="source-line-no">961</span><span id="line-961">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
 <span class="source-line-no">962</span><span id="line-962">    public final void setIsEnum( final boolean flag ) { m_IsEnum = flag; }</span>
@@ -977,7 +977,7 @@
 <span class="source-line-no">964</span><span id="line-964">    /**</span>
 <span class="source-line-no">965</span><span id="line-965">     *  Sets the preferences accessor class for this property.</span>
 <span class="source-line-no">966</span><span id="line-966">     *</span>
-<span class="source-line-no">967</span><span id="line-967">     *  @param  accessorClass   The accessor class; can be {@code null}.</span>
+<span class="source-line-no">967</span><span id="line-967">     *  @param  accessorClass   The accessor class; can be {@null}.</span>
 <span class="source-line-no">968</span><span id="line-968">     */</span>
 <span class="source-line-no">969</span><span id="line-969">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
 <span class="source-line-no">970</span><span id="line-970">    public final void setPrefsAccessorClass( final TypeName accessorClass )</span>
@@ -1021,7 +1021,7 @@
 <span class="source-line-no">1008</span><span id="line-1008">    /**</span>
 <span class="source-line-no">1009</span><span id="line-1009">     *  Sets the builder for the setter of this property.</span>
 <span class="source-line-no">1010</span><span id="line-1010">     *</span>
-<span class="source-line-no">1011</span><span id="line-1011">     *  @param  builder The builder; can be {@code null}.</span>
+<span class="source-line-no">1011</span><span id="line-1011">     *  @param  builder The builder; can be {@null}.</span>
 <span class="source-line-no">1012</span><span id="line-1012">     */</span>
 <span class="source-line-no">1013</span><span id="line-1013">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
 <span class="source-line-no">1014</span><span id="line-1014">    public final void setSetterBuilder( final MethodSpec.Builder builder )</span>
@@ -1065,7 +1065,7 @@
 <span class="source-line-no">1052</span><span id="line-1052">     *  {@link org.tquadrat.foundation.lang.StringConverter}</span>
 <span class="source-line-no">1053</span><span id="line-1053">     *  for the type of this property.</span>
 <span class="source-line-no">1054</span><span id="line-1054">     *</span>
-<span class="source-line-no">1055</span><span id="line-1055">     *  @param  typeName    The String converter class; can be {@code null}.</span>
+<span class="source-line-no">1055</span><span id="line-1055">     *  @param  typeName    The String converter class; can be {@null}.</span>
 <span class="source-line-no">1056</span><span id="line-1056">     */</span>
 <span class="source-line-no">1057</span><span id="line-1057">    @SuppressWarnings( "PublicMethodNotExposedInInterface" )</span>
 <span class="source-line-no">1058</span><span id="line-1058">    public final void setStringConverterClass( final TypeName typeName )</span>

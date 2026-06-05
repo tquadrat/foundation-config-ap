@@ -44,9 +44,9 @@ import org.tquadrat.foundation.test.helper.CodeGeneratorTestBase;
  *  interface.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: TestI18nSupportBuilder.java 1077 2023-10-14 23:00:23Z tquadrat $
+ *  @version $Id: TestI18nSupportBuilder.java 1258 2026-06-04 18:33:06Z tquadrat $
  */
-@ClassVersion( sourceVersion = "$Id: TestI18nSupportBuilder.java 1077 2023-10-14 23:00:23Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: TestI18nSupportBuilder.java 1258 2026-06-04 18:33:06Z tquadrat $" )
 @DisplayName( "org.tquadrat.foundation.config.ap.impl.TestConfigBeanBuilder" )
 public class TestI18nSupportBuilder extends CodeGeneratorTestBase
 {
@@ -56,8 +56,8 @@ public class TestI18nSupportBuilder extends CodeGeneratorTestBase
     /**
      *  A test for the code generation.
      *
-     *  @param  flag    {@code true} if debug output should be created,
-     *      {@code false} if not.
+     *  @param  flag    {@true} if debug output should be created,
+     *      {@false} if not.
      *  @throws Exception   Something went wrong unexpectedly.
      */
     @ParameterizedTest( name = "testCodeGeneration6 [{index}] = {0}" )

@@ -56,13 +56,13 @@
 <span class="source-line-no">043</span><span id="line-43"> *  The specification for a property of a configuration bean.</span>
 <span class="source-line-no">044</span><span id="line-44"> *</span>
 <span class="source-line-no">045</span><span id="line-45"> *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org</span>
-<span class="source-line-no">046</span><span id="line-46"> *  @version $Id: PropertySpec.java 1105 2024-02-28 12:58:46Z tquadrat $</span>
+<span class="source-line-no">046</span><span id="line-46"> *  @version $Id: PropertySpec.java 1258 2026-06-04 18:33:06Z tquadrat $</span>
 <span class="source-line-no">047</span><span id="line-47"> *  @since 0.1.0</span>
 <span class="source-line-no">048</span><span id="line-48"> *</span>
 <span class="source-line-no">049</span><span id="line-49"> *  @UMLGraph.link</span>
 <span class="source-line-no">050</span><span id="line-50"> */</span>
 <span class="source-line-no">051</span><span id="line-51">@SuppressWarnings( "ClassWithTooManyMethods" )</span>
-<span class="source-line-no">052</span><span id="line-52">@ClassVersion( sourceVersion = "$Id: PropertySpec.java 1105 2024-02-28 12:58:46Z tquadrat $" )</span>
+<span class="source-line-no">052</span><span id="line-52">@ClassVersion( sourceVersion = "$Id: PropertySpec.java 1258 2026-06-04 18:33:06Z tquadrat $" )</span>
 <span class="source-line-no">053</span><span id="line-53">@API( status = MAINTAINED, since = "0.1.0" )</span>
 <span class="source-line-no">054</span><span id="line-54">public interface PropertySpec</span>
 <span class="source-line-no">055</span><span id="line-55">{</span>
@@ -73,12 +73,12 @@
 <span class="source-line-no">060</span><span id="line-60">     *  The flags for a property.</span>
 <span class="source-line-no">061</span><span id="line-61">     *</span>
 <span class="source-line-no">062</span><span id="line-62">     *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org</span>
-<span class="source-line-no">063</span><span id="line-63">     *  @version $Id: PropertySpec.java 1105 2024-02-28 12:58:46Z tquadrat $</span>
+<span class="source-line-no">063</span><span id="line-63">     *  @version $Id: PropertySpec.java 1258 2026-06-04 18:33:06Z tquadrat $</span>
 <span class="source-line-no">064</span><span id="line-64">     *  @since 0.1.0</span>
 <span class="source-line-no">065</span><span id="line-65">     *</span>
 <span class="source-line-no">066</span><span id="line-66">     *  @UMLGraph.link</span>
 <span class="source-line-no">067</span><span id="line-67">     */</span>
-<span class="source-line-no">068</span><span id="line-68">    @ClassVersion( sourceVersion = "$Id: PropertySpec.java 1105 2024-02-28 12:58:46Z tquadrat $" )</span>
+<span class="source-line-no">068</span><span id="line-68">    @ClassVersion( sourceVersion = "$Id: PropertySpec.java 1258 2026-06-04 18:33:06Z tquadrat $" )</span>
 <span class="source-line-no">069</span><span id="line-69">    @API( status = MAINTAINED, since = "0.1.0" )</span>
 <span class="source-line-no">070</span><span id="line-70">    public static enum PropertyFlag</span>
 <span class="source-line-no">071</span><span id="line-71">    {</span>
@@ -336,7 +336,7 @@
 <span class="source-line-no">323</span><span id="line-323">    /**</span>
 <span class="source-line-no">324</span><span id="line-324">     *  Returns the name of the 'add' method's argument.</span>
 <span class="source-line-no">325</span><span id="line-325">     *</span>
-<span class="source-line-no">326</span><span id="line-326">     *  @return The argument name; is probable {@code null} when</span>
+<span class="source-line-no">326</span><span id="line-326">     *  @return The argument name; is probable {@null} when</span>
 <span class="source-line-no">327</span><span id="line-327">     *      {@link #getAddMethodName()}</span>
 <span class="source-line-no">328</span><span id="line-328">     *      returns</span>
 <span class="source-line-no">329</span><span id="line-329">     *      {@link Optional#empty()}.</span>
@@ -633,7 +633,7 @@
 <span class="source-line-no">620</span><span id="line-620">    /**</span>
 <span class="source-line-no">621</span><span id="line-621">     *  Returns the name of the setter's argument.</span>
 <span class="source-line-no">622</span><span id="line-622">     *</span>
-<span class="source-line-no">623</span><span id="line-623">     *  @return The argument name; is probably {@code null} when</span>
+<span class="source-line-no">623</span><span id="line-623">     *  @return The argument name; is probably {@null} when</span>
 <span class="source-line-no">624</span><span id="line-624">     *      {@link #getSetterMethodName()}</span>
 <span class="source-line-no">625</span><span id="line-625">     *      returns</span>
 <span class="source-line-no">626</span><span id="line-626">     *      {@link Optional#empty()}.</span>
@@ -707,14 +707,14 @@
 <span class="source-line-no">694</span><span id="line-694">     *  Checks whether the given flag is set for this property.</span>
 <span class="source-line-no">695</span><span id="line-695">     *</span>
 <span class="source-line-no">696</span><span id="line-696">     *  @param  flag    The flag to test for.</span>
-<span class="source-line-no">697</span><span id="line-697">     *  @return {@code true} if the flag is set, {@code false} otherwise.</span>
+<span class="source-line-no">697</span><span id="line-697">     *  @return {@true} if the flag is set, {@false} otherwise.</span>
 <span class="source-line-no">698</span><span id="line-698">     */</span>
 <span class="source-line-no">699</span><span id="line-699">    public boolean hasFlag( final PropertyFlag flag );</span>
 <span class="source-line-no">700</span><span id="line-700"></span>
 <span class="source-line-no">701</span><span id="line-701">    /**</span>
 <span class="source-line-no">702</span><span id="line-702">     *  Checks whether this property is a collection of some kind.</span>
 <span class="source-line-no">703</span><span id="line-703">     *</span>
-<span class="source-line-no">704</span><span id="line-704">     *  @return {@code true} if this property is a collection, {@code false}</span>
+<span class="source-line-no">704</span><span id="line-704">     *  @return {@true} if this property is a collection, {@false}</span>
 <span class="source-line-no">705</span><span id="line-705">     *      otherwise.</span>
 <span class="source-line-no">706</span><span id="line-706">     */</span>
 <span class="source-line-no">707</span><span id="line-707">    public default boolean isCollection() { return getCollectionKind() != NO_COLLECTION; }</span>
@@ -724,8 +724,8 @@
 <span class="source-line-no">711</span><span id="line-711">     *  {@link Enum enum}</span>
 <span class="source-line-no">712</span><span id="line-712">     *  type.</span>
 <span class="source-line-no">713</span><span id="line-713">     *</span>
-<span class="source-line-no">714</span><span id="line-714">     *  @return {@code true} if the property type is an {@code enum},</span>
-<span class="source-line-no">715</span><span id="line-715">     *      {@code false} otherwise.</span>
+<span class="source-line-no">714</span><span id="line-714">     *  @return {@true} if the property type is an {@code enum},</span>
+<span class="source-line-no">715</span><span id="line-715">     *      {@false} otherwise.</span>
 <span class="source-line-no">716</span><span id="line-716">     */</span>
 <span class="source-line-no">717</span><span id="line-717">    public boolean isEnum();</span>
 <span class="source-line-no">718</span><span id="line-718"></span>
@@ -737,8 +737,8 @@
 <span class="source-line-no">724</span><span id="line-724">     *  {@link PropertyFlag#PROPERTY_IS_OPTION}</span>
 <span class="source-line-no">725</span><span id="line-725">     *  set to it.</span>
 <span class="source-line-no">726</span><span id="line-726">     *</span>
-<span class="source-line-no">727</span><span id="line-727">     *  @return {@code true} if the property is exposed to the CLI,</span>
-<span class="source-line-no">728</span><span id="line-728">     *      {@code false} otherwise.</span>
+<span class="source-line-no">727</span><span id="line-727">     *  @return {@true} if the property is exposed to the CLI,</span>
+<span class="source-line-no">728</span><span id="line-728">     *      {@false} otherwise.</span>
 <span class="source-line-no">729</span><span id="line-729">     */</span>
 <span class="source-line-no">730</span><span id="line-730">    public default boolean isOnCLI() { return hasFlag( PropertyFlag.PROPERTY_IS_ARGUMENT ) || hasFlag( PropertyFlag.PROPERTY_IS_OPTION ); }</span>
 <span class="source-line-no">731</span><span id="line-731"></span>

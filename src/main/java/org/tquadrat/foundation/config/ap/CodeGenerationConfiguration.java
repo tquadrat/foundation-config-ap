@@ -17,16 +17,18 @@
 
 package org.tquadrat.foundation.config.ap;
 
-import org.apiguardian.api.API;
-import org.tquadrat.foundation.annotation.ClassVersion;
-import org.tquadrat.foundation.ap.APHelper;
-import org.tquadrat.foundation.ap.CodeGenerationError;
-import org.tquadrat.foundation.config.INIGroup;
-import org.tquadrat.foundation.config.ap.impl.PropertySpecImpl;
-import org.tquadrat.foundation.javacomposer.ClassName;
-import org.tquadrat.foundation.javacomposer.JavaComposer;
-import org.tquadrat.foundation.javacomposer.MethodSpec;
-import org.tquadrat.foundation.javacomposer.TypeName;
+import static java.lang.String.format;
+import static java.util.Collections.unmodifiableMap;
+import static org.apiguardian.api.API.Status.MAINTAINED;
+import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_DuplicateProperty;
+import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_IllegalImplementation;
+import static org.tquadrat.foundation.lang.Objects.isNull;
+import static org.tquadrat.foundation.lang.Objects.nonNull;
+import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
+import static org.tquadrat.foundation.lang.Objects.requireNotEmptyArgument;
+import static org.tquadrat.foundation.util.Comparators.caseInsensitiveComparator;
+import static org.tquadrat.foundation.util.StringUtils.isEmptyOrBlank;
+import static org.tquadrat.foundation.util.StringUtils.isNotEmptyOrBlank;
 
 import javax.lang.model.element.Name;
 import javax.lang.model.util.Elements;
@@ -41,30 +43,28 @@ import java.util.Optional;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import static java.lang.String.format;
-import static java.util.Collections.unmodifiableMap;
-import static org.apiguardian.api.API.Status.MAINTAINED;
-import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_DuplicateProperty;
-import static org.tquadrat.foundation.config.ap.ConfigAnnotationProcessor.MSG_IllegalImplementation;
-import static org.tquadrat.foundation.lang.Objects.isNull;
-import static org.tquadrat.foundation.lang.Objects.nonNull;
-import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
-import static org.tquadrat.foundation.lang.Objects.requireNotEmptyArgument;
-import static org.tquadrat.foundation.util.Comparators.caseInsensitiveComparator;
-import static org.tquadrat.foundation.util.StringUtils.isEmptyOrBlank;
-import static org.tquadrat.foundation.util.StringUtils.isNotEmptyOrBlank;
+import org.apiguardian.api.API;
+import org.tquadrat.foundation.annotation.ClassVersion;
+import org.tquadrat.foundation.ap.APHelper;
+import org.tquadrat.foundation.ap.CodeGenerationError;
+import org.tquadrat.foundation.config.INIGroup;
+import org.tquadrat.foundation.config.ap.impl.PropertySpecImpl;
+import org.tquadrat.foundation.javacomposer.ClassName;
+import org.tquadrat.foundation.javacomposer.JavaComposer;
+import org.tquadrat.foundation.javacomposer.MethodSpec;
+import org.tquadrat.foundation.javacomposer.TypeName;
 
 /**
  *  An instance of this class provides the configuration for the code
  *  generation, and it collects the results from the different code generators.
  *
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
- *  @version $Id: CodeGenerationConfiguration.java 1164 2026-03-20 17:38:18Z tquadrat $
+ *  @version $Id: CodeGenerationConfiguration.java 1258 2026-06-04 18:33:06Z tquadrat $
  *  @UMLGraph.link
  *  @since 0.1.0
  */
 @SuppressWarnings( {"ClassWithTooManyFields", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 1164 2026-03-20 17:38:18Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeGenerationConfiguration.java 1258 2026-06-04 18:33:06Z tquadrat $" )
 @API( status = MAINTAINED, since = "0.1.0" )
 public final class CodeGenerationConfiguration
 {
@@ -207,8 +207,8 @@ public final class CodeGenerationConfiguration
      *      class.
      *  @param  baseClass   The optional base class for the new configuration
      *      bean class.
-     *  @param  synchronizeAccess   {@code true} if the access to the
-     *      configuration bean properties should be thread safe, {@code false}
+     *  @param  synchronizeAccess   {@true} if the access to the
+     *      configuration bean properties should be thread safe, {@false}
      *      if a synchronisation/locking is not required.
      */
     @SuppressWarnings( {"UseOfConcreteClass", "ConstructorWithTooManyParameters"} )
@@ -362,7 +362,7 @@ public final class CodeGenerationConfiguration
      *  Returns the flag that indicates whether the configuration file must
      *  exist before the program starts.
      *
-     *  @return {@code true} if the file must exist already, {@code false} if
+     *  @return {@true} if the file must exist already, {@false} if
      *      it will be created on startup.
      *
      * @see org.tquadrat.foundation.config.INIFileConfig#mustExist()
@@ -507,8 +507,8 @@ public final class CodeGenerationConfiguration
      *  Returns the flag that controls whether the generated code for the
      *  access to the configuration bean properties has to be thread-safe.
      *
-     *  @return {@code true} if synchronisation/locking is required,
-     *      {@code false} if not.
+     *  @return {@true} if synchronisation/locking is required,
+     *      {@false} if not.
      */
     @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )
     public final boolean getSynchronizationRequired() { return m_SynchronizeAccess; }
@@ -517,8 +517,8 @@ public final class CodeGenerationConfiguration
      *  Checks whether a property with the given name does already exist.
      *
      *  @param  propertyName    The name of the property.
-     *  @return {@code true} if the property with the given name already
-     *      exists, {@code false} otherwise.
+     *  @return {@true} if the property with the given name already
+     *      exists, {@false} otherwise.
      */
     public final boolean hasProperty( final String propertyName ) { return m_Properties.containsKey( propertyName ); }
 
@@ -528,8 +528,8 @@ public final class CodeGenerationConfiguration
      *
      *  @param  interfaceToImplement    The class for the interface that has to
      *      be implemented.
-     *  @return {@code true} if the given interface must be implemented,
-     *      {@code false} otherwise.
+     *  @return {@true} if the given interface must be implemented,
+     *      {@false} otherwise.
      */
     @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )
     public final boolean implementInterface( final TypeName interfaceToImplement )
@@ -546,8 +546,8 @@ public final class CodeGenerationConfiguration
      *
      *  @param  interfaceToImplement    The class for the interface that has to
      *      be implemented.
-     *  @return {@code true} if the given interface must be implemented,
-     *      {@code false} otherwise.
+     *  @return {@true} if the given interface must be implemented,
+     *      {@false} otherwise.
      */
     @SuppressWarnings( "BooleanMethodNameMustStartWithQuestion" )
     public final boolean implementInterface( final Type interfaceToImplement )
@@ -604,11 +604,11 @@ public final class CodeGenerationConfiguration
     /**
      *  Sets the configuration for the {@code INI} file.
      *
-     *  @param  filename    The path; can be {@code null}.
+     *  @param  filename    The path; can be {@null}.
      *  @param  flag    The flag that indicates whether the configuration file
-     *      must exist before the program starts.{@code true} if the file must
-     *      exist, {@code false} if it will be created on startup.
-     *  @param  comment The comment; can be {@code null}.
+     *      must exist before the program starts.{@true} if the file must
+     *      exist, {@false} if it will be created on startup.
+     *  @param  comment The comment; can be {@null}.
      */
     public final void setINIFileConfig( final String filename, final boolean flag,  final String comment )
     {
@@ -621,7 +621,7 @@ public final class CodeGenerationConfiguration
      *  Set the method that is provided as a source for the initialisation of
      *  the properties of the configuration bean.
      *
-     *  @param  method  The method; can be {@code null}.
+     *  @param  method  The method; can be {@null}.
      */
     public final void setInitDataMethod( final MethodSpec method ) { m_InitDataMethod = method; }
 
@@ -629,14 +629,14 @@ public final class CodeGenerationConfiguration
      *  Set the name of the resource that is used to initialise the
      *  properties of the configuration bean.
      *
-     *  @param  initDataResource    The resource name; can be {@code null}.
+     *  @param  initDataResource    The resource name; can be {@null}.
      */
     public final void setInitDataResource( final String initDataResource ) { m_InitDataResource = initDataResource; }
 
     /**
      *  Sets the class for the {@code Preferences} change listener.
      *
-     *  @param  listenerClass   The listener class; can be {@code null}.
+     *  @param  listenerClass   The listener class; can be {@null}.
      *
      *  @see org.tquadrat.foundation.config.PreferencesRoot#changeListenerClass()
      */

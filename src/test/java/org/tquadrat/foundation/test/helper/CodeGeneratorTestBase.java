@@ -89,11 +89,11 @@ import org.tquadrat.foundation.util.stringconverter.StringStringConverter;
 /**
  *  The base class for the code generation tests.
  *
- *  @version $Id: CodeGeneratorTestBase.java 1076 2023-10-03 18:36:07Z tquadrat $
+ *  @version $Id: CodeGeneratorTestBase.java 1258 2026-06-04 18:33:06Z tquadrat $
  *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
  */
 @SuppressWarnings( {"AbstractClassWithoutAbstractMethods", "OverlyCoupledClass", "ClassWithTooManyMethods"} )
-@ClassVersion( sourceVersion = "$Id: CodeGeneratorTestBase.java 1076 2023-10-03 18:36:07Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: CodeGeneratorTestBase.java 1258 2026-06-04 18:33:06Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 public abstract class CodeGeneratorTestBase extends TestBaseClass
 {
@@ -114,8 +114,8 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
      *
      *  @param  environment The mock for the
      *      {@link APHelper}.
-     *  @param  flag    {@code true} if debug output should be created,
-     *      {@code false} if not.
+     *  @param  flag    {@true} if debug output should be created,
+     *      {@false} if not.
      *  @return The configuration.
      */
     @SuppressWarnings( "UseOfConcreteClass" )
@@ -139,8 +139,8 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
      *  @param  specName    The name for the configuration bean specification.
      *  @param  environment The mock for the
      *      {@link APHelper}.
-     *  @param  flag    {@code true} if debug output should be created,
-     *      {@code false} if not.
+     *  @param  flag    {@true} if debug output should be created,
+     *      {@false} if not.
      *  @return The configuration.
      */
     @SuppressWarnings( "UseOfConcreteClass" )
@@ -190,8 +190,8 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
      *
      *  @param  environment The mock for the
      *      {@link APHelper}.
-     *  @param  flag    {@code true} if debug output should be created,
-     *      {@code false} if not.
+     *  @param  flag    {@true} if debug output should be created,
+     *      {@false} if not.
      *  @return The configuration.
      */
     @SuppressWarnings( "UseOfConcreteClass" )
@@ -756,8 +756,8 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
      *
      *  @param  configuration   The configuration that takes the created
      *      property.
-     *  @param  isMutable   {@code true} if the property should be mutable,
-     *      {@code false}  otherwise.
+     *  @param  isMutable   {@true} if the property should be mutable,
+     *      {@false}  otherwise.
      */
     @SuppressWarnings( "UseOfConcreteClass" )
     public static final void createProperty_resourceBundle( final CodeGenerationConfiguration configuration, final boolean isMutable )
@@ -828,8 +828,8 @@ public abstract class CodeGeneratorTestBase extends TestBaseClass
      *
      *  @param  environment The mock for the
      *      {@link APHelper}.
-     *  @param  flag    {@code true} if debug output should be created,
-     *      {@code false} if not.
+     *  @param  flag    {@true} if debug output should be created,
+     *      {@false} if not.
      *  @return The configuration.
      */
     @SuppressWarnings( "UseOfConcreteClass" )
