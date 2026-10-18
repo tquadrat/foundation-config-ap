@@ -9,4 +9,4 @@ Refer also to [`foundation-config`](https://tquadrat.github.io/foundation-config
 The current version for the annotation processor is 0.25.14.
 
 ---  
-Last updated: 2026-10-17T17:18:05.319780895+02:00[Europe/Berlin]
+Last updated: 2026-10-18T12:55:47.944395126+02:00[Europe/Berlin]
