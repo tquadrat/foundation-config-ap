@@ -1,6 +1,6 @@
 /*
  * ============================================================================
- *  Copyright © 2002-2025 by Thomas Thrien.
+ *  Copyright © 2002-2026 by Thomas Thrien.
  *  All Rights Reserved.
  * ============================================================================
  *  Licensed to the public under the agreements of the GNU Lesser General Public
@@ -141,7 +141,7 @@ import org.tquadrat.foundation.config.spi.prefs.MapAccessor;
 import org.tquadrat.foundation.config.spi.prefs.PreferenceAccessor;
 import org.tquadrat.foundation.config.spi.prefs.SetAccessor;
 import org.tquadrat.foundation.config.spi.prefs.SimplePreferenceAccessor;
-import org.tquadrat.foundation.exception.UnexpectedExceptionError;
+import org.tquadrat.foundation.exception.UnlikelyExceptionError;
 import org.tquadrat.foundation.exception.UnsupportedEnumError;
 import org.tquadrat.foundation.i18n.BaseBundleName;
 import org.tquadrat.foundation.i18n.MessagePrefix;
@@ -156,16 +156,15 @@ import org.tquadrat.foundation.util.LazyMap;
 import org.tquadrat.foundation.util.stringconverter.EnumStringConverter;
 
 /**
- *  The annotation processor for the {@code org.tquadrat.foundation.config}
- *  module.
+ *  <p>{@summary The annotation processor for the {@code org.tquadrat.foundation.config}
+ *  module.}</p>
  *
  *  @version $Id: ConfigAnnotationProcessor.java 1258 2026-06-04 18:33:06Z tquadrat $
  *
- *  @extauthor Thomas Thrien - thomas.thrien@tquadrat.org
+ *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@SuppressWarnings( {"OverlyCoupledClass", "OverlyComplexClass", "ClassWithTooManyMethods"} )
 @ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1258 2026-06-04 18:33:06Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @SupportedSourceVersion( SourceVersion.RELEASE_17 )
@@ -179,18 +178,20 @@ public class ConfigAnnotationProcessor extends APBase
      *  The name for
      *  {@link org.tquadrat.foundation.config.ConfigBeanSpec#addListener(org.tquadrat.foundation.config.ConfigurationChangeListener)}: {@value}.
      */
+    @SuppressWarnings( "FieldNamingConvention" )
     public static final String METHODNAME_ConfigBeanSpec_AddListener = "addListener";
 
     /**
      *  The name for
      *  {@link org.tquadrat.foundation.config.ConfigBeanSpec#getResourceBundle()}: {@value}.
      */
-    @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
+    @SuppressWarnings( {"StaticMethodOnlyUsedInOneClass", "FieldNamingConvention"} )
     public static final String METHODNAME_ConfigBeanSpec_GetResourceBundle = "getResourceBundle";
 
     /**
      *  The name for the optional {@code initData } method: {@value}.
      */
+    @SuppressWarnings( "FieldNamingConvention" )
     public static final String METHODNAME_ConfigBeanSpec_InitData = "initData";
 
     /**
@@ -353,6 +354,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  {@link org.tquadrat.foundation.lang.StringConverter}
      *  for a property: {@value}.
      */
+    @SuppressWarnings( "FieldNamingConvention" )
     public static final String MSG_MissingStringConverterWithType = "There is no StringConverter for the property '%1$s' than converts '%2$s'";
 
     /**
@@ -432,7 +434,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  {@link org.tquadrat.foundation.config.ConfigBeanSpec#getResourceBundle()}:
      *  {@value}.
      */
-    @SuppressWarnings( "StaticMethodOnlyUsedInOneClass" )
+    @SuppressWarnings( {"StaticMethodOnlyUsedInOneClass", "FieldNamingConvention"} )
     public static final String MSG_ResourceBundleWrongReturnType = "The return type of getResourceBundle() must be Optional(ResourceBundle)";
 
     /**
@@ -513,7 +515,7 @@ public class ConfigAnnotationProcessor extends APBase
     ====** Constructors **=====================================================
         \*--------------*/
     /**
-     *  Creates a new {@code ConfigAnnotationProcessor} instance.
+     *  <p>{@summary {@constructor}}</p>
      */
     public ConfigAnnotationProcessor()
     {
@@ -843,7 +845,9 @@ public class ConfigAnnotationProcessor extends APBase
     private final String determinePropertyNameFromMethod( @SuppressWarnings( "TypeMayBeWeakened" ) final ExecutableElement method )
     {
         final String retValue;
+        @SuppressWarnings( "LocalVariableNamingConvention" )
         final var specialPropertyAnnotation = method.getAnnotation( SpecialProperty.class );
+        @SuppressWarnings( "LocalVariableNamingConvention" )
         final var propertyNameAnnotation = method.getAnnotation( PropertyName.class );
         if( nonNull( specialPropertyAnnotation ) )
         {
@@ -1215,6 +1219,7 @@ public class ConfigAnnotationProcessor extends APBase
          * Some properties are 'special', and that is reflected by the
          * annotation @SpecialProperty.
          */
+        @SuppressWarnings( "LocalVariableNamingConvention" )
         final var specialPropertyAnnotation = getter.getAnnotation( SpecialProperty.class );
         if( nonNull( specialPropertyAnnotation ) )
         {
@@ -1259,6 +1264,7 @@ public class ConfigAnnotationProcessor extends APBase
             //noinspection NonShortCircuitBooleanExpression
             allowsPreferences &= iniValue.isEmpty();
 
+            @SuppressWarnings( "LocalVariableNamingConvention" )
             final var systemPropertyAnnotation = getter.getAnnotation( SystemProperty.class );
             if( nonNull( systemPropertyAnnotation ) )
             {
@@ -1276,6 +1282,7 @@ public class ConfigAnnotationProcessor extends APBase
                 allowsPreferences = false;
             }
 
+            @SuppressWarnings( "LocalVariableNamingConvention" )
             final var environmentVariableAnnotation = getter.getAnnotation( EnvironmentVariable.class );
             if( nonNull( environmentVariableAnnotation ) )
             {
@@ -1302,6 +1309,7 @@ public class ConfigAnnotationProcessor extends APBase
                 allowsPreferences = false;
             }
 
+            @SuppressWarnings( "LocalVariableNamingConvention" )
             final var systemPrefsAnnotation = getter.getAnnotation( SystemPreference.class );
             if( nonNull( systemPrefsAnnotation ) )
             {
@@ -1359,6 +1367,7 @@ public class ConfigAnnotationProcessor extends APBase
             }
 
             //---* Process the preferences annotations *-----------------------
+            @SuppressWarnings( "LocalVariableNamingConvention" )
             final var noPreferenceAnnotation = getter.getAnnotation( NoPreference.class );
             final var preferenceAnnotation = getter.getAnnotation( Preference.class );
             if( !allowsPreferences && nonNull( preferenceAnnotation ) )
@@ -1466,7 +1475,7 @@ public class ConfigAnnotationProcessor extends APBase
             }
             catch( final NoSuchElementException e )
             {
-                throw new UnexpectedExceptionError( e );
+                throw new UnlikelyExceptionError( e );
             }
             ifDebug( property.hasFlag( PROPERTY_IS_SPECIAL ), "property '%s' is special"::formatted, propertyName );
 
@@ -1478,6 +1487,7 @@ public class ConfigAnnotationProcessor extends APBase
             propertyType = property.getPropertyType();
             if( !propertyType.equals( TypeName.from( setter.getParameters().getFirst().asType() ) ) )
             {
+                //noinspection UnnecessaryToStringCall
                 throw new CodeGenerationError( format( MSG_TypeMismatch, TypeName.from( setter.getParameters().getFirst().asType() ).toString(), setterMethodName, propertyType.toString() ) );
             }
             collectionKind = property.getCollectionKind();
@@ -1538,6 +1548,7 @@ public class ConfigAnnotationProcessor extends APBase
          * we have a getter, and whether that getter is for the same special
          * property.
          */
+        @SuppressWarnings( "LocalVariableNamingConvention" )
         final var specialPropertyAnnotation = setter.getAnnotation( SpecialProperty.class );
         if( nonNull( specialPropertyAnnotation ) )
         {
@@ -1547,6 +1558,7 @@ public class ConfigAnnotationProcessor extends APBase
             if( isDefault ) throw new IllegalAnnotationError( format( MSG_IllegalAnnotationOnSetter, SpecialProperty.class.getName(), setterMethodName ) );
 
             final var specialPropertyType = specialPropertyAnnotation.value();
+            @SuppressWarnings( "LocalVariableNamingConvention" )
             final var specialPropertyTypeOptional = property.getSpecialPropertyType();
             if( specialPropertyTypeOptional.isEmpty() )
             {
@@ -1568,6 +1580,7 @@ public class ConfigAnnotationProcessor extends APBase
         else
         {
             //---* Process the preferences annotations *-----------------------
+            @SuppressWarnings( "LocalVariableNamingConvention" )
             final var noPreferenceAnnotation = setter.getAnnotation( NoPreference.class );
             final var preferenceAnnotation = setter.getAnnotation( Preference.class );
             final var allowsPreferences = isNull( noPreferenceAnnotation );
@@ -1636,6 +1649,7 @@ public class ConfigAnnotationProcessor extends APBase
              * Determine the string converter instance, either from the
              * annotation or guess it from the property type.
              */
+            @SuppressWarnings( "LocalVariableNamingConvention" )
             final var stringConverterOptional = determineStringConverterClass( setter, propertyType, isEnum );
             property.getStringConverterClass()
                 .ifPresentOrElse( stringConverterClass ->
@@ -1826,7 +1840,7 @@ public class ConfigAnnotationProcessor extends APBase
      *  @param  annotation  The annotation.
      *  @param  property    The property.
      */
-    @SuppressWarnings( "UseOfConcreteClass" )
+    @SuppressWarnings( {"UseOfConcreteClass", "NewMethodNamingConvention"} )
     private final void parseEnvironmentVariableAnnotation( final EnvironmentVariable annotation, final PropertySpecImpl property )
     {
         /*
@@ -1945,7 +1959,7 @@ public class ConfigAnnotationProcessor extends APBase
                     }
                     else
                     {
-                        printMessage( ERROR, format( MSG_IllegalAnnotationUse, element.getSimpleName().toString(), ConfigurationBeanSpecification.class.getSimpleName() ), element );
+                        printMessage( ERROR, format( MSG_IllegalAnnotationUse, element.getSimpleName(), ConfigurationBeanSpecification.class.getSimpleName() ), element );
                         throw new IllegalAnnotationError( ConfigurationBeanSpecification.class );
                     }
                 }   //  ScanLoop:
@@ -1963,15 +1977,17 @@ public class ConfigAnnotationProcessor extends APBase
      *  @param  specification   The specification interface.
      *  @throws IOException A problem occurred when writing the source file.
      */
-    @SuppressWarnings( {"OverlyCoupledMethod", "OverlyComplexMethod"} )
+    @SuppressWarnings( {"OverlyCoupledMethod", "OverlyComplexMethod", "NewMethodNamingConvention"} )
     private final void processConfigurationBeanSpecification( final TypeElement specification ) throws IOException
     {
         //---* Create the composer *-------------------------------------------
         final var composer = new JavaComposer( LAYOUT_FOUNDATION, addDebugOutput() );
 
+        @SuppressWarnings( "LocalVariableNamingConvention" )
         final var specificationAnnotation = specification.getAnnotation( ConfigurationBeanSpecification.class );
 
         //---* Determine the simple name of the bean class *-------------------
+        @SuppressWarnings( "LocalVariableNamingConvention" )
         final var configurationBeanClassName = getElementUtils().getName( isEmpty( specificationAnnotation.name() ) ? format( "%sImpl", specification.getSimpleName() ) : specificationAnnotation.name() );
         final var isSamePackage = specificationAnnotation.samePackage();
 
@@ -1979,6 +1995,7 @@ public class ConfigAnnotationProcessor extends APBase
         final var synchronizeAccess = specificationAnnotation.synchronizeAccess();
 
         //---* Get the base class *--------------------------------------------
+        @SuppressWarnings( "UnusedAssignment" )
         TypeName baseClass = null;
         try
         {
@@ -2008,7 +2025,9 @@ public class ConfigAnnotationProcessor extends APBase
             parentElement = (TypeElement) specification.getEnclosingElement();
         }
         final var packageElement = (PackageElement) specification.getEnclosingElement();
+        @SuppressWarnings( "LocalVariableNamingConvention" )
         final var specificationPackageName = packageElement.getQualifiedName().toString();
+        @SuppressWarnings( "LocalVariableNamingConvention" )
         final var configurationBeanPackageName = getElementUtils().getName
             (
                 isSamePackage
@@ -2055,6 +2074,7 @@ public class ConfigAnnotationProcessor extends APBase
         }
 
         //---* Determine the settings for the preferences stuff *--------------
+        @SuppressWarnings( "LocalVariableNamingConvention" )
         final var preferencesRootAnnotation = specification.getAnnotation( PreferencesRoot.class );
         if( nonNull( preferencesRootAnnotation ) )
         {
@@ -2167,9 +2187,10 @@ public class ConfigAnnotationProcessor extends APBase
      *  @param  specification   The configuration bean specification interface.
      *
      *  @note   If a base class for the new configuration bean is defined, the
-     *      method may be abstract, but if that base class does not implement
-     *      the method it will be detected only by the final compiler run, not
-     *      by the code generation here.
+     *      method {@code initData()} may be abstract. If that base class does
+     *      not implement the method {@code initData()} then, this will be
+     *      detected only by the final compiler run, not by the code generation
+     *      here.
      */
     @SuppressWarnings( {"TypeMayBeWeakened", "UseOfConcreteClass"} )
     private final void retrieveInitDataMethod( final CodeGenerationConfiguration configuration, final TypeElement specification )
@@ -2321,6 +2342,7 @@ public class ConfigAnnotationProcessor extends APBase
         {
             try
             {
+                @SuppressWarnings( "LocalVariableNamingConvention" )
                 final var getSubjectClassMethod = converterClass.getMethod( METHOD_NAME_GetSubjectClass );
                 //noinspection unchecked
                 retValue = (Collection<Class<?>>) getSubjectClassMethod.invoke( converter );
@@ -2333,7 +2355,7 @@ public class ConfigAnnotationProcessor extends APBase
         }
         catch( final NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException e )
         {
-            throw new UnexpectedExceptionError( e );
+            throw new UnlikelyExceptionError( e );
         }
 
         //---* Done *----------------------------------------------------------
