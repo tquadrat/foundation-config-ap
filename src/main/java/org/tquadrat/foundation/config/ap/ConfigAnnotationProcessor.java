@@ -159,13 +159,13 @@ import org.tquadrat.foundation.util.stringconverter.EnumStringConverter;
  *  <p>{@summary The annotation processor for the {@code org.tquadrat.foundation.config}
  *  module.}</p>
  *
- *  @version $Id: ConfigAnnotationProcessor.java 1258 2026-06-04 18:33:06Z tquadrat $
+ *  @version $Id: ConfigAnnotationProcessor.java 1297 2026-11-07 17:15:43Z tquadrat $
  *
  *  @author Thomas Thrien - thomas.thrien@tquadrat.org
  *  @UMLGraph.link
  *  @since 0.1.0
  */
-@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1258 2026-06-04 18:33:06Z tquadrat $" )
+@ClassVersion( sourceVersion = "$Id: ConfigAnnotationProcessor.java 1297 2026-11-07 17:15:43Z tquadrat $" )
 @API( status = STABLE, since = "0.1.0" )
 @SupportedSourceVersion( SourceVersion.RELEASE_17 )
 @SupportedOptions( { APBase.ADD_DEBUG_OUTPUT, APBase.MAVEN_GOAL } )
