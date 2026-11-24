@@ -157,7 +157,7 @@ public class TestConfigBeanBuilder extends CodeGeneratorTestBase
                      * and the file comment there for the details.
                      * ============================================================================
                      */
-                     
+                    
                     package org.tquadrat.foundation.test.generated;
 
                     import static java.lang.String.format;
@@ -166,7 +166,7 @@ public class TestConfigBeanBuilder extends CodeGeneratorTestBase
                     import static org.tquadrat.foundation.lang.CommonConstants.NULL_STRING;
                     import static org.tquadrat.foundation.lang.Objects.nonNull;
                     import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
-                                    
+                    
                     import java.lang.Override;
                     import java.lang.String;
                     import java.lang.SuppressWarnings;
@@ -187,7 +187,7 @@ public class TestConfigBeanBuilder extends CodeGeneratorTestBase
                     import org.tquadrat.foundation.util.stringconverter.CharsetStringConverter;
                     import org.tquadrat.foundation.util.stringconverter.LocaleStringConverter;
                     import org.tquadrat.foundation.util.stringconverter.ZoneIdStringConverter;
-                                    
+                    
                     /**
                      * The configuration bean that implements
                      * {@link MyConfigurationBeanSpecification}.
@@ -208,7 +208,7 @@ public class TestConfigBeanBuilder extends CodeGeneratorTestBase
                          * Property: &quot;isDebug&quot;.
                          */
                         private final boolean m_IsDebug;
-                                    
+                    
                         /**
                          * Property: &quot;isTest&quot;.
                          */
@@ -266,7 +266,7 @@ public class TestConfigBeanBuilder extends CodeGeneratorTestBase
                              * Initialise the property 'charset'.
                              */
                             m_Charset = defaultCharset();
-                            
+                    
                             /*
                              * Initialise the property 'isDebug' from the system properties.
                              */
@@ -275,7 +275,7 @@ public class TestConfigBeanBuilder extends CodeGeneratorTestBase
                                 final var value = getProperty( "isDebug", "false" );
                                 m_IsDebug = stringConverter.fromString( value );
                             }
-                                    
+                    
                             /*
                              * Initialise the property 'isTest' from the system properties.
                              */
@@ -284,7 +284,7 @@ public class TestConfigBeanBuilder extends CodeGeneratorTestBase
                                 final var value = getProperty( "isTest", "false" );
                                 m_IsTest = stringConverter.fromString( value );
                             }
-                                    
+                    
                             /*
                              * Initialise the property 'locale'.
                              */
@@ -433,7 +433,7 @@ public class TestConfigBeanBuilder extends CodeGeneratorTestBase
                         {
                             final var prefix = format ( "%%s [", getClass().getName() );
                             final var joiner = new StringJoiner( ", ", prefix, "]" );
-                            
+                    
                             try( final var ignored = m_ReadLock.lock() )
                             {
                                 //---* Property "charset" *----------------------------------------
@@ -580,6 +580,7 @@ public class TestConfigBeanBuilder extends CodeGeneratorTestBase
                     import java.io.FileNotFoundException;
                     import java.io.IOException;
                     import java.lang.ExceptionInInitializerError;
+                    import java.lang.IllegalArgumentException;
                     import java.lang.Integer;
                     import java.lang.Override;
                     import java.lang.String;
@@ -600,7 +601,6 @@ public class TestConfigBeanBuilder extends CodeGeneratorTestBase
                     import org.tquadrat.foundation.annotation.ClassVersion;
                     import org.tquadrat.foundation.config.ConfigurationChangeListener;
                     import org.tquadrat.foundation.config.spi.ConfigChangeListenerSupport;
-                    import org.tquadrat.foundation.exception.ValidationException;
                     import org.tquadrat.foundation.lang.AutoLock;
                     import org.tquadrat.foundation.lang.Objects;
                     import org.tquadrat.foundation.test.MyConfigurationBeanSpecification;
@@ -740,7 +740,7 @@ public class TestConfigBeanBuilder extends CodeGeneratorTestBase
                                 final var value = getProperty( "isDebug", "false" );
                                 m_IsDebug = stringConverter.fromString( value );
                             }
-                                    
+                    
                             /*
                              * Initialise the property 'isTest' from the system properties.
                              */
@@ -749,7 +749,7 @@ public class TestConfigBeanBuilder extends CodeGeneratorTestBase
                                 final var value = getProperty( "isTest", "false" );
                                 m_IsTest = stringConverter.fromString( value );
                             }
-                                    
+                    
                             /*
                              * Initialise the property 'locale'.
                              */
@@ -778,7 +778,7 @@ public class TestConfigBeanBuilder extends CodeGeneratorTestBase
                                 final var initData = initData();
                                 if( isNull( initData ) )
                                 {
-                                    throw new ValidationException( "initData() returns null" );
+                                    throw new IllegalArgumentException( "initData() returns null" );
                                 }
                                 if( initData.containsKey( "date1" ) )
                                 {
@@ -1085,7 +1085,7 @@ public class TestConfigBeanBuilder extends CodeGeneratorTestBase
                         {
                             final var prefix = format ( "%s [", getClass().getName() );
                             final var joiner = new StringJoiner( ", ", prefix, "]" );
-                            
+                    
                             try( final var ignored = m_ReadLock.lock() )
                             {
                                 //---* Property "charset" *----------------------------------------

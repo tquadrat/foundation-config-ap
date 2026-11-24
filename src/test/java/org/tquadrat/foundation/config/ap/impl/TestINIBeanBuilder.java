@@ -122,9 +122,9 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                      * and the file comment there for the details.
                      * ============================================================================
                      */
-                                    
+                    
                     package org.tquadrat.foundation.test.generated;
-                                    
+                    
                     import static java.lang.String.format;
                     import static java.lang.System.getProperty;
                     import static java.nio.charset.Charset.defaultCharset;
@@ -134,10 +134,11 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                     import static org.tquadrat.foundation.lang.Objects.nonNull;
                     import static org.tquadrat.foundation.lang.Objects.requireNonNullArgument;
                     import static org.tquadrat.foundation.util.SystemUtils.getPID;
-                                    
+                    
                     import java.io.FileNotFoundException;
                     import java.io.IOException;
                     import java.lang.ExceptionInInitializerError;
+                    import java.lang.IllegalArgumentException;
                     import java.lang.Integer;
                     import java.lang.Override;
                     import java.lang.String;
@@ -160,7 +161,6 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                     import org.tquadrat.foundation.config.ConfigurationChangeListener;
                     import org.tquadrat.foundation.config.spi.ConfigChangeListenerSupport;
                     import org.tquadrat.foundation.config.spi.prefs.PreferencesException;
-                    import org.tquadrat.foundation.exception.ValidationException;
                     import org.tquadrat.foundation.inifile.INIFile;
                     import org.tquadrat.foundation.lang.AutoLock;
                     import org.tquadrat.foundation.lang.Lazy;
@@ -174,7 +174,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                     import org.tquadrat.foundation.util.stringconverter.LocaleStringConverter;
                     import org.tquadrat.foundation.util.stringconverter.StringStringConverter;
                     import org.tquadrat.foundation.util.stringconverter.ZoneIdStringConverter;
-                                    
+                    
                     /**
                      * The configuration bean that implements
                      * {@link INISpec}.
@@ -190,129 +190,129 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                          * Property: &quot;charset&quot;.
                          */
                         private Charset m_Charset;
-                                    
+                    
                         /**
                          * Special Property: &quot;clock&quot;.
                          */
                         private Clock m_Clock;
-                                    
+                    
                         /**
                          * Property: &quot;date1&quot;.
                          */
                         private Instant m_Date1;
-                                    
+                    
                         /**
                          * Property: &quot;date1Ini&quot;.
                          */
                         private Instant m_Date1Ini;
-                                    
+                    
                         /**
                          * Property: &quot;date2&quot;.
                          */
                         private Instant m_Date2;
-                                    
+                    
                         /**
                          * The INIFile instance that is used by this configuration bean to
                          * persist (some of) its properties.
                          */
                         private final Lazy<INIFile> m_INIFile;
-                                    
+                    
                         /**
                          * Property: &quot;int1&quot;.
                          */
                         private int m_Int1;
-                                    
+                    
                         /**
                          * Property: &quot;int1Ini&quot;.
                          */
                         private int m_Int1Ini;
-                                    
+                    
                         /**
                          * Property: &quot;int2&quot;.
                          */
                         private Integer m_Int2;
-                                    
+                    
                         /**
                          * Property: &quot;int2Ini&quot;.
                          */
                         private Integer m_Int2Ini;
-                                    
+                    
                         /**
                          * Property: &quot;int3&quot;.
                          */
                         private int m_Int3;
-                                    
+                    
                         /**
                          * Property: &quot;int4&quot;.
                          */
                         private Integer m_Int4;
-                                    
+                    
                         /**
                          * Property: &quot;isDebug&quot;.
                          */
                         private final boolean m_IsDebug;
-                                    
+                    
                         /**
                          * Property: &quot;isTest&quot;.
                          */
                         private final boolean m_IsTest;
-                                    
+                    
                         /**
                          * The support for the configuration change listener.
                          */
                         @SuppressWarnings( "InstanceVariableOfConcreteClass" )
                         private final ConfigChangeListenerSupport m_ListenerSupport;
-                                    
+                    
                         /**
                          * Property: &quot;locale&quot;.
                          */
                         private Locale m_Locale;
-                                    
+                    
                         /**
                          * Special Property: &quot;processId&quot;.
                          */
                         private final long m_ProcessId;
-                                    
+                    
                         /**
                          * Special Property: &quot;random&quot;.
                          */
                         private final Random m_Random;
-                                    
+                    
                         /**
                          * The &quot;read&quot; lock.
                          */
                         private final AutoLock m_ReadLock;
-                                    
+                    
                         /**
                          * Special Property: &quot;resourceBundle&quot;.
                          */
                         private ResourceBundle m_ResourceBundle = null;
-                                    
+                    
                         /**
                          * Property: &quot;string1&quot;.
                          */
                         private String m_String1;
-                                    
+                    
                         /**
                          * Property: &quot;string1Ini&quot;.
                          */
                         private String m_String1Ini;
-                                    
+                    
                         /**
                          * Property: &quot;string2&quot;.
                          */
                         private String m_String2;
-                                    
+                    
                         /**
                          * Property: &quot;timezone&quot;.
                          */
                         private ZoneId m_Timezone;
-                                    
+                    
                         /**
                          * The &quot;write&quot; lock.
                          */
                         private final AutoLock m_WriteLock;
-                                    
+                    
                             /*--------------*\\
                         ====** Constructors **=====================================================
                             \\*--------------*/
@@ -324,22 +324,22 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         {
                             //---* Initialise the listener support *-------------------------------
                             m_ListenerSupport = new ConfigChangeListenerSupport( this );
-                                    
+                    
                             //---* Create the locks and initialise them *--------------------------
                             final var lock = new ReentrantReadWriteLock();
                             m_ReadLock = AutoLock.of( lock.readLock() );
                             m_WriteLock = AutoLock.of( lock.writeLock() );
-                                    
+                    
                             /*
                              * Initialise the property 'charset'.
                              */
                             m_Charset = defaultCharset();
-                                    
+                    
                             /*
                              * Initialise the property 'clock'.
                              */
                             m_Clock = Clock.systemDefaultZone();
-                                    
+                    
                             /*
                              * Initialise the property 'isDebug' from the system properties.
                              */
@@ -348,7 +348,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                 final var value = getProperty( "isDebug", "false" );
                                 m_IsDebug = stringConverter.fromString( value );
                             }
-                                    
+                    
                             /*
                              * Initialise the property 'isTest' from the system properties.
                              */
@@ -357,27 +357,27 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                 final var value = getProperty( "isTest", "false" );
                                 m_IsTest = stringConverter.fromString( value );
                             }
-                                    
+                    
                             /*
                              * Initialise the property 'locale'.
                              */
                             m_Locale = Locale.getDefault();
-                                    
+                    
                             /*
                              * Initialise the property 'processId'.
                              */
                             m_ProcessId = getPID();
-                                    
+                    
                             /*
                              * Initialise the property 'random'.
                              */
                             m_Random = new SecureRandom();
-                                    
+                    
                             /*
                              * Initialise the property 'timezone'.
                              */
                             m_Timezone = ZoneId.systemDefault();
-                                    
+                    
                             /*
                              * Initialise the properties from 'initData()'.
                              */
@@ -386,7 +386,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                 final var initData = initData();
                                 if( isNull( initData ) )
                                 {
-                                    throw new ValidationException( "initData() returns null" );
+                                    throw new IllegalArgumentException( "initData() returns null" );
                                 }
                                 if( initData.containsKey( "date1" ) )
                                 {
@@ -447,7 +447,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                 eiie.addSuppressed( t );
                                 throw eiie;
                             }
-                                    
+                    
                             /*
                              * Load initialisation data from resource "INISpec.properties".
                              */
@@ -460,7 +460,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                     eiie.addSuppressed( fnfe );
                                     throw eiie;
                                 }
-                                    
+                    
                                 final var initData = new Properties();
                                 try( final var inputStream = resource.openStream() )
                                 {
@@ -472,89 +472,89 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                     eiie.addSuppressed( e );
                                     throw eiie;
                                 }
-                                    
+                    
                                 /*
                                  * Initialise the properties.
                                  */
                                 String value;
-                                    
+                    
                                 value = initData.getProperty( "date1" );
                                 if( nonNull( value ) )
                                 {
                                     final var stringConverter = InstantStringConverter.INSTANCE;
                                     m_Date1 = stringConverter.fromString( value );
                                 }
-                                    
+                    
                                 value = initData.getProperty( "date1Ini" );
                                 if( nonNull( value ) )
                                 {
                                     final var stringConverter = InstantStringConverter.INSTANCE;
                                     m_Date1Ini = stringConverter.fromString( value );
                                 }
-                                    
+                    
                                 value = initData.getProperty( "date2" );
                                 if( nonNull( value ) )
                                 {
                                     final var stringConverter = InstantStringConverter.INSTANCE;
                                     m_Date2 = stringConverter.fromString( value );
                                 }
-                                    
+                    
                                 value = initData.getProperty( "int1" );
                                 if( nonNull( value ) )
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     m_Int1 = stringConverter.fromString( value );
                                 }
-                                    
+                    
                                 value = initData.getProperty( "int1Ini" );
                                 if( nonNull( value ) )
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     m_Int1Ini = stringConverter.fromString( value );
                                 }
-                                    
+                    
                                 value = initData.getProperty( "int2" );
                                 if( nonNull( value ) )
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     m_Int2 = stringConverter.fromString( value );
                                 }
-                                    
+                    
                                 value = initData.getProperty( "int2Ini" );
                                 if( nonNull( value ) )
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     m_Int2Ini = stringConverter.fromString( value );
                                 }
-                                    
+                    
                                 value = initData.getProperty( "int3" );
                                 if( nonNull( value ) )
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     m_Int3 = stringConverter.fromString( value );
                                 }
-                                    
+                    
                                 value = initData.getProperty( "int4" );
                                 if( nonNull( value ) )
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     m_Int4 = stringConverter.fromString( value );
                                 }
-                                    
+                    
                                 value = initData.getProperty( "string1" );
                                 if( nonNull( value ) )
                                 {
                                     final var stringConverter = StringStringConverter.INSTANCE;
                                     m_String1 = stringConverter.fromString( value );
                                 }
-                                    
+                    
                                 value = initData.getProperty( "string1Ini" );
                                 if( nonNull( value ) )
                                 {
                                     final var stringConverter = StringStringConverter.INSTANCE;
                                     m_String1Ini = stringConverter.fromString( value );
                                 }
-                                    
+                    
                                 value = initData.getProperty( "string2" );
                                 if( nonNull( value ) )
                                 {
@@ -562,11 +562,11 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                     m_String2 = stringConverter.fromString( value );
                                 }
                             }
-                                    
+                    
                             //---* Initialise the INI file *----------------------------------------
                             m_INIFile = Lazy.use( this::createINIFile );
                         }  //  INIBean()
-                                    
+                    
                             /*---------*\\
                         ====** Methods **==========================================================
                             \\*---------*/
@@ -578,7 +578,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         {
                             m_ListenerSupport.addListener( listener );
                         }  //  addListener()
-                                    
+                    
                         /**
                          * Creates the
                          * {@link INIFile}
@@ -604,7 +604,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                             {
                                 throw new ExceptionInInitializerError( e );
                             }
-                                    
+                    
                             // Sets the structure of the INIFile
                             retValue.setComment( "Group1", "The comment for group 1.\\n" );
                             retValue.setComment( "Group2", "The comment for group 2.\\n" );
@@ -613,11 +613,11 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                             retValue.setComment( "Group1", "int1Ini", "Property 'int1Ini'" );
                             retValue.setComment( "Group1", "int2Ini", "Property 'int2Ini'" );
                             retValue.setComment( "Group1", "string1Ini", "Property 'string1Ini'" );
-                                                
+                    
                             //---* Done *----------------------------------------------------------
                             return retValue;
                         }  //  createINIFile()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -629,7 +629,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                 return m_Charset;
                             }
                         }  //  getCharset()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -641,7 +641,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                 return m_Clock;
                             }
                         }  //  getClock()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -650,7 +650,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         {
                             return Optional.ofNullable( m_Date1 );
                         }  //  getDate1()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -659,7 +659,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         {
                             return Optional.ofNullable( m_Date1Ini );
                         }  //  getDate1Ini()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -668,7 +668,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         {
                             return m_Int1;
                         }  //  getInt1()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -677,7 +677,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         {
                             return m_Int1Ini;
                         }  //  getInt1Ini()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -686,7 +686,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         {
                             return m_Int2;
                         }  //  getInt2()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -695,7 +695,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         {
                             return m_Int2Ini;
                         }  //  getInt2Ini()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -707,7 +707,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                 return m_Locale;
                             }
                         }  //  getLocale()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -716,7 +716,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         {
                             return m_ProcessId;
                         }  //  getProcessId()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -725,7 +725,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         {
                             return m_Random;
                         }  //  getRandom()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -737,7 +737,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                 return Optional.ofNullable( m_ResourceBundle );
                             }
                         }  //  getResourceBundle()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -746,7 +746,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         {
                             return m_String1;
                         }  //  getString1()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -755,7 +755,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         {
                             return m_String1Ini;
                         }  //  getString1Ini()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -767,7 +767,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                 return m_Timezone;
                             }
                         }  //  getTimezone()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -776,7 +776,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         {
                             return m_IsDebug;
                         }  //  isDebug()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -785,7 +785,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         {
                             return m_IsTest;
                         }  //  isTest()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -796,7 +796,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                             {
                                 final var iniFile = m_INIFile.get();
                                 iniFile.refresh();
-                                    
+                    
                                 /*
                                  * Load the data.
                                  */
@@ -822,7 +822,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                 throw new PreferencesException( e );
                             }
                         }  //  loadINIFile()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -831,7 +831,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         {
                             return Optional.of( m_INIFile.get() );
                         }  //  obtainINIFile()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -840,7 +840,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         {
                             m_ListenerSupport.removeListener( listener );
                         }  //  removeListener()
-                                    
+                    
                         /**
                          * Returns the path for the INIFile backing file.
                          *
@@ -867,7 +867,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                 m_Charset = newValue;
                             }
                         }  //  setCharset()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -881,7 +881,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                 m_Clock = newValue;
                             }
                         }  //  setClock()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -895,7 +895,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                 m_Date2 = newValue;
                             }
                         }  //  setDate2()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -909,7 +909,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                 m_Int3 = newValue;
                             }
                         }  //  setInt3()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -923,7 +923,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                 m_Int4 = newValue;
                             }
                         }  //  setInt4()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -937,7 +937,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                 m_Locale = newValue;
                             }
                         }  //  setLocale()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -951,7 +951,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                 m_String2 = newValue;
                             }
                         }  //  setString2()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -965,7 +965,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                 m_Timezone = newValue;
                             }
                         }  //  setTimezone()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -974,7 +974,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         {
                             final var prefix = format ( "%s [", getClass().getName() );
                             final var joiner = new StringJoiner( ", ", prefix, "]" );
-                                    
+                    
                             try( final var ignored = m_ReadLock.lock() )
                             {
                                 //---* Property "charset" *----------------------------------------
@@ -983,122 +983,122 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                     final var value = stringConverter.toString( m_Charset );
                                     joiner.add( format( "charset = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                                    
+                    
                                 //---* Property "date1" *------------------------------------------
                                 {
                                     final var stringConverter = InstantStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Date1 );
                                     joiner.add( format( "date1 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                                    
+                    
                                 //---* Property "date1Ini" *---------------------------------------
                                 {
                                     final var stringConverter = InstantStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Date1Ini );
                                     joiner.add( format( "date1Ini = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                                    
+                    
                                 //---* Property "date2" *------------------------------------------
                                 {
                                     final var stringConverter = InstantStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Date2 );
                                     joiner.add( format( "date2 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                                    
+                    
                                 //---* Property "int1" *-------------------------------------------
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Int1 );
                                     joiner.add( format( "int1 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                                    
+                    
                                 //---* Property "int1Ini" *----------------------------------------
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Int1Ini );
                                     joiner.add( format( "int1Ini = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                                    
+                    
                                 //---* Property "int2" *-------------------------------------------
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Int2 );
                                     joiner.add( format( "int2 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                                    
+                    
                                 //---* Property "int2Ini" *----------------------------------------
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Int2Ini );
                                     joiner.add( format( "int2Ini = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                                    
+                    
                                 //---* Property "int3" *-------------------------------------------
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Int3 );
                                     joiner.add( format( "int3 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                                    
+                    
                                 //---* Property "int4" *-------------------------------------------
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Int4 );
                                     joiner.add( format( "int4 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                                    
+                    
                                 //---* Property "isDebug" *----------------------------------------
                                 {
                                     final var stringConverter = BooleanStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_IsDebug );
                                     joiner.add( format( "isDebug = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                                    
+                    
                                 //---* Property "isTest" *-----------------------------------------
                                 {
                                     final var stringConverter = BooleanStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_IsTest );
                                     joiner.add( format( "isTest = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                                    
+                    
                                 //---* Property "locale" *-----------------------------------------
                                 {
                                     final var stringConverter = LocaleStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Locale );
                                     joiner.add( format( "locale = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                                    
+                    
                                 //---* Property "object1" *----------------------------------------
                                 {
                                     joiner.add( format( "object1 = \\"%1$s\\"", Objects.toString( getObject1() ) ) );
                                 }
-                                    
+                    
                                 //---* Property "processId" *--------------------------------------
                                 {
                                     joiner.add( format( "processId = \\"%1$S\\"", Objects.toString( m_ProcessId ) ) );
                                 }
-                                    
+                    
                                 //---* Property "string1" *----------------------------------------
                                 {
                                     final var stringConverter = StringStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_String1 );
                                     joiner.add( format( "string1 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                                    
+                    
                                 //---* Property "string1Ini" *-------------------------------------
                                 {
                                     final var stringConverter = StringStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_String1Ini );
                                     joiner.add( format( "string1Ini = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                                    
+                    
                                 //---* Property "string2" *----------------------------------------
                                 {
                                     final var stringConverter = StringStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_String2 );
                                     joiner.add( format( "string2 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                                    
+                    
                                 //---* Property "timezone" *---------------------------------------
                                 {
                                     final var stringConverter = ZoneIdStringConverter.INSTANCE;
@@ -1106,14 +1106,14 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                                     joiner.add( format( "timezone = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
                             }
-                                    
+                    
                             //---* Create the return value *---------------------------------------
                             final var retValue = joiner.toString();
-                                    
+                    
                             //---* Done *----------------------------------------------------------
                             return retValue;
                         }  //  toString()
-                                    
+                    
                         /**
                          * {@inheritDoc}
                          */
@@ -1123,7 +1123,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                             try( final var ignore = m_ReadLock.lock() )
                             {
                                 final var iniFile = m_INIFile.get();
-                                
+                    
                                 /*
                                  * Write the data.
                                  */
@@ -1153,7 +1153,7 @@ public class TestINIBeanBuilder extends CodeGeneratorTestBase
                         }  //  updateINIFile()
                     }
                     //  class INIBean
-                                    
+                    
                     /*
                      * End of File
                      */"""

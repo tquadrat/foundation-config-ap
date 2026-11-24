@@ -136,6 +136,7 @@ public class TestSessionBeanBuilder extends CodeGeneratorTestBase
                     import java.io.FileNotFoundException;
                     import java.io.IOException;
                     import java.lang.ExceptionInInitializerError;
+                    import java.lang.IllegalArgumentException;
                     import java.lang.Integer;
                     import java.lang.Object;
                     import java.lang.Override;
@@ -164,7 +165,6 @@ public class TestSessionBeanBuilder extends CodeGeneratorTestBase
                     import org.tquadrat.foundation.annotation.ClassVersion;
                     import org.tquadrat.foundation.config.ConfigurationChangeListener;
                     import org.tquadrat.foundation.config.spi.ConfigChangeListenerSupport;
-                    import org.tquadrat.foundation.exception.ValidationException;
                     import org.tquadrat.foundation.lang.AutoLock;
                     import org.tquadrat.foundation.lang.Objects;
                     import org.tquadrat.foundation.test.MySessionConfigurationBeanSpecification;
@@ -338,7 +338,7 @@ public class TestSessionBeanBuilder extends CodeGeneratorTestBase
                                 final var value = getProperty( "isDebug", "false" );
                                 m_IsDebug = stringConverter.fromString( value );
                             }
-                                    
+                    
                             /*
                              * Initialise the property 'isTest' from the system properties.
                              */
@@ -347,7 +347,7 @@ public class TestSessionBeanBuilder extends CodeGeneratorTestBase
                                 final var value = getProperty( "isTest", "false" );
                                 m_IsTest = stringConverter.fromString( value );
                             }
-                                    
+                    
                             /*
                              * Initialise the property 'locale'.
                              */
@@ -376,7 +376,7 @@ public class TestSessionBeanBuilder extends CodeGeneratorTestBase
                                 final var initData = initData();
                                 if( isNull( initData ) )
                                 {
-                                    throw new ValidationException( "initData() returns null" );
+                                    throw new IllegalArgumentException( "initData() returns null" );
                                 }
                                 if( initData.containsKey( "date1" ) )
                                 {
@@ -971,99 +971,99 @@ public class TestSessionBeanBuilder extends CodeGeneratorTestBase
                                     final var value = stringConverter.toString( m_Charset );
                                     joiner.add( format( "charset = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                            
+                    
                                 //---* Property "date1" *------------------------------------------
                                 {
                                     final var stringConverter = InstantStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Date1 );
                                     joiner.add( format( "date1 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                            
+                    
                                 //---* Property "date2" *------------------------------------------
                                 {
                                     final var stringConverter = InstantStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Date2 );
                                     joiner.add( format( "date2 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                            
+                    
                                 //---* Property "int1" *-------------------------------------------
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Int1 );
                                     joiner.add( format( "int1 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                            
+                    
                                 //---* Property "int2" *-------------------------------------------
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Int2 );
                                     joiner.add( format( "int2 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                            
+                    
                                 //---* Property "int3" *-------------------------------------------
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Int3 );
                                     joiner.add( format( "int3 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                            
+                    
                                 //---* Property "int4" *-------------------------------------------
                                 {
                                     final var stringConverter = IntegerStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Int4 );
                                     joiner.add( format( "int4 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                            
+                    
                                 //---* Property "isDebug" *----------------------------------------
                                 {
                                     final var stringConverter = BooleanStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_IsDebug );
                                     joiner.add( format( "isDebug = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                            
+                    
                                 //---* Property "isTest" *-----------------------------------------
                                 {
                                     final var stringConverter = BooleanStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_IsTest );
                                     joiner.add( format( "isTest = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                            
+                    
                                 //---* Property "locale" *-----------------------------------------
                                 {
                                     final var stringConverter = LocaleStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_Locale );
                                     joiner.add( format( "locale = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                            
+                    
                                 //---* Property "object1" *----------------------------------------
                                 {
                                     joiner.add( format( "object1 = \\"%1$s\\"", Objects.toString( getObject1() ) ) );
                                 }
-                            
+                    
                                 //---* Property "processId" *--------------------------------------
                                 {
                                     joiner.add( format( "processId = \\"%1$S\\"", Objects.toString( m_ProcessId ) ) );
                                 }
-                            
+                    
                                 //---* Property "session" *----------------------------------------
                                 {
                                     joiner.add( format( "session = \\"%1$S\\"", Objects.toString( m_Session ) ) );
                                 }
-                            
+                    
                                 //---* Property "string1" *----------------------------------------
                                 {
                                     final var stringConverter = StringStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_String1 );
                                     joiner.add( format( "string1 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                            
+                    
                                 //---* Property "string2" *----------------------------------------
                                 {
                                     final var stringConverter = StringStringConverter.INSTANCE;
                                     final var value = stringConverter.toString( m_String2 );
                                     joiner.add( format( "string2 = \\"%1$s\\"", nonNull( value ) ? value : NULL_STRING ) );
                                 }
-                            
+                    
                                 //---* Property "timezone" *---------------------------------------
                                 {
                                     final var stringConverter = ZoneIdStringConverter.INSTANCE;

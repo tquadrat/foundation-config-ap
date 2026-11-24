@@ -137,6 +137,7 @@ public class TestCLICodeGenerator extends CodeGeneratorTestBase
                     import java.io.OutputStream;
                     import java.lang.CharSequence;
                     import java.lang.ExceptionInInitializerError;
+                    import java.lang.IllegalArgumentException;
                     import java.lang.Integer;
                     import java.lang.Override;
                     import java.lang.String;
@@ -168,7 +169,6 @@ public class TestCLICodeGenerator extends CodeGeneratorTestBase
                     import org.tquadrat.foundation.config.spi.CLIDefinition;
                     import org.tquadrat.foundation.config.spi.CLIOptionDefinition;
                     import org.tquadrat.foundation.config.spi.ConfigChangeListenerSupport;
-                    import org.tquadrat.foundation.exception.ValidationException;
                     import org.tquadrat.foundation.lang.AutoLock;
                     import org.tquadrat.foundation.lang.Objects;
                     import org.tquadrat.foundation.test.MyCLIBeanSpecification;
@@ -341,7 +341,7 @@ public class TestCLICodeGenerator extends CodeGeneratorTestBase
                                 final var value = getProperty( "isDebug", "false" );
                                 m_IsDebug = stringConverter.fromString( value );
                             }
-                                    
+                    
                             /*
                              * Initialise the property 'isTest' from the system properties.
                              */
@@ -350,7 +350,7 @@ public class TestCLICodeGenerator extends CodeGeneratorTestBase
                                 final var value = getProperty( "isTest", "false" );
                                 m_IsTest = stringConverter.fromString( value );
                             }
-                                    
+                    
                             /*
                              * Initialise the property 'locale'.
                              */
@@ -379,7 +379,7 @@ public class TestCLICodeGenerator extends CodeGeneratorTestBase
                                 final var initData = initData();
                                 if( isNull( initData ) )
                                 {
-                                    throw new ValidationException( "initData() returns null" );
+                                    throw new IllegalArgumentException( "initData() returns null" );
                                 }
                                 if( initData.containsKey( "date1" ) )
                                 {
@@ -1018,7 +1018,7 @@ public class TestCLICodeGenerator extends CodeGeneratorTestBase
                         {
                             final var prefix = format ( "%s [", getClass().getName() );
                             final var joiner = new StringJoiner( ", ", prefix, "]" );
-                            
+                    
                             try( final var ignored = m_ReadLock.lock() )
                             {
                                 //---* Property "charset" *----------------------------------------
